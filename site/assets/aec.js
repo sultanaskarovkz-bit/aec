@@ -272,13 +272,15 @@ window.AECUI = (function () {
   }
 
   // Фото серии с сайта клиента, иначе схематичная иллюстрация
-  function pphoto(p, cls) { const ph = D.SERIES_PHOTOS && D.SERIES_PHOTOS[p.series]; return ph ? `<img class="pphoto ${cls || ''}" src="assets/img/${ph}" alt="${p.name.replace(/"/g, '&quot;')}" loading="lazy" onerror="this.onerror=null;this.outerHTML=AECUI.art('${p.img}')">` : art(p.img); }
+  function pphoto(p, cls) { const ph = p.photo ? 'products/' + p.photo : (D.SERIES_PHOTOS && D.SERIES_PHOTOS[p.series]); return ph ? `<img class="pphoto ${cls || ''}" src="assets/img/${ph}" alt="${p.name.replace(/"/g, '&quot;')}" loading="lazy" onerror="this.onerror=null;this.outerHTML=AECUI.art('${p.img}')">` : art(p.img); }
+  // Мощность: у серий ДГУ диапазон kva–kvaMax
+  function powerTxt(p) { return p.kvaMax ? `${p.kva}–${p.kvaMax} кВА` : `${p.kva} кВА / ${p.kw} кВт`; }
   // ---------- Карточка товара (общая) ----------
   function productCard(p, list) {
     const u = D.unit(p.cat);
     const st = p.stock === 'in' ? '<span class="stock stock-in">В наличии в Алматы</span>' : p.stock === 'eol' ? '<span class="stock stock-eol">Снят с производства</span>' : '<span class="stock stock-order">Под заказ · ' + p.lead + '</span>';
     const specs = p.cat === 'akb' ? [['Ёмкость', p.kva + ' А·ч'], ['Напряжение', p.form], ['Технология', (p.topology || '').split(' ')[0]], ['Срок службы', p.spec['Срок службы (проектный)'] || '']]
-      : p.cat === 'dgu' ? [['Мощность', p.kva + ' кВА / ' + p.kw + ' кВт'], ['Двигатель', p.spec['Двигатель'] || ''], ['Исполнение', p.form], ['АВР', 'опция']]
+      : p.cat === 'dgu' ? [['Мощность', powerTxt(p)], ['Двигатель', p.spec['Двигатель'] || ''], ['Исполнение', p.form], ['АВР', 'опция']]
         : p.cat === 'sts' ? [['Ток', p.kva + ' А'], ['Фазы', p.phases], ['Переключение', '< 4 мс'], ['Исполнение', p.form]]
           : p.cat === 'stab' ? [['Мощность', p.kva + ' кВА'], ['Фазы', p.phases], ['Тип', (p.topology || '').split(' ')[0]], ['Точность', p.spec['Точность стабилизации'] || '']]
             : [['Мощность', p.kva + ' кВА / ' + p.kw + ' кВт'], ['Фазы', p.phases], ['Исполнение', p.form], ['АКБ', p.battery]];
@@ -339,5 +341,5 @@ window.AECUI = (function () {
   function hashParts() { return location.hash.replace(/^#/, '').split('.').filter(Boolean); }
   function fmtDate(iso) { return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }); }
 
-  return { icon, art, img, bg, pphoto, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer };
+  return { icon, art, img, bg, pphoto, powerTxt, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer };
 })();

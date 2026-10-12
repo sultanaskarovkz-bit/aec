@@ -1,7 +1,7 @@
 import asyncio, os, re
 from playwright.async_api import async_playwright
 SITE=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'site')
-pages=['index.html','catalog.html','catalog.html#dgu','catalog.html#akb.12v','catalog.html#ibp.kva-20','product.html','product.html#tescom-tdj-125p','calc.html','calc.html#dgu','solution.html#med','solution.html#oil','service.html#remont','service.html#zamena','projects.html','project.html#lab','region.html#atyrau','brands.html','brand.html#tescom','about.html','contacts.html','blog.html','article.html#1','faq.html','docs.html','legal.html#warranty','thanks.html','404.html','kp.html','compare.html','favorites.html','search.html']
+pages=['index.html','catalog.html','catalog.html#dgu','catalog.html#akb.12v','catalog.html#ibp.kva-20','product.html','product.html#ibp-salicru-slc-adapt2-50-50-kva','product.html#dizelnyj-generator-tescom-s-dvigatelem-perkins-ot-22-do-1250-kva','product.html#akkumulyatornaya-batareya-hoppecke-6-opzs-420-2-v-420-a-ch','calc.html','calc.html#dgu','solution.html#med','solution.html#oil','service.html#remont','service.html#zamena','projects.html','project.html#lab','region.html#atyrau','brands.html','brand.html#tescom','about.html','contacts.html','blog.html','article.html#1','faq.html','docs.html','legal.html#warranty','thanks.html','404.html','kp.html','compare.html','favorites.html','search.html']
 async def main():
     bad=set(); errs=[]
     async with async_playwright() as p:

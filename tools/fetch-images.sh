@@ -4,7 +4,8 @@
 set -e
 cd "$(dirname "$0")/../site"
 mkdir -p assets/img
-python3 - <<'PY'
+PY=$(command -v python3 >/dev/null 2>&1 && python3 -c "print(1)" >/dev/null 2>&1 && echo python3 || echo python)
+$PY - <<'PY'
 import json, subprocess, os
 m = json.load(open('assets/images.json', encoding='utf-8'))
 ok = fail = 0

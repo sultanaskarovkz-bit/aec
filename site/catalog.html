@@ -116,6 +116,7 @@
   <div id="body"></div>
 </main>
 </div>
+<script src="assets/catalog.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/aec.js"></script>
 <script>
@@ -295,8 +296,8 @@
   /* ---------- Фильтрация ---------- */
   const F = {
     sub: p => !st.sub || (p.sub || []).includes(st.sub),
-    kva: p => st.kva == null || (near ? p.kva >= st.kva * 0.75 && p.kva <= st.kva * 1.34 : Math.abs(p.kva - st.kva) / st.kva <= 0.05),
-    range: p => (st.min == null || p.kva >= st.min) && (st.max == null || p.kva <= st.max),
+    kva: p => st.kva == null || (p.kvaMax ? p.kva <= st.kva && p.kvaMax >= st.kva : near ? p.kva >= st.kva * 0.75 && p.kva <= st.kva * 1.34 : Math.abs(p.kva - st.kva) / st.kva <= 0.05),
+    range: p => D.inRange(p, st.min, st.max),
     brand: p => !st.brands.length || st.brands.includes(p.brandId),
     phase: p => !st.phase || phaseKey(p) === st.phase,
     form: p => !st.form || formMatch(p, st.form),

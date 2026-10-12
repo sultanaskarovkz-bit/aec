@@ -74,6 +74,7 @@
   <section class="section-tight"><div class="wrap" id="res"></div></section>
 </main>
 </div>
+<script src="assets/catalog.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/aec.js"></script>
 <script>
@@ -143,7 +144,7 @@
     const v = q.value.trim(); if (v.length < 2) { closeSugg(); return; }
     const r = smart(v); list = r.products.slice(0, 6); idx = -1;
     if (!list.length) { closeSugg(); return; }
-    sugg.innerHTML = list.map(p => `<a href="${L.product(p.slug)}" role="option"><span class="th">${U.art(p.img)}</span><span><b>${esc(p.name)}</b><small>${esc(p.brand)} · ${esc(p.series)} · ${p.stock === 'in' ? 'в наличии' : 'под заказ'}</small></span><span class="pw">${p.kva} ${esc(D.unit(p.cat))}</span></a>`).join('') + `<div class="all"><span>${r.fixed ? 'Исправлено: «' + esc(r.fixed) + '»' : ''}</span><span>Все результаты (${r.products.length}${r.pages.length ? ' + ' + r.pages.length + ' стр.' : ''}) · Enter</span></div>`;
+    sugg.innerHTML = list.map(p => `<a href="${L.product(p.slug)}" role="option"><span class="th">${U.pphoto(p)}</span><span><b>${esc(p.name)}</b><small>${esc(p.brand)} · ${esc(p.series)} · ${p.stock === 'in' ? 'в наличии' : 'под заказ'}</small></span><span class="pw">${p.kva} ${esc(D.unit(p.cat))}</span></a>`).join('') + `<div class="all"><span>${r.fixed ? 'Исправлено: «' + esc(r.fixed) + '»' : ''}</span><span>Все результаты (${r.products.length}${r.pages.length ? ' + ' + r.pages.length + ' стр.' : ''}) · Enter</span></div>`;
     sugg.classList.add('open');
   }
   q.addEventListener('input', () => { box.classList.toggle('has', !!q.value); clearTimeout(t); t = setTimeout(showSugg, 150); });

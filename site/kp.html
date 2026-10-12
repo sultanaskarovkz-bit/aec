@@ -89,6 +89,7 @@
   </div></div></section>
 </main>
 </div>
+<script src="assets/catalog.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/aec.js"></script>
 <script>
@@ -117,7 +118,7 @@
     const n = items.reduce((s, i) => s + i.x.q, 0), priced = items.filter(i => i.p.price);
     const sum = priced.reduce((s, i) => s + i.p.price * i.x.q, 0);
     el.innerHTML = `<div class="kp-list">${items.map(({ x, p }) => `<div class="kp-row" data-id="${p.id}">
-        <a class="pimg" href="${L.product(p.slug)}" aria-hidden="true" tabindex="-1">${U.art(p.img)}</a>
+        <a class="pimg" href="${L.product(p.slug)}" aria-hidden="true" tabindex="-1">${U.pphoto(p)}</a>
         <div class="info"><span class="brand">${esc(p.brand)} · ${esc(p.series)}</span><a class="name" href="${L.product(p.slug)}">${esc(p.name)}</a><div class="meta"><span>${p.kva} ${esc(D.unit(p.cat))}${p.cat === 'ibp' || p.cat === 'dgu' ? ' / ' + p.kw + ' кВт' : ''}</span>${p.sku ? `<span>арт. ${esc(p.sku)}</span>` : ''}<span>${p.stock === 'in' ? 'в наличии в Алматы' : 'под заказ · ' + esc(p.lead)}</span></div></div>
         <div class="qty" aria-label="Количество"><button type="button" data-dec="${p.id}" aria-label="Меньше">−</button><input type="number" min="1" max="999" value="${x.q}" data-q="${p.id}" inputmode="numeric" aria-label="Количество"><button type="button" data-inc="${p.id}" aria-label="Больше">+</button></div>
         <div class="price">${p.price ? (p.price * x.q).toLocaleString('ru-RU') + ' ₸' : 'по запросу'}${p.price && x.q > 1 ? `<small>${D.fmtPrice(p.price)} за шт.</small>` : p.price ? '<small>цена «от»</small>' : ''}</div>

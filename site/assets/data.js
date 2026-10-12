@@ -1,5 +1,5 @@
-/* AEC Kazakhstan — данные прототипа. Модели и серии взяты с текущего сайта aecups.kz;
-   часть характеристик демонстрационная и уточняется по datasheet производителя. */
+/* AEC Kazakhstan — данные прототипа. Каталог товаров (PRODUCTS) собирается из assets/catalog.js,
+   который генерируется tools/build-catalog.py из выгрузки WooCommerce текущего сайта aecups.kz. */
 window.AEC = (function () {
   const CONTACT = {
     phone: '+7 706 651 16 01',
@@ -16,7 +16,7 @@ window.AEC = (function () {
   };
 
   const CATEGORIES = [
-    { id: 'ibp', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/', name: 'ИБП', full: 'Источники бесперебойного питания', range: '1–3600 кВА', min: 1, max: 3600, unit: 'кВА', img: 'ups', count: 217,
+    { id: 'ibp', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/', name: 'ИБП', full: 'Источники бесперебойного питания', range: '0,7–1200 кВА', min: 0.7, max: 1200, unit: 'кВА', img: 'ups', count: 233,
       subs: [
         { id: 'odnofaznye', name: 'Однофазные', hint: '1–10 кВА, серверные и кабинеты' },
         { id: 'tryohfaznye', name: 'Трёхфазные', hint: '10–1200 кВА' },
@@ -25,28 +25,30 @@ window.AEC = (function () {
         { id: 'batarejnye-shkafy', name: 'Батарейные шкафы и модули', hint: '' },
         { id: 'aksessuary', name: 'Аксессуары', hint: 'SNMP-карты, байпасы, датчики' }
       ] },
-    { id: 'dgu', slug: 'product-category/generatory-2/', name: 'Дизельные генераторы', full: 'Дизельные генераторные установки (ДГУ)', range: '10–4000 кВА', min: 10, max: 4000, unit: 'кВА', img: 'genset', count: 22,
+    { id: 'dgu', slug: 'product-category/generatory-2/', name: 'Дизельные генераторы', full: 'Дизельные генераторные установки (ДГУ)', range: '10–3750 кВА', min: 10, max: 3750, unit: 'кВА', img: 'genset', count: 22,
       subs: [
         { id: 'otkrytye', name: 'Открытого исполнения', hint: 'для машзалов' },
         { id: 'v-kozhuhe', name: 'В шумозащитном кожухе', hint: '≤ 72 дБ(А)' },
         { id: 'v-kontejnere', name: 'В контейнере', hint: 'всепогодные, с АВР' },
         { id: 'avr', name: 'АВР и панели управления', hint: '' }
       ] },
-    { id: 'akb', slug: 'product-category/akb/', name: 'Аккумуляторные батареи', full: 'Стационарные аккумуляторные батареи', range: '5–3250 А·ч', min: 5, max: 3250, unit: 'А·ч', img: 'battery', count: 176,
+    { id: 'akb', slug: 'product-category/akb/', name: 'Аккумуляторные батареи', full: 'Стационарные аккумуляторные батареи', range: '7–3250 А·ч', min: 7, max: 3250, unit: 'А·ч', img: 'battery', count: 198,
       subs: [
         { id: '12v', name: '12 В AGM / GEL', hint: 'для ИБП до 200 кВА' },
         { id: '2v', name: '2 В OPzV / OPzS', hint: 'срок службы 15–20 лет' },
+        { id: '6v', name: '6 В', hint: 'блоки OPzS / OPzV' },
         { id: 'li-ion', name: 'Литий-ионные', hint: 'LiFePO4' },
         { id: 'stellazhi', name: 'Стеллажи и шкафы', hint: '' }
       ] },
-    { id: 'stab', slug: 'product-category/stabilizatory/', name: 'Стабилизаторы напряжения', full: 'Стабилизаторы напряжения', range: '1–8000 кВА', min: 1, max: 8000, unit: 'кВА', img: 'stab', count: 124,
+    { id: 'stab', slug: 'product-category/stabilizatory/', name: 'Стабилизаторы напряжения', full: 'Стабилизаторы напряжения', range: '0,3–3200 кВА', min: 0.3, max: 3200, unit: 'кВА', img: 'stab', count: 124,
       subs: [
         { id: 'odnofaznye', name: 'Однофазные', hint: '220 В' },
         { id: 'tryohfaznye', name: 'Трёхфазные', hint: '380 В' },
+        { id: 'relejnye', name: 'Релейные', hint: 'ступенчатые, бюджетные' },
         { id: 'elektromehanicheskie', name: 'Электромеханические', hint: 'высокая перегрузочная способность' },
         { id: 'elektronnye', name: 'Электронные (тиристорные)', hint: 'без износа' }
       ] },
-    { id: 'sts', slug: 'product-category/staticheskie-pereklyuchateli-sts/', name: 'Статические переключатели (STS)', full: 'Статические переключатели нагрузки', range: '100–1250 А', min: 100, max: 1250, unit: 'А', img: 'sts', count: 30,
+    { id: 'sts', slug: 'product-category/staticheskie-pereklyuchateli-sts/', name: 'Статические переключатели (STS)', full: 'Статические переключатели нагрузки', range: '32–1250 А', min: 32, max: 1250, unit: 'А', img: 'sts', count: 25,
       subs: [
         { id: 'odnofaznye', name: 'Однофазные (STS2000)', hint: '' },
         { id: 'tryohfaznye', name: 'Трёхфазные (STS3000 / STS4000)', hint: '3- и 4-полюсные' }
@@ -80,121 +82,51 @@ window.AEC = (function () {
   ];
 
   const BRANDS = [
-    { id: 'salicru', name: 'Salicru', country: 'Испания', type: 'ИБП, стабилизаторы', status: 'Официальный дистрибьютор', count: 191 },
-    { id: 'kehua-tech', name: 'Kehua Tech', country: 'Китай', type: 'ИБП, модульные системы', status: 'Официальный партнёр', count: 67 },
-    { id: 'tescom', name: 'Tescom', country: 'Турция', type: 'ИБП, ДГУ, стабилизаторы, STS', status: 'Официальный дистрибьютор', count: 81 },
-    { id: 'hoppecke', name: 'Hoppecke', country: 'Германия', type: 'Аккумуляторы OPzS / OPzV', status: 'Партнёр', count: 85 },
-    { id: 'bae-batterien', name: 'BAE Batterien', country: 'Германия', type: 'Аккумуляторы Secura', status: 'Партнёр', count: 59 },
-    { id: 'energrid', name: 'EnerGrid', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр', count: 38 },
-    { id: 'everexceed', name: 'EverExceed', country: 'Китай', type: 'АКБ, стабилизаторы', status: 'Партнёр', count: 37 },
-    { id: 'ritar', name: 'Ritar', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр', count: 10 },
-    { id: 'exide', name: 'Exide Sprinter', country: 'Германия', type: 'Аккумуляторы', status: 'Партнёр', count: 7 },
-    { id: 'agg', name: 'AGG Power', country: 'Великобритания / Китай', type: 'ДГУ', status: 'Партнёр', count: 7 },
-    { id: 'baifa', name: 'BAIFA Power', country: 'Китай', type: 'ДГУ', status: 'Партнёр', count: 7 },
-    { id: 'cummins', name: 'Cummins', country: 'США', type: 'Двигатели ДГУ', status: 'Двигатели', count: 2 },
-    { id: 'perkins', name: 'Perkins', country: 'Великобритания', type: 'Двигатели ДГУ', status: 'Двигатели', count: 3 },
-    { id: 'volvo-penta', name: 'Volvo Penta', country: 'Швеция', type: 'Двигатели ДГУ', status: 'Двигатели', count: 2 },
-    { id: 'mtu', name: 'MTU', country: 'Германия', type: 'Двигатели ДГУ', status: 'Двигатели', count: 2 },
-    { id: 'scania', name: 'Scania', country: 'Швеция', type: 'Двигатели ДГУ', status: 'Двигатели', count: 2 },
-    { id: 'deutz', name: 'Deutz', country: 'Германия', type: 'Двигатели ДГУ', status: 'Двигатели', count: 1 },
-    { id: 'doosan', name: 'Doosan', country: 'Корея', type: 'Двигатели ДГУ', status: 'Двигатели', count: 2 },
-    { id: 'baudouin', name: 'Baudouin', country: 'Франция', type: 'Двигатели ДГУ', status: 'Двигатели', count: 2 },
-    { id: 'stamford-avk', name: 'Stamford AVK', country: 'Великобритания', type: 'Генераторы переменного тока', status: 'Альтернаторы', count: 0 },
-    { id: 'mecc-alte', name: 'Mecc Alte', country: 'Италия', type: 'Генераторы переменного тока', status: 'Альтернаторы', count: 0 },
-    { id: 'leroy-somer', name: 'Nidec Leroy-Somer', country: 'Франция', type: 'Генераторы переменного тока', status: 'Альтернаторы', count: 0 }
+    { id: 'salicru', name: 'Salicru', country: 'Испания', type: 'ИБП, стабилизаторы', status: 'Официальный дистрибьютор', logo: 'brand-salicru.svg' },
+    { id: 'kehua-tech', name: 'Kehua Tech', country: 'Китай', type: 'ИБП, модульные системы', status: 'Официальный партнёр', logo: 'brand-kehua-tech.svg' },
+    { id: 'tescom', name: 'Tescom', country: 'Турция', type: 'ИБП, ДГУ, стабилизаторы, STS', status: 'Официальный дистрибьютор', logo: 'brand-tescom.svg' },
+    { id: 'hoppecke', name: 'Hoppecke', country: 'Германия', type: 'Аккумуляторы OPzS / OPzV', status: 'Партнёр' },
+    { id: 'bae-batterien', name: 'BAE Batterien', country: 'Германия', type: 'Аккумуляторы Secura', status: 'Партнёр', logo: 'brand-bae-batterien.svg' },
+    { id: 'energrid', name: 'EnerGrid', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
+    { id: 'everexceed', name: 'EverExceed', country: 'Китай', type: 'АКБ, стабилизаторы', status: 'Партнёр' },
+    { id: 'ritar', name: 'Ritar', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
+    { id: 'sprinter', name: 'Exide Sprinter', country: 'Германия', type: 'Аккумуляторы', status: 'Партнёр' },
+    { id: 'agg', name: 'AGG Power', country: 'Великобритания / Китай', type: 'ДГУ', status: 'Партнёр' },
+    { id: 'baifa', name: 'BAIFA Power', country: 'Китай', type: 'ДГУ', status: 'Партнёр', logo: 'brand-baifa.svg' },
+    { id: 'socomec', name: 'Socomec', country: 'Франция', type: 'ИБП, STS', status: 'Под заказ', logo: 'brand-socomec.svg' },
+    { id: 'leega', name: 'LEEGA', country: 'Китай', type: 'ДГУ', status: 'Под заказ', logo: 'brand-leega.svg' },
+    { id: 'cummins', name: 'Cummins', country: 'США', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-cummins.svg' },
+    { id: 'perkins', name: 'Perkins', country: 'Великобритания', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-perkins.svg' },
+    { id: 'volvo-penta', name: 'Volvo Penta', country: 'Швеция', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-volvo-penta.svg' },
+    { id: 'mtu', name: 'MTU', country: 'Германия', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-mtu.svg' },
+    { id: 'scania', name: 'Scania', country: 'Швеция', type: 'Двигатели ДГУ', status: 'Двигатели' },
+    { id: 'deutz', name: 'Deutz', country: 'Германия', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-deutz.svg' },
+    { id: 'doosan', name: 'Doosan', country: 'Корея', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-doosan.svg' },
+    { id: 'baudouin', name: 'Baudouin', country: 'Франция', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-baudouin.svg' },
+    { id: 'sdec', name: 'SDEC', country: 'Китай', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-sdec.svg' },
+    { id: 'yto', name: 'YTO', country: 'Китай', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-yto.svg' },
+    { id: 'hyundai', name: 'Hyundai', country: 'Корея', type: 'Двигатели ДГУ', status: 'Двигатели' },
+    { id: 'stamford-avk', name: 'Stamford AVK', country: 'Великобритания', type: 'Генераторы переменного тока', status: 'Альтернаторы', logo: 'brand-stamford-avk.svg' },
+    { id: 'mecc-alte', name: 'Mecc Alte', country: 'Италия', type: 'Генераторы переменного тока', status: 'Альтернаторы', logo: 'brand-mecc-alte.svg' },
+    { id: 'nidec-leroy-somer', name: 'Nidec Leroy-Somer', country: 'Франция', type: 'Генераторы переменного тока', status: 'Альтернаторы', logo: 'brand-nidec-leroy-somer.svg' }
   ];
 
-  // ---------- Каталог: серии → модели ----------
-  const P = [];
-  let n = 0;
-  function add(base, models) {
-    models.forEach(m => {
-      n++;
-      const kva = m.kva, kw = m.kw != null ? m.kw : (base.pf ? Math.round(kva * base.pf * 10) / 10 : kva);
-      P.push(Object.assign({
-        id: 'p' + n,
-        slug: (base.brand + '-' + m.m).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-        name: (base.prefix || '') + base.brand + ' ' + m.m,
-        model: m.m,
-        sku: m.sku || '',
-        brand: base.brand,
-        brandId: base.brandId,
-        cat: base.cat,
-        series: base.series,
-        sub: base.sub,
-        kva: kva, kw: kw,
-        price: m.price || null,
-        stock: m.stock || base.stock || 'order',
-        lead: m.lead || base.lead || '4–6 недель',
-        img: base.img,
-        photo: base.photo || null,
-        industries: base.industries || [],
-        docs: base.docs || [{ name: 'Datasheet ' + base.series + ' (PDF)', size: '1,2 МБ' }],
-        spec: Object.assign({}, base.spec, m.spec || {})
-      }, {
-        phases: base.phases, topology: base.topology, form: base.form, arch: base.arch, pf: base.pf,
-        eff: base.eff, battery: base.battery, interfaces: base.interfaces, ip: base.ip, warranty: base.warranty,
-        dims: m.dims || base.dims, weight: m.weight || base.weight, parallel: base.parallel
-      }));
-    });
-  }
+  // ---------- Каталог: реальные товары aecups.kz (assets/catalog.js, собирается tools/build-catalog.py) ----------
+  const LEAD = { ibp: '4–6 недель', dgu: '8–12 недель', akb: '2–4 недели', stab: '3–5 недель', sts: '6–8 недель' };
+  const RAW = (window.AEC_CATALOG && window.AEC_CATALOG.products) || [];
+  const P = RAW.map(r => Object.assign({
+    price: null, stock: 'order', lead: LEAD[r.cat] || '4–6 недель', sku: '', series: '', sub: [], kw: r.kva, kvaMax: null, kwMax: null,
+    photo: null, photos: r.photo ? [r.photo] : [], industries: [], docs: [], spec: {},
+    phases: '', topology: '', form: '', arch: '', pf: 1, eff: '', battery: '', interfaces: [], ip: '', warranty: null, dims: '', weight: '', parallel: ''
+  }, r));
+  // Полные таблицы характеристик и описания (assets/catalog-details.js подключается только на карточке товара)
+  function details(id) { const d = window.AEC_CATALOG_DETAILS; return (d && d[id]) || null; }
+  // Диапазон мощности: у серий ДГУ задан kva…kvaMax
+  function kvaRange(p) { return [p.kva, p.kvaMax || p.kva]; }
+  function inRange(p, min, max) { const r = kvaRange(p); return (min == null || r[1] >= min) && (max == null || r[0] <= max); }
 
-  // ИБП Salicru
-  add({ prefix: 'ИБП ', brand: 'Salicru', brandId: 'salicru', cat: 'ibp', series: 'SLC TWIN RT2', sub: ['odnofaznye', 'stoechnye'], phases: '1/1', topology: 'On-line (двойное преобразование)', form: 'Rack/Tower', arch: 'Моноблочная', pf: 0.9, eff: '94 / 98', battery: 'встроенные', interfaces: ['USB', 'RS-232', 'SNMP (слот)', 'EPO', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: 'до 3 шт. (от 6 кВА)', img: 'rack', industries: ['czod', 'office', 'emergency'], stock: 'in', lead: 'со склада в Алматы' },
-    [{ m: 'SLC-4000-TWIN RT2', kva: 4, kw: 3.6, dims: '438×608×88 мм (2U)', weight: '27 кг', price: 985000 }, { m: 'SLC-5000-TWIN RT2', kva: 5, kw: 4.5, dims: '438×608×88 мм (2U)', weight: '28 кг' }, { m: 'SLC-6000-TWIN RT2', kva: 6, kw: 5.4, dims: '438×608×88 мм (2U)', weight: '29 кг', price: 1290000 }, { m: 'SLC-8000-TWIN RT2', kva: 8, kw: 7.2, dims: '438×608×130 мм (3U)', weight: '41 кг' }, { m: 'SLC-10000-TWIN RT2', kva: 10, kw: 9, dims: '438×608×130 мм (3U)', weight: '42 кг', price: 1980000 }]);
-  add({ prefix: 'ИБП ', brand: 'Salicru', brandId: 'salicru', cat: 'ibp', series: 'SLC TWIN RT3', sub: ['odnofaznye', 'stoechnye'], phases: '1/1', topology: 'On-line (двойное преобразование)', form: 'Rack/Tower', arch: 'Моноблочная', pf: 1, eff: '95 / 98', battery: 'встроенные', interfaces: ['USB', 'RS-232', 'SNMP (слот)', 'EPO', 'Сухие контакты', 'Ethernet'], ip: 'IP20', warranty: 24, parallel: 'до 4 шт.', img: 'rack', industries: ['czod', 'office', 'emergency', 'telecom'], stock: 'in', lead: 'со склада в Алматы' },
-    [{ m: 'SLC-4000-TWIN RT3', kva: 4, kw: 4, dims: '438×608×88 мм (2U)', weight: '28 кг' }, { m: 'SLC-5000-TWIN RT3', kva: 5, kw: 5, dims: '438×608×88 мм (2U)', weight: '29 кг' }, { m: 'SLC-6000-TWIN RT3', kva: 6, kw: 6, dims: '438×608×88 мм (2U)', weight: '30 кг' }, { m: 'SLC-8000-TWIN RT3', kva: 8, kw: 8, dims: '438×608×130 мм (3U)', weight: '43 кг' }, { m: 'SLC-10000-TWIN RT3', kva: 10, kw: 10, dims: '438×608×130 мм (3U)', weight: '44 кг' }]);
-  add({ prefix: 'ИБП ', brand: 'Salicru', brandId: 'salicru', cat: 'ibp', series: 'SLC TWIN PRO3', sub: ['tryohfaznye'], phases: '3/3', topology: 'On-line (двойное преобразование)', form: 'Напольный', arch: 'Моноблочная', pf: 1, eff: '96 / 99', battery: 'внешние', interfaces: ['USB', 'RS-232', 'RS-485', 'SNMP', 'Modbus', 'EPO', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: 'до 4 шт.', img: 'tower', industries: ['czod', 'med', 'office', 'machines'], stock: 'in', lead: 'со склада в Алматы' },
-    [{ m: 'SLC-10000-TWIN PRO3', kva: 10, kw: 10, dims: '250×700×560 мм', weight: '48 кг' }, { m: 'SLC-15000-TWIN PRO3', kva: 15, kw: 15, dims: '250×700×560 мм', weight: '52 кг' }, { m: 'SLC-20000-TWIN PRO3', kva: 20, kw: 20, dims: '250×700×560 мм', weight: '55 кг', price: 4850000 }, { m: 'SLC-30000-TWIN PRO3', kva: 30, kw: 30, dims: '350×800×780 мм', weight: '90 кг' }, { m: 'SLC-40000-TWIN PRO3', kva: 40, kw: 40, dims: '350×800×780 мм', weight: '95 кг' }]);
-  add({ prefix: 'ИБП ', brand: 'Salicru', brandId: 'salicru', cat: 'ibp', series: 'SLC ADAPT2', sub: ['tryohfaznye', 'modulnye'], phases: '3/3', topology: 'On-line, модульный, трёхуровневая PWM', form: 'Напольный', arch: 'Модульная', pf: 1, eff: '96 / 99', battery: 'внешние', interfaces: ['USB', 'RS-232', 'RS-485', 'SNMP', 'NIMBUS', 'Modbus', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: 'до 1500 кВА, hot-swap модули 25/50 кВА', img: 'modular', industries: ['czod', 'med', 'prom', 'oil', 'office'], docs: [{ name: 'Datasheet SLC ADAPT2 25–50 kVA (PDF)', size: '2,4 МБ' }, { name: 'Руководство по эксплуатации (PDF)', size: '6,1 МБ' }, { name: 'Сертификат соответствия ЕАЭС (PDF)', size: '0,8 МБ' }] },
-    [{ m: 'SLC ADAPT2 25', kva: 25, kw: 25, sku: '694AB000015', dims: '700×510×178 мм (модуль)', weight: '43 кг' }, { m: 'SLC ADAPT2 50', kva: 50, kw: 50, sku: '694AB000016', dims: '700×510×178 мм (модуль)', weight: '45 кг', stock: 'in', lead: 'со склада в Алматы' }, { m: 'SLC-N/2 ADAPT2 30', kva: 30, kw: 30 }, { m: 'SLC-N/4 ADAPT2 45', kva: 45, kw: 45 }, { m: 'SLC-N/6 ADAPT2 90', kva: 90, kw: 90 }, { m: 'SLC-N/8 ADAPT2 200', kva: 200, kw: 200, dims: '600×1000×2000 мм (шкаф)', weight: '420 кг' }, { m: 'SLC-N/12 ADAPT2 300', kva: 300, kw: 300, dims: '600×1000×2000 мм (шкаф)', weight: '560 кг' }, { m: 'SLC-N/10 ADAPT2 500', kva: 500, kw: 500, dims: '1200×1000×2000 мм (шкаф)', weight: '980 кг' }]);
-  // ИБП Kehua
-  add({ prefix: 'ИБП ', brand: 'Kehua', brandId: 'kehua-tech', cat: 'ibp', series: 'KR11', sub: ['odnofaznye'], phases: '1/1', topology: 'On-line (двойное преобразование)', form: 'Напольный (tower)', arch: 'Моноблочная', pf: 0.9, eff: '93 / 97', battery: 'встроенные', interfaces: ['USB', 'RS-232', 'SNMP (слот)', 'EPO'], ip: 'IP20', warranty: 24, parallel: 'до 3 шт.', img: 'tower', industries: ['office', 'emergency', 'machines'], stock: 'in', lead: 'со склада в Алматы' },
-    [{ m: 'KR1110', kva: 1, kw: 0.9 }, { m: 'KR1120', kva: 2, kw: 1.8 }, { m: 'KR1130', kva: 3, kw: 2.7 }, { m: 'KR1160', kva: 6, kw: 5.4 }, { m: 'KR11100', kva: 10, kw: 9 }]);
-  add({ prefix: 'ИБП ', brand: 'Kehua', brandId: 'kehua-tech', cat: 'ibp', series: 'KR33', sub: ['tryohfaznye'], phases: '3/3', topology: 'On-line (двойное преобразование)', form: 'Напольный', arch: 'Моноблочная', pf: 1, eff: '96 / 99', battery: 'внешние', interfaces: ['RS-232', 'RS-485', 'SNMP', 'Modbus', 'EPO', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: 'до 4 шт.', img: 'tower', industries: ['czod', 'med', 'prom', 'office', 'machines'] },
-    [{ m: 'KR3310', kva: 10, kw: 10 }, { m: 'KR3315', kva: 15, kw: 15 }, { m: 'KR3320', kva: 20, kw: 20, stock: 'in', lead: 'со склада в Алматы' }, { m: 'KR3330', kva: 30, kw: 30 }, { m: 'KR3340', kva: 40, kw: 40 }, { m: 'KR3360', kva: 60, kw: 60 }, { m: 'KR3380', kva: 80, kw: 80 }, { m: 'KR33100', kva: 100, kw: 100 }, { m: 'KR33120', kva: 120, kw: 120 }]);
-  add({ prefix: 'ИБП ', brand: 'Kehua', brandId: 'kehua-tech', cat: 'ibp', series: 'MR33', sub: ['tryohfaznye', 'modulnye'], phases: '3/3', topology: 'On-line, модульный', form: 'Напольный', arch: 'Модульная', pf: 1, eff: '96,5 / 99', battery: 'внешние', interfaces: ['RS-232', 'RS-485', 'SNMP', 'Modbus', 'EPO', 'Сухие контакты', 'Ethernet'], ip: 'IP20', warranty: 36, parallel: 'модули 25/50 кВА, до 4 шкафов', img: 'modular', industries: ['czod', 'med', 'prom', 'oil'] },
-    [{ m: 'MR33 150', kva: 150, kw: 150, dims: '600×1000×2000 мм', weight: '380 кг' }, { m: 'MR33 300', kva: 300, kw: 300, dims: '600×1000×2000 мм', weight: '520 кг' }, { m: 'MR33 600', kva: 600, kw: 600, dims: '1200×1000×2000 мм', weight: '1100 кг' }]);
-  // ИБП Tescom
-  add({ prefix: 'ИБП ', brand: 'Tescom', brandId: 'tescom', cat: 'ibp', series: 'NEOLINE', sub: ['tryohfaznye'], phases: '3/3', topology: 'On-line (двойное преобразование)', form: 'Напольный', arch: 'Моноблочная', pf: 1, eff: '95 / 98', battery: 'внешние', interfaces: ['RS-232', 'RS-485', 'SNMP', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: 'до 4 шт.', img: 'tower', industries: ['med', 'prom', 'office'] },
-    [{ m: 'NEOLINE 310', kva: 10, kw: 10 }, { m: 'NEOLINE 320', kva: 20, kw: 20 }, { m: 'NEOLINE 330', kva: 30, kw: 30 }, { m: 'NEOLINE 340', kva: 40, kw: 40 }]);
-  add({ prefix: 'ИБП ', brand: 'Tescom', brandId: 'tescom', cat: 'ibp', series: 'TEOS', sub: ['tryohfaznye'], phases: '3/3', topology: 'On-line, трансформаторный', form: 'Напольный', arch: 'Моноблочная', pf: 0.9, eff: '94 / 97', battery: 'внешние', interfaces: ['RS-232', 'RS-485', 'SNMP', 'Modbus', 'Сухие контакты'], ip: 'IP21', warranty: 24, parallel: 'до 6 шт.', img: 'tower', industries: ['med', 'prom', 'oil', 'machines'] },
-    [{ m: 'TEOS 40', kva: 40, kw: 36 }, { m: 'TEOS 60', kva: 60, kw: 54 }, { m: 'TEOS 80', kva: 80, kw: 72 }, { m: 'TEOS 100', kva: 100, kw: 90 }, { m: 'TEOS 160', kva: 160, kw: 144 }, { m: 'TEOS 200', kva: 200, kw: 180 }]);
-  add({ prefix: 'ИБП ', brand: 'Tescom', brandId: 'tescom', cat: 'ibp', series: 'MTW', sub: ['tryohfaznye', 'modulnye'], phases: '3/3', topology: 'On-line, модульный', form: 'Напольный', arch: 'Модульная', pf: 1, eff: '96 / 99', battery: 'внешние', interfaces: ['RS-232', 'RS-485', 'SNMP', 'Modbus', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: 'модули 10–50 кВА, hot-swap', img: 'modular', industries: ['czod', 'med', 'prom'] },
-    [{ m: 'MTW150 30', kva: 30, kw: 30 }, { m: 'MTW150 60', kva: 60, kw: 60 }, { m: 'MTW150 90', kva: 90, kw: 90 }, { m: 'MTW150 120', kva: 120, kw: 120 }, { m: 'MTW180 180', kva: 180, kw: 180 }, { m: 'MTW300 300', kva: 300, kw: 300 }, { m: 'MTW500 400', kva: 400, kw: 400 }, { m: 'MTW600 600', kva: 600, kw: 600 }]);
-
-  // ДГУ
-  const gen = (brand, brandId, series, engine, enclosure, sub, models) => add({ prefix: 'ДГУ ', brand, brandId, cat: 'dgu', series, sub, phases: '3ф 400 В', topology: '', form: enclosure, arch: '', pf: 0.8, eff: '', battery: '', interfaces: ['Deep Sea 7320', 'Modbus', 'АВР (опция)'], ip: enclosure === 'В контейнере' ? 'IP54' : 'IP23', warranty: 12, parallel: 'синхронизация до 8 шт.', img: enclosure === 'В контейнере' ? 'container' : 'genset', industries: ['oil', 'prom', 'office', 'med', 'czod'], spec: { 'Двигатель': engine, 'Частота вращения': '1500 об/мин', 'Альтернатор': 'Stamford / Mecc Alte' }, lead: '8–12 недель' }, models);
-  gen('Tescom', 'tescom', 'TDJ (Perkins)', 'Perkins', 'Открытое / кожух', ['otkrytye', 'v-kozhuhe'], [{ m: 'TDJ 50P', kva: 50, kw: 40 }, { m: 'TDJ 125P', kva: 125, kw: 100, price: 14900000 }, { m: 'TDJ 150P', kva: 150, kw: 120 }, { m: 'TDJ 250P', kva: 250, kw: 200 }, { m: 'TDJ 500P', kva: 500, kw: 400 }]);
-  gen('Tescom', 'tescom', 'TDJ (Volvo Penta)', 'Volvo Penta', 'Открытое / кожух', ['otkrytye', 'v-kozhuhe'], [{ m: 'TDJ 110V', kva: 110, kw: 88 }, { m: 'TDJ 275V', kva: 275, kw: 220 }, { m: 'TDJ 550V', kva: 550, kw: 440 }, { m: 'TDJ 770V', kva: 770, kw: 616 }]);
-  gen('AGG Power', 'agg', 'C-серия (Cummins)', 'Cummins', 'В контейнере', ['v-kontejnere'], [{ m: 'C138D5', kva: 138, kw: 110 }, { m: 'C275D5', kva: 275, kw: 220 }, { m: 'C550D5', kva: 550, kw: 440 }, { m: 'C1100D5', kva: 1100, kw: 880 }, { m: 'C2500D5', kva: 2500, kw: 2000 }]);
-  gen('AGG Power', 'agg', 'P-серия (Perkins)', 'Perkins', 'В контейнере', ['v-kontejnere'], [{ m: 'P66D5', kva: 66, kw: 53 }, { m: 'P125D5', kva: 125, kw: 100, price: 16800000 }, { m: 'P220D5', kva: 220, kw: 176 }, { m: 'P500D5', kva: 500, kw: 400 }]);
-  gen('BAIFA Power', 'baifa', 'BF-C (Cummins)', 'Cummins', 'Открытое / кожух / контейнер', ['otkrytye', 'v-kozhuhe', 'v-kontejnere'], [{ m: 'BF-C55', kva: 55, kw: 44 }, { m: 'BF-C138', kva: 138, kw: 110 }, { m: 'BF-C275', kva: 275, kw: 220 }, { m: 'BF-C825', kva: 825, kw: 660 }]);
-  gen('BAIFA Power', 'baifa', 'BF-M (MTU)', 'MTU', 'В контейнере', ['v-kontejnere'], [{ m: 'BF-M750', kva: 750, kw: 600 }, { m: 'BF-M1650', kva: 1650, kw: 1320 }, { m: 'BF-M3750', kva: 3750, kw: 3000 }]);
-
-  // АКБ
-  const bat = (brand, brandId, series, tech, volt, life, sub, models, extra) => add(Object.assign({ prefix: 'АКБ ', brand, brandId, cat: 'akb', series, sub, phases: '', topology: tech, form: volt + ' В', arch: '', pf: 1, eff: '', battery: '', interfaces: [], ip: '', warranty: 24, parallel: '', img: volt === 2 ? 'cell' : 'battery', industries: ['czod', 'med', 'prom', 'oil', 'telecom'], spec: { 'Технология': tech, 'Напряжение': volt + ' В', 'Срок службы (проектный)': life }, lead: '2–4 недели' }, extra || {}), models.map(m => ({ m: m.m, kva: m.ah, kw: m.ah, spec: { 'Ёмкость C10': m.ah + ' А·ч' }, dims: m.dims, weight: m.weight, price: m.price, stock: m.stock, lead: m.lead })));
-  bat('Hoppecke', 'hoppecke', 'grid power VR M', 'OPzV (гель, VRLA)', 2, '18 лет', ['2v'], [{ m: 'VR M 2-230', ah: 232 }, { m: 'VR M 2-330', ah: 343 }, { m: 'VR M 2-400', ah: 411 }, { m: 'VR M 2-600', ah: 604 }, { m: 'VR M 2-800', ah: 834 }, { m: 'VR M 2-1000', ah: 1070 }]);
-  bat('Hoppecke', 'hoppecke', 'OPzS', 'OPzS (жидкий электролит)', 2, '20 лет', ['2v'], [{ m: '4 OPzS 200', ah: 200 }, { m: '6 OPzS 420', ah: 420 }, { m: '10 OPzS 1000', ah: 1000 }, { m: '16 OPzS 2000', ah: 2000 }, { m: '26 OPzS 3250', ah: 3250 }]);
-  bat('BAE', 'bae-batterien', 'Secura OPzV', 'OPzV (гель, VRLA)', 2, '18 лет', ['2v'], [{ m: '2 OPzV 100', ah: 100 }, { m: '6 OPzV 420', ah: 420, stock: 'in', lead: 'со склада в Алматы' }, { m: '12 OPzV 1500', ah: 1500 }, { m: '24 OPzV 3000', ah: 3000 }]);
-  bat('BAE', 'bae-batterien', 'Secura 12V OPzV', 'OPzV (гель, VRLA)', 12, '15 лет', ['12v'], [{ m: '12V 1 OPzV 50', ah: 50 }, { m: '12V 2 OPzV 100', ah: 100, price: 285000 }, { m: '12V 3 OPzV 150', ah: 150 }]);
-  bat('Ritar', 'ritar', 'RA / RT (AGM)', 'AGM', 12, '10–12 лет', ['12v'], [{ m: 'RT1270', ah: 7, price: 12500, stock: 'in', lead: 'со склада в Алматы' }, { m: 'RT12180', ah: 18, stock: 'in', lead: 'со склада в Алматы' }, { m: 'RA12-40', ah: 40 }, { m: 'RA12-65', ah: 65, stock: 'in', lead: 'со склада в Алматы' }, { m: 'RA12-100', ah: 100, price: 118000, stock: 'in', lead: 'со склада в Алматы', dims: '330×173×212 мм', weight: '29,5 кг' }, { m: 'HR12-380SW', ah: 100, dims: '330×173×212 мм', weight: '31 кг' }]);
-  bat('EnerGrid', 'energrid', 'GP / FT (AGM)', 'AGM', 12, '10 лет', ['12v'], [{ m: 'GP1272', ah: 7.2, stock: 'in', lead: 'со склада в Алматы' }, { m: 'GP12180', ah: 18 }, { m: 'FT12-55', ah: 55 }, { m: 'FT12-100', ah: 100, price: 112000, stock: 'in', lead: 'со склада в Алматы', dims: '395×110×287 мм (front terminal)', weight: '31 кг' }, { m: 'FT12-150', ah: 150 }, { m: 'FT12-200', ah: 200 }]);
-  bat('Exide', 'exide', 'Sprinter Pure Power', 'AGM', 12, '12 лет', ['12v'], [{ m: 'S12V2800PP', ah: 69.5 }, { m: 'S12V3800PP', ah: 105 }, { m: 'S12V4500PP', ah: 120 }]);
-
-  // Стабилизаторы
-  add({ prefix: 'Стабилизатор ', brand: 'Tescom', brandId: 'tescom', cat: 'stab', series: 'TSVR', sub: ['tryohfaznye', 'elektromehanicheskie'], phases: '3', topology: 'Электромеханический (сервоприводный)', form: 'Напольный', arch: '', pf: 1, eff: '98', battery: '', interfaces: ['RS-485', 'Сухие контакты'], ip: 'IP21', warranty: 24, parallel: '', img: 'stab', industries: ['prom', 'machines', 'oil', 'office'], spec: { 'Диапазон входного напряжения': '±20 %', 'Точность стабилизации': '±1 %', 'Выходное напряжение': '380 / 400 В' } },
-    [{ m: 'TSVR 33010', kva: 10 }, { m: 'TSVR 33030', kva: 30 }, { m: 'TSVR 33060', kva: 60 }, { m: 'TSVR 33100', kva: 100 }, { m: 'TSVR 33250', kva: 250 }, { m: 'TSVR 33500', kva: 500 }, { m: 'TSVR 331000', kva: 1000 }, { m: 'TSVR 333200', kva: 3200 }]);
-  add({ prefix: 'Стабилизатор ', brand: 'Salicru', brandId: 'salicru', cat: 'stab', series: 'RE3 T', sub: ['tryohfaznye', 'elektronnye'], phases: '3', topology: 'Электронный (тиристорный)', form: 'Напольный', arch: '', pf: 1, eff: '98', battery: '', interfaces: ['RS-485', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: '', img: 'stab', industries: ['med', 'czod', 'office'], spec: { 'Диапазон входного напряжения': '±15 %', 'Точность стабилизации': '±2 %', 'Выходное напряжение': '400 В' } },
-    [{ m: 'RE3 T 15', kva: 15 }, { m: 'RE3 T 30', kva: 30 }, { m: 'RE3 T 60', kva: 60 }, { m: 'RE3 T 100', kva: 100 }]);
-  add({ prefix: 'Стабилизатор ', brand: 'EverExceed', brandId: 'everexceed', cat: 'stab', series: 'SVC', sub: ['odnofaznye', 'elektromehanicheskie'], phases: '1', topology: 'Электромеханический', form: 'Настенный / напольный', arch: '', pf: 1, eff: '97', battery: '', interfaces: [], ip: 'IP20', warranty: 12, parallel: '', img: 'stab', industries: ['office', 'emergency'], spec: { 'Диапазон входного напряжения': '150–250 В', 'Точность стабилизации': '±3 %', 'Выходное напряжение': '220 В' }, stock: 'in', lead: 'со склада в Алматы' },
-    [{ m: 'SVC-1000', kva: 1 }, { m: 'SVC-3000', kva: 3 }, { m: 'SVC-5000', kva: 5 }, { m: 'SVC-10000', kva: 10 }]);
-
-  // STS
-  add({ prefix: 'STS ', brand: 'Tescom', brandId: 'tescom', cat: 'sts', series: 'STS4000', sub: ['tryohfaznye'], phases: '3 (4-полюсный)', topology: 'Статический переключатель', form: 'Стоечный / напольный', arch: '', pf: 1, eff: '99', battery: '', interfaces: ['SNMP', 'RS-485', 'Сухие контакты'], ip: 'IP20', warranty: 24, parallel: '', img: 'sts', industries: ['czod', 'med', 'telecom'], spec: { 'Время переключения': '< 4 мс' } },
-    [{ m: 'STS4100', kva: 100 }, { m: 'STS4250', kva: 250 }, { m: 'STS4400', kva: 400 }, { m: 'STS4800', kva: 800 }, { m: 'STS41250', kva: 1250 }]);
-  add({ prefix: 'STS ', brand: 'Tescom', brandId: 'tescom', cat: 'sts', series: 'STS2000', sub: ['odnofaznye'], phases: '1', topology: 'Статический переключатель', form: 'Стоечный', arch: '', pf: 1, eff: '99', battery: '', interfaces: ['SNMP', 'RS-485'], ip: 'IP20', warranty: 24, parallel: '', img: 'sts', industries: ['czod', 'telecom'], spec: { 'Время переключения': '< 4 мс' } },
-    [{ m: 'STS2016', kva: 16 }, { m: 'STS2032', kva: 32 }, { m: 'STS2063', kva: 63 }]);
+  BRANDS.forEach(b => { b.count = P.filter(p => p.brandId === b.id || (p.cat === 'dgu' && (p.spec['Двигатель'] || '').toLowerCase().split(' ')[0] === b.name.toLowerCase().split(' ')[0])).length; });
+  CATEGORIES.forEach(c => { const n = P.filter(p => p.cat === c.id).length; if (n) c.count = n; });
 
   const PROJECTS = [
     { id: 'ktz', slug: 'proekty/akb-i-zvu-dlya-ktzh/', title: 'Аккумуляторные батареи и ЗВУ для АО «КТЖ»', client: 'АО «Қазақстан темір жолы»', object: 'Тяговые подстанции', city: 'Астана', year: 2025, industry: 'prom', kva: '600 элементов × 420 А·ч', equipment: ['АКБ OPzV 2 В 420 А·ч, 600 шт.', 'Зарядно-выпрямительные устройства, 10 комплектов'], task: 'Заменить выработавшие ресурс батареи оперативного тока и ЗВУ на объектах железной дороги без остановки движения.', solution: 'Поставка 600 элементов OPzV 2 В ёмкостью 420 А·ч и 10 комплектов ЗВУ, пусконаладка и ввод в эксплуатацию по графику окон.', img: 'cell', photos: ['proj-ktz-1.jpg', 'proj-ktz-2.jpg', 'proj-ktz-3.jpg', 'proj-ktz-4.jpg', 'proj-ktz-5.jpg'] },
@@ -209,7 +141,7 @@ window.AEC = (function () {
     { id: 'power-expo-2025', name: 'POWER EXPO 2025', city: 'Алматы', year: 2025, theme: 'энергетика', photos: ['exh-powerexpo2025-1.jpg', 'exh-powerexpo2025-2.jpg', 'exh-powerexpo2025-3.jpg', 'exh-powerexpo2025-4.jpg'] },
     { id: 'electronica-2025', name: 'ELECTRONICA EXPO ASTANA 2025', city: 'Астана', year: 2025, theme: 'электроника', photos: ['exh-electronica2025-1.jpg', 'exh-electronica2025-2.jpg', 'exh-electronica2025-3.jpg'] },
     { id: 'kihe-2025', name: 'KIHE ALMATY 2025', city: 'Алматы', year: 2025, theme: 'здравоохранение', photos: ['exh-kihe2025-1.jpg', 'exh-kihe2025-2.jpg', 'exh-kihe2025-3.jpg', 'exh-kihe2025-4.jpg', 'exh-kihe2025-5.jpg', 'exh-kihe2025-6.jpg'] },
-    { id: 'power-expo-2024', name: 'POWER EXPO 2024', city: 'Алматы', year: 2024, theme: 'энергетика', photos: ['exh-powerexpo2024-1.png', 'exh-powerexpo2024-2.png', 'exh-powerexpo2024-3.png', 'exh-powerexpo2024-4.png', 'exh-powerexpo2024-5.png', 'exh-powerexpo2024-6.png'] }
+    { id: 'power-expo-2024', name: 'POWER EXPO 2024', city: 'Алматы', year: 2024, theme: 'энергетика', photos: ['exh-powerexpo2024-1.jpg', 'exh-powerexpo2024-2.jpg', 'exh-powerexpo2024-3.jpg', 'exh-powerexpo2024-4.jpg', 'exh-powerexpo2024-5.jpg', 'exh-powerexpo2024-6.jpg'] }
   ];
   const REVIEWS = [
     { name: 'Argun KN', date: '12 сентября 2025', text: 'Ребята устанавливали в моей клинике УПС и протягивали силовой кабель 120 м. Всё сделали быстро, аккуратно и профессионально. Помогают и с промышленным электрооборудованием: бывало, что за час выехали и помогли с тем, что их совсем не касалось.' },
@@ -234,17 +166,20 @@ window.AEC = (function () {
     { slot: 'cert-kazaeronavigacia.jpg', title: 'Благодарственное письмо', from: 'КазАэроНавигация' }, { slot: 'cert-emirmed.png', title: 'Благодарственное письмо', from: 'Эмирмед' }, { slot: 'cert-stepnogorsk.jpg', title: 'Благодарственное письмо', from: 'Степногорская ТЭЦ' }, { slot: 'cert-ziylan.jpg', title: 'Благодарственное письмо', from: 'Зийлан КЗ' }, { slot: 'cert-hitech.jpg', title: 'Благодарственное письмо', from: 'Клиника Хай-Тек' }, { slot: 'cert-tusas.jpg', title: 'Благодарственное письмо', from: 'TUSAŞ' }
   ];
   const CLIENT_LOGOS = [['client-airastana.png', 'Air Astana'], ['client-ktz.png', 'АО «КТЖ»'], ['client-nbk.png', 'Национальный банк РК'], ['client-worldbank.png', 'World Bank'], ['client-mabetex.png', 'Mabetex Group'], ['client-almatymetrology.png', 'Almaty Metrology'], ['client-kao.png', 'КАО'], ['client-getbybin.png', 'GetByBin'], ['client-gluster.png', 'Gluster'], ['client-10.png', 'Клиент'], ['client-12.png', 'Клиент'], ['client-13.png', 'Клиент'], ['client-14.png', 'Клиент'], ['client-15.png', 'Клиент'], ['client-17.png', 'Клиент'], ['client-18.png', 'Клиент'], ['client-19.png', 'Клиент'], ['client-11.webp', 'Клиент']];
-  const CAT_PHOTOS = { ibp: 'prod-salicru-adapt2.jpg', dgu: 'prod-tescom-genset-1.jpg', akb: 'prod-hoppecke-opzs.jpg', stab: 'proj-ktz-2.jpg', sts: 'proj-tv-1.jpg' };
-  const SERIES_PHOTOS = { 'SLC ADAPT2': 'prod-salicru-adapt2.jpg', 'SLC TWIN RT3': 'prod-salicru-twin-rt3.jpg', 'SLC TWIN RT2': 'prod-salicru-twin-rt3.jpg', 'SLC TWIN PRO3': 'prod-salicru-twin-pro3.jpg', 'MTW': 'prod-tescom-mtw300.png', 'TDJ (Perkins)': 'prod-tescom-genset-1.jpg', 'TDJ (Volvo Penta)': 'prod-tescom-genset-2.jpg', 'RA / RT (AGM)': 'prod-ritar-ra12-100.webp', 'OPzS': 'prod-hoppecke-opzs.jpg', 'grid power VR M': 'prod-hoppecke-opzs.jpg' };
+  const STAFF_PHOTOS = ['staff-1.png', 'staff-2.png', 'staff-3.png', 'staff-4.png', 'staff-5.png', 'staff-6.png'];
+  const CAT_PHOTOS = { ibp: 'prod-salicru-adapt2.jpg', dgu: 'dgu-photo-8.jpg', akb: 'prod-hoppecke-opzs.jpg', stab: 'cat-stab-photo.jpg', sts: 'products/thumbnailgenerator.jpg' };
+  const DGU_PHOTOS = ['dgu-photo-1.jpg', 'dgu-photo-2.jpg', 'dgu-photo-3.jpg', 'dgu-photo-4.jpg', 'dgu-photo-5.jpg', 'dgu-photo-6.jpg', 'dgu-photo-7.jpg', 'dgu-photo-8.jpg', 'dgu-photo-9.jpg', 'dgu-photo-10.jpg', 'dgu-photo-11.jpg'];
+  const SERIES_PHOTOS = { 'SLC ADAPT2': 'prod-salicru-adapt2.jpg', 'SLC TWIN RT3': 'prod-salicru-twin-rt3.jpg', 'SLC TWIN RT2': 'prod-salicru-twin-rt3.jpg', 'SLC TWIN PRO3': 'prod-salicru-twin-pro3.jpg', 'MTW': 'prod-tescom-mtw300.png', 'TDJ (Perkins)': 'prod-tescom-genset-1.jpg', 'TDJ (Volvo Penta)': 'prod-tescom-genset-2.jpg', 'RA': 'prod-ritar-ra12-100.webp', 'OPzS': 'prod-hoppecke-opzs.jpg', 'grid power VR M': 'prod-hoppecke-opzs.jpg' };
+  P.forEach(p => { if (p.photo && !SERIES_PHOTOS[p.series]) SERIES_PHOTOS[p.series] = 'products/' + p.photo; });
   const CLIENTS = ['Air Astana', 'АО «КТЖ»', 'Национальный банк РК', 'КазАэроНавигация', 'Степногорская ТЭЦ', 'Эмирмед', 'Клиника Хай-Тек', 'TUSAŞ', 'Зийлан КЗ', 'Mabetex Group', 'Телеканал «Казахстан»', 'Almaty Metrology'];
 
   const ARTICLES = [
-    { slug: 'blog/istochnik-besperebojnogo-pitaniya-dlya-servernogo-oborudovaniya-polnoe-rukovodstvo-po-vyboru/', title: 'ИБП для серверного оборудования: полное руководство по выбору', cat: 'Подбор', date: '2026-09-18', read: 9 },
-    { slug: 'blog/tehnicheskoe-obsluzhivanie-promyshlennyh-ibp-pravila-i-reglamenty/', title: 'Техническое обслуживание промышленных ИБП: правила и регламенты', cat: 'Сервис', date: '2026-08-30', read: 7 },
-    { slug: 'blog/dizel-generatornaya-ustanovka-podrobnyj-razbor/', title: 'Дизель-генераторная установка: устройство, работа и сферы применения', cat: 'ДГУ', date: '2026-08-12', read: 11 },
-    { slug: 'blog/aec-kazakhstan-na-vystavke-kioge-2026/', title: 'AEC Kazakhstan на выставке KIOGE 2026: бесперебойное питание для нефтегазовой отрасли', cat: 'Новости', date: '2026-10-02', read: 4 },
-    { slug: 'blog/chto-takoe-ibp-i-dlya-chego-nuzhen-besperebojnik/', title: 'Что такое ИБП и для чего нужен бесперебойник', cat: 'Основы', date: '2026-05-20', read: 6 },
-    { slug: 'blog/vybiraem-stabilizator-napryazheniya-dlya-chastnogo-doma/', title: 'Выбираем стабилизатор напряжения для частного дома', cat: 'Подбор', date: '2026-04-11', read: 6 }
+    { slug: 'blog/istochnik-besperebojnogo-pitaniya-dlya-servernogo-oborudovaniya-polnoe-rukovodstvo-po-vyboru/', title: 'ИБП для серверного оборудования: полное руководство по выбору', cat: 'Подбор', date: '2026-09-18', read: 9, cover: 'blog-ibp-server.png' },
+    { slug: 'blog/tehnicheskoe-obsluzhivanie-promyshlennyh-ibp-pravila-i-reglamenty/', title: 'Техническое обслуживание промышленных ИБП: правила и регламенты', cat: 'Сервис', date: '2026-08-30', read: 7, cover: 'blog-to-ibp.jpg' },
+    { slug: 'blog/dizel-generatornaya-ustanovka-podrobnyj-razbor/', title: 'Дизель-генераторная установка: устройство, работа и сферы применения', cat: 'ДГУ', date: '2026-08-12', read: 11, cover: 'blog-dgu.jpg' },
+    { slug: 'blog/aec-kazakhstan-na-vystavke-kioge-2026/', title: 'AEC Kazakhstan на выставке KIOGE 2026: бесперебойное питание для нефтегазовой отрасли', cat: 'Новости', date: '2026-10-02', read: 4, cover: 'blog-kioge-cover.jpg' },
+    { slug: 'blog/chto-takoe-ibp-i-dlya-chego-nuzhen-besperebojnik/', title: 'Что такое ИБП и для чего нужен бесперебойник', cat: 'Основы', date: '2026-05-20', read: 6, cover: 'blog-chto-takoe-ibp.jpg' },
+    { slug: 'blog/vybiraem-stabilizator-napryazheniya-dlya-chastnogo-doma/', title: 'Выбираем стабилизатор напряжения для частного дома', cat: 'Подбор', date: '2026-04-11', read: 6, cover: 'blog-stab-dom.jpg' }
   ];
 
   const FAQ = [
@@ -274,9 +209,9 @@ window.AEC = (function () {
   ];
 
   const TEAM = [
-    { name: 'Денис Цой', role: 'Директор' }, { name: 'Жанибек', role: 'Руководитель сервисного отдела' },
-    { name: 'Айгуль', role: 'Менеджер проектов' }, { name: 'Айдар', role: 'Менеджер проектов' }, { name: 'Нуркелды', role: 'Менеджер проектов' },
-    { name: 'Алишер', role: 'Инженер' }, { name: 'Диас', role: 'Инженер' }, { name: 'Дмитрий', role: 'Инженер' }
+    { name: 'Денис Цой', role: 'Директор', photo: 'team-denis.jpg' }, { name: 'Жанибек', role: 'Руководитель сервисного отдела', photo: 'team-zhanibek.jpg' },
+    { name: 'Айгуль', role: 'Менеджер проектов', photo: 'team-aigul.jpg' }, { name: 'Айдар', role: 'Менеджер проектов', photo: 'team-aidar.jpg' }, { name: 'Нуркелды', role: 'Менеджер проектов', photo: 'team-nurkeldy.jpg' },
+    { name: 'Алишер', role: 'Инженер', photo: 'team-alisher.jpg' }, { name: 'Диас', role: 'Инженер', photo: 'team-dias.jpg' }, { name: 'Дмитрий', role: 'Инженер', photo: 'team-dmitriy.jpg' }
   ];
 
   function fmtPrice(p) { return p ? 'от ' + p.toLocaleString('ru-RU') + ' ₸' : 'Цена по запросу'; }
@@ -285,5 +220,5 @@ window.AEC = (function () {
   function bySlug(slug) { return P.find(p => p.slug === slug); }
   function cat(id) { return CATEGORIES.find(c => c.id === id); }
 
-  return { CONTACT, CATEGORIES, INDUSTRIES, SERVICES, BRANDS, PRODUCTS: P, PROJECTS, CLIENTS, ARTICLES, FAQ, CITIES, TEAM, EXHIBITIONS, REVIEWS, TESTIMONIALS, VIDEOS, CERTS, CLIENT_LOGOS, CAT_PHOTOS, SERIES_PHOTOS, fmtPrice, unit, byId, bySlug, cat };
+  return { CONTACT, CATEGORIES, INDUSTRIES, SERVICES, BRANDS, PRODUCTS: P, PROJECTS, CLIENTS, ARTICLES, FAQ, CITIES, TEAM, EXHIBITIONS, REVIEWS, TESTIMONIALS, VIDEOS, CERTS, CLIENT_LOGOS, CAT_PHOTOS, SERIES_PHOTOS, STAFF_PHOTOS, DGU_PHOTOS, fmtPrice, unit, byId, bySlug, cat, details, kvaRange, inRange };
 })();

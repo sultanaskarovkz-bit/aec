@@ -31,13 +31,14 @@
   <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2>Похожие статьи</h2></div><a class="more" href="blog.html">Все статьи</a></div><div class="posts" id="similar"></div></div></section>
 </main>
 </div>
+<script src="assets/catalog.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/aec.js"></script>
 <script>
 (function () {
   const D = AEC, U = AECUI, I = U.icon, L = U.L;
   U.init({ active: 'company' });
-  const prodBox = model => { const p = D.PRODUCTS.find(x => x.model === model); return p ? `<div class="inline-prod"><span class="pimg">${U.art(p.img)}</span><span><b>${p.name}</b><small>${p.kva} ${D.unit(p.cat)} · ${p.phases ? p.phases + ' · ' : ''}${p.form} · ${D.fmtPrice(p.price)}</small></span><a class="btn btn-sm btn-primary" href="${L.product(p.slug)}">В каталог</a></div>` : ''; };
+  const prodBox = model => { const p = D.PRODUCTS.find(x => x.model === model); return p ? `<div class="inline-prod"><span class="pimg">${U.pphoto(p)}</span><span><b>${p.name}</b><small>${p.kva} ${D.unit(p.cat)} · ${p.phases ? p.phases + ' · ' : ''}${p.form} · ${D.fmtPrice(p.price)}</small></span><a class="btn btn-sm btn-primary" href="${L.product(p.slug)}">В каталог</a></div>` : ''; };
   const BODY = {
     0: `<p>Серверное оборудование чувствительно к любым отклонениям сети: провал напряжения на 20 мс приводит к перезагрузке, скачок выводит из строя блоки питания, а полное отключение без корректного завершения работы грозит потерей данных. Источник бесперебойного питания для серверной решает все три задачи, но только если выбран правильно. Ниже методика, по которой инженеры AEC подбирают ИБП для серверных и ЦОД в Казахстане.</p>
 <h2 id="s1">Топология: только on-line</h2><p>Для серверного оборудования подходит только ИБП с двойным преобразованием (on-line). Он постоянно питает нагрузку от инвертора, формируя идеальную синусоиду 230 В 50 Гц, и переходит на батареи за 0 мс. Line-interactive ИБП переключаются с задержкой 4–8 мс и пропускают искажения сети, их место в офисах, но не в серверных. Все ИБП в каталоге AEC для серверных: Salicru SLC TWIN RT3, Kehua KR33, модульные SLC ADAPT2 и MR33 имеют on-line топологию.</p>
@@ -60,7 +61,7 @@
     const body = BODY[i] || BODY[0]; document.getElementById('body').innerHTML = body + `<div class="author"><span class="av">AEC</span><div><b>Инженерная служба AEC Kazakhstan</b><div class="small muted">Технические данные проверены сервисным отделом. Вопросы по статье: ${D.CONTACT.email}</div></div></div>`;
     const hs = [...document.querySelectorAll('#body h2')]; document.getElementById('toc').innerHTML = hs.length ? `<b>Содержание</b><ol>${hs.map(h => `<li><a href="#${h.id}" onclick="document.getElementById('${h.id}').scrollIntoView({behavior:'smooth'});return false;">${h.textContent}</a></li>`).join('')}</ol>` : '';
     document.getElementById('side').innerHTML = `<h3>По теме статьи</h3><a class="btn btn-primary btn-block" href="${L.calc}">Калькулятор подбора</a><a class="btn btn-ghost btn-block" href="${L.cat('ibp')}">Каталог ИБП</a><a class="btn btn-ghost btn-block" href="${L.service('service')}">Сервисное обслуживание</a><button class="btn btn-kp btn-block" data-open-modal data-title="Вопрос эксперту" data-type="Вопрос эксперту (статья)" data-product="${a.title}">Задать вопрос инженеру</button>`;
-    document.getElementById('similar').innerHTML = D.ARTICLES.map((x, k) => ({ x, k })).filter(o => o.k !== i).slice(0, 3).map(o => `<a class="post" href="${L.article(o.k)}"><div class="meta"><span class="badge">${o.x.cat}</span><span>${U.fmtDate(o.x.date)}</span></div><h3>${o.x.title}</h3><span class="more">Читать</span></a>`).join('');
+    document.getElementById('similar').innerHTML = D.ARTICLES.map((x, k) => ({ x, k })).filter(o => o.k !== i).slice(0, 3).map(o => `<a class="post" href="${L.article(o.k)}">${o.x.cover ? `<span class="cover">${U.img(o.x.cover, o.x.title, '', 'data-ph="bg"')}</span>` : ''}<div class="meta"><span class="badge">${o.x.cat}</span><span>${U.fmtDate(o.x.date)}</span></div><h3>${o.x.title}</h3><span class="more">Читать</span></a>`).join('');
     document.title = a.title + ' | AEC Kazakhstan';
     document.querySelector('meta[name=description]').setAttribute('content', document.querySelector('#body p').textContent.slice(0, 158));
     document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());

@@ -1,0 +1,612 @@
+[
+ {
+  "file": "sts-2000-series-32-120-a.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/sts-2000-series-32-120-a.pdf",
+  "title": "STS 2000 SERIES (32 &#8212; 120 A)"
+ },
+ {
+  "file": "sts-3000-4000-series-50-1250-a.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/sts-3000-4000-series-50-1250-a.pdf",
+  "title": "STS 3000-4000 SERIES (50 &#8212; 1250 A)"
+ },
+ {
+  "file": "1.-slc-twin-pro2-700-3000-va.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/1.-slc-twin-pro2-700-3000-va.pdf",
+  "title": "1. SLC TWIN PRO2 (700-3000 VA)"
+ },
+ {
+  "file": "1.-slc-twin-pro3-10-20-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/1.-slc-twin-pro3-10-20-kva.pdf",
+  "title": "1. SLC TWIN PRO3 (10-20 kVA)"
+ },
+ {
+  "file": "10.-slc-twin-rt2-t-ul-6-10-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/10.-slc-twin-rt2-t-ul-6-10-kva.pdf",
+  "title": "10. SLC TWIN RT2 T UL (6 &#038; 10 kVA)"
+ },
+ {
+  "file": "11.-slc-twin-rt3-4-10-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/11.-slc-twin-rt3-4-10-kva.pdf",
+  "title": "11. SLC TWIN RT3 (4-10 kVA)"
+ },
+ {
+  "file": "2.-slc-adapt2-with-modules-25-50-kva-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/2.-slc-adapt2-with-modules-25-50-kva-1.pdf",
+  "title": "2. SLC ADAPT2 (with modules 25 &#038; 50 kVA)"
+ },
+ {
+  "file": "2.-slc-adapt2-with-modules-25-50-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/2.-slc-adapt2-with-modules-25-50-kva.pdf",
+  "title": "2. SLC ADAPT2 (with modules 25 &#038; 50 kVA)"
+ },
+ {
+  "file": "2.-slc-twin-pro2-4-20-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/2.-slc-twin-pro2-4-20-kva.pdf",
+  "title": "2. SLC TWIN PRO2 (4-20 kVA)"
+ },
+ {
+  "file": "2.-slc-twin-rt3-10-20-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/2.-slc-twin-rt3-10-20-kva.pdf",
+  "title": "2. SLC TWIN RT3 10-20 kVA"
+ },
+ {
+  "file": "3.-slc-adapt-3x480-40-1200-kva_with-modules-40-kva-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/3.-slc-adapt-3x480-40-1200-kva_with-modules-40-kva-1.pdf",
+  "title": "3. SLC ADAPT 3&#215;480 (40-1200 kVA_with modules 40 kVA)"
+ },
+ {
+  "file": "3.-slc-cube4-r-7.5-20-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/3.-slc-cube4-r-7.5-20-kva.pdf",
+  "title": "3. SLC CUBE4 R (7.5-20 kVA)"
+ },
+ {
+  "file": "3.-slc-twin-pro3-4-10-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/3.-slc-twin-pro3-4-10-kva.pdf",
+  "title": "3. SLC TWIN PRO3 (4-10 kVA)"
+ },
+ {
+  "file": "4.-slc-cube4-7.5-80-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/4.-slc-cube4-7.5-80-kva.pdf",
+  "title": "4. SLC CUBE4 (7.5-80 kVA)"
+ },
+ {
+  "file": "4.-slc-twin-pro2-t-ul-6-10-kva-2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/4.-slc-twin-pro2-t-ul-6-10-kva-2.pdf",
+  "title": "4. SLC TWIN PRO2 T UL (6 &#038; 10 kVA)"
+ },
+ {
+  "file": "4.-slc-twin-pro2-t-ul-6-10-kva-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/4.-slc-twin-pro2-t-ul-6-10-kva-1.pdf",
+  "title": "4. SLC TWIN PRO2 T UL (6 &#038; 10 kVA)"
+ },
+ {
+  "file": "4.-slc-twin-pro2-t-ul-6-10-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/4.-slc-twin-pro2-t-ul-6-10-kva.pdf",
+  "title": "4. SLC TWIN PRO2 T UL (6 &#038; 10 kVA)"
+ },
+ {
+  "file": "5.-slc-cube3-7.5-200-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/5.-slc-cube3-7.5-200-kva.pdf",
+  "title": "5. SLC CUBE3+ (7.5-200 kVA)"
+ },
+ {
+  "file": "6.-slc-cube3-ps-7.5-200-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/6.-slc-cube3-ps-7.5-200-kva.pdf",
+  "title": "6. SLC CUBE3+ PS (7.5-200 kVA)"
+ },
+ {
+  "file": "6.-slc-twin-rt2-700-3000-va.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/6.-slc-twin-rt2-700-3000-va.pdf",
+  "title": "6. SLC TWIN RT2 (700-3000 VA)"
+ },
+ {
+  "file": "7.-slc-twin-rt3-1-3-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/7.-slc-twin-rt3-1-3-kva.pdf",
+  "title": "7. SLC TWIN RT3 (1-3 kVA)"
+ },
+ {
+  "file": "7.-slc-x-pert-80-400-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/7.-slc-x-pert-80-400-kva.pdf",
+  "title": "7. SLC X-PERT (80-400 kVA)"
+ },
+ {
+  "file": "8.-slc-twin-rt3-lion-1-3-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/8.-slc-twin-rt3-lion-1-3-kva.pdf",
+  "title": "8. SLC TWIN RT3 LION (1-3 kVA)"
+ },
+ {
+  "file": "8.-slc-x-tra-100-800-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/8.-slc-x-tra-100-800-kva.pdf",
+  "title": "8. SLC X-TRA (100-800 kVA)"
+ },
+ {
+  "file": "9.-slc-twin-rt2-4-10-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/9.-slc-twin-rt2-4-10-kva.pdf",
+  "title": "9. SLC TWIN RT2 (4-10 kVA)"
+ },
+ {
+  "file": "1.-slc-adapt2-with-modules-10-15-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/1.-slc-adapt2-with-modules-10-15-kva.pdf",
+  "title": "1. SLC ADAPT2 (with modules 10 &#038; 15 kVA)"
+ },
+ {
+  "file": "3.-slc-adapt-3x480-40-1200-kva_with-modules-40-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/09/3.-slc-adapt-3x480-40-1200-kva_with-modules-40-kva.pdf",
+  "title": "3. SLC ADAPT 3&#215;480 (40-1200 kVA_with modules 40 kVA)"
+ },
+ {
+  "file": "jm84101.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/jm84101.pdf",
+  "title": "JM84101"
+ },
+ {
+  "file": "stk_11001_serie_full_automatic_ac_static_voltage_stabilizer_1_kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/stk_11001_serie_full_automatic_ac_static_voltage_stabilizer_1_kva.pdf",
+  "title": "STK_11001_SERIE_FULL_AUTOMATIC_AC_STATIC_VOLTAGE_STABILIZER_1_kVA"
+ },
+ {
+  "file": "tsvr11001-series-1-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/tsvr11001-series-1-kva.pdf",
+  "title": "TSVR11001 SERIES (1 kVA)"
+ },
+ {
+  "file": "tsvr_series_1_3200_kva_static_electronic_voltage_stabilizer.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/tsvr_series_1_3200_kva_static_electronic_voltage_stabilizer.pdf",
+  "title": "TSVR_SERIES_1_3200_kVA_STATIC_ELECTRONIC_VOLTAGE_STABILIZER"
+ },
+ {
+  "file": "06-01-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/06-01-1.pdf",
+  "title": "06-01"
+ },
+ {
+  "file": "06-01.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/06-01.pdf",
+  "title": "06-01"
+ },
+ {
+  "file": "everexceed-general-avr-catalog-technical-sheet.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/everexceed-general-avr-catalog-technical-sheet.pdf",
+  "title": "EverExceed &#8212; General AVR Catalog (Technical Sheet)"
+ },
+ {
+  "file": "energrid-gpl12500.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12500.pdf",
+  "title": "EnerGrid GPL12500"
+ },
+ {
+  "file": "energrid-gpl12400.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12400.pdf",
+  "title": "EnerGrid GPL12400"
+ },
+ {
+  "file": "energrid-gpl12340.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12340.pdf",
+  "title": "EnerGrid GPL12340"
+ },
+ {
+  "file": "energrid-gpl12280.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12280.pdf",
+  "title": "EnerGrid GPL12280"
+ },
+ {
+  "file": "energrid-gpl12260.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12260.pdf",
+  "title": "EnerGrid GPL12260"
+ },
+ {
+  "file": "energrid-gpl12120.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12120.pdf",
+  "title": "EnerGrid GPL12120"
+ },
+ {
+  "file": "energrid-gpl1290-f2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl1290-f2.pdf",
+  "title": "EnerGrid GPL1290 F2"
+ },
+ {
+  "file": "energrid-gpl1272.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl1272.pdf",
+  "title": "EnerGrid GPL1272"
+ },
+ {
+  "file": "energrid-gp12200.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gp12200.pdf",
+  "title": "EnerGrid GP12200"
+ },
+ {
+  "file": "energrid-gp12180.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gp12180.pdf",
+  "title": "EnerGrid GP12180"
+ },
+ {
+  "file": "energrid-gp1275-f2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gp1275-f2.pdf",
+  "title": "EnerGrid GP1275 F2"
+ },
+ {
+  "file": "energrid-gp1272-f2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gp1272-f2.pdf",
+  "title": "EnerGrid GP1272 F2"
+ },
+ {
+  "file": "energrid-ft12-200.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-ft12-200.pdf",
+  "title": "EnerGrid FT12-200"
+ },
+ {
+  "file": "energrid-ft12-190.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-ft12-190.pdf",
+  "title": "EnerGrid FT12-190"
+ },
+ {
+  "file": "energrid-ft12-175.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-ft12-175.pdf",
+  "title": "EnerGrid FT12-175"
+ },
+ {
+  "file": "energrid-ft12-150.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-ft12-150.pdf",
+  "title": "EnerGrid FT12-150"
+ },
+ {
+  "file": "energrid-ft12-100.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-ft12-100.pdf",
+  "title": "EnerGrid FT12-100"
+ },
+ {
+  "file": "energrid-ft12-55.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-ft12-55.pdf",
+  "title": "EnerGrid FT12-55"
+ },
+ {
+  "file": "energrid-gpl121200a.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl121200a.pdf",
+  "title": "EnerGrid GPL121200A"
+ },
+ {
+  "file": "energrid-gpl121200.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl121200.pdf",
+  "title": "EnerGrid GPL121200"
+ },
+ {
+  "file": "energrid-gpl121000.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl121000.pdf",
+  "title": "EnerGrid GPL121000"
+ },
+ {
+  "file": "energrid-gpl121000-cl.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl121000-cl.pdf",
+  "title": "EnerGrid GPL121000 CL"
+ },
+ {
+  "file": "energrid-gpl12950.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12950.pdf",
+  "title": "EnerGrid GPL12950"
+ },
+ {
+  "file": "energrid-gpl12900.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12900.pdf",
+  "title": "EnerGrid GPL12900"
+ },
+ {
+  "file": "energrid-gpl12800.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12800.pdf",
+  "title": "EnerGrid GPL12800"
+ },
+ {
+  "file": "energrid-gpl12700.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12700.pdf",
+  "title": "EnerGrid GPL12700"
+ },
+ {
+  "file": "energrid-gpl12650.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12650.pdf",
+  "title": "EnerGrid GPL12650"
+ },
+ {
+  "file": "energrid-gpl12550.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl12550.pdf",
+  "title": "EnerGrid GPL12550"
+ },
+ {
+  "file": "energrid-hr1221w-f2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hr1221w-f2.pdf",
+  "title": "EnerGrid HR1221W F2"
+ },
+ {
+  "file": "energrid-gpl122000h.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-gpl122000h.pdf",
+  "title": "EnerGrid GPL122000H"
+ },
+ {
+  "file": "energrid-hrl12110w.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl12110w.pdf",
+  "title": "EnerGrid HRL12110W"
+ },
+ {
+  "file": "energrid-hrl1235w-f2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl1235w-f2.pdf",
+  "title": "EnerGrid HRL1235W F2"
+ },
+ {
+  "file": "energrid-hr1236w-f2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hr1236w-f2.pdf",
+  "title": "EnerGrid HR1236W F2"
+ },
+ {
+  "file": "energrid-hrl12330w.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl12330w.pdf",
+  "title": "EnerGrid HRL12330W"
+ },
+ {
+  "file": "energrid-hrl12390w.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl12390w.pdf",
+  "title": "EnerGrid HRL12390W"
+ },
+ {
+  "file": "energrid-hrl12440w.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl12440w.pdf",
+  "title": "EnerGrid HRL12440W"
+ },
+ {
+  "file": "energrid-hrl12530w.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl12530w.pdf",
+  "title": "EnerGrid HRL12530W"
+ },
+ {
+  "file": "energrid-hrl12580w.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/energrid-hrl12580w.pdf",
+  "title": "EnerGrid HRL12580W"
+ },
+ {
+  "file": "100ach-ra12-100_12v100ah-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/100ach-ra12-100_12v100ah-1.pdf",
+  "title": "100Ач RA12-100_12V100Ah"
+ },
+ {
+  "file": "100ach-ra12-100_12v100ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/100ach-ra12-100_12v100ah.pdf",
+  "title": "100Ач RA12-100_12V100Ah"
+ },
+ {
+  "file": "100ach-hr12-380sw-_12v100ah-high-rate.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/100ach-hr12-380sw-_12v100ah-high-rate.pdf",
+  "title": "100Ач HR12-380SW _12V100Ah (high rate)"
+ },
+ {
+  "file": "65ach-ra12-65_12v65ah-5.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/65ach-ra12-65_12v65ah-5.pdf",
+  "title": "65Ач RA12-65_12V65Ah"
+ },
+ {
+  "file": "65ach-ra12-65_12v65ah-4.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/65ach-ra12-65_12v65ah-4.pdf",
+  "title": "65Ач RA12-65_12V65Ah"
+ },
+ {
+  "file": "65ach-ra12-65_12v65ah-3.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/65ach-ra12-65_12v65ah-3.pdf",
+  "title": "65Ач RA12-65_12V65Ah"
+ },
+ {
+  "file": "65ach-ra12-65_12v65ah-2.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/65ach-ra12-65_12v65ah-2.pdf",
+  "title": "65Ач RA12-65_12V65Ah"
+ },
+ {
+  "file": "65ach-ra12-65_12v65ah-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/65ach-ra12-65_12v65ah-1.pdf",
+  "title": "65Ач RA12-65_12V65Ah"
+ },
+ {
+  "file": "65ach-ra12-65_12v65ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/65ach-ra12-65_12v65ah.pdf",
+  "title": "65Ач RA12-65_12V65Ah"
+ },
+ {
+  "file": "55ach-ra12-55_12v55ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/55ach-ra12-55_12v55ah.pdf",
+  "title": "55Ач RA12-55_12v55Ah"
+ },
+ {
+  "file": "40ach-ra12-40-_12v40ah-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/40ach-ra12-40-_12v40ah-1.pdf",
+  "title": "40Ач RA12-40 _12V40Ah"
+ },
+ {
+  "file": "40ach-ra12-40-_12v40ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/40ach-ra12-40-_12v40ah.pdf",
+  "title": "40Ач RA12-40 _12V40Ah"
+ },
+ {
+  "file": "33ach-ra12-33_12v33ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/33ach-ra12-33_12v33ah.pdf",
+  "title": "33Ач RA12-33_12v33Ah"
+ },
+ {
+  "file": "26ach-rt12260s_12v26ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/26ach-rt12260s_12v26ah.pdf",
+  "title": "26Ач RT12260S_12V26Ah"
+ },
+ {
+  "file": "18ach-rt12180_12v18ah-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/18ach-rt12180_12v18ah-1.pdf",
+  "title": "18Ач RT12180_12V18Ah"
+ },
+ {
+  "file": "18ach-rt12180_12v18ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/18ach-rt12180_12v18ah.pdf",
+  "title": "18Ач RT12180_12V18Ah"
+ },
+ {
+  "file": "9ach-rt1290-12v9ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/9ach-rt1290-12v9ah.pdf",
+  "title": "9Ач RT1290 12V9Ah"
+ },
+ {
+  "file": "7ach-rt1270-12v7ah.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/7ach-rt1270-12v7ah.pdf",
+  "title": "7Ач RT1270 12V7Ah"
+ },
+ {
+  "file": "exide-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/exide-1.pdf",
+  "title": "Exide"
+ },
+ {
+  "file": "exide.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/exide.pdf",
+  "title": "Exide"
+ },
+ {
+  "file": "ogi.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/ogi.pdf",
+  "title": "OGi"
+ },
+ {
+  "file": "ogiv-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/ogiv-1.pdf",
+  "title": "OGiV"
+ },
+ {
+  "file": "ogiv.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/ogiv.pdf",
+  "title": "OGiV"
+ },
+ {
+  "file": "opzv-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/opzv-1.pdf",
+  "title": "OPzV (1)"
+ },
+ {
+  "file": "opzs-ru-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/opzs-ru-1.pdf",
+  "title": "opzs-ru (1)"
+ },
+ {
+  "file": "catalogo_bae.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/catalogo_bae.pdf",
+  "title": "Catalogo_BAE"
+ },
+ {
+  "file": "bae_opzv_cells.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/bae_opzv_cells.pdf",
+  "title": "BAE_OPzV_Cells"
+ },
+ {
+  "file": "bae-opzs-cells-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/08/bae-opzs-cells-1.pdf",
+  "title": "BAE-OPzS Cells (1)"
+ },
+ {
+  "file": "generator_catalogue.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/07/generator_catalogue.pdf",
+  "title": "Generator_Catalogue"
+ },
+ {
+  "file": "2024-catalog.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/07/2024-catalog.pdf",
+  "title": "2024 catalog"
+ },
+ {
+  "file": "2024-catalogue-baifapower-en.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/07/2024-catalogue-baifapower-en.pdf",
+  "title": "2024 CATALOGUE BAIFAPOWER-EN"
+ },
+ {
+  "file": "tescom-tsc-series-1p-1p-6-20-kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/07/tescom-tsc-series-1p-1p-6-20-kva.pdf",
+  "title": "Tescom TSC Series 1P-1P (6-20 kVA)"
+ },
+ {
+  "file": "tescom-neoline-pro-380xl-80kva-ru.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/07/tescom-neoline-pro-380xl-80kva-ru.pdf",
+  "title": "Tescom Neoline PRO 380XL 80kVA RU"
+ },
+ {
+  "file": "9_1_mtw_modular_ups_25_180_kvt_25_30_kvt_modul.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/06/9_1_mtw_modular_ups_25_180_kvt_25_30_kvt_modul.pdf",
+  "title": "9_1_MTW_Modular_Ups_25_180_кВт_25_30_кВт_модуль"
+ },
+ {
+  "file": "10_mtw300_modular_ups_30_300_kvt_modul_30_kvt-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/06/10_mtw300_modular_ups_30_300_kvt_modul_30_kvt-1.pdf",
+  "title": "10_MTW300_Modular_Ups_30_300_кВт_модуль_30_кВт (1)"
+ },
+ {
+  "file": "9.-mtw150-modular-ups-10-15-20-25-kw-module.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/06/9.-mtw150-modular-ups-10-15-20-25-kw-module.pdf",
+  "title": "9. MTW150-Modular-Ups (10-15-20-25 kW module)"
+ },
+ {
+  "file": "11_mtw500_modular_ups_50_500_kvt_modul_50_60_kvt-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/06/11_mtw500_modular_ups_50_500_kvt_modul_50_60_kvt-1.pdf",
+  "title": "11_MTW500_Modular_Ups_50_500_кВт_модуль_50_60_кВт (1)"
+ },
+ {
+  "file": "ups-s3-lithium-ion-battery-all-in-one-solution-20240409-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/ups-s3-lithium-ion-battery-all-in-one-solution-20240409-1.pdf",
+  "title": "UPS S3 Lithium-ion Battery All-in-one Solution 20240409 (1)"
+ },
+ {
+  "file": "kr-rm-li-1-3kva-v20230822.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/kr-rm-li-1-3kva-v20230822.pdf",
+  "title": "KR-RM Li 1-3kVA V20230822"
+ },
+ {
+  "file": "kr33300-1200.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/kr33300-1200.pdf",
+  "title": "KR33300-1200"
+ },
+ {
+  "file": "kehua-kr33-h-400-800kva-series-brochure.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/kehua-kr33-h-400-800kva-series-brochure.pdf",
+  "title": "KEHUA KR33-H 400-800KVA Series Brochure"
+ },
+ {
+  "file": "fr-uk-gel-series-ups.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/fr-uk-gel-series-ups.pdf",
+  "title": "FR-UK GEL Series UPS"
+ },
+ {
+  "file": "mr-series-ups-120kva-30k-module-v20240812-1.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/mr-series-ups-120kva-30k-module-v20240812-1.pdf",
+  "title": "MR Series UPS 120kVA 30K Module V20240812 (1)"
+ },
+ {
+  "file": "mr33-series-ups-200-500k-50k-module_high-efficiency.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/mr33-series-ups-200-500k-50k-module_high-efficiency.pdf",
+  "title": "MR33 series UPS 200-500k 50k module_High efficiency"
+ },
+ {
+  "file": "mr-series-ups-120kva-30k-module-v20240812.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/mr-series-ups-120kva-30k-module-v20240812.pdf",
+  "title": "MR Series UPS 120kVA 30K Module V20240812"
+ },
+ {
+  "file": "myria-series-ups-60-200kva-20240401.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/myria-series-ups-60-200kva-20240401.pdf",
+  "title": "Myria Series UPS 60-200kVA 20240401"
+ },
+ {
+  "file": "myria-series-ups-10-40kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/myria-series-ups-10-40kva.pdf",
+  "title": "Myria Series UPS 10-40kVA"
+ },
+ {
+  "file": "kr-rm-10-40kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/kr-rm-10-40kva.pdf",
+  "title": "KR-RM 10-40kVA"
+ },
+ {
+  "file": "kr-rm-1-10kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/kr-rm-1-10kva.pdf",
+  "title": "KR-RM 1-10kVA"
+ },
+ {
+  "file": "kr11-plus-1-10kva.pdf",
+  "url": "https://aecups.kz/wp-content/uploads/2026/02/kr11-plus-1-10kva.pdf",
+  "title": "KR11 Plus 1-10kVA"
+ }
+]

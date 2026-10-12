@@ -2,3 +2,5 @@ shots/
 __pycache__/
 *.pyc
 site/_dev/
+*.log
+.vercel/

@@ -15,6 +15,9 @@ async def main(url, out, w, h, full, scroll_to):
         await pg.goto(url, wait_until='networkidle')
         await pg.add_style_tag(content=DEV_FONTS)
         await pg.evaluate('document.fonts.ready')
+        # прокрутка всей страницы, чтобы подгрузились lazy-изображения
+        await pg.evaluate('''async () => { const h = document.documentElement.scrollHeight; for (let y = 0; y < h; y += 700) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 120)); } window.scrollTo(0, 0); }''')
+        await pg.evaluate('''() => Promise.race([new Promise(r => setTimeout(r, 4000)), Promise.all([...document.images].filter(i => !i.complete).map(i => new Promise(r => { i.onload = i.onerror = r; })))])''')
         await pg.wait_for_timeout(600)
         if scroll_to:
             await pg.evaluate(f"window.scrollTo({{top: {scroll_to}, behavior: 'instant'}})")

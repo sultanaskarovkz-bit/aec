@@ -173,7 +173,7 @@
     const kMin = nominal, kMax = nominal * 1.6;
     const base = D.PRODUCTS.filter(p => p.cat === 'dgu');
     const byForm = base.filter(p => DGU_FORM_RE[s.form].test(p.form || ''));
-    let models = byForm.filter(p => p.kva >= kMin && p.kva <= kMax).sort((a, b) => a.kva - b.kva || stockFirst(a, b));
+    let models = byForm.filter(p => D.inRange(p, kMin, kMax)).sort((a, b) => a.kva - b.kva || stockFirst(a, b));
     let near = false;
     if (!models.length) { near = true; models = nearest(byForm.length ? byForm : base, kMin, 4); }
     const catHash = 'catalog.html#dgu.kvamin-' + num(kMin) + '.kvamax-' + num(kMax) + '.form-' + DGU_FORM_CAT[s.form];

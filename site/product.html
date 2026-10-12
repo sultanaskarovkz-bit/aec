@@ -96,6 +96,8 @@
 <div id="app">
 <main id="main"></main>
 </div>
+<script src="assets/catalog.js"></script>
+<script src="assets/catalog-details.js"></script>
 <script src="assets/data.js"></script>
 <script src="assets/aec.js"></script>
 <script>
@@ -106,7 +108,7 @@
   const fmtN = v => (+v).toLocaleString('ru-RU');
   const brandOf = p => D.BRANDS.find(b => b.id === p.brandId);
   const indName = id => (D.INDUSTRIES.find(x => x.id === id) || {}).name || '';
-  const DEFAULT = 'salicru-slc-adapt2-50';
+  const DEFAULT = 'ibp-salicru-slc-adapt2-50-50-kva';
 
   /* ---------- Тексты серий ---------- */
   const SERIES = {
@@ -167,7 +169,7 @@
   function keySpecs(p) {
     const u = D.unit(p.cat), s = p.spec;
     const list = p.cat === 'akb' ? [['Ёмкость C10', p.kva + ' А·ч'], ['Напряжение', p.form], ['Технология', p.topology], ['Срок службы', s['Срок службы (проектный)']], ['Габариты', p.dims], ['Масса', p.weight]]
-      : p.cat === 'dgu' ? [['Мощность', p.kva + ' кВА / ' + p.kw + ' кВт'], ['Двигатель', s['Двигатель']], ['Исполнение', p.form], ['Частота вращения', s['Частота вращения']], ['Альтернатор', s['Альтернатор']], ['Степень защиты', p.ip]]
+      : p.cat === 'dgu' ? [['Мощность', U.powerTxt(p)], ['Двигатель', s['Двигатель']], ['Исполнение', p.form], ['Частота вращения', s['Частота вращения']], ['Альтернатор', s['Альтернатор']], ['Степень защиты', p.ip]]
         : p.cat === 'stab' ? [['Мощность', p.kva + ' кВА'], ['Фазы', p.phases === '3' ? '3 (380/400 В)' : '1 (220 В)'], ['Тип', p.topology], ['Точность', s['Точность стабилизации']], ['Диапазон входа', s['Диапазон входного напряжения']], ['Исполнение', p.form]]
           : p.cat === 'sts' ? [['Номинальный ток', p.kva + ' А'], ['Фазы', p.phases], ['Время переключения', s['Время переключения']], ['Исполнение', p.form], ['Интерфейсы', (p.interfaces || []).join(', ')], ['Степень защиты', p.ip]]
             : [['Мощность', p.kva + ' кВА / ' + p.kw + ' кВт'], ['Фазы (вход/выход)', p.phases], ['Топология', p.topology], ['Исполнение', p.form + (p.arch ? ', ' + p.arch.toLowerCase() : '')], ['Батареи', p.battery], ['КПД (on-line / ECO)', p.eff ? p.eff + ' %' : '']];
@@ -181,18 +183,22 @@
     const G = [
       ['Общие', [['Бренд', p.brand], ['Серия', p.series], ['Модель', p.model], ['Артикул', p.sku], ['Тип', p.cat === 'akb' ? 'Стационарная аккумуляторная батарея' : p.cat === 'dgu' ? 'Дизельная генераторная установка' : p.cat === 'stab' ? 'Стабилизатор напряжения' : p.cat === 'sts' ? 'Статический переключатель нагрузки' : 'Источник бесперебойного питания'], ['Топология', p.cat !== 'akb' ? p.topology : ''], ['Архитектура', p.arch], ['Исполнение', p.cat !== 'akb' ? p.form : ''], ['Двигатель', s['Двигатель']], ['Частота вращения', s['Частота вращения']], ['Альтернатор', s['Альтернатор']]]],
       ['Вход', [['Фазы входа', p.cat === 'ibp' ? ph[0] : p.cat === 'stab' ? p.phases : p.cat === 'sts' ? (p.phases || '').replace(/\s*\(.*/, '') + ', два источника' : ''], ['Напряжение', vin], ['Диапазон входного напряжения', s['Диапазон входного напряжения']]]],
-      ['Выход', [['Мощность', p.cat === 'akb' ? '' : p.cat === 'sts' ? p.kva + ' А' : p.kva + ' кВА' + (p.kw && p.kw !== p.kva ? ' / ' + p.kw + ' кВт' : p.kw ? ' / ' + p.kw + ' кВт' : '')], ['Фазы выхода', p.cat === 'ibp' ? (ph[1] || ph[0]) : p.cat === 'dgu' ? '3 фазы + N, 400 В' : ''], ['Напряжение', vout || s['Выходное напряжение']], ['Коэффициент мощности', p.cat === 'akb' || p.cat === 'sts' ? '' : String(p.pf).replace('.', ',')], ['Точность стабилизации', s['Точность стабилизации']], ['Время переключения', s['Время переключения']], ['КПД', p.cat === 'akb' ? '' : effTxt], ['Параллельная работа', p.parallel]]],
+      ['Выход', [['Мощность', p.cat === 'akb' ? '' : p.cat === 'sts' ? p.kva + ' А' : p.kvaMax ? U.powerTxt(p) : p.kva + ' кВА' + (p.kw ? ' / ' + p.kw + ' кВт' : '')], ['Фазы выхода', p.cat === 'ibp' ? (ph[1] || ph[0]) : p.cat === 'dgu' ? '3 фазы + N, 400 В' : ''], ['Напряжение', vout || s['Выходное напряжение']], ['Коэффициент мощности', p.cat === 'akb' || p.cat === 'sts' ? '' : String(p.pf).replace('.', ',')], ['Точность стабилизации', s['Точность стабилизации']], ['Время переключения', s['Время переключения']], ['КПД', p.cat === 'akb' ? '' : effTxt], ['Параллельная работа', p.parallel]]],
       ['Батареи', [['Батареи', p.battery], ['Технология', s['Технология']], ['Напряжение', s['Напряжение']], ['Ёмкость C10', s['Ёмкость C10']], ['Срок службы (проектный)', s['Срок службы (проектный)']]]],
       ['Связь и мониторинг', [['Интерфейсы', (p.interfaces || []).join(', ')]]],
       ['Габариты и масса', [['Габариты (Ш×Г×В)', p.dims], ['Масса', p.weight]]],
       ['Условия эксплуатации и гарантия', [['Степень защиты', p.ip], ['Гарантия', p.warranty ? p.warranty + ' мес.' : ''], ['Наличие', p.stock === 'in' ? 'В наличии в Алматы' : 'Под заказ'], ['Срок поставки', p.lead]]]
     ];
+    const det = D.details(p.id);
+    if (det && det.table && det.table.length) G.push(['Полная таблица характеристик (данные производителя)', det.table.map(r => [r[0], r[1]])]);
     return G.map(g => [g[0], g[1].filter(r => r[1])]).filter(g => g[1].length);
   }
   function description(p) {
     const out = [];
+    const det = D.details(p.id);
     const series = SERIES[p.series];
-    if (series) out.push(series);
+    if (det && det.desc && det.desc.length) out.push(...det.desc);
+    else if (series) out.push(series);
     else if (p.cat === 'dgu') out.push(`Дизельная генераторная установка ${p.brand} серии ${p.series} мощностью ${p.kva} кВА / ${p.kw} кВт на двигателе ${p.spec['Двигатель']} с альтернатором ${p.spec['Альтернатор']}, частота вращения ${p.spec['Частота вращения']}. Исполнение: ${p.form.toLowerCase()}. Контроллер Deep Sea 7320 с Modbus, автозапуск по сигналу АВР, синхронизация до восьми установок в параллель.`);
     else if (p.cat === 'akb') out.push(`${p.name.replace('АКБ ', 'Аккумуляторная батарея ')} серии ${p.series}: напряжение ${p.form}, ёмкость ${p.kva} А·ч (C10), проектный срок службы ${p.spec['Срок службы (проектный)']}. ` + (TECH[(p.topology || '').split(' ')[0]] || ''));
     else out.push(`${p.name}: ${p.topology.toLowerCase()}, ${p.kva} ${D.unit(p.cat)}, исполнение ${p.form.toLowerCase()}.`);
@@ -273,18 +279,20 @@
     document.title = p.name + ': купить, цена, характеристики | AEC';
     document.querySelector('meta[name=description]').content = `${p.name}: ${p.kva} ${u}${p.cat === 'ibp' ? ', ' + p.topology.toLowerCase() : ''}. ${D.fmtPrice(p.price)}, ${p.stock === 'in' ? 'в наличии в Алматы' : 'поставка ' + p.lead}. Характеристики, документация, запрос КП.`;
     const wa = C.whatsapp + encodeURIComponent(' Интересует ' + p.name + (p.sku ? ' (арт. ' + p.sku + ')' : '') + '.');
-    const views = [['front', 'Фото', () => U.pphoto(p)], ['scheme', 'Схема подключения', () => schemeSVG(p)], ['dims', 'Габаритный чертёж', () => dimsSVG(p)]];
+    const hasPhoto = !!(p.photo || (D.SERIES_PHOTOS && D.SERIES_PHOTOS[p.series]));
+    const extra = (p.photos || []).slice(1).map((ph, i) => ['photo' + i, 'Фото ' + (i + 2), () => `<img class="pphoto" src="assets/img/products/${ph}" alt="${esc(p.name)}, фото ${i + 2}" loading="lazy">`]);
+    const views = [['front', 'Фото', () => U.pphoto(p)], ...extra, ['scheme', 'Схема подключения', () => schemeSVG(p)], ['dims', 'Габаритный чертёж', () => dimsSVG(p)]];
     const seriesItems = D.PRODUCTS.filter(x => x.cat === p.cat && x.series === p.series && x.brandId === p.brandId);
     const rel = related(p), sim = similar(p), groups = specGroups(p), desc = description(p), opts = options(p), svcs = services(p);
     const stock = p.stock === 'in' ? '<span class="stock stock-in">В наличии в Алматы</span>' : p.stock === 'eol' ? '<span class="stock stock-eol">Снят с производства</span>' : '<span class="stock stock-order">Под заказ</span>';
     const colHead = p.cat === 'akb' ? ['Модель', 'Ёмкость C10', 'Напряжение', 'Технология'] : p.cat === 'dgu' ? ['Модель', 'Мощность', 'Двигатель', 'Исполнение'] : p.cat === 'sts' ? ['Модель', 'Ток', 'Фазы', 'Исполнение'] : ['Модель', 'Мощность', 'Фазы', 'Исполнение'];
-    const colVals = x => p.cat === 'akb' ? [x.kva + ' А·ч', x.form, (x.topology || '').split(' ')[0]] : p.cat === 'dgu' ? [x.kva + ' кВА / ' + x.kw + ' кВт', x.spec['Двигатель'], x.form] : p.cat === 'sts' ? [x.kva + ' А', x.phases, x.form] : [x.kva + ' кВА / ' + x.kw + ' кВт', x.phases, x.form];
+    const colVals = x => p.cat === 'akb' ? [x.kva + ' А·ч', x.form, (x.topology || '').split(' ')[0]] : p.cat === 'dgu' ? [U.powerTxt(x), x.spec['Двигатель'], x.form] : p.cat === 'sts' ? [x.kva + ' А', x.phases, x.form] : [x.kva + ' кВА / ' + x.kw + ' кВт', x.phases, x.form];
 
     main.innerHTML = `
     <section class="ptop"><div class="wrap">${U.crumbs(crumbs)}
       <div class="pgrid">
         <div class="gallery">
-          <div class="gmain front" id="gmain">${U.pphoto(p)}<a class="brandmark" href="${L.brand(p.brandId)}">${esc(p.brand)}<small>${esc(b ? b.country : '')}</small></a><span class="vlabel" id="vlabel">Фото производителя</span></div>
+          <div class="gmain front" id="gmain">${U.pphoto(p)}<a class="brandmark" href="${L.brand(p.brandId)}">${esc(p.brand)}<small>${esc(b ? b.country : '')}</small></a><span class="vlabel" id="vlabel">${hasPhoto ? 'Фото производителя' : 'Схематичная иллюстрация'}</span></div>
           <div class="gthumbs" id="gthumbs">${views.map(v => `<button type="button" class="${v[0] === 'front' ? 'on' : ''}" data-view="${v[0]}"><span class="th">${v[2]()}</span><span>${v[1]}</span></button>`).join('')}</div>
         </div>
         <div class="pinfo">
@@ -310,7 +318,7 @@
       <div class="tabs" role="tablist"><button class="on" data-tab="spec">Характеристики</button><button data-tab="desc">Описание</button><button data-tab="docs">Документация</button><button data-tab="opts">Комплектация и опции</button></div>
       <div class="tab-panel on" id="tab-spec"><div class="spec-wrap"><div class="tbl-wrap"><table class="spec">${groups.map(g => `<tr class="grp"><td colspan="2">${esc(g[0])}</td></tr>` + g[1].map(r => `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join('')).join('')}</table></div></div><p class="small muted" style="margin-top:12px">Характеристики приведены по данным производителя и уточняются по datasheet конкретной модификации. Для подбора батарей и расчёта автономии воспользуйтесь <a href="${L.calc}">калькулятором</a> или запросите КП.</p></div>
       <div class="tab-panel" id="tab-desc"><div class="desc">${desc.map((t, i) => (i === 1 ? `<h3>Модель ${esc(p.model)}</h3>` : i === 2 ? '<h3>Применение</h3>' : '') + `<p>${t}</p>`).join('')}</div></div>
-      <div class="tab-panel" id="tab-docs"><div class="docs">${(p.docs || []).map(d => `<div class="doc"><span class="ic">${I('file')}</span><div><b>${esc(d.name)}</b><small>PDF · ${esc(d.size)}</small></div><a class="btn btn-sm btn-ghost dl" href="#" aria-label="Скачать ${esc(d.name)}">${I('download')} Скачать</a></div>`).join('')}<div class="doc"><span class="ic">${I('doc')}</span><div><b>Сертификаты и дистрибьюторские письма</b><small>Для тендерной документации</small></div><a class="btn btn-sm btn-ghost" href="${L.docs}">Открыть</a></div></div></div>
+      <div class="tab-panel" id="tab-docs"><div class="docs">${(p.docs || []).map(d => `<div class="doc"><span class="ic">${I('file')}</span><div><b>${esc(d.name)}</b><small>PDF · ${esc(d.size)}</small></div><a class="btn btn-sm btn-ghost dl" href="${d.file ? 'assets/docs/' + d.file : '#'}"${d.file ? ' download target="_blank" rel="noopener"' : ''} aria-label="Скачать ${esc(d.name)}">${I('download')} Скачать</a></div>`).join('')}<div class="doc"><span class="ic">${I('doc')}</span><div><b>Сертификаты и дистрибьюторские письма</b><small>Для тендерной документации</small></div><a class="btn btn-sm btn-ghost" href="${L.docs}">Открыть</a></div></div></div>
       <div class="tab-panel" id="tab-opts"><div class="opts">${opts.map(o => `<div class="opt"><span class="ic">${I(o[0])}</span><div><b>${esc(o[1])}</b><p>${o[2]}</p></div></div>`).join('')}</div></div>
     </div></section>
 
@@ -358,8 +366,8 @@
     document.querySelectorAll('#gthumbs button').forEach(b => b.addEventListener('click', () => {
       view = b.dataset.view; const v = views.find(x => x[0] === view);
       document.querySelectorAll('#gthumbs button').forEach(x => x.classList.toggle('on', x === b));
-      gm.querySelector('svg').outerHTML = v[2](); gm.classList.toggle('front', view === 'front');
-      vl.textContent = view === 'front' ? 'Схематичная иллюстрация' : view === 'scheme' ? 'Упрощённая схема подключения' : 'Размеры по данным производителя';
+      gm.querySelector('svg, img.pphoto').outerHTML = v[2](); gm.classList.toggle('front', view === 'front' || view.startsWith('photo'));
+      vl.textContent = view === 'front' || view.startsWith('photo') ? (p.photo ? 'Фото производителя' : 'Схематичная иллюстрация') : view === 'scheme' ? 'Упрощённая схема подключения' : 'Размеры по данным производителя';
     }));
     document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
       document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
