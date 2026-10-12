@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Поиск по каталогу | AEC Kazakhstan</title>
+<meta name="description" content="Поиск по моделям, сериям, артикулам и брендам: ИБП, ДГУ, аккумуляторы, стабилизаторы. Исправление раскладки и транслита.">
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+.shead { background: var(--mist); border-bottom: 1px solid var(--line); padding-bottom: 28px; }
+.shead .crumbs { padding-block: 16px 14px; }
+.shead h1 { font-size: clamp(26px, 3vw, 36px); margin-bottom: 16px; }
+.sbox { position: relative; max-width: 760px; }
+.sbox .input { min-height: 56px; padding-left: 50px; padding-right: 110px; font-size: 17px; }
+.sbox > svg { position: absolute; left: 18px; top: 19px; width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+.sbox .go { position: absolute; right: 6px; top: 6px; min-height: 44px; }
+.sbox .clr { position: absolute; right: 96px; top: 11px; width: 34px; min-height: 34px; border: 0; background: transparent; color: var(--muted); display: none; }
+.sbox .clr svg { width: 18px; height: 18px; }
+.sbox.has .clr { display: inline-flex; }
+.sugg { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); z-index: 20; display: none; overflow: hidden; }
+.sugg.open { display: block; }
+.sugg a { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 8px 12px; color: var(--ink); border-bottom: 1px solid var(--mist-2); }
+.sugg a .th { width: 44px; height: 44px; background: var(--mist); border-radius: var(--r-s); display: grid; place-items: center; padding: 4px; }
+.sugg a .th svg { width: 90%; height: 90%; }
+.sugg a b { display: block; font-weight: 500; font-size: 14px; line-height: 1.3; }
+.sugg a small { color: var(--muted); font-size: 12px; }
+.sugg a .pw { font-size: 13px; color: var(--navy); font-weight: 500; white-space: nowrap; }
+.sugg a.on, .sugg a:hover { background: var(--blue-l); color: var(--ink); }
+.sugg .all { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 13px; color: var(--blue); background: var(--mist); }
+.shint { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.shint code { font-family: inherit; background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; color: var(--ink); }
+.fixnote { margin: 0 0 20px; }
+.fixnote a { font-weight: 500; }
+.pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 28px; }
+.pages a { display: flex; gap: 12px; align-items: center; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--r); color: var(--ink); }
+.pages a:hover { border-color: var(--blue); color: var(--blue); }
+.pages a .badge { flex: none; }
+@media (max-width: 640px) { .pages { grid-template-columns: 1fr; } }
+.rgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1100px) { .rgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 800px) { .rgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .rgrid { grid-template-columns: 1fr; } }
+.rhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.rhead h2 { font-size: clamp(20px, 2.2vw, 26px); }
+.rhead span { color: var(--muted); font-size: 14px; }
+.chips-pop { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips-pop button { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 999px; background: #fff; font-size: 14px; color: var(--ink); }
+.chips-pop button:hover { border-color: var(--blue); color: var(--blue); }
+.chips-pop button svg { width: 14px; height: 14px; color: var(--muted); }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: clamp(24px, 4vw, 40px) 24px; text-align: center; margin-bottom: 32px; }
+.empty h2 { font-size: clamp(20px, 2.4vw, 28px); }
+.empty p { color: var(--muted); max-width: 54ch; margin: 10px auto 0; }
+.empty .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="shead"><div class="wrap" id="head">
+    <div id="crumbs"></div>
+    <h1>Поиск по каталогу</h1>
+    <form class="sbox" id="sform" autocomplete="off" role="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label class="sr" for="q">Поиск</label>
+      <input class="input" id="q" name="q" placeholder="Модель, серия, артикул, бренд: например, SLC ADAPT2 или ибп 20 ква" autofocus>
+      <button class="clr" type="button" id="clr" aria-label="Очистить"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <button class="btn btn-primary go" type="submit">Найти</button>
+      <div class="sugg" id="sugg" role="listbox"></div>
+    </form>
+    <p class="shint">Понимаем ошибки раскладки и транслит: <code>b,g</code> найдёт ИБП, <code>кехуа</code> и <code>rehua</code> покажут Kehua, <code>хоппеке</code> найдёт Hoppecke.</p>
+  </div></section>
+  <section class="section-tight"><div class="wrap" id="res"></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: '' });
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const plural = (n, a, b, c) => { const m = n % 100, d = n % 10; return m > 10 && m < 20 ? c : d === 1 ? a : d > 1 && d < 5 ? b : c; };
+  document.getElementById('crumbs').innerHTML = U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Поиск' }]);
+  const q = document.getElementById('q'), sugg = document.getElementById('sugg'), res = document.getElementById('res'), box = document.getElementById('sform');
+  const POPQ = ['ибп 20 ква', 'kehua', 'hoppecke opzv', 'дгу в контейнере', 'стабилизатор 380', 'акб 12в 100ач'];
+  const TYPE_ICON = { 'Категория': 'ups', 'Решение': 'building', 'Услуга': 'wrench', 'Статья': 'doc', 'Бренд': 'award' };
+
+  /* ---------- Нечёткое исправление (опечатки в брендах и сериях) ---------- */
+  const DICT = [...new Set([].concat(D.BRANDS.map(b => b.name.toLowerCase()), D.BRANDS.flatMap(b => b.name.toLowerCase().split(/\s+/)), D.PRODUCTS.map(p => p.series.toLowerCase()), D.PRODUCTS.flatMap(p => p.series.toLowerCase().split(/[\s/()]+/)), ['ибп', 'дгу', 'акб', 'стабилизатор', 'генератор', 'аккумулятор', 'батарея', 'sts', 'ups', 'модульный', 'трёхфазный', 'однофазный', 'кехуа', 'саликру', 'теском', 'хоппеке', 'ритар']).filter(w => w && w.length >= 3))];
+  function lev(a, b) { const m = a.length, n = b.length; if (!m) return n; if (!n) return m; let prev = Array.from({ length: n + 1 }, (_, i) => i); for (let i = 1; i <= m; i++) { const cur = [i]; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; }
+  function fuzzyWord(w) { if (w.length < 4) return null; let best = null, bd = 3; DICT.forEach(d => { if (Math.abs(d.length - w.length) > 2) return; const dd = lev(w, d); if (dd < bd && dd > 0 && dd <= (w.length >= 6 ? 2 : 1)) { bd = dd; best = d; } }); return best; }
+  function fuzzy(query) { const words = query.toLowerCase().trim().split(/\s+/); let changed = false; const out = words.map(w => { if (U.search(w).products.length) return w; const f = fuzzyWord(w); if (f) { changed = true; return f; } return w; }); return changed ? out.join(' ') : null; }
+  function smart(query) {
+    let r = U.search(query), fixed = r.fixed;
+    if (!r.products.length && !r.pages.length) { const f = fuzzy(query); if (f) { const r2 = U.search(f); if (r2.products.length || r2.pages.length) { r = r2; fixed = f; } } }
+    return { products: r.products, pages: r.pages, fixed };
+  }
+  const hay = p => (p.name + ' ' + p.series + ' ' + p.brand + ' ' + p.sku).toLowerCase();
+  const rawSearch = query => { const t = query.toLowerCase().trim(); return D.PRODUCTS.filter(p => hay(p).includes(t)); };
+
+  /* ---------- Результаты ---------- */
+  function showPopular() {
+    const pop = D.PRODUCTS.filter(p => p.stock === 'in').sort((a, b) => (!!b.price) - (!!a.price)).filter((p, i, a) => a.findIndex(x => x.series === p.series) === i).slice(0, 8);
+    res.innerHTML = `<div class="rhead"><h2>Часто ищут</h2></div><div class="chips-pop">${POPQ.map(s => `<button type="button" data-q="${esc(s)}">${I('search')}${esc(s)}</button>`).join('')}</div>
+      <div class="rhead" style="margin-top:32px"><h2>Популярные модели</h2><span>Складские позиции в Алматы</span></div><div class="rgrid">${pop.map(p => U.productCard(p)).join('')}</div>`;
+    res.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { q.value = b.dataset.q; box.classList.add('has'); run(q.value); q.focus(); }));
+    U.render();
+  }
+  function run(query, raw) {
+    closeSugg();
+    query = (query || '').trim();
+    if (!query) { showPopular(); return; }
+    document.title = `${query}: поиск по каталогу | AEC Kazakhstan`;
+    let r, fixed = null, shown = query;
+    if (raw) { r = { products: rawSearch(query), pages: [] }; }
+    else { r = smart(query); fixed = r.fixed; if (fixed) shown = fixed; }
+    let html = '';
+    if (fixed) html += `<div class="note fixnote">Показаны результаты по запросу «${esc(fixed)}». Искать «<a href="#" data-raw="${esc(query)}">${esc(query)}</a>»?</div>`;
+    if (raw) html += `<div class="note fixnote">Точный поиск по «${esc(query)}» без исправления раскладки. <a href="#" data-smart="${esc(query)}">Вернуть умный поиск</a></div>`;
+    if (!r.products.length && !r.pages.length) {
+      html += `<div class="empty"><h2>По запросу «${esc(shown)}» ничего не найдено</h2><p>Проверьте написание модели или серии, попробуйте короче: бренд, серия или мощность. Если модели нет в каталоге, подберём аналог.</p><div class="cta"><a class="btn btn-primary" href="${L.cat('ibp')}">Открыть каталог</a><button class="btn btn-kp" type="button" data-open-modal data-title="Подбор: ${esc(shown)}" data-type="Подбор по запросу">Запросить подбор</button></div></div>`;
+      res.innerHTML = html; bindRes(); showPopularBelow(); return;
+    }
+    if (r.pages.length) html += `<div class="rhead"><h2>Страницы</h2><span>${r.pages.length}</span></div><div class="pages">${r.pages.map(pg => `<a href="${pg.href}"><span class="badge">${esc(pg.type)}</span><span>${esc(pg.t)}</span></a>`).join('')}</div>`;
+    if (r.products.length) html += `<div class="rhead"><h2>Товары</h2><span>${r.products.length} ${plural(r.products.length, 'модель', 'модели', 'моделей')}${r.products.length >= 24 ? ', показаны первые 24' : ''}</span></div><div class="rgrid">${r.products.map(p => U.productCard(p)).join('')}</div>`;
+    else html += `<div class="empty" style="margin-top:8px"><h2>Товаров по запросу «${esc(shown)}» нет</h2><p>Найдены только страницы. Уточните модель или серию, либо запросите подбор.</p></div>`;
+    res.innerHTML = html; bindRes(); U.render();
+  }
+  function showPopularBelow() { const pop = D.PRODUCTS.filter(p => p.stock === 'in' && p.price).slice(0, 4); res.insertAdjacentHTML('beforeend', `<div class="rhead"><h2>Часто ищут</h2></div><div class="chips-pop">${POPQ.map(s => `<button type="button" data-q="${esc(s)}">${I('search')}${esc(s)}</button>`).join('')}</div><div class="rhead" style="margin-top:28px"><h2>Складские позиции</h2></div><div class="rgrid">${pop.map(p => U.productCard(p)).join('')}</div>`); bindRes(); U.render(); }
+  function bindRes() {
+    res.querySelectorAll('[data-raw]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); run(a.dataset.raw, true); }));
+    res.querySelectorAll('[data-smart]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); run(a.dataset.smart); }));
+    res.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { q.value = b.dataset.q; box.classList.add('has'); run(q.value); q.focus(); }));
+    res.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => U.openModal({ title: b.dataset.title, type: b.dataset.type, comment: 'Искал: ' + q.value })));
+  }
+
+  /* ---------- Подсказки ---------- */
+  let t, idx = -1, list = [];
+  function closeSugg() { sugg.classList.remove('open'); sugg.innerHTML = ''; idx = -1; list = []; }
+  function showSugg() {
+    const v = q.value.trim(); if (v.length < 2) { closeSugg(); return; }
+    const r = smart(v); list = r.products.slice(0, 6); idx = -1;
+    if (!list.length) { closeSugg(); return; }
+    sugg.innerHTML = list.map(p => `<a href="${L.product(p.slug)}" role="option"><span class="th">${U.art(p.img)}</span><span><b>${esc(p.name)}</b><small>${esc(p.brand)} · ${esc(p.series)} · ${p.stock === 'in' ? 'в наличии' : 'под заказ'}</small></span><span class="pw">${p.kva} ${esc(D.unit(p.cat))}</span></a>`).join('') + `<div class="all"><span>${r.fixed ? 'Исправлено: «' + esc(r.fixed) + '»' : ''}</span><span>Все результаты (${r.products.length}${r.pages.length ? ' + ' + r.pages.length + ' стр.' : ''}) · Enter</span></div>`;
+    sugg.classList.add('open');
+  }
+  q.addEventListener('input', () => { box.classList.toggle('has', !!q.value); clearTimeout(t); t = setTimeout(showSugg, 150); });
+  q.addEventListener('keydown', e => {
+    const items = sugg.querySelectorAll('a');
+    if (e.key === 'ArrowDown' && items.length) { e.preventDefault(); idx = (idx + 1) % items.length; items.forEach((a, i) => a.classList.toggle('on', i === idx)); }
+    else if (e.key === 'ArrowUp' && items.length) { e.preventDefault(); idx = (idx - 1 + items.length) % items.length; items.forEach((a, i) => a.classList.toggle('on', i === idx)); }
+    else if (e.key === 'Enter' && idx >= 0 && items[idx]) { e.preventDefault(); location.href = items[idx].href; }
+    else if (e.key === 'Escape') closeSugg();
+  });
+  document.addEventListener('click', e => { if (!box.contains(e.target)) closeSugg(); });
+  box.addEventListener('submit', e => { e.preventDefault(); clearTimeout(t); run(q.value); });
+  document.getElementById('clr').addEventListener('click', () => { q.value = ''; box.classList.remove('has'); closeSugg(); showPopular(); q.focus(); });
+
+  /* ---------- Старт ---------- */
+  const h = location.hash;
+  if (h.startsWith('#q-')) { try { q.value = decodeURIComponent(h.slice(3)); } catch (e) { q.value = h.slice(3); } }
+  box.classList.toggle('has', !!q.value);
+  run(q.value);
+  setTimeout(() => q.focus(), 50);
+})();
+</script>
+</body>
+</html>

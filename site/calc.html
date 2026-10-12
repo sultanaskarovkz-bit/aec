@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Калькулятор подбора ИБП, ДГУ и батарей | AEC Kazakhstan</title>
+<meta name="description" content="Инженерный калькулятор: мощность ИБП с запасом, количество и ёмкость батарей на нужную автономию, номинал дизельного генератора и стабилизатора. Подходящие модели из каталога AEC, проверка расчёта инженером бесплатно.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+/* ---- Hero ---- */
+.page-hero .pts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 20px; font-size: 14px; color: #9fb3c8; }
+.page-hero .pts span { display: inline-flex; align-items: center; gap: 7px; }
+.page-hero .pts svg { width: 16px; height: 16px; color: var(--amber); flex: none; }
+
+/* ---- Калькулятор ---- */
+.calc-layout { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(20px, 3vw, 36px); align-items: start; margin-top: 22px; }
+@media (max-width: 960px) { .calc-layout { grid-template-columns: 1fr; } }
+.cform { border: 1px solid var(--line); border-radius: var(--r-l); padding: clamp(18px, 2.4vw, 26px); background: #fff; display: grid; gap: 16px; }
+.cform h2 { font-size: 20px; }
+.cform .sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 420px) { .row2 { grid-template-columns: 1fr; } }
+.fx { display: flex; gap: 8px; align-items: stretch; }
+.fx .input { flex: 1; min-width: 0; }
+.fx .seg { flex: none; }
+.fx .seg button { padding-inline: 12px; }
+.cform .input[type=number]::-webkit-outer-spin-button, .cform .input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.cform .input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+.field .hint a { font-weight: 500; }
+.sl { display: grid; grid-template-columns: 1fr 92px; gap: 12px; align-items: center; }
+.sl input[type=range] { margin: 0; height: 28px; }
+.sl .input { min-height: 40px; padding: 8px 10px; text-align: center; }
+.ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--faint); padding: 0 2px; }
+.segw { display: flex; flex-wrap: wrap; gap: 6px; }
+.segw .seg { flex-wrap: wrap; }
+.cform .ff { font-size: 12px; color: var(--muted); padding-top: 4px; border-top: 1px solid var(--line); }
+
+/* результат */
+.cres { display: grid; gap: 16px; min-width: 0; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.kpi { border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; background: #fff; min-width: 0; }
+.kpi span { display: block; font-size: 12px; color: var(--muted); }
+.kpi b { display: block; font-family: var(--font-display); font-size: clamp(20px, 2vw, 26px); font-weight: 600; color: var(--navy); line-height: 1.12; margin-top: 4px; overflow-wrap: anywhere; }
+.kpi small { display: block; font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.35; }
+.kpi.hi { background: var(--navy); border-color: var(--navy); }
+.kpi.hi span, .kpi.hi small { color: #9fb3c8; }
+.kpi.hi b { color: #fff; }
+@media (max-width: 600px) { .kpis { grid-template-columns: 1fr 1fr; gap: 10px; } .kpi.hi { grid-column: 1 / -1; } .kpi { padding: 12px 14px; } }
+.box { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; background: #fff; min-width: 0; }
+.box h3 { font-size: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.box h3 small { font-size: 12px; color: var(--muted); font-family: var(--font-body); font-weight: 400; }
+.bars { display: grid; gap: 9px; }
+.bar { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; font-size: 13px; }
+.bar .lbl { color: var(--muted); line-height: 1.25; }
+.bar .trk { height: 28px; background: var(--mist-2); border-radius: 5px; position: relative; overflow: hidden; }
+.bar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; background: var(--blue-l2); transition: width .45s var(--ease); min-width: 3px; }
+.bar.b2 .fill { background: var(--blue); }
+.bar.b3 .fill { background: var(--navy); }
+.bar.b4 .fill { background: var(--amber); }
+.bar .val { position: absolute; left: 10px; top: 0; line-height: 28px; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.bar.b2 .val, .bar.b3 .val, .bar.b4 .val { color: #fff; }
+.bar.lo .val { color: var(--ink); left: auto; }
+@media (max-width: 480px) { .bar { grid-template-columns: 1fr; gap: 3px; } .bar .lbl { font-size: 12px; } }
+.batsvg svg { width: 100%; height: auto; display: block; }
+.batsvg .bk { fill: var(--blue-l); stroke: var(--navy); stroke-width: 1.2; }
+.batsvg .tm { fill: var(--amber); }
+.batsvg .wire { stroke: var(--navy); stroke-width: 1.4; fill: none; }
+.batsvg .lb { font: 500 12px var(--font-body); fill: var(--muted); }
+.batsvg .lbn { font: 600 12px var(--font-display); fill: var(--navy); }
+.batcap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: 14px; }
+.batcap b { font-family: var(--font-display); color: var(--navy); }
+.batcap span { color: var(--muted); }
+.spec.sm th, .spec.sm td { padding: 8px 10px; font-size: 14px; }
+.spec.sm th { width: 54%; }
+.spec.sm td { font-variant-numeric: tabular-nums; }
+.cact { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cact .btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 10px; }
+.cact .wide { grid-column: 1 / -1; }
+.cact .lnk { grid-column: 1 / -1; font-size: 14px; display: inline-flex; gap: 6px; align-items: center; justify-content: center; font-weight: 500; }
+.cact .lnk svg { width: 16px; height: 16px; }
+@media (max-width: 480px) { .cact { grid-template-columns: 1fr; } }
+.note.info { background: var(--blue-l); border-color: var(--blue); color: var(--blue-d); }
+.note.ok { background: var(--ok-l); border-color: var(--ok); color: var(--ok); }
+.note a { font-weight: 500; }
+.notes { display: grid; gap: 8px; }
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cmp div { border: 1px solid var(--line); border-radius: var(--r-s); padding: 10px 12px; font-size: 13px; }
+.cmp div.rec { border-color: var(--blue); background: var(--blue-l); }
+.cmp b { display: block; font-family: var(--font-display); color: var(--navy); font-size: 18px; margin: 2px 0; }
+.cmp span { color: var(--muted); }
+.svcl { display: grid; gap: 10px; }
+.svcl a { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-s); color: var(--ink); }
+.svcl a:hover { border-color: var(--blue); color: var(--ink); }
+.svcl .ic { width: 36px; height: 36px; border-radius: 8px; background: var(--amber-l); color: var(--amber-d); display: grid; place-items: center; flex: none; }
+.svcl .ic svg { width: 20px; height: 20px; }
+.svcl b { display: block; font-size: 14px; font-weight: 600; }
+.svcl small { color: var(--muted); font-size: 12px; }
+/* мобильная сводка */
+.msum { display: none; }
+@media (max-width: 960px) {
+  .msum { display: flex; position: sticky; top: calc(var(--header-h) + 8px); z-index: 5; background: var(--navy); color: #c9d7e6; border-radius: var(--r); padding: 10px 14px; gap: 12px; align-items: center; font-size: 13px; box-shadow: var(--shadow-s); min-width: 0; }
+  .msum b { color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 15px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .msum div { min-width: 0; flex: 1; }
+  .msum button { border: 0; background: rgba(255, 255, 255, .1); color: #ffd28a; font-weight: 500; font-size: 13px; padding: 8px 12px; border-radius: var(--r-s); white-space: nowrap; }
+}
+/* модели */
+.models .pgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1100px) { .models .pgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .models .pgrid { grid-template-columns: 1fr; } }
+.models .note { margin-bottom: 16px; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: 28px 24px; text-align: center; }
+.empty p { color: var(--muted); max-width: 52ch; margin: 8px auto 0; }
+/* методика, SEO */
+.meth { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: m; }
+.meth > div { border: 1px solid var(--line); border-radius: var(--r); padding: 18px; background: #fff; position: relative; }
+.meth > div::before { counter-increment: m; content: counter(m); position: absolute; top: -12px; left: 14px; width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: #fff; font: 600 12px/24px var(--font-display); text-align: center; }
+.meth b { display: block; font-family: var(--font-display); color: var(--ink); margin-bottom: 6px; font-size: 16px; }
+.meth p { font-size: 14px; color: var(--muted); }
+.meth code { display: block; margin: 8px 0; padding: 8px 10px; background: var(--mist); border-radius: 5px; font-size: 13px; color: var(--navy); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; overflow-wrap: anywhere; }
+@media (max-width: 1024px) { .meth { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .meth { grid-template-columns: 1fr; } }
+.seo { max-width: 78ch; }
+.seo h2 { font-size: clamp(22px, 2.4vw, 30px); margin-bottom: 14px; }
+.seo h3 { font-size: 19px; margin: 22px 0 8px; }
+.seo p { margin-bottom: 12px; }
+.seo-split { align-items: flex-start; grid-template-columns: 1.2fr .8fr; }
+@media (max-width: 860px) { .seo-split { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap" id="hero"></div></section>
+
+  <section class="section-tight" id="calc">
+    <div class="wrap">
+      <div class="tabs" role="tablist" id="tabs">
+        <button type="button" role="tab" data-mode="ibp">ИБП</button>
+        <button type="button" role="tab" data-mode="dgu">Дизельный генератор</button>
+        <button type="button" role="tab" data-mode="akb">Батареи для ИБП</button>
+        <button type="button" role="tab" data-mode="stab">Стабилизатор</button>
+      </div>
+      <div class="calc-layout">
+        <div class="msum" id="msum" style="grid-column:1/-1"></div>
+        <form class="cform" id="cform" novalidate autocomplete="off"></form>
+        <div class="cres" id="cres"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight bg-mist models">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:18px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)" id="modTitle"></h2><p id="modSub"></p></div><a class="more" id="modCat" href="catalog.html#ibp">Открыть в каталоге с фильтром</a></div>
+      <div id="modNote"></div>
+      <div class="pgrid" id="modGrid"></div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:28px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Как мы считаем</h2><p>Методика та же, что у инженеров AEC при предпроектной оценке. Формулы упрощены, допущения указаны: итоговую конфигурацию инженер проверяет по разрядным таблицам и datasheet производителя.</p></div></div>
+      <div class="meth" id="meth"></div>
+    </div>
+  </section>
+
+  <section class="section bg-mist">
+    <div class="wrap"><div class="split seo-split">
+      <div class="seo" id="seo"></div>
+      <div><h2 style="font-size:clamp(22px,2.4vw,30px)">Вопросы и ответы</h2><p class="muted" style="margin:10px 0 18px">Коротко о единицах, запасе и ресурсе батарей. <a href="faq.html">Все вопросы</a></p><div class="acc" id="faq"></div></div>
+    </div></div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap"><div class="cta-band">
+      <div><h2>Проверить расчёт инженером</h2><p>Отправьте текущий расчёт: инженер AEC сверит его с разрядными таблицами батарей и перегрузочной способностью ИБП, предложит 2–3 варианта и пришлёт спецификацию с ценами в течение рабочего дня. Бесплатно.</p>
+        <div style="margin-top:22px;display:grid;gap:10px;font-size:15px" id="ctaContacts"></div></div>
+      <form class="form-grid" data-lead novalidate>
+        <input type="hidden" name="formType" value="Проверка расчёта инженером (калькулятор)">
+        <div class="field"><label for="cName">Имя <i>*</i></label><input class="input" id="cName" name="name" required autocomplete="name"><span class="hint"></span></div>
+        <div class="field"><label for="cPhone">Телефон <i>*</i></label><input class="input" id="cPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div>
+        <div class="field full"><label for="cMsg">Расчёт и комментарий</label><textarea class="textarea" id="cMsg" name="comment" style="min-height:120px"></textarea></div>
+        <label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label>
+        <div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Отправить на проверку</button></div>
+      </form>
+    </div></div>
+  </section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script src="assets/calc-page.js"></script>
+</body>
+</html>

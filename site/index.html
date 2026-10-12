@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AEC Kazakhstan</title>
+<meta name="description" content="AEC Kazakhstan: ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения. Подбор, поставка со склада в Алматы, монтаж и сервис по всему Казахстану с 2015 года.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+/* ---- Первый экран: фото во всю ширину, белая панель с заголовком заходит на фото ---- */
+.hero { position: relative; background: #fff; }
+.hero-media { position: relative; height: clamp(420px, 62vh, 660px); overflow: hidden; background: var(--mist-2); }
+.hero-media .slides { position: absolute; inset: 0; }
+.hero-media .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+.hero-media .slide.on { opacity: 1; }
+.hero-media .slide img { width: 100%; height: 100%; object-fit: cover; }
+.hero-media .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10, 37, 64, .28), rgba(10, 37, 64, 0) 45%); pointer-events: none; }
+.hero-ctrl { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
+.hero-ctrl .wrap { display: flex; justify-content: flex-end; gap: 28px; padding-bottom: 22px; }
+.hero-ctrl button { border: 0; background: transparent; color: rgba(255, 255, 255, .72); font: 500 13px/1 var(--font-body); padding: 10px 0 0; position: relative; cursor: pointer; }
+.hero-ctrl button::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgba(255, 255, 255, .35); }
+.hero-ctrl button::after { content: ''; position: absolute; left: 0; top: 0; height: 2px; width: 0; background: #fff; }
+.hero-ctrl button.on { color: #fff; }
+.hero-ctrl button.on::after { width: 100%; transition: width var(--slide-ms, 7000ms) linear; }
+.hero-body { position: relative; z-index: 3; }
+.hero-panel { background: #fff; max-width: 760px; margin-top: -140px; margin-left: -40px; padding: 36px 48px 0 40px; }
+.hero-panel h1 { font-size: clamp(28px, 3vw, 40px); line-height: 1.15; }
+.hero-panel p { margin-top: 14px; font-size: 16px; max-width: 58ch; }
+.hero-panel .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.hero-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.hero-facts b { display: block; color: var(--ink); font-weight: 500; font-size: 15px; }
+@media (max-width: 960px) {
+  .hero-media { height: clamp(260px, 46vw, 420px); }
+  .hero-ctrl .wrap { gap: 18px; padding-bottom: 14px; justify-content: flex-start; }
+  .hero-panel { margin-top: 0; margin-left: 0; padding: 24px 0 0; max-width: none; }
+  .hero-facts { grid-template-columns: 1fr; gap: 12px; margin-top: 24px; }
+}
+/* ---- Линейки оборудования: пять колонок с разделителями ---- */
+.lines { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-inline: -20px; }
+.line { display: flex; flex-direction: column; gap: 10px; padding: 24px 20px 28px; border-right: 1px solid var(--line); min-width: 0; }
+.line:last-child { border-right: 0; }
+.line h3 { min-height: 2.4em; }
+.line .im { aspect-ratio: 4 / 3; background: var(--mist); overflow: hidden; margin-bottom: 6px; }
+.line .im img { width: 100%; height: 100%; object-fit: cover; }
+.line h3 a { color: var(--ink); }
+.line h3 a:hover { color: var(--blue); }
+.line .rng { font-size: 14px; color: var(--muted); }
+.line ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 5px; font-size: 14px; }
+.line ul a { color: var(--text); }
+.line ul a:hover { color: var(--blue); }
+.lines-more { border-top: 1px solid var(--line); margin-inline: -20px; padding: 16px 20px 0; font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.lines-more a { color: var(--ink); }
+.lines-more a:hover { color: var(--blue); }
+@media (max-width: 1024px) { .lines { grid-template-columns: repeat(3, minmax(0, 1fr)); } .line:nth-child(3n) { border-right: 0; } .line:nth-child(n+4) { border-top: 1px solid var(--line); } }
+@media (max-width: 640px) { .lines-more { margin-inline: -14px; padding-inline: 14px; } .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: -14px; } .line { padding: 18px 14px 20px; } .line h3 { min-height: 0; } .line:nth-child(3n) { border-right: 1px solid var(--line); } .line:nth-child(2n) { border-right: 0; } .line:nth-child(n+3) { border-top: 1px solid var(--line); } .line ul { display: none; } }
+/* ---- Отрасли: список слева, фото справа меняется при наведении ---- */
+.ind-split { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
+.ind-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.ind-list a { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; padding: 15px 0 15px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 17px; font-weight: 500; position: relative; }
+.ind-list a small { font-size: 13px; color: var(--muted); font-weight: 400; white-space: nowrap; }
+.ind-list a::before { content: ''; position: absolute; left: -20px; top: 0; bottom: 0; width: 3px; background: transparent; }
+.ind-list li.on a { color: var(--navy); }
+.ind-list li.on a::before { background: var(--amber); }
+.ind-media { position: sticky; top: calc(var(--header-h) + 24px); }
+.ind-media .frame { position: relative; aspect-ratio: 4 / 3; background: var(--mist-2); overflow: hidden; }
+.ind-media .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s ease; }
+.ind-media .frame img.on { opacity: 1; }
+.ind-media .cap { padding: 14px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; font-size: 14px; color: var(--muted); }
+.ind-media .cap b { display: block; color: var(--ink); font-weight: 500; font-size: 15px; margin-bottom: 2px; }
+@media (max-width: 960px) { .ind-split { grid-template-columns: 1fr; gap: 24px; } .ind-media { position: static; order: -1; } .ind-list a::before { left: -12px; } }
+/* ---- Сервис: фото уходит в левый край, список услуг справа ---- */
+.svc-sec { overflow: hidden; }
+.svc-split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: stretch; }
+.svc-photo { position: relative; min-height: 520px; background: var(--mist-2); margin-left: calc(-1 * clamp(20px, (100vw - 1240px) / 2, 240px)); overflow: hidden; }
+.svc-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.svc-photo .cap { position: absolute; left: clamp(20px, (100vw - 1240px) / 2, 240px); bottom: 0; background: #fff; padding: 12px 18px 0 0; font-size: 13px; color: var(--muted); max-width: 320px; }
+.svc-text { padding-block: 8px; }
+.svc-text > p { margin-top: 14px; max-width: 52ch; }
+.svc-rows { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid var(--line-2); }
+.svc-rows a { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
+.svc-rows a b { font-weight: 500; font-size: 16px; display: block; }
+.svc-rows a small { display: block; font-size: 13px; color: var(--muted); margin-top: 1px; }
+.svc-rows a svg { width: 18px; height: 18px; color: var(--muted); transform: rotate(-90deg); }
+.svc-rows a:hover b { color: var(--blue); }
+.svc-text .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+@media (max-width: 960px) { .svc-split2 { grid-template-columns: 1fr; gap: 24px; } .svc-photo { min-height: 0; aspect-ratio: 16 / 10; margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); } .svc-photo .cap { left: var(--gutter); } }
+/* ---- Проекты ---- */
+.proj3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.proj3 a { color: var(--ink); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.proj3 .im { aspect-ratio: 16 / 10; background: var(--mist-2); overflow: hidden; margin-bottom: 8px; }
+.proj3 .im img { width: 100%; height: 100%; object-fit: cover; }
+.proj3 .meta { font-size: 13px; color: var(--muted); }
+.proj3 h3 { font-size: 18px; line-height: 1.3; }
+.proj3 a:hover h3 { color: var(--blue); }
+.proj3 .eq { font-size: 14px; color: var(--text); }
+@media (max-width: 960px) { .proj3 { grid-template-columns: 1fr 1fr; gap: 20px; } }
+@media (max-width: 600px) { .proj3 { grid-template-columns: 1fr; } }
+/* ---- Компания и цифры ---- */
+.company { display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: start; }
+.company .txt p + p { margin-top: 14px; }
+.company .txt .more { display: inline-block; margin-top: 22px; font-weight: 500; }
+.numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 32px; }
+.numbers div { border-top: 1px solid var(--line-2); padding-top: 14px; }
+.numbers b { display: block; font-size: clamp(30px, 3vw, 40px); font-weight: 500; color: var(--navy); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.numbers span { display: block; font-size: 14px; color: var(--muted); margin-top: 6px; }
+.brands-row { margin-top: 48px; }
+.brands-row .lbl { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.brands-row .logo-row { grid-template-columns: repeat(8, 1fr); gap: 0; border: 1px solid var(--line); }
+.brands-row .logo-row a { border: 0; border-right: 1px solid var(--line); min-height: 64px; font-size: 15px; }
+.brands-row .logo-row a:nth-child(8n) { border-right: 0; }
+.brands-row .logo-row a:nth-child(n+9) { border-top: 1px solid var(--line); }
+@media (max-width: 1024px) { .brands-row .logo-row { grid-template-columns: repeat(4, 1fr); } .brands-row .logo-row a:nth-child(4n) { border-right: 0; } .brands-row .logo-row a:nth-child(n+5) { border-top: 1px solid var(--line); } }
+@media (max-width: 960px) { .company { grid-template-columns: 1fr; gap: 32px; } }
+@media (max-width: 560px) { .brands-row .logo-row { grid-template-columns: repeat(2, 1fr); } .brands-row .logo-row a:nth-child(2n) { border-right: 0; } .brands-row .logo-row a:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.clients-lbl { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.clients { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; align-items: center; }
+.clients div { height: 56px; display: grid; place-items: center; }
+.clients img { max-height: 44px; width: auto; max-width: 100%; object-fit: contain; filter: grayscale(1); opacity: .75; }
+.clients img.ph { height: 44px; width: 100%; opacity: .5; }
+@media (max-width: 960px) { .clients { grid-template-columns: repeat(4, 1fr); } }
+/* ---- Новости и события ---- */
+.news-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; }
+.news-main { color: var(--ink); display: block; }
+.news-main .im { aspect-ratio: 16 / 9; background: var(--mist-2); overflow: hidden; margin-bottom: 14px; }
+.news-main .im img { width: 100%; height: 100%; object-fit: cover; }
+.news-main .meta { font-size: 13px; color: var(--muted); }
+.news-main h3 { font-size: 22px; margin-top: 6px; line-height: 1.3; }
+.news-main p { margin-top: 8px; font-size: 15px; color: var(--text); }
+.news-main:hover h3 { color: var(--blue); }
+.news-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.news-list a { display: grid; grid-template-columns: 128px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
+.news-list .dt { font-size: 13px; color: var(--muted); padding-top: 3px; font-variant-numeric: tabular-nums; }
+.news-list b { font-weight: 500; font-size: 16px; line-height: 1.35; display: block; }
+.news-list small { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+.news-list a:hover b { color: var(--blue); }
+@media (max-width: 960px) { .news-grid { grid-template-columns: 1fr; gap: 24px; } }
+/* ---- Контакты и форма ---- */
+.contact2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.contact2 .kv2 { margin: 26px 0 0; display: grid; gap: 0; border-top: 1px solid var(--line-2); }
+.contact2 .kv2 div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.contact2 .kv2 dt { color: var(--muted); }
+.contact2 .kv2 dd { margin: 0; color: var(--ink); }
+.contact2 .kv2 a { color: var(--ink); font-weight: 500; }
+.contact2 .kv2 a:hover { color: var(--blue); }
+.contact2 .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.cform { border: 1px solid var(--line); padding: 28px; background: #fff; }
+.cform h3 { grid-column: 1 / -1; font-size: 18px; }
+.cform .note-s { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+@media (max-width: 960px) { .contact2 { grid-template-columns: 1fr; gap: 28px; } .contact2 .kv2 div { grid-template-columns: 110px 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+<!-- 1. Первый экран -->
+<section class="hero" aria-label="Главное">
+  <div class="hero-media"><div id="heroMedia" class="slides"></div><div class="hero-ctrl"><div class="wrap" id="heroCtrl"></div></div></div>
+  <div class="wrap hero-body">
+    <div class="hero-panel">
+      <h1 id="heroTitle">Системы гарантированного электропитания для промышленности, медицины и ЦОД</h1>
+      <p id="heroText">ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 1 до 4000 кВА. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.</p>
+      <div class="links" id="heroLinks"><a class="btn btn-primary btn-lg" href="catalog.html#ibp">Каталог оборудования</a><a class="btn btn-ghost btn-lg" href="kp.html">Запросить КП</a></div>
+    </div>
+    <div class="hero-facts" id="heroFacts"></div>
+  </div>
+</section>
+
+<!-- 2. Оборудование -->
+<section class="section" style="padding-top:clamp(40px,5vw,64px)"><div class="wrap">
+  <div class="sec-head"><div><h2>Оборудование</h2></div><a class="more" href="catalog.html#ibp">Весь каталог</a></div>
+  <div class="lines" id="lines"></div>
+  <div class="lines-more" id="linesMore"></div>
+</div></section>
+
+<!-- 3. Решения по отраслям -->
+<section class="section bg-mist"><div class="wrap">
+  <div class="sec-head"><div><h2>Решения по отраслям</h2><p>Комплектуем системы под требования отрасли: пиковые токи медицинского оборудования, резервирование N+1 для ЦОД, запылённость и индуктивные нагрузки производств.</p></div></div>
+  <div class="ind-split"><ul class="ind-list" id="indList"></ul><div class="ind-media" id="indMedia"></div></div>
+</div></section>
+
+<!-- 4. Сервис -->
+<section class="section svc-sec"><div class="wrap svc-split2">
+  <div class="svc-photo" id="svcPhoto"></div>
+  <div class="svc-text">
+    <h2>Сервисная служба</h2>
+    <p>Собственные инженеры, допуски к работам, нагрузочный модуль 150 кВт и анализатор батарей Fluke VT521. Выезд по Алматы в день обращения, по Казахстану по графику.</p>
+    <ul class="svc-rows" id="svcList"></ul>
+    <div class="links"><a class="btn btn-primary" href="service.html#montazh">Все услуги</a><button class="btn btn-ghost" data-open-modal data-title="Заявка на сервис" data-type="Заявка на услугу (главная)">Оставить заявку</button></div>
+  </div>
+</div></section>
+
+<!-- 5. Проекты -->
+<section class="section bg-mist"><div class="wrap">
+  <div class="sec-head"><div><h2>Реализованные проекты</h2></div><a class="more" href="projects.html">Все проекты</a></div>
+  <div class="proj3" id="proj"></div>
+</div></section>
+
+<!-- 6. Компания -->
+<section class="section"><div class="wrap">
+  <div class="company">
+    <div class="txt">
+      <h2>AEC Kazakhstan</h2>
+      <p class="lead" style="margin-top:14px">Инженерная компания в области гарантированного электропитания. Работаем в Казахстане с 2015 года: проектируем, поставляем, монтируем и обслуживаем системы бесперебойного питания для объектов любого масштаба.</p>
+      <p>Официальный дистрибьютор Salicru, Tescom и Kehua, партнёр Hoppecke и BAE Batterien. Среди заказчиков Air Astana, АО «КТЖ», Национальный банк РК, телеканал «Казахстан», медицинские центры и промышленные предприятия.</p>
+      <a class="more" href="about.html">Подробнее о компании</a>
+    </div>
+    <div class="numbers" id="numbers"></div>
+  </div>
+  <div class="brands-row"><div class="lbl">Официальный дистрибьютор и партнёр производителей</div><div class="logo-row" id="brandRow"></div></div>
+</div></section>
+
+<!-- 7. Клиенты -->
+<section class="section-tight" style="padding-top:0"><div class="wrap"><div class="clients-lbl">Среди заказчиков</div><div class="clients" id="clientLogos"></div></div></section>
+
+<!-- 8. Новости и события -->
+<section class="section bg-mist"><div class="wrap">
+  <div class="sec-head"><div><h2>Новости и события</h2></div><a class="more" href="blog.html">Все материалы</a></div>
+  <div class="news-grid"><a class="news-main" id="newsMain" href="article.html#3"></a><ul class="news-list" id="newsList"></ul></div>
+</div></section>
+
+<!-- 9. Контакты -->
+<section class="section"><div class="wrap contact2">
+  <div>
+    <h2>Отдел продаж</h2>
+    <p style="margin-top:14px;max-width:50ch">Подберём оборудование под объект, подготовим коммерческое предложение и спецификацию. Ответ в течение рабочего дня.</p>
+    <dl class="kv2" id="kv"></dl>
+    <div class="links"><a class="btn btn-ghost" id="ctaWa" href="#" target="_blank" rel="noopener">Написать в WhatsApp</a><a class="btn btn-ghost" href="contacts.html">Как добраться</a></div>
+  </div>
+  <form class="form-grid cform" data-lead id="finalForm" novalidate><h3>Запросить КП или консультацию</h3><input type="hidden" name="formType" value="Заявка на КП/консультацию (главная)"><div class="field"><label for="fName">Имя <i>*</i></label><input class="input" id="fName" name="name" required><span class="hint"></span></div><div class="field"><label for="fPhone">Телефон <i>*</i></label><input class="input" id="fPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div><div class="field"><label for="fCompany">Компания</label><input class="input" id="fCompany" name="company"></div><div class="field"><label for="fEmail">E-mail</label><input class="input" id="fEmail" name="email" type="email"></div><div class="field full"><label for="fMsg">Задача</label><textarea class="textarea" id="fMsg" name="comment" style="min-height:90px" placeholder="Например: ИБП 40 кВА для операционной, автономия 20 минут, Шымкент"></textarea></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg" type="submit">Отправить запрос</button></div><p class="note-s">Заявка уходит в отдел продаж и менеджеру в WhatsApp. Файлы спецификаций можно приложить в ответном письме.</p></form>
+</div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L, C = D.CONTACT, img = U.img;
+  U.init({ active: 'home' });
+  const pimg = (slot, alt) => img(slot, alt, '', 'data-ph="bg"');
+
+  // Слайды первого экрана
+  const SLIDES = [
+    { tab: 'Оборудование', slot: 'proj-lab-1.jpg', alt: 'Модульный ИБП Tescom 300 кВА в лаборатории, Караганда', h: 'Системы гарантированного электропитания для промышленности, медицины и ЦОД', p: 'ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 1 до 4000 кВА. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.', a: ['catalog.html#ibp', 'Каталог оборудования'], b: ['kp.html', 'Запросить КП'] },
+    { tab: 'Сервис', slot: 'service-montazh.jpg', alt: 'Инженеры AEC на монтаже ИБП', h: 'Монтаж, обслуживание и ремонт ИБП и генераторов по всему Казахстану', p: 'Собственная сервисная служба: пусконаладка под нагрузкой, регламентное обслуживание, замена и диагностика батарей, ремонт с выездом на объект.', a: ['service.html#montazh', 'Услуги сервиса'], b: ['service.html#zamena', 'Замена батарей'] },
+    { tab: 'Проекты', slot: 'proj-ktz-2.jpg', alt: 'Батареи OPzV на тяговой подстанции КТЖ', h: 'Резервное питание для АО «КТЖ»: 600 аккумуляторов OPzV и 10 ЗВУ', p: 'Замена батарей оперативного тока на тяговых подстанциях без остановки движения. Поставка, монтаж и ввод в эксплуатацию за один сезон.', a: ['project.html#ktz', 'О проекте'], b: ['projects.html', 'Все проекты'] }
+  ];
+  const media = document.getElementById('heroMedia'), ctrl = document.getElementById('heroCtrl');
+  media.innerHTML = SLIDES.map((s, i) => `<div class="slide ${i === 0 ? 'on' : ''}">${pimg(s.slot, s.alt)}</div>`).join('');
+  ctrl.innerHTML = SLIDES.map((s, i) => `<button type="button" class="${i === 0 ? 'on' : ''}" data-i="${i}" aria-label="Слайд ${i + 1}: ${s.tab}">${s.tab}</button>`).join('');
+  const hT = document.getElementById('heroTitle'), hP = document.getElementById('heroText'), hL = document.getElementById('heroLinks');
+  let cur = 0, timer;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(i) {
+    cur = i; const s = SLIDES[i];
+    media.querySelectorAll('.slide').forEach((el, k) => el.classList.toggle('on', k === i));
+    ctrl.querySelectorAll('button').forEach((el, k) => { el.classList.remove('on'); if (k === i) { void el.offsetWidth; el.classList.add('on'); } });
+    hT.textContent = s.h; hP.textContent = s.p;
+    hL.innerHTML = `<a class="btn btn-primary btn-lg" href="${s.a[0]}">${s.a[1]}</a><a class="btn btn-ghost btn-lg" href="${s.b[0]}">${s.b[1]}</a>`;
+  }
+  function arm() { clearTimeout(timer); if (!reduce) timer = setTimeout(() => { show((cur + 1) % SLIDES.length); arm(); }, 7000); }
+  ctrl.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; show(+b.dataset.i); arm(); });
+  media.addEventListener('mouseenter', () => clearTimeout(timer)); media.addEventListener('mouseleave', arm);
+  if (reduce) document.documentElement.style.setProperty('--slide-ms', '0ms');
+  arm();
+  document.getElementById('heroFacts').innerHTML = [['Официальный дистрибьютор', 'Salicru, Tescom, Kehua'], ['Склад в Алматы', 'ИБП и батареи в наличии'], ['Сервис', 'Алматы, Астана, выезд по РК']].map(f => `<div><b>${f[0]}</b>${f[1]}</div>`).join('');
+
+  // Оборудование
+  const main = D.CATEGORIES.filter(c => !c.soon), soon = D.CATEGORIES.filter(c => c.soon);
+  document.getElementById('lines').innerHTML = main.map(c => `<div class="line"><a class="im" href="${L.cat(c.id)}">${pimg(D.CAT_PHOTOS[c.id], c.full || c.name)}</a><h3><a href="${L.cat(c.id)}">${c.id === 'sts' ? 'Переключатели STS' : c.name}</a></h3><div class="rng">${c.range}, ${c.count} моделей</div><ul>${c.subs.slice(0, 3).map(s => `<li><a href="${L.cat(c.id, s.id)}">${s.name}</a></li>`).join('')}</ul></div>`).join('');
+  document.getElementById('linesMore').innerHTML = '<span>Под проект:</span>' + soon.map(c => `<a href="${L.cat(c.id)}">${c.name}</a>`).join('') + `<a href="${L.calc}">Калькулятор подбора</a>`;
+
+  // Отрасли
+  const IPH = { czod: 'proj-airastana-1.jpg', med: 'proj-uralsk-1.jpg', prom: 'proj-ktz-2.jpg', oil: 'prod-tescom-genset-1.jpg', office: 'proj-airastana-3.jpg', machines: 'proj-ktz-4.jpg', emergency: 'proj-lab-2.jpg', telecom: 'proj-tv-1.jpg' };
+  const list = document.getElementById('indList'), im = document.getElementById('indMedia');
+  list.innerHTML = D.INDUSTRIES.map((x, i) => `<li class="${i === 0 ? 'on' : ''}" data-i="${i}"><a href="${L.solution(x.id)}">${x.name}<small>${x.kva}</small></a></li>`).join('');
+  im.innerHTML = `<div class="frame">${D.INDUSTRIES.map((x, i) => img(IPH[x.id], x.h1, i === 0 ? 'on' : '', 'data-ph="bg"')).join('')}</div><div class="cap" id="indCap"></div>`;
+  const cap = document.getElementById('indCap');
+  function pick(i) { list.querySelectorAll('li').forEach((li, k) => li.classList.toggle('on', k === i)); im.querySelectorAll('.frame img').forEach((el, k) => el.classList.toggle('on', k === i)); const x = D.INDUSTRIES[i]; cap.innerHTML = `<div><b>${x.h1}</b>${x.text}</div><a href="${L.solution(x.id)}">Подробнее</a>`; }
+  pick(0);
+  list.addEventListener('mouseover', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
+  list.addEventListener('focusin', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
+
+  // Сервис
+  document.getElementById('svcPhoto').innerHTML = pimg('service-montazh.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
+  document.getElementById('svcList').innerHTML = D.SERVICES.map(s => `<li><a href="${L.service(s.id)}"><span><b>${s.short}</b><small>${s.text}</small></span>${I('chev')}</a></li>`).join('');
+
+  // Проекты
+  const ind = id => (D.INDUSTRIES.find(x => x.id === id) || {}).name || '';
+  document.getElementById('proj').innerHTML = D.PROJECTS.slice(0, 3).map(p => `<a href="${L.project(p.id)}"><div class="im">${pimg(p.photos[0], p.title)}</div><div class="meta">${p.client}, ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="eq">${p.equipment[0]}</div></a>`).join('');
+
+  // Компания
+  document.getElementById('numbers').innerHTML = [['2015', 'год основания'], ['25', 'брендов в портфеле'], ['570', 'позиций в каталоге'], ['12', 'городов с проектами']].map(s => `<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+  document.getElementById('brandRow').innerHTML = D.BRANDS.slice(0, 16).map(b => `<a href="${L.brand(b.id)}">${b.name}</a>`).join('');
+  document.getElementById('clientLogos').innerHTML = D.CLIENT_LOGOS.slice(0, 8).map(c => `<div title="${c[1]}">${img(c[0], c[1])}</div>`).join('');
+
+  // Новости и события
+  const a3 = D.ARTICLES[3];
+  document.getElementById('newsMain').innerHTML = `<div class="im">${pimg('blog-kioge-1.jpg', a3.title)}</div><div class="meta">${a3.cat}, ${U.fmtDate(a3.date)}</div><h3>${a3.title}</h3><p>Стенд AEC Kazakhstan на нефтегазовой выставке: модульные ИБП Tescom, ДГУ в контейнерном исполнении и батареи Hoppecke для объектов добычи.</p>`;
+  const ev = D.EXHIBITIONS.slice(0, 2).map(e => ({ d: String(e.year), t: e.name + ', ' + e.city, s: 'Выставка, ' + e.theme, href: 'about.html#exhibitions' }));
+  const arts = [0, 1, 2].map(k => ({ d: U.fmtDate(D.ARTICLES[k].date), t: D.ARTICLES[k].title, s: D.ARTICLES[k].cat, href: L.article(k) }));
+  document.getElementById('newsList').innerHTML = [arts[0], ev[0], arts[1], arts[2], ev[1]].map(n => `<li><a href="${n.href}"><span class="dt">${n.d}</span><span><b>${n.t}</b><small>${n.s}</small></span></a></li>`).join('');
+
+  // Контакты
+  document.getElementById('kv').innerHTML = `<div><dt>Телефон</dt><dd><a href="tel:+${C.phoneRaw}">${C.phone}</a></dd></div><div><dt>E-mail</dt><dd><a href="mailto:${C.email}">${C.email}</a></dd></div><div><dt>Офис и склад</dt><dd>${C.address}</dd></div><div><dt>Часы работы</dt><dd>${C.hours}</dd></div>`;
+  document.getElementById('ctaWa').href = C.whatsapp;
+
+  U.jsonld({ '@context': 'https://schema.org', '@graph': [
+    { '@type': 'Organization', '@id': 'https://aecups.kz/#org', name: 'AEC Kazakhstan', legalName: C.legal, url: 'https://aecups.kz/', logo: 'https://aecups.kz/wp-content/uploads/2026/01/group-534814152-1-optimized.png', sameAs: [C.instagram, C.youtube, C.twogis], contactPoint: { '@type': 'ContactPoint', telephone: '+' + C.phoneRaw, contactType: 'sales', areaServed: 'KZ', availableLanguage: ['ru', 'kk'] } },
+    { '@type': 'LocalBusiness', '@id': 'https://aecups.kz/#local', name: 'AEC Kazakhstan', telephone: '+' + C.phoneRaw, email: C.email, address: { '@type': 'PostalAddress', streetAddress: 'ул. Чаплина 71/66, БЦ «Станица», офис А01', addressLocality: 'Алматы', postalCode: '050000', addressCountry: 'KZ' }, geo: { '@type': 'GeoCoordinates', latitude: 43.2389, longitude: 76.9456 }, openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' } },
+    { '@type': 'WebSite', url: 'https://aecups.kz/', name: 'AEC Kazakhstan', potentialAction: { '@type': 'SearchAction', target: 'https://aecups.kz/?s={search_term_string}', 'query-input': 'required name=search_term_string' } }
+  ] });
+})();
+</script>
+</body>
+</html>

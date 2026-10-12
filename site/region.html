@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ИБП и генераторы в регионах Казахстана | AEC Kazakhstan</title>
+<meta name="description" content="Поставка ИБП, дизельных генераторов, аккумуляторов и стабилизаторов, монтаж и сервис в городах Казахстана. Сроки доставки, выезд инженеров, реализованные проекты.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+.city-nav { display: flex; gap: 8px; flex-wrap: wrap; }
+.city-nav a { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: 14px; background: #fff; }
+.city-nav a.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+.cat-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 1024px) { .cat-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .cat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap" id="hero"></div></section>
+  <section class="section-tight"><div class="wrap"><div class="city-nav" id="cityNav"></div></div></section>
+  <section class="section-tight"><div class="wrap"><div class="stats s4" id="stats"></div></div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2 id="catTitle"></h2><p>Складские позиции отгружаем в день оплаты, проектное оборудование поставляем напрямую на объект.</p></div></div><div class="cat-row" id="cats"></div></div></section>
+  <section class="section"><div class="wrap"><div class="sec-head"><div><h2 id="svcTitle"></h2><p>Собственная сервисная служба: выезд инженеров, монтаж, пусконаладка, ТО и ремонт на объекте заказчика.</p></div></div><div class="svc-grid" id="svcs"></div></div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2 id="pjTitle"></h2></div><a class="more" href="projects.html">Все проекты</a></div><div class="pj-grid" id="pj"></div></div></section>
+  <section class="section"><div class="wrap"><div class="split" style="align-items:flex-start"><div class="seo" id="seo"></div><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Вопросы и ответы</h2><div class="acc" id="faq" style="margin-top:16px"></div></div></div></div></section>
+  <section class="section" style="padding-top:0"><div class="wrap"><div class="cta-band"><div><h2 id="ctaTitle"></h2><p>Укажите объект и нагрузку: подберём оборудование, посчитаем доставку и выезд инженера, пришлём КП в течение рабочего дня.</p></div>
+    <form class="form-grid" data-lead novalidate><input type="hidden" name="formType" id="formType" value="Заявка из региона"><div class="field"><label for="rName">Имя <i>*</i></label><input class="input" id="rName" name="name" required><span class="hint"></span></div><div class="field"><label for="rPhone">Телефон <i>*</i></label><input class="input" id="rPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div><div class="field full"><label for="rMsg">Что нужно</label><textarea class="textarea" id="rMsg" name="comment" style="min-height:72px"></textarea></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Получить КП</button></div></form></div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'company' });
+  const DEL = { almaty: ['в день оплаты', 'склад и сервис в городе', 'в день обращения'], astana: ['1–2 дня', 'рейсы ежедневно', '1–2 дня'], shymkent: ['1–2 дня', 'автотранспорт', '2–3 дня'], karaganda: ['1–2 дня', 'автотранспорт', '1–2 дня'], atyrau: ['3–4 дня', 'автотранспорт, авиа для срочных', '3–4 дня'], aktobe: ['3–4 дня', 'автотранспорт', '3–4 дня'], uralsk: ['4–5 дней', 'автотранспорт', '4–5 дней'], pavlodar: ['2–3 дня', 'автотранспорт', '2–3 дня'], 'ust-kamenogorsk': ['2–3 дня', 'автотранспорт', '2–3 дня'], stepnogorsk: ['2–3 дня', 'автотранспорт', '2–3 дня'], aktau: ['4–5 дней', 'автотранспорт, авиа для срочных', '4–5 дней'], kyzylorda: ['2–3 дня', 'автотранспорт', '2–3 дня'] };
+  const PREP = { almaty: 'в Алматы', astana: 'в Астане', shymkent: 'в Шымкенте', karaganda: 'в Караганде', atyrau: 'в Атырау', aktobe: 'в Актобе', uralsk: 'в Уральске', pavlodar: 'в Павлодаре', 'ust-kamenogorsk': 'в Усть-Каменогорске', stepnogorsk: 'в Степногорске', aktau: 'в Актау', kyzylorda: 'в Кызылорде' };
+  const IND = { almaty: 'бизнес-центры, клиники, ЦОД, производство', astana: 'госучреждения, офисы, телеком, железная дорога', shymkent: 'производство, медицина, торговые центры', karaganda: 'промышленность, лаборатории, энергетика', atyrau: 'нефтегаз, подрядчики месторождений', aktobe: 'нефтегаз, промышленность', uralsk: 'медицина, нефтегаз', pavlodar: 'энергетика, металлургия', 'ust-kamenogorsk': 'металлургия, энергетика', stepnogorsk: 'энергетика, горнодобыча', aktau: 'нефтегаз, порт', kyzylorda: 'нефтегаз, аграрный сектор' };
+  function render() {
+    const slug = U.hashParts()[0] || 'astana'; const c = D.CITIES.find(x => x.slug === slug) || D.CITIES[1]; const d = DEL[c.slug] || DEL.astana; const pr = PREP[c.slug] || 'в ' + c.name;
+    document.getElementById('cityNav').innerHTML = D.CITIES.map(x => `<a href="${L.region(x.slug)}" class="${x.slug === c.slug ? 'on' : ''}">${x.name}</a>`).join('');
+    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'География', href: L.home + '#categories' }, { name: c.name }];
+    const h1 = c.hq ? 'ИБП, генераторы и сервис в Алматы: офис, склад и сервисная служба AEC' : 'ИБП, дизельные генераторы и сервис ' + pr;
+    document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${h1}</h1><p class="lead">${c.hq ? 'Головной офис, склад и сервисная служба AEC Kazakhstan находятся в Алматы. Складские ИБП, батареи и стабилизаторы отгружаем в день оплаты, инженер выезжает на объект в день обращения.' : 'Поставляем ИБП, ДГУ, аккумуляторы и стабилизаторы ' + pr + ' со склада в Алматы и напрямую с заводов, выполняем монтаж, пусконаладку и сервис силами инженеров AEC. Типовые заказчики региона: ' + (IND[c.slug] || 'бизнес, медицина, производство') + '.'}</p><div class="cta"><button class="btn btn-lg btn-kp" data-open-modal data-title="КП с доставкой ${pr}" data-type="Заявка из региона: ${c.name}">Запросить КП</button><a class="btn btn-lg btn-outline-light" href="${L.calc}">Калькулятор подбора</a></div>`;
+    document.getElementById('stats').innerHTML = [[d[0], 'доставка складских позиций ' + pr], [d[2], 'выезд инженера на объект'], [c.projects ? c.projects + (c.projects > 1 ? ' проекта' : ' проект') : 'поставка', c.projects ? 'реализовано ' + pr : 'и сервис ' + pr], ['570+', 'позиций в каталоге']].map(s => `<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+    document.getElementById('catTitle').textContent = 'Оборудование с доставкой ' + pr;
+    document.getElementById('cats').innerHTML = D.CATEGORIES.slice(0, 5).map(x => `<a class="tile" href="${L.cat(x.id)}"><span class="ic">${I(x.img)}</span><h3>${x.name}</h3><p>${x.range}</p></a>`).join('');
+    document.getElementById('svcTitle').textContent = 'Монтаж и сервис ' + pr;
+    document.getElementById('svcs').innerHTML = D.SERVICES.slice(0, 4).map(s => `<a class="svc" href="${L.service(s.id)}"><span class="ic">${I(s.icon)}</span><h3>${s.short}</h3><p>${s.text}</p><span class="pr">выезд ${d[2]}</span></a>`).join('');
+    const pj = D.PROJECTS.filter(p => p.city === c.name); const list = pj.length ? pj : D.PROJECTS.slice(0, 3);
+    document.getElementById('pjTitle').textContent = pj.length ? 'Проекты ' + pr : 'Проекты в Казахстане';
+    document.getElementById('pj').innerHTML = list.map(p => `<a class="pj" href="${L.project(p.id)}"><div class="img" style="padding:0;overflow:hidden"><span class="badge badge-navy tag" style="z-index:1">${p.city}, ${p.year}</span>${U.img(p.photos[0], p.title, '', 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div><div class="body"><div class="meta">${p.client}</div><h3>${p.title}</h3><div class="kva">${p.kva}</div></div></a>`).join('');
+    document.getElementById('seo').innerHTML = `<h2>Купить ИБП и генератор ${pr}: как мы работаем</h2><p>AEC Kazakhstan поставляет системы гарантированного электропитания ${pr} с 2015 года. Складские позиции (ИБП до 20 кВА, батареи 12 В, стабилизаторы до 10 кВА) отправляем из Алматы ${d[0]}, доставка ${d[1]}. Проектное оборудование (модульные ИБП, ДГУ, батареи OPzV) поставляется напрямую на объект заказчика с заводов Salicru, Tescom, Kehua, AGG Power.</p><h3>Монтаж и сервис ${pr}</h3><p>Инженеры AEC выезжают ${pr} для обследования, монтажа, пусконаладки и ремонта. Срок выезда ${d[2]}, для сервисных договоров действует приоритет. Испытания под нагрузкой проводим собственным нагрузочным модулем, диагностику батарей анализатором Fluke VT521.</p><h3>Кому поставляем</h3><p>Типовые заказчики региона: ${IND[c.slug] || 'бизнес, медицина, производство'}. Для тендеров предоставляем сертификаты ЕАЭС, дистрибьюторские письма и референс-лист проектов.</p>`;
+    const faq = [['Сколько стоит доставка ' + pr + '?', 'Складские позиции до 50 кг: от 5 000 ₸ транспортной компанией. Крупногабаритное оборудование: по расчёту, обычно 1–3 % от стоимости. Точную сумму укажем в КП.'], ['Выезжает ли инженер ' + pr + '?', 'Да, срок выезда ' + d[2] + '. Для сервисных договоров приоритетный выезд.'], ['Есть ли у вас склад ' + pr + '?', c.hq ? 'Да, склад и офис на ул. Чаплина 71/66.' : 'Склад в Алматы, доставка ' + pr + ' ' + d[0] + '. Для крупных проектов возможна прямая поставка с завода на объект.'], ['Делаете ли ТО оборудования других поставщиков?', 'Да, обслуживаем и ремонтируем ИБП и ДГУ любых брендов.']];
+    document.getElementById('faq').innerHTML = faq.map(q => `<details><summary>${q[0]}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${q[1]}</div></details>`).join('');
+    document.getElementById('ctaTitle').textContent = 'КП с доставкой ' + pr;
+    document.getElementById('formType').value = 'Заявка из региона: ' + c.name;
+    document.title = 'ИБП, генераторы, сервис ' + pr + ': поставка и монтаж | AEC Kazakhstan';
+    document.querySelector('meta[name=description]').setAttribute('content', 'Поставка ИБП, ДГУ, аккумуляторов и стабилизаторов ' + pr + ', монтаж, пусконаладка и сервис. Доставка ' + d[0] + ', выезд инженера ' + d[2] + '. AEC Kazakhstan.');
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());
+    U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, item: x.href ? new URL(x.href, location.href).href : location.href })) }, { '@type': 'Service', name: 'Поставка и сервис систем электропитания ' + pr, provider: { '@id': 'https://aecups.kz/#org' }, areaServed: { '@type': 'City', name: c.name } }, { '@type': 'FAQPage', mainEntity: faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }] });
+    U.render(); window.scrollTo({ top: 0 });
+  }
+  render(); window.addEventListener('hashchange', render);
+})();
+</script>
+</body>
+</html>

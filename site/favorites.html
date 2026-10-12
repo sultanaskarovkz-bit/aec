@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Избранное | AEC Kazakhstan</title>
+<meta name="description" content="Сохранённые модели ИБП, ДГУ, аккумуляторов и стабилизаторов. Сравнение и запрос КП одним действием.">
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+.phead { padding-block: 0 24px; }
+.phead .crumbs { padding-block: 16px 18px; }
+.phead h1 { font-size: clamp(28px, 3.2vw, 40px); }
+.phead .meta { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-top: 12px; color: var(--muted); font-size: 14px; }
+.phead .meta .sp { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.fgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1100px) { .fgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 800px) { .fgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .fgrid { grid-template-columns: 1fr; } }
+.cat-sep { margin: 28px 0 14px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 12px; }
+.cat-sep::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.cat-sep:first-child { margin-top: 0; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: clamp(28px, 4vw, 48px) 24px; text-align: center; }
+.empty .ic { width: 56px; height: 56px; border-radius: 50%; background: var(--amber-l); color: var(--amber); display: grid; place-items: center; margin: 0 auto 14px; }
+.empty .ic svg { width: 26px; height: 26px; }
+.empty h2 { font-size: clamp(22px, 2.4vw, 30px); }
+.empty p { color: var(--muted); max-width: 54ch; margin: 10px auto 0; }
+.empty .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="phead"><div class="wrap" id="head"></div></section>
+  <section style="padding-bottom:clamp(40px,6vw,72px)"><div class="wrap" id="body"></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: '' });
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const plural = (n, a, b, c) => { const m = n % 100, d = n % 10; return m > 10 && m < 20 ? c : d === 1 ? a : d > 1 && d < 5 ? b : c; };
+  let last = null;
+  function render() {
+    const ids = U.FAV.items(); last = JSON.stringify(ids);
+    const items = ids.map(D.byId).filter(Boolean);
+    const head = document.getElementById('head'), body = document.getElementById('body');
+    const crumbs = U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Избранное' }]);
+    if (!items.length) {
+      head.innerHTML = crumbs + '<h1>Избранное</h1>';
+      const pop = D.PRODUCTS.filter(p => p.stock === 'in' && p.price).slice(0, 4);
+      body.innerHTML = `<div class="empty"><span class="ic">${I('heart')}</span><h2>Список избранного пуст</h2><p>Нажмите на сердечко в карточке товара, чтобы сохранить модель. Список хранится в этом браузере, из него можно сразу собрать запрос КП или отправить модели в сравнение.</p>
+        <div class="cta"><a class="btn btn-primary" href="${L.cat('ibp')}">Каталог ИБП</a><a class="btn btn-ghost" href="${L.cat('akb')}">Аккумуляторы</a><a class="btn btn-ghost" href="${L.calc}">Калькулятор подбора</a></div></div>
+        <div class="sec-head" style="margin-top:40px;margin-bottom:18px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Складские позиции</h2><p>Модели в наличии в Алматы с указанной ценой.</p></div></div><div class="fgrid">${pop.map(p => U.productCard(p)).join('')}</div>`;
+      return;
+    }
+    head.innerHTML = crumbs + `<h1>Избранное</h1><div class="meta"><span>${items.length} ${plural(items.length, 'модель', 'модели', 'моделей')}</span><span class="sp"><button class="btn btn-sm btn-kp" type="button" id="kpAll">${I('kp')} Всё в запрос КП</button><button class="btn btn-sm btn-ghost" type="button" id="clearAll">Очистить</button></span></div>`;
+    const cats = D.CATEGORIES.filter(c => items.some(p => p.cat === c.id));
+    body.innerHTML = cats.map(c => `<div class="cat-sep">${esc(c.name)} · ${items.filter(p => p.cat === c.id).length}</div><div class="fgrid">${items.filter(p => p.cat === c.id).map(p => U.productCard(p)).join('')}</div>`).join('');
+    document.getElementById('kpAll').addEventListener('click', () => { items.forEach(p => { if (!U.KP.items().find(x => x.id === p.id)) U.KP.add(p.id, 1); }); U.toast('Позиции добавлены в запрос КП', L.kp, 'Открыть'); });
+    document.getElementById('clearAll').addEventListener('click', () => { U.store.set('fav', []); U.render(); });
+    U.render();
+  }
+  document.addEventListener('aec:render', () => { if (JSON.stringify(U.FAV.items()) !== last) render(); });
+  render();
+})();
+</script>
+</body>
+</html>

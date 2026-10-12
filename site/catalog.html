@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Каталог оборудования | AEC Kazakhstan</title>
+<meta name="description" content="Каталог ИБП, дизельных генераторов, аккумуляторных батарей и стабилизаторов напряжения. Фильтры по мощности, фазности, исполнению и бренду. Поставка со склада в Алматы и под проект по Казахстану.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+/* ---- Подкатегории ---- */
+.subs { display: grid; grid-template-columns: repeat(auto-fill, minmax(166px, 1fr)); gap: 10px; }
+.sub { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; color: var(--ink); transition: border-color .2s, background .2s; min-width: 0; }
+.sub:hover { border-color: var(--blue); color: var(--ink); }
+.sub.on { border-color: var(--blue); background: var(--blue-l); }
+.sub b { font-weight: 600; font-size: 15px; line-height: 1.25; }
+.sub small { color: var(--muted); font-size: 12px; line-height: 1.3; }
+.sub .n { margin-top: 4px; font-size: 12px; color: var(--blue-d); font-weight: 500; }
+.sub.off { color: var(--muted); }
+.sub.off b { color: var(--muted); }
+.subs-soon .sub { cursor: pointer; text-align: left; font: inherit; }
+@media (max-width: 640px) { .subs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .sub { padding: 10px 12px; } .sub b { font-size: 14px; } }
+
+/* ---- Двухколоночный layout ---- */
+.cat-layout { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 32px; align-items: start; }
+.fpanel { position: sticky; top: calc(var(--header-h) + 16px); max-height: calc(100vh - var(--header-h) - 32px); overflow: auto; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
+.fpanel-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.fpanel-head h2 { font-size: 17px; }
+.fpanel-head a { font-size: 13px; }
+.fpanel-head .btn-icon { display: none; }
+.fpanel-body { padding: 4px 16px 12px; flex: 1; }
+.fpanel-foot { display: none; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); background: #fff; }
+.fgroup { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.fgroup:last-child { border-bottom: 0; }
+.fgroup h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; font-family: var(--font-body); letter-spacing: .01em; }
+.fgroup .check { font-size: 14px; color: var(--text); padding: 4px 0; align-items: center; }
+.fgroup .check input { margin-top: 0; }
+.fgroup .check .cnt { margin-left: auto; color: var(--faint); font-size: 12px; font-variant-numeric: tabular-nums; }
+.fgroup .check > span { display: flex; gap: 8px; flex: 1; align-items: center; min-width: 0; }
+.fgroup .check > span em { font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rng { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+.rng .input { min-height: 38px; padding: 6px 10px; font-size: 14px; }
+.rng .input::-webkit-outer-spin-button, .rng .input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.rng .input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+.rng .dash { color: var(--faint); }
+.dr { position: relative; height: 28px; margin: 10px 4px 2px; }
+.dr .track { position: absolute; left: 0; right: 0; top: 12px; height: 4px; border-radius: 2px; background: var(--line-2); }
+.dr .fill { position: absolute; top: 12px; height: 4px; border-radius: 2px; background: var(--blue); }
+.dr input[type=range] { position: absolute; left: 0; top: 0; width: 100%; height: 28px; margin: 0; background: none; pointer-events: none; -webkit-appearance: none; appearance: none; }
+.dr input[type=range]::-webkit-slider-runnable-track { height: 4px; background: transparent; }
+.dr input[type=range]::-moz-range-track { height: 4px; background: transparent; }
+.dr input[type=range]::-webkit-slider-thumb { pointer-events: auto; -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--blue); margin-top: -7px; cursor: pointer; box-shadow: var(--shadow-s); }
+.dr input[type=range]::-moz-range-thumb { pointer-events: auto; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--blue); cursor: pointer; }
+.dr input[type=range]:focus-visible { outline: none; }
+.dr input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--amber); outline-offset: 2px; }
+.rng-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--faint); padding: 0 2px; }
+
+/* ---- Тулбар, чипы, сетка ---- */
+.toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.toolbar .cnt { font-size: 14px; color: var(--muted); margin-right: auto; }
+.toolbar .cnt b { color: var(--ink); font-weight: 600; }
+.toolbar .select { min-height: 38px; padding: 6px 32px 6px 12px; font-size: 14px; width: auto; }
+.toolbar .seg button { padding: 8px 10px; display: inline-flex; }
+.toolbar .seg svg { width: 18px; height: 18px; }
+.fbtn { display: none; }
+.fbtn i { font-style: normal; background: var(--amber); color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: inline-grid; place-items: center; padding: 0 4px; }
+.fbtn i:empty { display: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 0 0; }
+.chips:empty { display: none; }
+.chips .reset { font-size: 13px; font-weight: 500; }
+.pgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.pgrid.list { grid-template-columns: 1fr; }
+.near { margin: 16px 0 0; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: 28px 24px; text-align: center; margin-top: 18px; }
+.empty h3 { margin-bottom: 8px; }
+.empty p { color: var(--muted); max-width: 52ch; margin-inline: auto; }
+.empty .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.more-wrap { text-align: center; margin-top: 24px; }
+.pager { margin-top: 14px; }
+.pager button { min-width: 40px; height: 40px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: var(--r-s); color: var(--ink); font-size: 14px; background: #fff; }
+.pager button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+.pager button:disabled { color: var(--faint); cursor: default; }
+@media (max-width: 1200px) { .pgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1024px) {
+  .cat-layout { grid-template-columns: 1fr; gap: 0; }
+  .fbtn { display: inline-flex; }
+  .fpanel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 86; width: min(400px, 100%); max-height: none; border: 0; border-radius: 0; transform: translateX(100%); transition: transform .3s var(--ease), visibility .3s; visibility: hidden; box-shadow: var(--shadow); }
+  .fpanel.open { transform: none; visibility: visible; }
+  .fpanel-head .btn-icon { display: inline-flex; }
+  .fpanel-foot { display: block; }
+  .fpanel-body { overflow: auto; }
+}
+@media (max-width: 600px) { .pgrid { grid-template-columns: 1fr; } .toolbar .cnt { flex-basis: 100%; } }
+
+/* ---- Подборки, SEO, FAQ ---- */
+.pop { display: flex; flex-wrap: wrap; gap: 8px; }
+.pop a { display: inline-flex; align-items: center; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 14px; color: var(--ink); background: #fff; transition: border-color .2s, color .2s; }
+.pop a:hover { border-color: var(--blue); color: var(--blue); }
+.seo { max-width: 78ch; }
+.seo h2 { font-size: clamp(22px, 2.4vw, 30px); margin-bottom: 14px; }
+.seo h3 { font-size: 19px; margin: 24px 0 8px; }
+.seo p { margin-bottom: 12px; }
+.seo ul { margin: 0 0 12px; padding-left: 20px; }
+.seo li { margin-bottom: 4px; }
+.seo-split { align-items: flex-start; grid-template-columns: 1.2fr .8fr; }
+@media (max-width: 860px) { .seo-split { grid-template-columns: 1fr; } }
+.soon-text { max-width: 72ch; }
+.soon-text p { margin-bottom: 12px; }
+.soon-text h2 { margin: 28px 0 14px; font-size: clamp(22px, 2.4vw, 30px); }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap" id="hero"></div></section>
+  <div id="body"></div>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'catalog' });
+  const PER = 12;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const TR = { а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ё: 'e', ж: 'zh', з: 'z', и: 'i', й: 'j', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'c', ч: 'ch', ш: 'sh', щ: 'sch', ъ: '', ы: 'y', ь: '', э: 'e', ю: 'yu', я: 'ya' };
+  const slug = s => String(s || '').toLowerCase().split('').map(c => TR[c] != null ? TR[c] : c).join('').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const brandName = id => (D.BRANDS.find(b => b.id === id) || { name: id }).name;
+  const fmtN = v => (+v).toLocaleString('ru-RU');
+  const lc = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : '';
+
+  /* ---------- Ключи фильтров ---------- */
+  const phaseKey = p => { const m = (p.phases || '').match(/^[\d/]+/); return m ? m[0].replace(/\//g, '-') : ''; };
+  const PHASE_LABEL = { '1-1': 'Однофазные (1/1)', '3-1': 'Вход 3 фазы, выход 1 (3/1)', '3-3': 'Трёхфазные (3/3)', '1': 'Однофазные', '3': 'Трёхфазные' };
+  const FORM_OPTS = [
+    { id: 'rack', label: 'Стоечное (Rack)', re: /rack|стоечн/i },
+    { id: 'tower', label: 'Напольное (Tower)', re: /напольн|tower/i },
+    { id: 'wall', label: 'Настенное', re: /настенн/i },
+    { id: 'open', label: 'Открытое', re: /открыт/i },
+    { id: 'kozhuh', label: 'В шумозащитном кожухе', re: /кожух/i },
+    { id: 'container', label: 'В контейнере', re: /контейнер/i },
+    { id: '12v', label: '12 В', re: /^12 в/i },
+    { id: '2v', label: '2 В', re: /^2 в/i }
+  ];
+  const formMatch = (p, v) => { const o = FORM_OPTS.find(x => x.id === v); return o ? o.re.test(p.form || '') : (p.form || '').toLowerCase().includes(v.toLowerCase()); };
+  const archKey = p => p.arch === 'Модульная' ? 'modular' : p.arch === 'Моноблочная' ? 'mono' : '';
+  const ARCH_LABEL = { modular: 'Модульная', mono: 'Моноблочная' };
+  const batKey = p => p.battery === 'встроенные' ? 'in' : p.battery === 'внешние' ? 'ext' : '';
+  const BAT_LABEL = { in: 'Встроенные АКБ', ext: 'Внешние батарейные шкафы' };
+  const techKey = p => slug((p.topology || '').split(/[\s(]/)[0]);
+  const techLabel = p => (p.topology || '').split(/[\s(]/)[0];
+  const engineKey = p => slug(p.spec['Двигатель'] || '');
+  const SORT = { pop: (a, b) => ((b.stock === 'in') - (a.stock === 'in')) || ((!!b.price) - (!!a.price)), 'kva-asc': (a, b) => a.kva - b.kva, 'kva-desc': (a, b) => b.kva - a.kva, name: (a, b) => a.name.localeCompare(b.name, 'ru') };
+  const SORT_LABEL = { pop: 'Сначала популярные', 'kva-asc': 'Мощность: по возрастанию', 'kva-desc': 'Мощность: по убыванию', name: 'По названию' };
+
+  /* ---------- Тексты ---------- */
+  const H1 = {
+    ibp: 'ИБП: источники бесперебойного питания', dgu: 'Дизельные генераторные установки (ДГУ)', akb: 'Аккумуляторные батареи для ИБП и СОПТ', stab: 'Стабилизаторы напряжения', sts: 'Статические переключатели нагрузки (STS)',
+    'ibp.batarejnye-shkafy': 'Батарейные шкафы и модули для ИБП', 'ibp.aksessuary': 'Аксессуары для ИБП',
+    'dgu.otkrytye': 'Дизельные генераторы открытого исполнения', 'dgu.v-kozhuhe': 'Дизельные генераторы в шумозащитном кожухе', 'dgu.v-kontejnere': 'Дизельные генераторы в контейнере', 'dgu.avr': 'АВР и панели управления для ДГУ',
+    'akb.12v': 'Аккумуляторные батареи 12 В AGM и GEL', 'akb.2v': 'Аккумуляторные батареи 2 В OPzV и OPzS', 'akb.li-ion': 'Литий-ионные аккумуляторные батареи', 'akb.stellazhi': 'Стеллажи и шкафы для аккумуляторных батарей',
+    'sts.odnofaznye': 'Статические переключатели STS однофазные', 'sts.tryohfaznye': 'Статические переключатели STS трёхфазные'
+  };
+  const SHORT = { 'akb.12v': 'АКБ 12 В', 'akb.2v': 'АКБ 2 В', 'dgu.v-kontejnere': 'ДГУ в контейнере', 'dgu.v-kozhuhe': 'ДГУ в кожухе', 'dgu.otkrytye': 'ДГУ открытые', 'sts.odnofaznye': 'STS однофазные', 'sts.tryohfaznye': 'STS трёхфазные' };
+  const INTRO = {
+    ibp: 'Однофазные и трёхфазные ИБП с двойным преобразованием от 1 до 600 кВА в каталоге и до 3600 кВА под проект: Salicru, Kehua, Tescom. Стоечные, напольные и модульные системы с резервированием N+1. Складские модели до 20 кВА отгружаем из Алматы, остальное под заказ за 4–6 недель.',
+    'ibp.odnofaznye': 'ИБП 1–10 кВА с однофазным входом и выходом для серверных стоек, кабинетов связи, кассовых узлов и систем безопасности. Встроенные батареи, подключение внешних батарейных модулей, SNMP-мониторинг.',
+    'ibp.tryohfaznye': 'Трёхфазные ИБП 3/3 от 10 до 600 кВА: моноблочные и модульные, с коэффициентом мощности 1,0 и КПД до 96 %. Для серверных, клиник, производств и бизнес-центров. Внешние батарейные шкафы на расчётную автономию.',
+    'ibp.modulnye': 'Модульные ИБП с силовыми модулями 25–50 кВА и горячей заменой: Salicru SLC ADAPT2, Kehua MR33, Tescom MTW. Резервирование N+1, наращивание мощности без замены системы, шкафы до 600 кВА.',
+    'ibp.stoechnye': 'ИБП в 19-дюймовом корпусе высотой 2U–3U с переворотной панелью для установки в стойку или на пол. Salicru SLC TWIN RT2 и RT3 на 4–10 кВА, в наличии в Алматы.',
+    'ibp.batarejnye-shkafy': 'Батарейные шкафы и модули для увеличения автономии ИБП: комплектуем под конкретную модель и расчётное время работы, с автоматами постоянного тока и перемычками.',
+    'ibp.aksessuary': 'SNMP-карты, модули сухих контактов, сервисные байпасы, датчики температуры, рельсы для стоек. Подбираем под установленные у вас ИБП Salicru, Kehua и Tescom.',
+    dgu: 'Дизельные генераторы от 50 до 3750 кВА на двигателях Perkins, Cummins, Volvo Penta и MTU: Tescom, AGG Power, BAIFA. Открытое исполнение, шумозащитный кожух и всепогодный контейнер с АВР. Поставка 8–12 недель, пусконаладка под нагрузкой.',
+    'dgu.otkrytye': 'ДГУ без кожуха для установки в машзалах и генераторных с приточно-вытяжной вентиляцией. Самый доступный вариант при наличии подготовленного помещения.',
+    'dgu.v-kozhuhe': 'ДГУ в шумозащитном кожухе с уровнем шума до 72 дБ(А): для установки на площадке рядом со зданием, у бизнес-центров, клиник и производств.',
+    'dgu.v-kontejnere': 'Контейнерные ДГУ с утеплением, обогревом, АВР и топливным баком: всепогодное решение для месторождений, удалённых объектов и северных регионов Казахстана.',
+    'dgu.avr': 'Шкафы АВР и панели управления Deep Sea для автоматического запуска ДГУ и переключения нагрузки. Комплектуем под мощность и схему объекта.',
+    akb: 'Стационарные аккумуляторные батареи от 7 до 3250 А·ч: 12 В AGM для ИБП, элементы 2 В OPzV и OPzS со сроком службы 15–20 лет для подстанций, СОПТ и телекома. Hoppecke, BAE, Ritar, EnerGrid, Exide. Ходовые 12 В в наличии в Алматы.',
+    'akb.12v': 'Герметичные необслуживаемые батареи 12 В с технологией AGM и гелевые OPzV на 7–200 А·ч для батарейных линеек ИБП. Ritar, EnerGrid, Exide Sprinter, BAE Secura 12V.',
+    'akb.2v': 'Элементы 2 В с трубчатыми пластинами: гелевые OPzV (Hoppecke grid power VR M, BAE Secura) и OPzS с жидким электролитом. Ёмкость от 100 до 3250 А·ч, срок службы 18–20 лет.',
+    'akb.li-ion': 'Литий-железо-фосфатные батареи LiFePO4 со встроенной BMS для ИБП и телеком-узлов: в 3–4 раза легче свинцовых при той же ёмкости, до 3000 циклов.',
+    'akb.stellazhi': 'Стеллажи, батарейные шкафы и кабинеты под линейки 12 В и 2 В: с автоматами постоянного тока, перемычками и датчиками температуры.',
+    stab: 'Стабилизаторы напряжения от 1 до 3200 кВА: однофазные 220 В и трёхфазные 380 В, электромеханические с точностью ±1 % и электронные тиристорные без износа. Tescom, Salicru, EverExceed.',
+    'stab.odnofaznye': 'Однофазные стабилизаторы 220 В на 1–10 кВА для офисов, торговых точек, котельных и частных объектов. Складские модели EverExceed SVC в наличии.',
+    'stab.tryohfaznye': 'Трёхфазные стабилизаторы 380/400 В от 10 до 3200 кВА для станков, компрессоров, холодильного оборудования, медицинской техники и целых зданий.',
+    'stab.elektromehanicheskie': 'Сервоприводные стабилизаторы с плавной регулировкой, точностью до ±1 % и высокой перегрузочной способностью: оптимальны для индуктивной нагрузки и производств.',
+    'stab.elektronnye': 'Тиристорные стабилизаторы без подвижных частей: быстрая реакция, отсутствие износа, тихая работа. Для медицины, ЦОД и объектов с частыми скачками напряжения.',
+    sts: 'Статические переключатели нагрузки Tescom STS2000 и STS4000 на 16–1250 А: перевод нагрузки между двумя источниками за время менее 4 мс. Для ЦОД, клиник и телеком-узлов со схемой 2N.',
+    'sts.odnofaznye': 'Стоечные однофазные STS2000 на 16, 32 и 63 А для питания оборудования с одним блоком питания от двух ИБП.',
+    'sts.tryohfaznye': 'Трёхфазные четырёхполюсные STS4000 на 100–1250 А с SNMP-мониторингом и ручным байпасом для распределительных щитов ЦОД и промышленных объектов.'
+  };
+  const SEO = {
+    ibp: `<h2>Как выбрать ИБП: мощность, топология, автономия</h2>
+<p>Источник бесперебойного питания подбирается по трём параметрам: активная мощность нагрузки в кВт с запасом 20–30 %, требуемое время автономии и характер нагрузки. Для серверных, медицинской техники и станков с ЧПУ нужен ИБП с двойным преобразованием (on-line, VFI): он полностью изолирует нагрузку от сети и держит выходное напряжение и частоту при любых отклонениях на входе. Line-interactive и off-line решения в B2B-сегменте применяются только для некритичных задач.</p>
+<h3>Однофазные и трёхфазные</h3>
+<p>До 10 кВА нагрузка, как правило, однофазная: стоечные Salicru SLC TWIN RT и напольные Kehua KR11 ставятся в серверную стойку или рядом с оборудованием, батареи встроены в корпус. От 10 кВА используются трёхфазные ИБП 3/3 (Salicru SLC TWIN PRO3, Kehua KR33, Tescom NEOLINE и TEOS) с внешними батарейными шкафами. При выборе проверяйте коэффициент мощности выхода (у современных серий 1,0, то есть 20 кВА равны 20 кВт) и перегрузочную способность под пусковые токи.</p>
+<h3>Модульные системы и резервирование N+1</h3>
+<p>Для ЦОД, лабораторий и объектов с растущей нагрузкой выгоднее модульная архитектура: Salicru SLC ADAPT2, Kehua MR33, Tescom MTW. Силовые модули 25–50 кВА заменяются без остановки нагрузки, один дополнительный модуль даёт резервирование N+1, а мощность наращивается покупкой модулей, а не нового ИБП.</p>
+<h3>Типичные ошибки при подборе</h3>
+<ul><li>Расчёт по кВА без учёта коэффициента мощности нагрузки и запаса на её рост.</li><li>Игнорирование пусковых токов двигателей, компрессоров и рентгеновских аппаратов: для них нужны трансформаторные серии вроде Tescom TEOS.</li><li>Размещение батарей в помещении с температурой выше 25 °C, что вдвое сокращает их ресурс.</li><li>Экономия на сервисном байпасе, без которого плановое ТО требует отключения нагрузки.</li></ul>
+<p>Инженеры AEC проверяют расчёт бесплатно и присылают спецификацию с батареями, шкафами и монтажом. Для складских моделей цена указана сразу, остальное считаем под проект в течение рабочего дня.</p>`,
+    dgu: `<h2>Дизельные генераторы для резервного и основного электроснабжения</h2>
+<p>ДГУ подбирается по мощности в режиме резервного (standby) или основного (prime) питания, по типу нагрузки и по условиям установки. Мощность указывается в кВА при cos φ 0,8: установка 100 кВА отдаёт 80 кВт активной мощности. Для электродвигателей, насосов и компрессоров нужен запас на пусковые токи, для ИБП и частотных преобразователей запас на нелинейную нагрузку.</p>
+<h3>Двигатели и альтернаторы</h3>
+<p>В каталоге установки на двигателях Perkins, Cummins, Volvo Penta и MTU с альтернаторами Stamford и Mecc Alte: Tescom TDJ, AGG Power серий C и P, BAIFA BF-C и BF-M. Частота вращения 1500 об/мин, контроллеры Deep Sea с Modbus, автозапуск по сигналу АВР.</p>
+<h3>Исполнение: открытое, в кожухе, в контейнере</h3>
+<p>Открытые ДГУ ставятся в машзалы с приточно-вытяжной вентиляцией и выхлопной трассой. Шумозащитный кожух снижает уровень шума до 72 дБ(А) и позволяет разместить агрегат рядом со зданием. Контейнерное исполнение (IP54, утепление, обогрев, АВР, топливный бак на расчётную автономию) предназначено для месторождений, удалённых объектов и северных регионов.</p>
+<h3>Что учесть при заказе</h3>
+<ul><li>Температура и высота площадки над уровнем моря: при их росте номинальная мощность снижается.</li><li>Подогрев блока цилиндров и зарядное устройство стартерной АКБ для зимнего пуска.</li><li>Место под топливную ёмкость, выхлопную трассу и обслуживание.</li><li>Для объектов с ИБП мощность ДГУ выбирается с запасом относительно мощности ИБП, чтобы выпрямитель не раскачивал частоту генератора.</li></ul>
+<p>Срок поставки 8–12 недель, пусконаладка под нагрузкой с нашим нагрузочным модулем 150 кВт и оформлением акта готовности.</p>`,
+    akb: `<h2>Аккумуляторные батареи для ИБП, СОПТ и телекома</h2>
+<p>Стационарные АКБ подбираются по напряжению, ёмкости C10, требуемому сроку службы и режиму работы (буферный или циклический). Для ИБП до 200 кВА обычно собирают линейку из блоков 12 В AGM: Ritar RA/RT, EnerGrid GP/FT, Exide Sprinter. Для подстанций, систем оперативного постоянного тока и объектов с ресурсом 15–20 лет используют элементы 2 В OPzV (Hoppecke grid power VR M, BAE Secura) или OPzS с жидким электролитом.</p>
+<h3>AGM, OPzV, OPzS: в чём разница</h3>
+<p>AGM: электролит в стекломате, герметичные, без обслуживания, срок службы 10–12 лет в буферном режиме при 20–25 °C, самый доступный вариант для ИБП. OPzV: гелевый электролит и трубчатые положительные пластины, 15–18 лет, устойчивы к глубоким разрядам. OPzS: жидкий электролит, до 20 лет, требуют долива воды и отдельного помещения с вентиляцией, но лучше всего переносят циклические режимы.</p>
+<h3>Расчёт батарейной линейки</h3>
+<p>Число блоков в линейке задаёт шина постоянного тока ИБП, ёмкость рассчитывается из мощности нагрузки, времени автономии и допустимого конечного напряжения на блок. Калькулятор на сайте показывает число и ёмкость батарей для стандартных серий, инженер проверяет расчёт по разрядным таблицам производителя.</p>
+<h3>Типичные ошибки</h3>
+<ul><li>Смешивание в одной линейке батарей разных партий, возрастов и производителей.</li><li>Установка в помещениях с температурой выше 25 °C без вентиляции.</li><li>Отсутствие ежегодной диагностики: отказ одной банки обнаруживается только при пропадании сети.</li></ul>
+<p>AEC выполняет диагностику анализатором Fluke VT521 с отчётом по каждой банке и замену батарей без остановки нагрузки, старые АКБ забираем на утилизацию.</p>`,
+    stab: `<h2>Стабилизаторы напряжения для промышленности и коммерческих объектов</h2>
+<p>Стабилизатор защищает оборудование от длительных отклонений напряжения: просадок при пуске мощных потребителей, перенапряжений в слабых сетях, перекоса фаз. В отличие от ИБП он не даёт автономии, но обходится дешевле и не требует батарей, поэтому на производствах часто ставится перед станками, компрессорами и холодильным оборудованием, а в связке с ИБП разгружает его байпас.</p>
+<h3>Электромеханические и электронные</h3>
+<p>Электромеханические (сервоприводные) стабилизаторы Tescom TSVR и EverExceed SVC плавно регулируют напряжение с точностью до ±1 % и выдерживают кратные перегрузки, но имеют подвижный контакт и ограниченную скорость регулирования. Электронные тиристорные Salicru RE3 T переключают отводы автотрансформатора без износа, работают быстрее и подходят для объектов с частыми скачками напряжения: медицина, ЦОД, офисы.</p>
+<h3>Как подобрать</h3>
+<p>Определите фазность (220 В однофазные до 10 кВА, 380/400 В трёхфазные от 10 кВА), измерьте реальный диапазон входного напряжения на объекте в течение суток и выберите модель с запасом по мощности 25–30 %. При глубоких просадках входа выходная мощность стабилизатора снижается, это нужно учитывать в расчёте.</p>
+<h3>Типичные ошибки</h3>
+<ul><li>Подбор по мощности нагрузки без учёта пусковых токов электродвигателей.</li><li>Установка однофазных стабилизаторов на каждую фазу трёхфазной сети без контроля перекоса.</li><li>Размещение в неотапливаемых помещениях без учёта диапазона рабочих температур.</li></ul>`,
+    sts: `<h2>Статические переключатели нагрузки STS</h2>
+<p>STS переводит критичную нагрузку между двумя независимыми источниками (два ИБП, ИБП и сеть, два ввода) за время менее 4 мс, то есть незаметно для серверов, медицинской техники и телеком-оборудования. Применяется в схемах 2N и для оборудования с одним блоком питания, которое нельзя подключить к двум вводам напрямую.</p>
+<h3>Однофазные и трёхфазные</h3>
+<p>Tescom STS2000 на 16–63 А устанавливаются в стойку и обслуживают отдельные ряды оборудования. Трёхфазные STS4000 на 100–1250 А, четырёхполюсные, с SNMP-мониторингом и ручным байпасом, работают на уровне распределительного щита.</p>
+<h3>Как подобрать</h3>
+<p>Номинальный ток выбирается по максимальной нагрузке с запасом 20–25 %. Проверьте синхронность источников: без разрыва STS переключает только синхронные источники, иначе переход идёт с паузой. Уточните наличие сервисного байпаса и способ монтажа: стойка или напольный шкаф.</p>
+<h3>Что учесть</h3>
+<p>Оба источника должны иметь общую точку заземления нейтрали, кабельные трассы прокладываются раздельно. Для ЦОД мы рекомендуем STS в составе схемы с двумя ИБП и раздельными батарейными группами, с проверкой под нагрузкой при пусконаладке.</p>`
+  };
+  const FAQS = {
+    ibp: [['Чем отличается ИБП on-line от line-interactive?', 'On-line (двойное преобразование) постоянно питает нагрузку через выпрямитель и инвертор, поэтому на выходе всегда стабильные напряжение и частота, а переход на батареи происходит за 0 мс. Line-interactive пропускает сеть напрямую, корректируя её автотрансформатором, и переключается на инвертор за 2–10 мс. Для серверов, медицины и станков используем только on-line.'], ['Сколько нужно батарей для автономии 30 минут?', 'Зависит от мощности нагрузки и напряжения шины ИБП. Для трёхфазного ИБП 20 кВА при полной нагрузке обычно нужна линейка из 32–40 блоков 12 В ёмкостью 65–100 А·ч. Калькулятор на сайте считает конфигурацию, инженер проверяет её по разрядным таблицам.'], ['Можно ли поставить ИБП 3/3 на однофазную нагрузку?', 'Да, если распределить однофазных потребителей по трём фазам выхода равномерно. При сильном перекосе нагрузка одной фазы ограничена третью мощности ИБП, поэтому для однофазной нагрузки свыше 10 кВА лучше рассмотреть модели 3/1 или несколько однофазных ИБП.'], ['Какие ИБП есть на складе в Алматы?', 'Постоянно в наличии стоечные Salicru SLC TWIN RT2 и RT3 на 4–10 кВА, Kehua KR11 на 1–10 кВА, трёхфазные Salicru SLC TWIN PRO3 на 10–40 кВА и отдельные модели Kehua KR33. Складские позиции отмечены статусом «В наличии» и отгружаются в день оплаты.']],
+    dgu: [['Как выбрать мощность ДГУ?', 'Сложите активную мощность потребителей, учтите пусковые токи двигателей (кратность 3–7) и переведите в кВА при cos φ 0,8. Для резервного питания объекта с ИБП мощность ДГУ берётся с запасом относительно ИБП, чтобы выпрямитель не вызывал колебания частоты. Расчёт выполняем бесплатно.'], ['Чем отличаются Perkins, Cummins и MTU?', 'Это двигатели с разной мощностной линейкой и стоимостью владения. Perkins и Cummins закрывают диапазон 50–2500 кВА и имеют развитую сервисную сеть в Казахстане, MTU используются в установках от 750 кВА для электростанций и крупных объектов. Выбор зависит от мощности, режима работы и требований тендера.'], ['Нужен ли АВР?', 'Для автоматического резервирования да: АВР отслеживает сеть, запускает ДГУ и переводит нагрузку, а после восстановления сети возвращает её обратно и останавливает агрегат. Для ручного режима или при наличии собственного щита АВР можно заказать установку без него.'], ['Какой срок поставки ДГУ?', 'Для большинства моделей 8–12 недель с завода. Контейнерные установки с нестандартной комплектацией до 16 недель. Монтаж и пусконаладка под нагрузкой выполняются нашими инженерами по всему Казахстану.']],
+    akb: [['Как понять, что батареи ИБП пора менять?', 'Признаки: время автономии при тесте меньше расчётного, разброс напряжений по блокам более 0,2 В, рост внутреннего сопротивления, вздутие корпусов, ошибки батарейного теста ИБП. Срок службы AGM в буферном режиме 3–5 лет при реальной эксплуатации, OPzV 15–18 лет.'], ['Можно ли заменить часть батарей в линейке?', 'Не рекомендуется: новые блоки работают в паре со старыми на их уровне, а разброс параметров ускоряет деградацию всей линейки. Заменяется вся линейка целиком, старые батареи забираем на утилизацию.'], ['Чем OPzV лучше AGM?', 'Трубчатые положительные пластины и гелевый электролит дают срок службы 15–18 лет и устойчивость к глубоким разрядам. Это выгодно на объектах с длительной автономией и дорогим сервисным выездом: подстанции, телеком-узлы, месторождения. Для ИБП в офисе с автономией 10–30 минут достаточно AGM.'], ['Какие батареи есть на складе?', 'В наличии в Алматы блоки 12 В Ritar RA/RT и EnerGrid GP/FT на 7–100 А·ч, а также отдельные позиции BAE Secura OPzV. Крупные элементы 2 В Hoppecke и BAE поставляются под заказ за 2–4 недели.']],
+    stab: [['Стабилизатор или ИБП?', 'Если задача только в качестве напряжения, а кратковременные пропадания сети допустимы, стабилизатор дешевле и не требует батарей. Если оборудование не должно останавливаться даже на секунды, нужен ИБП on-line, а стабилизатор ставится перед ним при сильных отклонениях сети.'], ['Как выбрать мощность стабилизатора?', 'Суммируйте мощность потребителей, учтите пусковые токи электродвигателей и возьмите запас 25–30 %. При просадке входного напряжения до нижней границы диапазона выходная мощность снижается, поэтому для слабых сетей запас больше.'], ['Электромеханический или электронный?', 'Электромеханический даёт точность ±1 % и хорошо держит перегрузки, но имеет подвижный контакт, требующий осмотра. Электронный тиристорный работает без износа и быстрее реагирует, но точность ±2–3 % и чувствительность к перегрузкам выше. Для производств чаще выбирают первый, для медицины и ЦОД второй.'], ['Есть ли стабилизаторы в наличии?', 'Однофазные EverExceed SVC на 1–10 кВА есть на складе в Алматы. Трёхфазные Tescom TSVR и Salicru RE3 T поставляются под заказ за 4–6 недель.']],
+    sts: [['Для чего нужен STS, если есть два ИБП?', 'Оборудование с одним блоком питания не может подключиться к двум ИБП одновременно. STS питает его от первого источника и за время менее 4 мс переводит на второй при отказе, сохраняя преимущества схемы 2N для всей нагрузки.'], ['Чем отличаются STS2000 и STS4000?', 'STS2000 однофазные на 16–63 А в стоечном исполнении для отдельных рядов оборудования. STS4000 трёхфазные четырёхполюсные на 100–1250 А для распределительных щитов, с ручным байпасом и SNMP.'], ['Что будет при несинхронных источниках?', 'Если источники не синхронизированы по фазе, STS выполняет переход с паузой, чтобы исключить перекрёстное замыкание. Поэтому при проектировании ИБП синхронизируются между собой или по общему байпасу.'], ['Какой срок поставки?', 'STS поставляются под заказ за 4–6 недель. Монтаж, настройка приоритетов источников и проверка переключения под нагрузкой входят в пусконаладку.']]
+  };
+  const POP = {
+    ibp: [[10, 20, 30, 40, 60, 80, 100, 160, 200].map(v => ['ИБП ' + v + ' кВА', 'ibp.kva-' + v]), [['Трёхфазные ИБП', 'ibp.tryohfaznye'], ['Модульные ИБП', 'ibp.modulnye'], ['Стоечные ИБП', 'ibp.stoechnye'], ['ИБП Salicru', 'ibp.brand-salicru'], ['ИБП Kehua', 'ibp.brand-kehua-tech'], ['ИБП в наличии', 'ibp.stock-in']]].flat(),
+    dgu: [[50, 100, 150, 200, 250, 500].map(v => ['ДГУ ' + v + ' кВА', 'dgu.kva-' + v]), [['ДГУ в контейнере', 'dgu.v-kontejnere'], ['ДГУ в кожухе', 'dgu.v-kozhuhe'], ['ДГУ Perkins', 'dgu.engine-perkins'], ['ДГУ Cummins', 'dgu.engine-cummins']]].flat(),
+    akb: [['АКБ 12 В 100 А·ч', 'akb.12v.kva-100'], ['АКБ 2 В OPzV', 'akb.2v.tech-opzv'], ['АКБ 12 В 7 А·ч', 'akb.12v.kva-7'], ['АКБ 12 В 65 А·ч', 'akb.12v.kva-65'], ['АКБ OPzS', 'akb.2v.tech-opzs'], ['АКБ Hoppecke', 'akb.brand-hoppecke'], ['АКБ в наличии', 'akb.stock-in']],
+    stab: [[10, 30, 60, 100].map(v => ['Стабилизатор ' + v + ' кВА', 'stab.kva-' + v]), [['Трёхфазные 380 В', 'stab.tryohfaznye'], ['Однофазные 220 В', 'stab.odnofaznye'], ['Электронные', 'stab.elektronnye']]].flat(),
+    sts: [['STS трёхфазные', 'sts.tryohfaznye'], ['STS однофазные', 'sts.odnofaznye'], ['STS 100 А', 'sts.kva-100'], ['STS 250 А', 'sts.kva-250']]
+  };
+  const SOON = {
+    zvu: { text: ['Зарядно-выпрямительные устройства и выпрямители для систем оперативного постоянного тока подстанций, электростанций, нефтегазовых объектов и телеком-узлов. Напряжение 12–220 В DC, ток до сотен ампер, параллельная работа и резервирование N+1.', 'Подбираем ЗВУ под напряжение шины, ёмкость батареи, ток нагрузки и требования к пульсациям, комплектуем шкафами СОПТ с распределением, контролем изоляции и мониторингом по Modbus или IEC 61850.'], subs: ['Однофазные ЗВУ', 'Трёхфазные ЗВУ', '12 В DC', '24 В DC', '48 В DC', '110 В DC', '220 В DC', 'Шкафы СОПТ'], ph: 'Например: ЗВУ 220 В DC, ток 100 А, батарея 400 А·ч, Атырау' },
+    inv: { text: ['Инверторы DC/AC для питания переменным током потребителей от батарей или шины постоянного тока: телеком-узлы 48 В, подстанции 110 и 220 В, объекты с автономными источниками. Мощность от 6 до 3500 кВт, однофазный и трёхфазный выход.', 'Поставляем под проект со статическим байпасом, параллельной работой и мониторингом. Подбор по входному напряжению, мощности и характеру нагрузки.'], subs: ['Однофазные', 'Трёхфазные', 'Вход 24 В DC', 'Вход 48 В DC', 'Вход 110 В DC', 'Вход 220 В DC', 'Стоечные', 'Напольные'], ph: 'Например: инвертор 48 В DC / 230 В AC, 10 кВт, телеком-узел в Актобе' },
+    freq: { text: ['Статические преобразователи частоты 50/60 Гц и 400 Гц для питания импортного оборудования, судовых и авиационных систем, испытательных стендов и наземного обеспечения воздушных судов.', 'Подбираем по мощности, фазности и требованиям к форме выходного напряжения, комплектуем под проект.'], subs: ['50 / 60 Гц', '400 Гц'], ph: 'Например: преобразователь 50 на 400 Гц, 30 кВА, трёхфазный' },
+    trafo: { text: ['Разделительные трансформаторы 1–100 кВА для гальванической развязки нагрузки от сети, снижения помех и обеспечения требований к электробезопасности в медицине, лабораториях и на производстве.', 'Однофазные и трёхфазные, медицинские по стандарту IEC 61558-2-15 и общепромышленные, в корпусе IP21–IP54 или для встраивания в шкаф.'], subs: ['Однофазные', 'Трёхфазные', 'Медицинские', 'Общепромышленные'], ph: 'Например: разделительный трансформатор 10 кВА, трёхфазный, IP21' },
+    ips: { text: ['Медицинские изолированные системы питания для помещений группы 2: операционные, реанимация, палаты интенсивной терапии. Разделительный трансформатор 3,15–10 кВА, устройство контроля изоляции (IMD), панели сигнализации для персонала и АВР.', 'Комплектуем системы под проект электроснабжения клиники, поставляем с монтажом и пусконаладкой, выдаём протоколы испытаний.'], subs: ['Комплекты для помещений группы 2', 'Трансформаторы', 'Панели IMD', 'АВР'], ph: 'Например: IPS 8 кВА для двух операционных, Караганда' }
+  };
+
+  /* ---------- Состояние ---------- */
+  function parse() {
+    const parts = U.hashParts();
+    const st = { cat: 'ibp', sub: null, kva: null, min: null, max: null, brands: [], phase: null, form: null, arch: null, bat: null, stock: false, tech: null, engine: null, sort: 'pop', view: 'grid' };
+    let i = 0;
+    if (parts[0] && D.cat(parts[0])) { st.cat = parts[0]; i = 1; }
+    const cat = D.cat(st.cat);
+    if (parts[i] && cat.subs.find(s => s.id === parts[i])) { st.sub = parts[i]; i++; }
+    for (; i < parts.length; i++) {
+      const m = parts[i].match(/^([a-z]+)-(.+)$/); if (!m) continue;
+      const k = m[1], v = m[2];
+      if (k === 'kva') { const n = parseFloat(v.replace('-', '.')); if (n > 0) st.kva = n; }
+      else if (k === 'kvamin') { const n = parseFloat(v.replace('-', '.')); if (n >= 0) st.min = n; }
+      else if (k === 'kvamax') { const n = parseFloat(v.replace('-', '.')); if (n > 0) st.max = n; }
+      else if (k === 'brand') st.brands.push(v);
+      else if (k === 'phase') st.phase = v; else if (k === 'form') st.form = v; else if (k === 'arch') st.arch = v; else if (k === 'bat') st.bat = v;
+      else if (k === 'stock') st.stock = v === 'in'; else if (k === 'tech') st.tech = v; else if (k === 'engine') st.engine = v;
+      else if (k === 'sort' && SORT[v]) st.sort = v; else if (k === 'view' && v === 'list') st.view = 'list';
+    }
+    return st;
+  }
+  function hashOf(st) {
+    const a = [st.cat]; if (st.sub) a.push(st.sub);
+    const num = n => String(n).replace('.', '-');
+    if (st.kva != null) a.push('kva-' + num(st.kva)); if (st.min != null) a.push('kvamin-' + num(st.min)); if (st.max != null) a.push('kvamax-' + num(st.max));
+    st.brands.forEach(b => a.push('brand-' + b));
+    if (st.phase) a.push('phase-' + st.phase); if (st.form) a.push('form-' + st.form); if (st.arch) a.push('arch-' + st.arch); if (st.bat) a.push('bat-' + st.bat);
+    if (st.stock) a.push('stock-in'); if (st.tech) a.push('tech-' + st.tech); if (st.engine) a.push('engine-' + st.engine);
+    if (st.sort !== 'pop') a.push('sort-' + st.sort); if (st.view === 'list') a.push('view-list');
+    return a.join('.');
+  }
+  let st = parse(), from = 0, to = PER, lastKey = '', near = false;
+  function commit(scroll) { history.replaceState(null, '', '#' + hashOf(st)); render(scroll); }
+  const filterKey = s => hashOf(Object.assign({}, s, { sort: 'pop', view: 'grid' }));
+
+  /* ---------- Фильтрация ---------- */
+  const F = {
+    sub: p => !st.sub || (p.sub || []).includes(st.sub),
+    kva: p => st.kva == null || (near ? p.kva >= st.kva * 0.75 && p.kva <= st.kva * 1.34 : Math.abs(p.kva - st.kva) / st.kva <= 0.05),
+    range: p => (st.min == null || p.kva >= st.min) && (st.max == null || p.kva <= st.max),
+    brand: p => !st.brands.length || st.brands.includes(p.brandId),
+    phase: p => !st.phase || phaseKey(p) === st.phase,
+    form: p => !st.form || formMatch(p, st.form),
+    arch: p => !st.arch || archKey(p) === st.arch,
+    bat: p => !st.bat || batKey(p) === st.bat,
+    stock: p => !st.stock || p.stock === 'in',
+    tech: p => !st.tech || techKey(p) === st.tech,
+    engine: p => !st.engine || engineKey(p) === st.engine
+  };
+  const catProducts = () => D.PRODUCTS.filter(p => p.cat === st.cat);
+  const apply = except => catProducts().filter(p => Object.keys(F).every(k => k === except || F[k](p)));
+  const count = (list, keyFn) => { const m = {}; list.forEach(p => { const k = keyFn(p); if (k) m[k] = (m[k] || 0) + 1; }); return m; };
+
+  /* ---------- Имена ---------- */
+  function names() {
+    const cat = D.cat(st.cat), sub = st.sub ? cat.subs.find(s => s.id === st.sub) : null, unit = D.unit(st.cat);
+    const key = st.cat + (sub ? '.' + sub.id : '');
+    const short = sub ? (SHORT[key] || cat.name + ' ' + lc(sub.name).replace(/\s*\(.*?\)/g, '')) : cat.name;
+    let h1 = sub ? (H1[key] || cat.name + ' ' + lc(sub.name)) : (H1[st.cat] || cat.full);
+    let title = SHORT[key] || (sub && H1[key]) || short;
+    const oneBrand = st.brands.length === 1 ? brandName(st.brands[0]) : '';
+    if (st.kva != null) { h1 = short + ' ' + fmtN(st.kva) + ' ' + unit; title = h1; }
+    else if (st.phase && PHASE_LABEL[st.phase] && !sub) { h1 = short + ' ' + PHASE_LABEL[st.phase].toLowerCase(); title = h1; }
+    if (oneBrand) { h1 += ' ' + oneBrand; title += ' ' + oneBrand; }
+    return { cat, sub, unit, key, short, h1, title };
+  }
+
+  /* ---------- Рендер ---------- */
+  function render(scroll) {
+    const key = filterKey(st); if (key !== lastKey) { from = 0; to = PER; lastKey = key; }
+    const cat = D.cat(st.cat);
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(s => s.remove());
+    if (cat.soon) { renderSoon(cat); } else { renderCat(); }
+    if (scroll) window.scrollTo({ top: 0 });
+    U.render();
+  }
+
+  function crumbsFor(n) {
+    const items = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: n.cat.name, href: L.cat(n.cat.id) }];
+    if (n.sub) items.push({ name: n.sub.name, href: L.cat(n.cat.id, n.sub.id) });
+    if (st.kva != null) items.push({ name: fmtN(st.kva) + ' ' + n.unit, href: 'catalog.html#' + hashOf(st) });
+    else if (st.brands.length === 1) items.push({ name: brandName(st.brands[0]), href: 'catalog.html#' + hashOf(st) });
+    return items;
+  }
+  function ldCrumbs(items) { return { '@type': 'BreadcrumbList', itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: new URL(it.href, location.href).href })) }; }
+
+  function renderSoon(cat) {
+    const s = SOON[cat.id];
+    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: cat.name, href: L.cat(cat.id) }];
+    document.title = cat.name + ' купить в Казахстане, поставка под проект | AEC';
+    document.querySelector('meta[name=description]').content = cat.full + ': ' + s.text[0].slice(0, 150);
+    document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${esc(cat.full)}</h1><p class="lead">${esc(s.text[0])}</p><div class="cta"><button class="btn btn-lg btn-kp" data-open-modal data-title="Запрос на ${esc(cat.name)}" data-type="Запрос под проект">Запросить подбор</button><a class="btn btn-lg btn-outline-light" href="${L.service('konsultaciya')}">Предпроектная консультация</a></div>`;
+    document.getElementById('body').innerHTML = `
+      <section class="section-tight"><div class="wrap">
+        <div class="sec-head"><div><h2>Типы оборудования</h2><p>Выберите тип, чтобы указать его в запросе. Характеристики и спецификацию составим под ваш объект.</p></div></div>
+        <div class="subs subs-soon">${s.subs.map(n => `<button class="sub" type="button" data-pick="${esc(n)}"><b>${esc(n)}</b><small>под проект</small></button>`).join('')}</div>
+      </div></section>
+      <section class="section-tight"><div class="wrap"><div class="soon-text">
+        <h2>Оборудование поставляется под проект</h2>
+        ${s.text.slice(1).map(t => `<p>${esc(t)}</p>`).join('')}
+        <p>Для расчёта пришлите техническое задание, однолинейную схему или опросный лист: напряжение, ток нагрузки, требуемую автономию и условия площадки. Подготовим технико-коммерческое предложение с характеристиками, сроками и стоимостью монтажа.</p>
+        <p>Смежные категории: ${D.CATEGORIES.filter(c => !c.soon).map(c => `<a href="${L.cat(c.id)}">${esc(c.name)}</a>`).join(', ')}.</p>
+      </div></div></section>
+      <section class="section"><div class="wrap"><div class="cta-band">
+        <div><h2>Помощь в подборе: ${esc(lc(cat.name))}</h2><p>Опишите задачу или приложите ТЗ. Инженер уточнит параметры по телефону и пришлёт ТКП в течение 1–2 рабочих дней.</p>
+          <ul class="icon-list" style="margin-top:22px;color:#c9d7e6"><li><span class="ic">${I('ruler')}</span><div><b style="color:#fff">Расчёт и спецификация</b><p style="color:#9fb3c8">Под напряжение шины, ток и автономию</p></div></li><li><span class="ic">${I('truck')}</span><div><b style="color:#fff">Поставка по Казахстану</b><p style="color:#9fb3c8">С монтажом и пусконаладкой</p></div></li></ul></div>
+        ${leadForm('Помощь в подборе: ' + cat.name, cat.name, s.ph)}
+      </div></div></section>`;
+    document.querySelectorAll('[data-pick]').forEach(b => b.addEventListener('click', () => { const ta = document.getElementById('cfMsg'); ta.value = cat.name + ': ' + b.dataset.pick; ta.closest('.cta-band').scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => ta.focus({ preventScroll: true }), 500); }));
+    document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => U.openModal({ title: b.dataset.title, type: b.dataset.type, product: b.dataset.product, sub: b.dataset.sub })));
+    document.querySelectorAll('form[data-lead]').forEach(f => U.bindForm(f));
+    U.jsonld({ '@context': 'https://schema.org', '@graph': [ldCrumbs(crumbs)] });
+  }
+
+  function leadForm(type, product, fromName) {
+    return `<form class="form-grid" data-lead novalidate>
+      <input type="hidden" name="formType" value="${esc(type)}">${product ? `<input type="hidden" name="product" value="${esc(product)}">` : ''}
+      <div class="field"><label for="cfName">Имя <i>*</i></label><input class="input" id="cfName" name="name" required autocomplete="name"><span class="hint"></span></div>
+      <div class="field"><label for="cfPhone">Телефон <i>*</i></label><input class="input" id="cfPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div>
+      <div class="field full"><label for="cfMsg">Что нужно</label><textarea class="textarea" id="cfMsg" name="comment" style="min-height:80px" placeholder="${esc(fromName || 'Например: ИБП 40 кВА для операционной, автономия 20 минут, Шымкент')}"></textarea></div>
+      <label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label>
+      <div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Отправить</button></div>
+    </form>`;
+  }
+
+  function renderCat() {
+    const n = names(), cat = n.cat, unit = n.unit;
+    near = false; let res = apply();
+    if (st.kva != null && !res.length) { near = true; res = apply(); }
+    res = res.slice().sort(SORT[st.sort]);
+    const total = res.length;
+    const subTotal = catProducts().filter(F.sub).length;
+    document.title = n.title + ' купить в Казахстане, цена от поставщика | AEC';
+    const intro = st.kva != null ? kvaIntro(n, res) : (INTRO[n.key] || INTRO[st.cat]);
+    document.querySelector('meta[name=description]').content = (n.title + ': ' + intro).slice(0, 300);
+
+    /* hero */
+    document.getElementById('hero').innerHTML = U.crumbs(crumbsFor(n)) + `<h1>${esc(n.h1)}</h1><p class="lead">${esc(intro)}</p>`;
+
+    /* subs */
+    const subs = `<section class="section-tight" style="padding-bottom:0"><div class="wrap"><div class="subs">
+      <a class="sub${!st.sub ? ' on' : ''}" href="${L.cat(cat.id)}"><b>Все ${esc(cat.id === 'ibp' ? 'ИБП' : lc(cat.name))}</b><small>${esc(cat.range)}</small><span class="n">${catProducts().length} моделей</span></a>
+      ${cat.subs.map(s => { const c = catProducts().filter(p => (p.sub || []).includes(s.id)).length; return `<a class="sub${st.sub === s.id ? ' on' : ''}${c ? '' : ' off'}" href="${L.cat(cat.id, s.id)}"><b>${esc(s.name)}</b>${s.hint ? `<small>${esc(s.hint)}</small>` : ''}<span class="n">${c ? c + ' ' + plural(c, 'модель', 'модели', 'моделей') : 'под проект'}</span></a>`; }).join('')}
+    </div></div></section>`;
+
+    /* панель фильтров */
+    const panel = renderPanel(total);
+
+    /* тулбар + чипы + сетка */
+    const chips = renderChips(n);
+    const page = res.slice(from, to);
+    const pages = Math.ceil(total / PER);
+    let grid;
+    if (!subTotal) {
+      grid = `<div class="empty"><h3>Позиции поставляются под проект</h3><p>Для этой подкатегории мы комплектуем оборудование под модель и мощность вашей системы. Отправьте запрос: подберём, посчитаем и пришлём КП в течение рабочего дня.</p><div class="cta"><button class="btn btn-kp" data-open-modal data-title="Запрос: ${esc(n.h1)}" data-type="Запрос под проект">Запросить КП</button><a class="btn btn-ghost" href="${L.cat(cat.id)}">Все ${esc(cat.id === 'ibp' ? 'ИБП' : lc(cat.name))}</a></div></div>`;
+    } else if (!total) {
+      grid = `<div class="empty"><h3>По выбранным фильтрам ничего не найдено</h3><p>Попробуйте расширить диапазон мощности или снять часть фильтров. Если нужной модели нет в каталоге, подберём аналог.</p><div class="cta"><button class="btn btn-primary" data-reset>Сбросить фильтры</button><button class="btn btn-kp" data-open-modal data-title="Подбор: ${esc(n.h1)}" data-type="Подбор оборудования">Запросить подбор</button></div></div>`;
+    } else {
+      grid = (near ? `<div class="note near">Точных совпадений по мощности ${fmtN(st.kva)} ${esc(unit)} нет: показаны ближайшие модели. Для нестандартной мощности подберём конфигурацию под проект.</div>` : '') +
+        `<div class="pgrid${st.view === 'list' ? ' list' : ''}">${page.map(p => U.productCard(p, st.view === 'list')).join('')}</div>` +
+        (to < total ? `<div class="more-wrap"><button class="btn btn-ghost btn-lg" data-more>Показать ещё ${Math.min(PER, total - to)} из ${total - to}</button></div>` : '') +
+        (pages > 1 ? `<div class="pager">${Array.from({ length: pages }, (_, i) => `<button type="button" data-page="${i}" class="${i * PER >= from && i * PER < to ? 'on' : ''}" aria-label="Страница ${i + 1}">${i + 1}</button>`).join('')}</div>` : '');
+    }
+    const results = `<div class="results">
+      <div class="toolbar"><div class="cnt">${total ? `Найдено <b>${total}</b> ${plural(total, 'модель', 'модели', 'моделей')}${total > PER ? `, показаны ${from + 1}–${Math.min(to, total)}` : ''}` : 'Моделей не найдено'}</div>
+        <button class="btn btn-ghost btn-sm fbtn" type="button" data-open-filters>${I('menu')} Фильтры <i>${activeCount() || ''}</i></button>
+        <label class="sr" for="sortSel">Сортировка</label><select class="select" id="sortSel">${Object.keys(SORT_LABEL).map(k => `<option value="${k}"${st.sort === k ? ' selected' : ''}>${SORT_LABEL[k]}</option>`).join('')}</select>
+        <div class="seg" role="group" aria-label="Вид"><button type="button" class="${st.view === 'grid' ? 'on' : ''}" data-view="grid" aria-label="Плитка"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button><button type="button" class="${st.view === 'list' ? 'on' : ''}" data-view="list" aria-label="Список"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div>
+      </div>
+      <div class="chips">${chips}</div>
+      ${grid}
+    </div>`;
+
+    const pop = (POP[st.cat] || []).filter(x => x[1] !== hashOf(st));
+    const faqs = FAQS[st.cat] || [];
+    document.getElementById('body').innerHTML = subs +
+      `<section class="section-tight"><div class="wrap"><div class="cat-layout">${panel}${results}</div></div></section>` +
+      `<section class="section-tight bg-mist"><div class="wrap"><div class="sec-head" style="margin-bottom:18px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Популярные подборки</h2><p>Готовые страницы по мощности, исполнению и бренду: цены, модели, подбор.</p></div></div><div class="pop">${pop.map(x => `<a href="catalog.html#${x[1]}">${esc(x[0])}</a>`).join('')}</div></div></section>` +
+      `<section class="section"><div class="wrap"><div class="split seo-split"><div class="seo">${SEO[st.cat] || ''}</div><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Вопросы и ответы</h2><p class="muted" style="margin:10px 0 18px">Коротко о выборе и эксплуатации. <a href="${L.faq}">Все вопросы</a></p><div class="acc">${faqs.map(q => `<details><summary>${esc(q[0])}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${esc(q[1])}</div></details>`).join('')}</div></div></div></div></section>` +
+      `<section class="section" style="padding-top:0"><div class="wrap"><div class="cta-band"><div><h2>Помощь в подборе: ${esc(n.short)}</h2><p>Укажите нагрузку, нужную автономию и город объекта или приложите спецификацию из тендера. Инженер проверит расчёт, предложит 2–3 варианта и пришлёт КП в течение рабочего дня.</p>
+        <div style="margin-top:22px;display:grid;gap:10px;font-size:15px"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--amber);display:flex">${I('phone')}</span><a href="tel:+${D.CONTACT.phoneRaw}" style="color:#fff;font-family:var(--font-display);font-size:20px;font-weight:600">${D.CONTACT.phone}</a></span><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--amber);display:flex">${I('mail')}</span><a href="mailto:${D.CONTACT.email}" style="color:#d7e3f0">${D.CONTACT.email}</a></span><a class="btn btn-sm btn-outline-light" style="justify-self:start" href="${L.calc}">Калькулятор подбора</a></div></div>
+        ${leadForm('Помощь в подборе (' + n.title + ')', '', 'Например: ' + n.short + ', нагрузка 18 кВт, автономия 30 минут, Астана')}</div></div></section>`;
+
+    bindCat(res, total);
+    const ld = [ldCrumbs(crumbsFor(n)), { '@type': 'ItemList', name: n.h1, numberOfItems: total, itemListElement: res.slice(0, 24).map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: new URL(L.product(p.slug), location.href).href, name: p.name })) }];
+    if (faqs.length) ld.push({ '@type': 'FAQPage', mainEntity: faqs.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) });
+    U.jsonld({ '@context': 'https://schema.org', '@graph': ld });
+  }
+
+  function plural(n, a, b, c) { const m = n % 100, d = n % 10; return m > 10 && m < 20 ? c : d === 1 ? a : d > 1 && d < 5 ? b : c; }
+  function kvaIntro(n, res) {
+    const brands = [...new Set(res.map(p => p.brand))], priced = res.filter(p => p.price).map(p => p.price), inStock = res.filter(p => p.stock === 'in').length;
+    const what = n.short;
+    return `${what} ${fmtN(st.kva)} ${n.unit}: цена, модели, подбор. В каталоге ${res.length} ${plural(res.length, 'модель', 'модели', 'моделей')}${brands.length ? ' ' + brands.join(', ') : ''}${priced.length ? ', складские позиции от ' + fmtN(Math.min(...priced)) + ' ₸' : ''}${inStock ? ', ' + inStock + ' ' + plural(inStock, 'модель', 'модели', 'моделей') + ' в наличии в Алматы' : ''}. Подберём по нагрузке, автономии и условиям объекта, пришлём КП в течение рабочего дня.`;
+  }
+  function activeCount() { return (st.kva != null ? 1 : 0) + (st.min != null || st.max != null ? 1 : 0) + st.brands.length + ['phase', 'form', 'arch', 'bat', 'tech', 'engine'].filter(k => st[k]).length + (st.stock ? 1 : 0); }
+
+  /* ---------- Панель фильтров ---------- */
+  function renderPanel(total) {
+    const cat = D.cat(st.cat), unit = D.unit(st.cat), all = catProducts();
+    const lo = Math.min(...all.map(p => p.kva)), hi = Math.max(...all.map(p => p.kva));
+    const groups = [];
+    // мощность
+    const curMin = st.min != null ? st.min : lo, curMax = st.max != null ? st.max : hi;
+    const toT = v => Math.round(Math.log(Math.max(lo, Math.min(hi, v)) / lo) / Math.log(hi / lo) * 1000);
+    const powerTitle = st.cat === 'akb' ? 'Ёмкость C10, А·ч' : st.cat === 'sts' ? 'Номинальный ток, А' : 'Мощность, кВА';
+    groups.push(`<div class="fgroup" data-g="range"><h3>${powerTitle}</h3>
+      ${st.kva != null ? `<p class="small muted" style="margin-bottom:8px">Выбрана точная мощность ${fmtN(st.kva)} ${esc(unit)}. <a href="#" data-clear="kva">Показать диапазон</a></p>` : ''}
+      <div class="rng"><input class="input" type="number" id="rMin" min="${lo}" max="${hi}" step="any" value="${curMin}" aria-label="От"><span class="dash">—</span><input class="input" type="number" id="rMax" min="${lo}" max="${hi}" step="any" value="${curMax}" aria-label="До"></div>
+      <div class="dr" id="dr"><div class="track"></div><div class="fill" id="drFill"></div><input type="range" id="drA" min="0" max="1000" value="${toT(curMin)}" aria-label="Минимум"><input type="range" id="drB" min="0" max="1000" value="${toT(curMax)}" aria-label="Максимум"></div>
+      <div class="rng-scale"><span>${fmtN(lo)}</span><span>${fmtN(hi)} ${esc(unit)}</span></div></div>`);
+    // бренд
+    const bc = count(apply('brand'), p => p.brandId);
+    const brandOpts = D.BRANDS.filter(b => bc[b.id]);
+    if (brandOpts.length) groups.push(group('Бренд', brandOpts.map(b => chk('brand', b.id, b.name, bc[b.id], st.brands.includes(b.id)))));
+    // фазность
+    if (['ibp', 'stab', 'sts'].includes(st.cat)) { const pc = count(apply('phase'), phaseKey); const ks = Object.keys(pc).sort(); if (ks.length) groups.push(group('Фазность', ks.map(k => chk('phase', k, PHASE_LABEL[k] || k, pc[k], st.phase === k, true)))); }
+    // двигатель
+    if (st.cat === 'dgu') { const base = apply('engine'); const ec = count(base, engineKey); const lbl = {}; base.forEach(p => lbl[engineKey(p)] = p.spec['Двигатель']); const ks = Object.keys(ec).sort(); if (ks.length) groups.push(group('Двигатель', ks.map(k => chk('engine', k, lbl[k], ec[k], st.engine === k, true)))); }
+    // исполнение / напряжение
+    { const base = apply('form'); const opts = FORM_OPTS.map(o => ({ o, n: base.filter(p => o.re.test(p.form || '')).length })).filter(x => x.n); if (opts.length) groups.push(group(st.cat === 'akb' ? 'Напряжение' : 'Исполнение', opts.map(x => chk('form', x.o.id, x.o.label, x.n, st.form === x.o.id, true)))); }
+    // архитектура, батареи
+    if (st.cat === 'ibp') {
+      const ac = count(apply('arch'), archKey); const ak = Object.keys(ac); if (ak.length) groups.push(group('Архитектура', ak.sort().map(k => chk('arch', k, ARCH_LABEL[k], ac[k], st.arch === k, true))));
+      const bk = count(apply('bat'), batKey); const bks = Object.keys(bk); if (bks.length) groups.push(group('Батареи', bks.sort().map(k => chk('bat', k, BAT_LABEL[k], bk[k], st.bat === k, true))));
+    }
+    // технология / тип
+    if (['akb', 'stab'].includes(st.cat)) { const base = apply('tech'); const tc = count(base, techKey); const lbl = {}; base.forEach(p => lbl[techKey(p)] = techLabel(p)); const ks = Object.keys(tc).sort(); if (ks.length) groups.push(group(st.cat === 'akb' ? 'Технология' : 'Тип регулирования', ks.map(k => chk('tech', k, lbl[k], tc[k], st.tech === k, true)))); }
+    // наличие
+    const sc = apply('stock').filter(p => p.stock === 'in').length;
+    groups.push(group('Наличие', [chk('stock', 'in', 'В наличии в Алматы', sc, st.stock)]));
+    return `<aside class="fpanel" id="fpanel" aria-label="Фильтры">
+      <div class="fpanel-head"><h2>Фильтры</h2>${activeCount() ? `<a href="#" data-reset>Сбросить</a>` : ''}<button class="btn-icon" type="button" data-close-filters aria-label="Закрыть">${I('close')}</button></div>
+      <div class="fpanel-body" id="fbody">${groups.join('')}</div>
+      <div class="fpanel-foot"><button class="btn btn-primary btn-block" type="button" data-close-filters>Показать ${total} ${plural(total, 'модель', 'модели', 'моделей')}</button></div>
+    </aside>`;
+  }
+  const group = (title, items) => `<div class="fgroup"><h3>${esc(title)}</h3>${items.join('')}</div>`;
+  const chk = (k, v, label, n, on, single) => `<label class="check"><input type="checkbox" data-f="${k}" value="${esc(v)}"${on ? ' checked' : ''}${single ? ' data-single' : ''}><span><em>${esc(label)}</em><span class="cnt">${n}</span></span></label>`;
+
+  function renderChips(n) {
+    const unit = n.unit, c = [];
+    const chip = (label, k, v) => `<span class="chip">${esc(label)}<button type="button" data-rm="${k}" data-v="${esc(v || '')}" aria-label="Убрать фильтр">${I('close')}</button></span>`;
+    if (st.kva != null) c.push(chip(fmtN(st.kva) + ' ' + unit, 'kva'));
+    if (st.min != null || st.max != null) c.push(chip((st.min != null ? 'от ' + fmtN(st.min) : '') + (st.max != null ? ' до ' + fmtN(st.max) : '') + ' ' + unit, 'range'));
+    st.brands.forEach(b => c.push(chip(brandName(b), 'brand', b)));
+    if (st.phase) c.push(chip(PHASE_LABEL[st.phase] || st.phase, 'phase'));
+    if (st.form) { const o = FORM_OPTS.find(x => x.id === st.form); c.push(chip(o ? o.label : st.form, 'form')); }
+    if (st.arch) c.push(chip(ARCH_LABEL[st.arch] || st.arch, 'arch'));
+    if (st.bat) c.push(chip(BAT_LABEL[st.bat] || st.bat, 'bat'));
+    if (st.tech) { const p = catProducts().find(p => techKey(p) === st.tech); c.push(chip(p ? techLabel(p) : st.tech, 'tech')); }
+    if (st.engine) { const p = catProducts().find(p => engineKey(p) === st.engine); c.push(chip(p ? p.spec['Двигатель'] : st.engine, 'engine')); }
+    if (st.stock) c.push(chip('В наличии', 'stock'));
+    if (c.length) c.push(`<a href="#" class="reset" data-reset>Сбросить всё</a>`);
+    return c.join('');
+  }
+  function clearKey(k, v) {
+    if (k === 'kva') st.kva = null; else if (k === 'range') { st.min = null; st.max = null; } else if (k === 'brand') st.brands = st.brands.filter(b => b !== v); else if (k === 'stock') st.stock = false; else st[k] = null;
+  }
+  function resetAll() { Object.assign(st, { kva: null, min: null, max: null, brands: [], phase: null, form: null, arch: null, bat: null, stock: false, tech: null, engine: null }); }
+
+  /* ---------- События ---------- */
+  function bindCat(res, total) {
+    const body = document.getElementById('body');
+    const panel = document.getElementById('fpanel'), overlay = document.querySelector('[data-overlay]');
+    const openF = () => { panel.classList.add('open'); overlay.classList.add('open'); };
+    const closeF = () => { panel.classList.remove('open'); overlay.classList.remove('open'); };
+    body.querySelectorAll('[data-open-filters]').forEach(b => b.addEventListener('click', openF));
+    body.querySelectorAll('[data-close-filters]').forEach(b => b.addEventListener('click', closeF));
+    body.querySelectorAll('[data-reset]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); resetAll(); commit(); }));
+    body.querySelectorAll('[data-clear]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); clearKey(b.dataset.clear); commit(); }));
+    body.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => { clearKey(b.dataset.rm, b.dataset.v); commit(); }));
+    body.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => { st.view = b.dataset.view; commit(); }));
+    const sel = document.getElementById('sortSel'); if (sel) sel.addEventListener('change', () => { st.sort = sel.value; commit(); });
+    body.querySelectorAll('[data-more]').forEach(b => b.addEventListener('click', () => { to = Math.min(total, to + PER); render(); }));
+    body.querySelectorAll('[data-page]').forEach(b => b.addEventListener('click', () => { from = +b.dataset.page * PER; to = from + PER; render(); const t = document.querySelector('.toolbar'); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+    body.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => U.openModal({ title: b.dataset.title, type: b.dataset.type, product: b.dataset.product, sub: b.dataset.sub })));
+    body.querySelectorAll('form[data-lead]').forEach(f => U.bindForm(f));
+    // чекбоксы
+    const fb = document.getElementById('fbody');
+    fb.addEventListener('change', e => {
+      const inp = e.target; if (!inp.matches('input[data-f]')) return;
+      const k = inp.dataset.f, v = inp.value, scrollTop = fb.scrollTop;
+      if (k === 'brand') { st.brands = inp.checked ? st.brands.concat(v) : st.brands.filter(b => b !== v); }
+      else if (k === 'stock') st.stock = inp.checked;
+      else st[k] = inp.checked ? v : null;
+      const wasOpen = panel.classList.contains('open');
+      commit();
+      if (wasOpen) { document.getElementById('fpanel').classList.add('open'); document.getElementById('fbody').scrollTop = scrollTop; }
+    });
+    // диапазон
+    const all = catProducts(), lo = Math.min(...all.map(p => p.kva)), hi = Math.max(...all.map(p => p.kva));
+    const a = document.getElementById('drA'), b = document.getElementById('drB'), fill = document.getElementById('drFill'), iMin = document.getElementById('rMin'), iMax = document.getElementById('rMax');
+    const nice = v => v < 10 ? Math.round(v * 10) / 10 : v < 100 ? Math.round(v) : v < 1000 ? Math.round(v / 5) * 5 : Math.round(v / 50) * 50;
+    const toVal = t => nice(lo * Math.pow(hi / lo, t / 1000));
+    const toT = v => Math.round(Math.log(Math.max(lo, Math.min(hi, v)) / lo) / Math.log(hi / lo) * 1000);
+    const paint = () => { let x = +a.value, y = +b.value; if (x > y) { if (document.activeElement === a) { y = x; b.value = y; } else { x = y; a.value = x; } } fill.style.left = x / 10 + '%'; fill.style.width = (y - x) / 10 + '%'; };
+    const commitRange = (mn, mx) => { mn = Math.max(lo, Math.min(hi, mn)); mx = Math.max(lo, Math.min(hi, mx)); if (mn > mx) [mn, mx] = [mx, mn]; st.min = mn <= lo ? null : mn; st.max = mx >= hi ? null : mx; st.kva = null; const wasOpen = panel.classList.contains('open'); const s = fb.scrollTop; commit(); if (wasOpen) { document.getElementById('fpanel').classList.add('open'); document.getElementById('fbody').scrollTop = s; } };
+    paint();
+    [a, b].forEach(r => { r.addEventListener('input', () => { paint(); iMin.value = toVal(+a.value); iMax.value = toVal(+b.value); }); r.addEventListener('change', () => commitRange(toVal(+a.value), toVal(+b.value))); });
+    [iMin, iMax].forEach(inp => { inp.addEventListener('change', () => { const mn = parseFloat(iMin.value), mx = parseFloat(iMax.value); if (isNaN(mn) || isNaN(mx)) return; a.value = toT(mn); b.value = toT(mx); paint(); commitRange(mn, mx); }); inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); inp.blur(); } }); });
+  }
+
+  document.querySelector('[data-overlay]').addEventListener('click', () => { const p = document.getElementById('fpanel'); if (p) p.classList.remove('open'); });
+  window.addEventListener('hashchange', () => { const prev = st.cat + '.' + st.sub; st = parse(); render(st.cat + '.' + st.sub !== prev); });
+  render();
+})();
+</script>
+</body>
+</html>

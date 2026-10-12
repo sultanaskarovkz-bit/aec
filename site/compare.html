@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Сравнение оборудования | AEC Kazakhstan</title>
+<meta name="description" content="Сравнение ИБП, ДГУ, аккумуляторов и стабилизаторов по характеристикам: мощность, топология, КПД, габариты, цена.">
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+.phead { padding-block: 0 24px; }
+.phead .crumbs { padding-block: 16px 18px; }
+.phead h1 { font-size: clamp(28px, 3.2vw, 40px); }
+.phead .meta { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 14px; color: var(--muted); font-size: 14px; }
+.phead .meta .check { color: var(--text); font-size: 14px; align-items: center; }
+.phead .meta .check input { margin-top: 0; }
+.phead .meta .sp { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+.cmp-wrap { border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
+.cmp { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; table-layout: fixed; }
+.cmp th, .cmp td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+.cmp th { font-weight: 500; color: var(--muted); width: 190px; position: sticky; left: 0; background: #fff; z-index: 1; border-right: 1px solid var(--line); }
+.cmp td { color: var(--ink); min-width: 0; }
+.cmp col.lbl { width: 190px; }
+.cmp col.prod { width: 240px; }
+.cmp col.add { width: 180px; }
+.cmp thead th, .cmp thead td { vertical-align: top; background: var(--mist); border-bottom: 2px solid var(--line); }
+.cmp thead th { z-index: 2; }
+.cmp .hp { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.cmp .hp .img { width: 100%; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--line); border-radius: var(--r-s); display: grid; place-items: center; padding: 10px; position: relative; }
+.cmp .hp .img svg { width: 70%; height: 70%; }
+.cmp .hp .img .x { position: absolute; top: 6px; right: 6px; width: 30px; min-height: 30px; }
+.cmp .hp .img .x svg { width: 16px; height: 16px; }
+.cmp .hp .brand { font-size: 12px; color: var(--muted); }
+.cmp .hp .name { font-weight: 600; color: var(--ink); font-size: 15px; line-height: 1.3; }
+.cmp .hp .name:hover { color: var(--blue); }
+.cmp .hp .price { font-family: var(--font-display); font-weight: 600; color: var(--navy); }
+.cmp .hp .act { display: flex; gap: 6px; width: 100%; }
+.cmp .hp .act .btn { flex: 1; }
+.cmp .addc { height: 100%; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px dashed var(--line-2); border-radius: var(--r-s); padding: 16px; text-align: center; color: var(--muted); font-size: 13px; }
+.cmp .addc svg { width: 26px; height: 26px; color: var(--blue); }
+.cmp tr.diff th::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--amber); margin-right: 8px; vertical-align: middle; }
+.cmp tr.diff td { background: #fffaf0; }
+.cmp tr.grp th, .cmp tr.grp td { background: var(--mist); color: var(--navy); font-weight: 600; font-family: var(--font-display); padding-block: 8px; }
+.cmp-wrap.only-diff tbody tr:not(.diff):not(.grp) { display: none; }
+.cmp-wrap.only-diff tbody tr.grp.nodiff { display: none; }
+.cmp .best { color: var(--ok); font-weight: 500; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: clamp(28px, 4vw, 48px) 24px; text-align: center; }
+.empty h2 { font-size: clamp(22px, 2.4vw, 30px); }
+.empty p { color: var(--muted); max-width: 56ch; margin: 10px auto 0; }
+.empty .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+.howto { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; text-align: left; }
+.howto div { padding: 16px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--text); }
+.howto .ic { width: 36px; height: 36px; flex: none; border-radius: 8px; background: var(--blue-l); color: var(--blue); display: grid; place-items: center; }
+.howto .ic svg { width: 20px; height: 20px; }
+.howto b { display: block; color: var(--ink); margin-bottom: 2px; }
+@media (max-width: 860px) { .howto { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .cmp th { width: 130px; } .cmp col.lbl { width: 130px; } .cmp col.prod { width: 200px; } .cmp th, .cmp td { padding: 9px 10px; font-size: 13px; } }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="phead"><div class="wrap" id="head"></div></section>
+  <section style="padding-bottom:clamp(40px,6vw,72px)"><div class="wrap" id="body"></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'catalog' });
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let onlyDiff = false, lastIds = null;
+
+  function rows(items) {
+    const cat = items[0].cat, u = D.unit(cat);
+    const specKeys = [...new Set(items.flatMap(p => Object.keys(p.spec || {})))];
+    const eff = p => p.eff ? (p.eff.includes('/') ? 'до ' + p.eff.split('/')[0].trim() + ' % / ' + p.eff.split('/')[1].trim() + ' % (ECO)' : 'до ' + p.eff + ' %') : '';
+    const R = [
+      ['Общие', [['Бренд', p => p.brand], ['Серия', p => p.series], ['Модель', p => p.model], ['Артикул', p => p.sku], ['Топология', p => cat === 'akb' ? '' : p.topology], ['Архитектура', p => p.arch], ['Исполнение', p => cat === 'akb' ? '' : p.form]]],
+      [cat === 'akb' ? 'Электрические параметры' : 'Мощность и выход', [[cat === 'akb' ? 'Ёмкость C10' : cat === 'sts' ? 'Номинальный ток' : 'Мощность', p => cat === 'akb' ? p.kva + ' А·ч' : cat === 'sts' ? p.kva + ' А' : p.kva + ' кВА / ' + p.kw + ' кВт'], ['Фазы', p => p.phases], ['Коэффициент мощности', p => cat === 'akb' || cat === 'sts' ? '' : String(p.pf).replace('.', ',')], ['КПД', p => cat === 'akb' ? '' : eff(p)], ['Параллельная работа', p => p.parallel], ['Батареи', p => p.battery]].concat(specKeys.map(k => [k, p => p.spec[k] || '']))],
+      ['Связь, габариты, условия', [['Интерфейсы', p => (p.interfaces || []).join(', ')], ['Габариты', p => p.dims], ['Масса', p => p.weight], ['Степень защиты', p => p.ip], ['Гарантия', p => p.warranty ? p.warranty + ' мес.' : '']]],
+      ['Наличие и цена', [['Наличие', p => p.stock === 'in' ? 'В наличии в Алматы' : 'Под заказ'], ['Срок поставки', p => p.lead], ['Цена', p => D.fmtPrice(p.price)]]]
+    ];
+    return R.map(g => [g[0], g[1].map(r => [r[0], items.map(r[1])]).filter(r => r[1].some(v => v))]).filter(g => g[1].length);
+  }
+
+  function render() {
+    const ids = U.CMP.items(); lastIds = JSON.stringify(ids);
+    const items = ids.map(D.byId).filter(Boolean);
+    const head = document.getElementById('head'), body = document.getElementById('body');
+    const crumbs = U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: 'Сравнение' }]);
+    if (!items.length) {
+      head.innerHTML = crumbs + '<h1>Сравнение оборудования</h1>';
+      const pop = D.PRODUCTS.filter(p => p.cat === 'ibp' && p.stock === 'in' && p.price).slice(0, 4);
+      body.innerHTML = `<div class="empty"><h2>В сравнении пока ничего нет</h2><p>Добавьте товары кнопкой «Сравнить» в каталоге: до четырёх моделей одной категории. Таблица покажет различия по мощности, топологии, КПД, габаритам и цене.</p>
+        <div class="cta"><a class="btn btn-primary" href="${L.cat('ibp')}">Открыть каталог ИБП</a><a class="btn btn-ghost" href="${L.cat('dgu')}">Дизельные генераторы</a><a class="btn btn-ghost" href="${L.cat('akb')}">Аккумуляторы</a></div>
+        <div class="howto"><div><span class="ic">${I('compare')}</span><div><b>1. Нажмите «Сравнить» на карточке</b>Кнопка с иконкой весов есть в каталоге и на странице товара.</div></div><div><span class="ic">${I('check')}</span><div><b>2. Соберите до 4 моделей</b>Сравниваются товары одной категории, например трёхфазные ИБП.</div></div><div><span class="ic">${I('kp')}</span><div><b>3. Запросите КП</b>Прямо из таблицы: добавьте выбранную модель в запрос КП.</div></div></div></div>
+        <div class="sec-head" style="margin-top:40px;margin-bottom:18px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Например, ИБП в наличии</h2><p>Нажмите «Сравнить» на двух-трёх карточках, чтобы увидеть таблицу.</p></div></div><div class="grid g4">${pop.map(p => U.productCard(p)).join('')}</div>`;
+      return;
+    }
+    const cat = D.cat(items[0].cat), groups = rows(items);
+    const diffCount = groups.reduce((s, g) => s + g[1].filter(r => new Set(r[1].map(v => v || '')).size > 1).length, 0);
+    head.innerHTML = crumbs + `<h1>Сравнение оборудования</h1><div class="meta"><span>${esc(cat.name)}: ${items.length} из 4 ${items.length === 1 ? 'модели' : 'моделей'}, различий по ${diffCount} ${plural(diffCount, 'параметру', 'параметрам', 'параметрам')}</span>
+      <label class="check"><input type="checkbox" id="onlyDiff"${onlyDiff ? ' checked' : ''}><span>Показывать только различия</span></label>
+      <span class="sp">${items.length < 4 ? `<a class="btn btn-sm btn-ghost" href="${L.cat(cat.id)}">${I('plus')} Добавить модель</a>` : ''}<button class="btn btn-sm btn-kp" type="button" id="kpAll">${I('kp')} Запросить КП на все</button><button class="btn btn-sm btn-ghost" type="button" id="clearAll">Очистить</button></span></div>`;
+    const cols = `<colgroup><col class="lbl">${items.map(() => '<col class="prod">').join('')}${items.length < 4 ? '<col class="add">' : ''}</colgroup>`;
+    const thead = `<thead><tr><th>Модель</th>${items.map(p => `<td><div class="hp"><div class="img">${U.art(p.img)}<button class="btn-icon x" type="button" data-rm="${p.id}" aria-label="Убрать из сравнения">${I('close')}</button></div><span class="brand">${esc(p.brand)} · ${esc(p.series)}</span><a class="name" href="${L.product(p.slug)}">${esc(p.name)}</a>${p.stock === 'in' ? '<span class="stock stock-in">В наличии</span>' : `<span class="stock stock-order">Под заказ · ${esc(p.lead)}</span>`}<span class="price">${D.fmtPrice(p.price)}</span><div class="act"><button class="btn btn-sm btn-primary" data-quote="${p.id}">Цена</button><button class="btn-icon" data-kp="${p.id}" title="В запрос КП" aria-label="В запрос КП">${I('kp')}</button></div></div></td>`).join('')}${items.length < 4 ? `<td><a class="addc" href="${L.cat(cat.id)}">${I('plus')}<span>Добавить ещё модель из каталога</span></a></td>` : ''}</tr></thead>`;
+    const tbody = '<tbody>' + groups.map(g => { const rs = g[1].map(r => { const d = new Set(r[1].map(v => v || '')).size > 1; return `<tr class="${d ? 'diff' : ''}"><th>${esc(r[0])}</th>${r[1].map(v => `<td>${esc(v || '—')}</td>`).join('')}${items.length < 4 ? '<td></td>' : ''}</tr>`; }); const anyDiff = g[1].some(r => new Set(r[1].map(v => v || '')).size > 1); return `<tr class="grp${anyDiff ? '' : ' nodiff'}"><th>${esc(g[0])}</th><td colspan="${items.length + (items.length < 4 ? 1 : 0)}"></td></tr>` + rs.join(''); }).join('') + '</tbody>';
+    body.innerHTML = `<div class="cmp-wrap${onlyDiff ? ' only-diff' : ''}" id="cmpWrap"><div class="tbl-wrap"><table class="cmp">${cols}${thead}${tbody}</table></div></div>
+      <p class="small muted" style="margin-top:12px">Строки с отличиями отмечены точкой. Характеристики по данным производителей, уточняются по datasheet. Для подбора батарей и расчёта автономии используйте <a href="${L.calc}">калькулятор</a>.</p>`;
+    document.getElementById('onlyDiff').addEventListener('change', e => { onlyDiff = e.target.checked; document.getElementById('cmpWrap').classList.toggle('only-diff', onlyDiff); });
+    document.getElementById('clearAll').addEventListener('click', () => { U.store.set('cmp', []); U.render(); });
+    document.getElementById('kpAll').addEventListener('click', () => U.openModal({ title: 'Запросить КП на ' + items.length + ' ' + (items.length === 1 ? 'модель' : items.length < 5 ? 'модели' : 'моделей'), product: items.map(p => p.name).join('; '), sub: 'Сравнение: ' + items.map(p => p.model).join(', '), comment: 'Прошу КП на: ' + items.map(p => p.name).join('; ') + '. Укажите сроки поставки и условия.' }));
+    body.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => U.CMP.toggle(b.dataset.rm)));
+    U.render();
+  }
+  function plural(n, a, b, c) { const m = n % 100, d = n % 10; return m > 10 && m < 20 ? c : d === 1 ? a : d > 1 && d < 5 ? b : c; }
+  document.addEventListener('aec:render', () => { if (JSON.stringify(U.CMP.items()) !== lastIds) render(); });
+  render();
+})();
+</script>
+</body>
+</html>

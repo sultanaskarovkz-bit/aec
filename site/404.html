@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,follow">
+<title>Страница не найдена | AEC Kazakhstan</title>
+<meta name="description" content="Страница не найдена. Воспользуйтесь поиском или перейдите в каталог.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+.nf { max-width: 760px; margin-inline: auto; text-align: center; padding-block: clamp(48px, 8vw, 100px); }
+.nf .code { font-family: var(--font-display); font-size: clamp(72px, 12vw, 140px); font-weight: 700; color: var(--line-2); line-height: 1; letter-spacing: -.04em; }
+.nf form { display: flex; gap: 8px; max-width: 480px; margin: 24px auto 0; }
+.nf form .input { flex: 1; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="section"><div class="wrap"><div class="nf">
+    <div class="code">404</div>
+    <h1>Такой страницы нет</h1>
+    <p class="lead" style="margin:12px auto 0">Возможно, адрес изменился после обновления сайта. Найдите модель через поиск или перейдите в нужный раздел. Старые адреса каталога ведут на новые автоматически.</p>
+    <form id="sf"><input class="input" id="sq" placeholder="Модель, серия, артикул"><button class="btn btn-primary" type="submit">Найти</button></form>
+    <div class="links" id="links"></div>
+  </div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, L = U.L;
+  U.init({ active: '' });
+  document.getElementById('links').innerHTML = [['Каталог ИБП', L.cat('ibp')], ['Генераторы', L.cat('dgu')], ['Батареи', L.cat('akb')], ['Услуги', L.service('montazh')], ['Проекты', L.projects], ['Контакты', L.contacts]].map(x => `<a class="btn btn-ghost btn-sm" href="${x[1]}">${x[0]}</a>`).join('');
+  document.getElementById('sf').addEventListener('submit', e => { e.preventDefault(); const q = document.getElementById('sq').value.trim(); location.href = 'search.html#q-' + encodeURIComponent(q); });
+})();
+</script>
+</body>
+</html>

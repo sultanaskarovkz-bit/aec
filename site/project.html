@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Проект | AEC Kazakhstan</title>
+<meta name="description" content="Кейс AEC Kazakhstan: задача, решение, поставленное оборудование, объём работ.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+<style>.gallery div img { width:100%; height:100%; object-fit:cover; transition: transform .4s var(--ease); } .gallery div:hover img { transform: scale(1.04); }</style>
+<style>
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.facts div { border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; background: #fff; }
+.facts span { display: block; font-size: 12px; color: var(--muted); }
+.facts b { display: block; font-family: var(--font-display); font-size: 18px; color: var(--navy); margin-top: 4px; }
+@media (max-width: 860px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.eq-list { display: grid; gap: 10px; }
+.eq-list a, .eq-list div { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r); color: var(--ink); background: #fff; }
+.eq-list .ic { width: 40px; height: 40px; border-radius: 8px; background: var(--mist); display: grid; place-items: center; flex: none; padding: 4px; }
+.eq-list .ic svg { width: 100%; height: 100%; }
+.eq-list b { font-size: 15px; font-weight: 500; display: block; }
+.eq-list small { color: var(--muted); }
+.letter { border: 1px solid var(--line); border-radius: var(--r); background: #fff; padding: 20px; display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; }
+.letter .doc { aspect-ratio: 3/4; background: var(--mist); border-radius: 4px; display: grid; place-items: center; }
+.letter .doc svg { width: 50%; }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap page-hero-grid"><div id="hero"></div><div class="art" id="heroArt"></div></div></section>
+  <section class="section-tight"><div class="wrap"><div class="facts" id="facts"></div></div></section>
+  <section class="section-tight"><div class="wrap"><div class="side">
+    <div class="article" style="max-width:none">
+      <h2>Задача</h2><p id="task"></p>
+      <h2>Решение</h2><p id="solution"></p>
+      <h2>Поставленное оборудование</h2><div class="eq-list" id="eq"></div>
+      <h2>Объём работ</h2><ul id="works"></ul>
+      <h2>Фотографии объекта</h2><div class="gallery" id="gallery"></div>
+      <h2>Благодарственное письмо</h2><div class="letter"><div class="doc" id="letterDoc" style="overflow:hidden"></div><div><b id="letterT"></b><p class="muted small" style="margin-top:6px">Скан письма заказчика. Оригиналы писем и сертификаты на странице компании.</p><a class="btn btn-ghost btn-sm" style="margin-top:10px" href="about.html#certs">Открыть документ</a></div></div>
+    </div>
+    <aside class="side-box" id="side"></aside>
+  </div></div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2>Похожие проекты</h2></div><a class="more" href="projects.html">Все проекты</a></div><div class="pj-grid" id="similar"></div></div></section>
+  <section class="section"><div class="wrap"><div class="cta-band"><div><h2>Хочу такой же проект</h2><p id="ctaText"></p></div>
+    <form class="form-grid" data-lead novalidate><input type="hidden" name="formType" id="formType" value="Хочу такой же проект"><div class="field"><label for="pName">Имя <i>*</i></label><input class="input" id="pName" name="name" required><span class="hint"></span></div><div class="field"><label for="pPhone">Телефон <i>*</i></label><input class="input" id="pPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div><div class="field full"><label for="pMsg">Объект и задача</label><textarea class="textarea" id="pMsg" name="comment" style="min-height:72px"></textarea></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Отправить</button></div></form></div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'projects' });
+  const WORKS = { ktz: ['Поставка 600 элементов OPzV 2 В 420 А·ч и 10 комплектов ЗВУ', 'Доставка на подстанции по графику технологических окон', 'Монтаж батарейных стеллажей и перемычек, подключение ЗВУ', 'Формовочный заряд, замеры, протоколы по каждой батарее', 'Обучение персонала, передача документации'], airastana: ['Обследование серверной и расчёт автономии', 'Поставка ИБП 120 кВА и батарейного шкафа', 'Монтаж, подключение к распределительному щиту', 'Пусконаладка, испытания под нагрузкой', 'Интеграция SNMP в систему мониторинга заказчика'], lab: ['Расчёт нагрузки анализаторов и холодильного оборудования', 'Поставка модульного ИБП Tescom MTW 300 кВА с резервированием N+1', 'Монтаж батарейных шкафов и АКБ', 'Пусконаладка и контрольный разряд', 'Сервисный договор на ТО'], uralsk: ['Подбор трансформаторных ИБП под пиковые токи рентгена', 'Поставка 2 × TEOS 80 кВА, 80 АКБ Bereli, аккумуляторные шкафы', 'Монтаж в техническом помещении, прокладка кабеля', 'Пусконаладка с тестом экспозиции', 'Инструктаж персонала'], tv: ['Подбор ИБП Salicru под эфирное оборудование', 'Поставка 2 × 10 кВА с аккумуляторными кабинетами', 'Монтаж и пусконаладка в аппаратной', 'Сдача по акту'] };
+  function render() {
+    const id = U.hashParts()[0] || 'ktz'; const p = D.PROJECTS.find(x => x.id === id) || D.PROJECTS[0];
+    const ind = D.INDUSTRIES.find(i => i.id === p.industry) || {};
+    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Проекты', href: L.projects }, { name: p.title }];
+    document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${p.title}</h1><p class="lead">${p.task}</p><div class="cta"><button class="btn btn-lg btn-kp" data-open-modal data-title="Хочу такой же проект" data-type="Хочу такой же проект: ${p.id}" data-product="${p.title}">Хочу такой же проект</button><a class="btn btn-lg btn-outline-light" href="${L.solution(p.industry)}">Решения: ${ind.name || ''}</a></div>`;
+    document.getElementById('heroArt').innerHTML = `<div style="border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;max-width:420px;margin-inline:auto;box-shadow:var(--shadow)">${U.img(p.photos[0], p.title, '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div>`;
+    document.getElementById('facts').innerHTML = [['Заказчик', p.client], ['Объект', p.object], ['Город и год', p.city + ', ' + p.year], ['Мощность', p.kva]].map(f => `<div><span>${f[0]}</span><b>${f[1]}</b></div>`).join('');
+    document.getElementById('task').textContent = p.task; document.getElementById('solution').textContent = p.solution;
+    document.getElementById('eq').innerHTML = p.equipment.map(e => { const m = e.match(/(Salicru|Kehua|Tescom|Bereli|BERELI)\s?([A-Za-z0-9 ]+)?/); let prod = null; if (/TEOS/i.test(e)) prod = D.PRODUCTS.find(x => x.model === 'TEOS 80'); else if (/MTW/i.test(e)) prod = D.PRODUCTS.find(x => x.model === 'MTW300 300'); else if (/Salicru 10/i.test(e)) prod = D.PRODUCTS.find(x => x.model === 'SLC-10000-TWIN RT3'); else if (/OPzV 2 В 420/i.test(e)) prod = D.PRODUCTS.find(x => x.model === '6 OPzV 420'); else if (/Kehua/i.test(e)) prod = D.PRODUCTS.find(x => x.model === 'KR33120'); return prod ? `<a href="${L.product(prod.slug)}"><span class="ic">${U.art(prod.img)}</span><span><b>${e}</b><small>В каталоге: ${prod.name}</small></span></a>` : `<div><span class="ic">${U.art(/АКБ|батаре/i.test(e) ? 'battery' : /ЗВУ/i.test(e) ? 'sts' : 'tower')}</span><span><b>${e}</b></span></div>`; }).join('');
+    document.getElementById('works').innerHTML = (WORKS[p.id] || []).map(w => `<li>${w}</li>`).join('');
+    document.getElementById('gallery').innerHTML = p.photos.map((ph, k) => `<div style="padding:0;overflow:hidden;cursor:zoom-in" data-zoom="${k}">${U.img(ph, p.title + ', фото ' + (k + 1), '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div>`).join('');
+    document.querySelectorAll('[data-zoom]').forEach(el => el.addEventListener('click', () => { const m = document.getElementById('modal'); const box = m.querySelector('.modal-box'); box.dataset.prev = box.innerHTML; box.style.maxWidth = '1100px'; box.innerHTML = `<button class="btn-icon x" data-close-modal aria-label="Закрыть">${I('close')}</button>${U.img(p.photos[+el.dataset.zoom], p.title, '', 'style="width:100%;height:auto;border-radius:8px"')}`; m.classList.add('open'); }));
+    const cert = D.CERTS.find(c => p.client.includes(c.from.split(' ')[0])); document.getElementById('letterDoc').innerHTML = cert ? U.img(cert.slot, cert.title, '', 'style="width:100%;height:100%;object-fit:cover;object-position:top" data-ph="bg"') : I('doc'); document.getElementById('letterT').textContent = 'Благодарственное письмо: ' + p.client;
+    document.getElementById('side').innerHTML = `<h3>Похожая задача?</h3><p class="small muted">Инженер подберёт решение по аналогии и подготовит КП в течение рабочего дня.</p><button class="btn btn-kp btn-block" data-open-modal data-title="Хочу такой же проект" data-type="Хочу такой же проект: ${p.id}" data-product="${p.title}">Запросить КП</button><a class="btn btn-ghost btn-block" href="${L.calc}">Рассчитать самостоятельно</a><div style="border-top:1px solid var(--line);padding-top:12px;font-size:14px"><b style="display:block;margin-bottom:6px">Отрасль</b><a href="${L.solution(p.industry)}">${ind.h1 || ind.name || ''}</a></div><div style="font-size:14px"><b style="display:block;margin-bottom:6px">Услуги по проекту</b>${['montazh', 'service', 'zamena'].map(s => { const x = D.SERVICES.find(y => y.id === s); return `<a href="${L.service(s)}" style="display:block;padding:3px 0">${x.short}</a>`; }).join('')}</div>`;
+    document.getElementById('similar').innerHTML = D.PROJECTS.filter(x => x.id !== p.id).sort((a, b) => (b.industry === p.industry) - (a.industry === p.industry)).slice(0, 3).map(x => `<a class="pj" href="${L.project(x.id)}"><div class="img" style="padding:0;overflow:hidden"><span class="badge badge-navy tag" style="z-index:1">${x.city}, ${x.year}</span>${U.img(x.photos[0], x.title, '', 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div><div class="body"><div class="meta">${x.client}</div><h3>${x.title}</h3><div class="kva">${x.kva}</div></div></a>`).join('');
+    document.getElementById('ctaText').textContent = 'Опишите объект и нагрузку. Подберём решение по аналогии с проектом «' + p.title + '» и подготовим КП в течение рабочего дня.';
+    document.getElementById('formType').value = 'Хочу такой же проект: ' + p.title;
+    document.title = p.title + ' | Проекты AEC Kazakhstan';
+    document.querySelector('meta[name=description]').setAttribute('content', (p.task + ' ' + p.solution).slice(0, 158));
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());
+    U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'Article', headline: p.title, about: p.object, datePublished: p.year + '-06-01', author: { '@id': 'https://aecups.kz/#org' }, publisher: { '@id': 'https://aecups.kz/#org' } }] });
+    U.render(); window.scrollTo({ top: 0 });
+  }
+  render(); window.addEventListener('hashchange', render);
+})();
+</script>
+</body>
+</html>

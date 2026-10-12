@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Запрос коммерческого предложения | AEC Kazakhstan</title>
+<meta name="description" content="Отправьте запрос КП на ИБП, ДГУ, аккумуляторы и стабилизаторы: список позиций, количество, контакты. Ответ в течение рабочего дня.">
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<style>
+.phead { padding-block: 0 24px; }
+.phead .crumbs { padding-block: 16px 18px; }
+.phead h1 { font-size: clamp(28px, 3.2vw, 40px); }
+.phead p { margin-top: 10px; color: var(--muted); max-width: 64ch; }
+.kp-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 32px; align-items: start; }
+@media (max-width: 960px) { .kp-layout { grid-template-columns: 1fr; } }
+.kp-list { display: grid; gap: 10px; }
+.kp-row { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto auto auto; gap: 14px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
+.kp-row .pimg { width: 72px; height: 72px; background: var(--mist); border-radius: var(--r-s); display: grid; place-items: center; padding: 6px; }
+.kp-row .pimg svg { width: 85%; height: 85%; }
+.kp-row .brand { font-size: 12px; color: var(--muted); }
+.kp-row .name { display: block; font-weight: 600; color: var(--ink); font-size: 15px; line-height: 1.3; margin-top: 2px; }
+.kp-row .name:hover { color: var(--blue); }
+.kp-row .meta { font-size: 12px; color: var(--muted); margin-top: 4px; display: flex; gap: 6px 12px; flex-wrap: wrap; }
+.kp-row .price { font-family: var(--font-display); font-weight: 600; color: var(--navy); white-space: nowrap; font-size: 15px; text-align: right; }
+.kp-row .price small { display: block; font: 400 12px/1.2 var(--font-body); color: var(--muted); }
+.kp-row .qty input { min-height: 30px; }
+.kp-row .btn-icon { width: 36px; min-height: 36px; color: var(--muted); }
+.kp-row .btn-icon svg { width: 16px; height: 16px; }
+@media (max-width: 640px) { .kp-row { grid-template-columns: 60px minmax(0, 1fr) auto; grid-template-areas: 'img info del' 'img qty price'; gap: 10px 12px; align-items: start; } .kp-row .pimg { grid-area: img; width: 60px; height: 60px; } .kp-row .info { grid-area: info; } .kp-row .qty { grid-area: qty; justify-self: start; } .kp-row .price { grid-area: price; align-self: center; } .kp-row .btn-icon { grid-area: del; } }
+.kp-total { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; padding: 14px 16px; border-radius: var(--r); background: var(--mist); font-size: 14px; }
+.kp-total b { color: var(--ink); }
+.kp-total .links { display: flex; gap: 12px; flex-wrap: wrap; }
+.kp-form { margin-top: 28px; border: 1px solid var(--line); border-radius: var(--r-l); padding: clamp(18px, 3vw, 28px); background: #fff; }
+.kp-form h2 { font-size: clamp(22px, 2.4vw, 28px); margin-bottom: 6px; }
+.kp-form .form-grid { margin-top: 18px; }
+.empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: clamp(24px, 4vw, 40px) 24px; text-align: center; }
+.empty h2 { font-size: clamp(22px, 2.4vw, 28px); }
+.empty p { color: var(--muted); max-width: 54ch; margin: 10px auto 0; }
+.empty .cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+.empty .cats a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 14px; color: var(--ink); }
+.empty .cats a svg { width: 18px; height: 18px; color: var(--blue); }
+.empty .cats a:hover { border-color: var(--blue); color: var(--blue); }
+.aside { display: grid; gap: 16px; position: sticky; top: calc(var(--header-h) + 16px); }
+@media (max-width: 960px) { .aside { position: static; } }
+.box { border: 1px solid var(--line); border-radius: var(--r); padding: 22px; background: #fff; }
+.box h2 { font-size: 20px; margin-bottom: 14px; }
+.box .steps { grid-template-columns: 1fr; gap: 20px; margin: 10px 0 0; padding: 0; }
+.box .steps li { padding: 14px 16px 14px 20px; }
+.box .steps li::before { left: -12px; top: 12px; }
+.contacts { display: grid; gap: 10px; font-size: 14px; }
+.contacts a, .contacts span { display: flex; gap: 10px; align-items: flex-start; color: var(--ink); }
+.contacts svg { width: 18px; height: 18px; flex: none; color: var(--blue); margin-top: 2px; }
+.contacts .ph { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+.box.navy { background: var(--navy); color: #c9d7e6; border-color: var(--navy); }
+.box.navy h2 { color: #fff; }
+.box.navy p { font-size: 14px; }
+.box ul.plain { margin: 0; padding-left: 18px; font-size: 14px; color: var(--text); display: grid; gap: 6px; }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="phead"><div class="wrap" id="head"></div></section>
+  <section style="padding-bottom:clamp(40px,6vw,72px)"><div class="wrap"><div class="kp-layout">
+    <div>
+      <div id="kpList"></div>
+      <div class="kp-form" id="kpFormBox">
+        <h2>Контакты для коммерческого предложения</h2>
+        <p class="muted small">Поля со звёздочкой обязательны. Файл с ТЗ или спецификацией ускорит расчёт.</p>
+        <form class="form-grid" id="kpForm" novalidate>
+          <input type="hidden" name="formType" value="Запрос КП (корзина)"><input type="hidden" name="items" id="kpItems" value="">
+          <div class="field"><label for="kName">Имя <i>*</i></label><input class="input" id="kName" name="name" required autocomplete="name"><span class="hint"></span></div>
+          <div class="field"><label for="kPhone">Телефон <i>*</i></label><input class="input" id="kPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div>
+          <div class="field"><label for="kCompany">Компания</label><input class="input" id="kCompany" name="company" autocomplete="organization"></div>
+          <div class="field"><label for="kEmail">E-mail</label><input class="input" id="kEmail" name="email" type="email" autocomplete="email" placeholder="для отправки КП"><span class="hint"></span></div>
+          <div class="field"><label for="kBin">БИН</label><input class="input" id="kBin" name="bin" inputmode="numeric" maxlength="12" placeholder="12 цифр"><span class="hint">Нужен для счёта и договора</span></div>
+          <div class="field"><label for="kCity">Город объекта</label><select class="select" id="kCity" name="city"></select></div>
+          <div class="field full"><label for="kMsg">Комментарий</label><textarea class="textarea" id="kMsg" name="comment" style="min-height:84px" placeholder="Автономия, сроки, монтаж, особенности объекта, условия тендера"></textarea></div>
+          <div class="field full"><label>Файл (ТЗ, спецификация, схема)</label><div class="file-drop">Перетащите файл или <label for="kFile" style="color:var(--blue);cursor:pointer;font-weight:500">выберите</label> · PDF, DOCX, XLSX, DWG, JPG до 20 МБ<input type="file" id="kFile" class="sr" name="file"></div></div>
+          <label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных согласно <a href="legal.html#policy">политике конфиденциальности</a></span></label>
+          <div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit" id="kpSubmit">Отправить запрос КП</button></div>
+          <p class="small muted full">Заявка уйдёт на e-mail отдела продаж и в мессенджер менеджера. КП с ценами и сроками пришлём в течение рабочего дня.</p>
+        </form>
+      </div>
+    </div>
+    <aside class="aside" id="aside"></aside>
+  </div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L, C = D.CONTACT;
+  U.init({ active: '' });
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const plural = (n, a, b, c) => { const m = n % 100, d = n % 10; return m > 10 && m < 20 ? c : d === 1 ? a : d > 1 && d < 5 ? b : c; };
+  document.getElementById('kCity').innerHTML = D.CITIES.map(c => `<option>${esc(c.name)}</option>`).join('') + '<option>Другой</option>';
+  document.getElementById('head').innerHTML = U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Запрос КП' }]) + '<h1>Запрос коммерческого предложения</h1><p>Проверьте список позиций и количество, оставьте контакты. Менеджер уточнит детали по телефону и пришлёт КП с ценами и сроками поставки.</p>';
+  document.getElementById('aside').innerHTML = `
+    <div class="box"><h2>Как мы готовим КП</h2><ol class="steps"><li><b>Заявка с сайта</b><p>Список позиций и контакты попадают менеджеру сразу, дубликат в журнал заявок.</p></li><li><b>Уточнение по телефону</b><p>Инженер проверяет мощность, автономию и комплектацию: батареи, шкафы, байпас, монтаж.</p></li><li><b>КП в течение рабочего дня</b><p>Цены в тенге, сроки поставки, условия оплаты и доставки. Для тендера приложим дистрибьюторское письмо.</p></li></ol></div>
+    <div class="box"><h2>Контакты</h2><div class="contacts"><a href="tel:+${C.phoneRaw}">${I('phone')}<span class="ph">${C.phone}</span></a><a href="${C.whatsapp}" target="_blank" rel="noopener">${I('wa')}<span>WhatsApp: написать менеджеру</span></a><a href="mailto:${C.email}">${I('mail')}<span>${C.email}</span></a><span>${I('pin')}<span>${C.address}</span></span><span>${I('clock')}<span>${C.hours}</span></span></div></div>
+    <div class="box"><h2>Что ускорит расчёт</h2><ul class="plain"><li>Мощность нагрузки в кВт и требуемая автономия</li><li>Фазность и напряжение сети на объекте</li><li>Город и условия установки: помещение, улица, температура</li><li>Спецификация или ТЗ из тендера, если есть</li></ul><p class="small muted" style="margin-top:12px">Не уверены в параметрах: <a href="${L.calc}">калькулятор подбора</a> или <a href="${L.service('konsultaciya')}">бесплатная консультация</a>.</p></div>`;
+
+  function renderList() {
+    const items = U.KP.items().map(x => ({ x, p: D.byId(x.id) })).filter(i => i.p);
+    const el = document.getElementById('kpList'), box = document.getElementById('kpFormBox');
+    if (!items.length) {
+      el.innerHTML = `<div class="empty"><h2>В запросе пока нет позиций</h2><p>Добавьте оборудование кнопкой «В запрос КП» в каталоге или на странице товара. Можно отправить и свободный запрос: опишите задачу в комментарии ниже.</p>
+        <div class="cats">${D.CATEGORIES.filter(c => !c.soon).map(c => `<a href="${L.cat(c.id)}">${I(c.img)}${esc(c.name)}</a>`).join('')}<a href="${L.calc}">${I('ruler')}Калькулятор подбора</a></div></div>`;
+      document.getElementById('kpItems').value = '';
+      document.getElementById('kpSubmit').textContent = 'Отправить запрос';
+      return;
+    }
+    const n = items.reduce((s, i) => s + i.x.q, 0), priced = items.filter(i => i.p.price);
+    const sum = priced.reduce((s, i) => s + i.p.price * i.x.q, 0);
+    el.innerHTML = `<div class="kp-list">${items.map(({ x, p }) => `<div class="kp-row" data-id="${p.id}">
+        <a class="pimg" href="${L.product(p.slug)}" aria-hidden="true" tabindex="-1">${U.art(p.img)}</a>
+        <div class="info"><span class="brand">${esc(p.brand)} · ${esc(p.series)}</span><a class="name" href="${L.product(p.slug)}">${esc(p.name)}</a><div class="meta"><span>${p.kva} ${esc(D.unit(p.cat))}${p.cat === 'ibp' || p.cat === 'dgu' ? ' / ' + p.kw + ' кВт' : ''}</span>${p.sku ? `<span>арт. ${esc(p.sku)}</span>` : ''}<span>${p.stock === 'in' ? 'в наличии в Алматы' : 'под заказ · ' + esc(p.lead)}</span></div></div>
+        <div class="qty" aria-label="Количество"><button type="button" data-dec="${p.id}" aria-label="Меньше">−</button><input type="number" min="1" max="999" value="${x.q}" data-q="${p.id}" inputmode="numeric" aria-label="Количество"><button type="button" data-inc="${p.id}" aria-label="Больше">+</button></div>
+        <div class="price">${p.price ? (p.price * x.q).toLocaleString('ru-RU') + ' ₸' : 'по запросу'}${p.price && x.q > 1 ? `<small>${D.fmtPrice(p.price)} за шт.</small>` : p.price ? '<small>цена «от»</small>' : ''}</div>
+        <button class="btn-icon" type="button" data-del="${p.id}" aria-label="Убрать">${I('close')}</button>
+      </div>`).join('')}</div>
+      <div class="kp-total"><span><b>${items.length}</b> ${plural(items.length, 'позиция', 'позиции', 'позиций')}, <b>${n}</b> ${plural(n, 'единица', 'единицы', 'единиц')}${priced.length ? `, складские позиции от <b>${sum.toLocaleString('ru-RU')} ₸</b>` : ''}${priced.length < items.length ? ', остальное рассчитаем в КП' : ''}</span><span class="links"><a href="${L.cat('ibp')}">Добавить ещё</a><a href="#" id="kpClear">Очистить список</a></span></div>`;
+    document.getElementById('kpItems').value = items.map(({ x, p }) => `${p.name}${p.sku ? ' (арт. ' + p.sku + ')' : ''} × ${x.q}`).join('; ');
+    document.getElementById('kpSubmit').textContent = 'Отправить запрос КП';
+    el.querySelectorAll('[data-inc]').forEach(b => b.addEventListener('click', () => { const it = U.KP.items().find(i => i.id === b.dataset.inc); U.KP.setQty(b.dataset.inc, (it ? it.q : 1) + 1); }));
+    el.querySelectorAll('[data-dec]').forEach(b => b.addEventListener('click', () => { const it = U.KP.items().find(i => i.id === b.dataset.dec); U.KP.setQty(b.dataset.dec, Math.max(1, (it ? it.q : 1) - 1)); }));
+    el.querySelectorAll('[data-q]').forEach(inp => inp.addEventListener('change', () => { const q = Math.max(1, Math.min(999, parseInt(inp.value, 10) || 1)); U.KP.setQty(inp.dataset.q, q); }));
+    el.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => { U.KP.remove(b.dataset.del); U.toast('Позиция убрана из запроса'); }));
+    document.getElementById('kpClear').addEventListener('click', e => { e.preventDefault(); U.KP.clear(); });
+  }
+  document.addEventListener('aec:render', renderList);
+  renderList();
+  U.bindForm(document.getElementById('kpForm'), () => { U.KP.clear(); location.href = L.thanks; });
+})();
+</script>
+</body>
+</html>

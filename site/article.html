@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Статья | AEC Kazakhstan</title>
+<meta name="description" content="Статья инженеров AEC Kazakhstan.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+.art-head { max-width: 76ch; }
+.art-head .meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; color: #9fb3c8; margin-top: 14px; }
+.inline-prod { border: 1px solid var(--line); border-radius: var(--r); padding: 16px; background: var(--mist); margin: 20px 0; display: grid; grid-template-columns: 80px 1fr auto; gap: 14px; align-items: center; }
+.inline-prod .pimg { width: 80px; height: 80px; background: #fff; border-radius: var(--r-s); padding: 6px; }
+.inline-prod b { display: block; font-size: 16px; }
+.inline-prod small { color: var(--muted); }
+@media (max-width: 560px) { .inline-prod { grid-template-columns: 1fr; } }
+.author { display: flex; gap: 12px; align-items: center; padding: 16px; border: 1px solid var(--line); border-radius: var(--r); margin-top: 28px; }
+.author .av { width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-family: var(--font-display); font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap"><div class="art-head" id="hero"></div></div></section>
+  <section class="section-tight"><div class="wrap"><div class="side">
+    <div class="article" id="body"></div>
+    <aside style="display:grid;gap:16px"><div class="toc" id="toc"></div><div class="side-box" style="position:static" id="side"></div></aside>
+  </div></div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2>Похожие статьи</h2></div><a class="more" href="blog.html">Все статьи</a></div><div class="posts" id="similar"></div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'company' });
+  const prodBox = model => { const p = D.PRODUCTS.find(x => x.model === model); return p ? `<div class="inline-prod"><span class="pimg">${U.art(p.img)}</span><span><b>${p.name}</b><small>${p.kva} ${D.unit(p.cat)} · ${p.phases ? p.phases + ' · ' : ''}${p.form} · ${D.fmtPrice(p.price)}</small></span><a class="btn btn-sm btn-primary" href="${L.product(p.slug)}">В каталог</a></div>` : ''; };
+  const BODY = {
+    0: `<p>Серверное оборудование чувствительно к любым отклонениям сети: провал напряжения на 20 мс приводит к перезагрузке, скачок выводит из строя блоки питания, а полное отключение без корректного завершения работы грозит потерей данных. Источник бесперебойного питания для серверной решает все три задачи, но только если выбран правильно. Ниже методика, по которой инженеры AEC подбирают ИБП для серверных и ЦОД в Казахстане.</p>
+<h2 id="s1">Топология: только on-line</h2><p>Для серверного оборудования подходит только ИБП с двойным преобразованием (on-line). Он постоянно питает нагрузку от инвертора, формируя идеальную синусоиду 230 В 50 Гц, и переходит на батареи за 0 мс. Line-interactive ИБП переключаются с задержкой 4–8 мс и пропускают искажения сети, их место в офисах, но не в серверных. Все ИБП в каталоге AEC для серверных: Salicru SLC TWIN RT3, Kehua KR33, модульные SLC ADAPT2 и MR33 имеют on-line топологию.</p>
+<h2 id="s2">Расчёт мощности</h2><p>Сложите потребление всех серверов, коммутаторов и систем хранения по паспортным данным или, лучше, по замерам под реальной нагрузкой. Разделите на коэффициент мощности нагрузки (для современных серверных блоков питания 0,9–1,0) и прибавьте запас 25–30 % на рост. Пример: 12 серверов по 450 Вт и сетевое оборудование 1,2 кВт дают 6,6 кВт; с PF 0,95 это 6,9 кВА, с запасом 30 % около 9 кВА. Подходит ИБП на 10 кВА.</p>${prodBox('SLC-10000-TWIN RT3')}
+<h2 id="s3">Автономия и батареи</h2><p>Время работы от батарей зависит от того, есть ли на объекте дизельный генератор. С ДГУ достаточно 10–15 минут: этого хватает на запуск генератора и приём нагрузки через АВР. Без ДГУ закладывают 30–60 минут на корректное завершение работы серверов через ПО мониторинга. Количество и ёмкость батарей считают по разрядным таблицам производителя, предварительный расчёт даёт <a href="${L.calc}">калькулятор подбора</a>.</p>
+<h2 id="s4">Стоечный или напольный</h2><p>До 10 кВА удобнее стоечные ИБП 2–3U, которые ставятся в серверную стойку вместе с батарейными модулями. От 10 до 40 кВА применяют напольные трёхфазные ИБП с внешними батарейными шкафами. От 20 кВА и при планах роста выгоднее модульные системы: мощность наращивается добавлением модулей, резервирование N+1 получается добавлением одного модуля, а ремонт сводится к замене модуля за 10 минут без остановки нагрузки.</p>${prodBox('SLC ADAPT2 50')}
+<h2 id="s5">Мониторинг и завершение работы</h2><p>Для серверной обязательна SNMP-карта: она передаёт состояние ИБП в систему мониторинга (Zabbix, PRTG, DCIM) и инициирует корректное завершение работы серверов при низком заряде батарей. Для виртуализированных сред настраивают интеграцию с VMware и Hyper-V.</p>
+<h2 id="s6">Типичные ошибки</h2><ul><li>Подбор по паспортной мощности серверов без замера: завышение в 2 раза и переплата.</li><li>Отсутствие запаса: через год нагрузка выросла, ИБП работает на пределе и уходит в байпас.</li><li>Батареи в тёплой серверной: при 30 °C срок службы AGM сокращается вдвое.</li><li>Нет сервисного байпаса: любое ТО требует остановки серверной.</li><li>Смешивание старых и новых батарей при замене.</li></ul>
+<h2 id="s7">Итог</h2><p>ИБП для серверной: on-line, с запасом 25–30 %, автономией под сценарий объекта, SNMP-мониторингом и сервисным байпасом. Инженеры AEC подбирают конфигурацию бесплатно и предоставляют спецификацию для тендера. Складские модели 4–10 кВА отгружаем в Алматы в день оплаты.</p>`,
+    1: `<p>Техническое обслуживание промышленных ИБП проводится по регламенту производителя и включает осмотр, замеры, чистку, тесты переходов и контроль батарей. Для систем свыше 10 кВА производители рекомендуют ТО дважды в год, для модульных систем и ЦОД ежеквартально.</p><h2 id="s1">Что входит в регламент</h2><ul><li>Визуальный осмотр: индикация, корпус, кабели, клеммы, следы перегрева.</li><li>Замеры: входные и выходные напряжения и токи, напряжение на каждой батарее, пульсации, температура.</li><li>Чистка от пыли, проверка и замена вентиляторов, протяжка соединений.</li><li>Тесты: переход на батареи, байпас, калибровка, контрольный разряд.</li><li>Анализ журнала событий, обновление прошивки.</li><li>Отчёт с замерами и прогнозом замены расходных узлов.</li></ul><h2 id="s2">Расходные узлы и сроки</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Узел</th><th>Срок замены</th><th>Признаки износа</th></tr></thead><tbody><tr><td>Батареи AGM</td><td>3–5 лет (long-life 10–12)</td><td>Сокращение автономии, вздутие, разброс напряжений</td></tr><tr><td>Вентиляторы</td><td>4–5 лет</td><td>Шум, перегрев, предупреждения</td></tr><tr><td>Конденсаторы DC-шины</td><td>7–10 лет</td><td>Пульсации, запах, уход в байпас</td></tr><tr><td>Конденсаторы AC</td><td>5–7 лет</td><td>Искажения выхода</td></tr></tbody></table></div><h2 id="s3">Сервисный договор</h2><p>Для объектов с несколькими ИБП выгоднее годовой договор: плановые ТО по графику, аварийный выезд с SLA, приоритет на запчасти. <a href="${L.service('service')}">Условия сервисного обслуживания AEC</a>.</p>`,
+    2: `<p>Дизельная генераторная установка (ДГУ) состоит из дизельного двигателя, синхронного генератора (альтернатора), системы управления с контроллером, топливной системы, системы охлаждения и выхлопа, рамы или контейнера. Двигатель вращает альтернатор с частотой 1500 об/мин, обеспечивая 50 Гц на выходе.</p><h2 id="s1">Основные узлы</h2><ul><li>Двигатель: Cummins, Perkins, Volvo Penta, MTU, Scania, Deutz, Doosan, Baudouin, SDEC, YTO.</li><li>Альтернатор: Stamford AVK, Mecc Alte, Leroy-Somer.</li><li>Контроллер: Deep Sea, ComAp: автозапуск, защиты, мониторинг, синхронизация.</li><li>АВР: автоматический ввод резерва, переключение нагрузки за 10–15 секунд.</li></ul><h2 id="s2">Мощность PRP и ESP</h2><p>Основная мощность PRP (prime) для длительной работы с переменной нагрузкой и резервная ESP (standby) на 10 % выше для аварийного режима. Для резервирования здания выбирают по ESP, для автономного электроснабжения по PRP.</p><h2 id="s3">Исполнение</h2><p>Открытое для машинных залов, в шумозащитном кожухе (до 72 дБ на 7 м) для размещения у зданий, в контейнере с обогревом для удалённых объектов и северных регионов. <a href="${L.cat('dgu')}">Каталог ДГУ AEC</a>: Tescom, AGG Power, BAIFA от 10 до 3750 кВА.</p>`,
+    3: `<p>AEC Kazakhstan принимает участие в международной выставке KIOGE 2026 в Алматы. На стенде: контейнерные ДГУ с АВР, промышленные ИБП Tescom TEOS, системы оперативного постоянного тока с батареями OPzV, демонстрация диагностики батарей анализатором Fluke VT521.</p><h2 id="s1">Что покажем</h2><ul><li>Решения электропитания для месторождений и НПС: контейнерные ДГУ 138–2500 кВА.</li><li>СОПТ 220 В DC: выпрямители N+1 и батареи на 20 лет.</li><li>Промышленные ИБП с трансформаторной развязкой.</li></ul><p>Приглашаем на стенд: инженеры ответят на вопросы по проектам и подготовят предварительный расчёт на месте. <a href="${L.solution('oil')}">Решения для нефтегаза</a>.</p>`,
+    4: `<p>ИБП (источник бесперебойного питания, UPS) защищает оборудование от отключений, провалов и скачков напряжения, питая нагрузку от батарей на время аварии. Бесперебойник нужен везде, где перерыв питания означает потерю данных, брак, остановку процесса или угрозу безопасности: серверные, медицина, производство, банки, телеком, аварийные системы зданий.</p><h2 id="s1">Три типа ИБП</h2><ul><li>Off-line (резервный): переключение 10 мс, для компьютеров и бытовой техники.</li><li>Line-interactive: стабилизация AVR, переключение 4–8 мс, офисное оборудование.</li><li>On-line (двойное преобразование): 0 мс, идеальная синусоида, серверы, медицина, промышленность.</li></ul><h2 id="s2">Как выбрать</h2><p>Мощность с запасом 25–30 %, автономия под сценарий объекта, фазность по нагрузке, исполнение по месту установки. <a href="${L.calc}">Калькулятор подбора</a> считает за минуту.</p>`,
+    5: `<p>Стабилизатор напряжения для дома нужен при просадках ниже 200 В и скачках выше 240 В, которые приводят к отказам котлов, холодильников и электроники. Выбор по трём параметрам: мощность всех потребителей с запасом 30 %, диапазон входного напряжения на объекте и тип регулирования.</p><h2 id="s1">Типы</h2><ul><li>Релейные: доступные, точность ±5–8 %, щелчки при переключении.</li><li>Электромеханические: точность ±1–3 %, выдерживают пусковые токи насосов и кондиционеров.</li><li>Электронные (тиристорные): без износа, быстрые, для электроники.</li></ul><p>Для дома с котлом и насосом подойдёт электромеханический стабилизатор 5–10 кВА, например EverExceed SVC-10000 со склада в Алматы. <a href="${L.cat('stab')}">Каталог стабилизаторов</a>.</p>`
+  };
+  function render() {
+    const i = parseInt(U.hashParts()[0] || '0', 10) || 0; const a = D.ARTICLES[i] || D.ARTICLES[0];
+    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Блог', href: L.blog }, { name: a.title }];
+    document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${a.title}</h1><div class="meta"><span class="badge badge-amber">${a.cat}</span><span>${U.fmtDate(a.date)}</span><span>${a.read} мин чтения</span><span>Инженеры AEC</span></div>`;
+    const body = BODY[i] || BODY[0]; document.getElementById('body').innerHTML = body + `<div class="author"><span class="av">AEC</span><div><b>Инженерная служба AEC Kazakhstan</b><div class="small muted">Технические данные проверены сервисным отделом. Вопросы по статье: ${D.CONTACT.email}</div></div></div>`;
+    const hs = [...document.querySelectorAll('#body h2')]; document.getElementById('toc').innerHTML = hs.length ? `<b>Содержание</b><ol>${hs.map(h => `<li><a href="#${h.id}" onclick="document.getElementById('${h.id}').scrollIntoView({behavior:'smooth'});return false;">${h.textContent}</a></li>`).join('')}</ol>` : '';
+    document.getElementById('side').innerHTML = `<h3>По теме статьи</h3><a class="btn btn-primary btn-block" href="${L.calc}">Калькулятор подбора</a><a class="btn btn-ghost btn-block" href="${L.cat('ibp')}">Каталог ИБП</a><a class="btn btn-ghost btn-block" href="${L.service('service')}">Сервисное обслуживание</a><button class="btn btn-kp btn-block" data-open-modal data-title="Вопрос эксперту" data-type="Вопрос эксперту (статья)" data-product="${a.title}">Задать вопрос инженеру</button>`;
+    document.getElementById('similar').innerHTML = D.ARTICLES.map((x, k) => ({ x, k })).filter(o => o.k !== i).slice(0, 3).map(o => `<a class="post" href="${L.article(o.k)}"><div class="meta"><span class="badge">${o.x.cat}</span><span>${U.fmtDate(o.x.date)}</span></div><h3>${o.x.title}</h3><span class="more">Читать</span></a>`).join('');
+    document.title = a.title + ' | AEC Kazakhstan';
+    document.querySelector('meta[name=description]').setAttribute('content', document.querySelector('#body p').textContent.slice(0, 158));
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());
+    U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, k) => ({ '@type': 'ListItem', position: k + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'Article', headline: a.title, datePublished: a.date, dateModified: a.date, author: { '@type': 'Organization', name: 'AEC Kazakhstan' }, publisher: { '@id': 'https://aecups.kz/#org' }, articleSection: a.cat }] });
+    U.render(); window.scrollTo({ top: 0 });
+  }
+  render(); window.addEventListener('hashchange', () => { if (/^#\d+$/.test(location.hash) || !location.hash) render(); });
+})();
+</script>
+</body>
+</html>

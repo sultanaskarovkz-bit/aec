@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Блог и статьи | AEC Kazakhstan</title>
+<meta name="description" content="Статьи инженеров AEC: как выбрать ИБП для серверной, регламенты обслуживания, устройство ДГУ, расчёт батарей, стабилизаторы напряжения. Новости и выставки.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap" id="hero"></div></section>
+  <section class="section-tight"><div class="wrap"><div class="filters-row" id="cats"></div><div class="posts" id="posts"></div><div class="pager"><span class="on">1</span><a href="#">2</a><a href="#">3</a></div></div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="cta-band"><div><h2>Вопрос эксперту</h2><p>Не нашли ответ в статьях? Инженер AEC ответит по e-mail или в WhatsApp в течение рабочего дня.</p></div>
+    <form class="form-grid" data-lead novalidate><input type="hidden" name="formType" value="Вопрос эксперту (блог)"><div class="field"><label for="qName">Имя <i>*</i></label><input class="input" id="qName" name="name" required><span class="hint"></span></div><div class="field"><label for="qPhone">Телефон или e-mail <i>*</i></label><input class="input" id="qPhone" name="contact" required><span class="hint"></span></div><div class="field full"><label for="qMsg">Вопрос <i>*</i></label><textarea class="textarea" id="qMsg" name="comment" required style="min-height:80px"></textarea><span class="hint"></span></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Задать вопрос</button></div></form></div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'company' });
+  const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Блог' }];
+  document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>Статьи и руководства по электропитанию</h1><p class="lead">Пишут инженеры AEC: подбор ИБП и генераторов, батареи, регламенты обслуживания, разборы проектов и новости с выставок.</p>`;
+  let cat = '';
+  const cats = [...new Set(D.ARTICLES.map(a => a.cat))];
+  function render() {
+    document.getElementById('cats').innerHTML = `<button class="${cat ? '' : 'on'}" data-c="">Все темы</button>` + cats.map(c => `<button class="${cat === c ? 'on' : ''}" data-c="${c}">${c}</button>`).join('');
+    document.getElementById('posts').innerHTML = D.ARTICLES.map((a, i) => ({ a, i })).filter(x => !cat || x.a.cat === cat).sort((x, y) => y.a.date.localeCompare(x.a.date)).map(x => `<a class="post" href="${L.article(x.i)}"><div class="meta"><span class="badge">${x.a.cat}</span><span>${U.fmtDate(x.a.date)}</span><span>${x.a.read} мин чтения</span></div><h3>${x.a.title}</h3><span class="more">Читать</span></a>`).join('');
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('.filters-row button'); if (!b) return; cat = b.dataset.c; render(); });
+  render();
+  U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'Blog', name: 'Блог AEC Kazakhstan', blogPost: D.ARTICLES.map((a, i) => ({ '@type': 'BlogPosting', headline: a.title, datePublished: a.date, url: new URL(L.article(i), location.href).href })) }] });
+})();
+</script>
+</body>
+</html>

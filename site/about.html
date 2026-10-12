@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>О компании AEC Kazakhstan</title>
+<meta name="description" content="AEC Kazakhstan (Almaty Electro Consult): поставщик систем гарантированного электропитания с 2015 года. Официальный дистрибьютор Salicru и Tescom, склад и сервисная служба в Алматы, проекты по всему Казахстану. Сертификаты, команда, выставки, реквизиты.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+<style>
+.timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.timeline div { border-top: 2px solid var(--amber); padding-top: 12px; }
+.timeline b { display: block; font-family: var(--font-display); font-size: 22px; color: var(--navy); }
+.timeline p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+@media (max-width: 860px) { .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.exh { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.exh a { border: 1px solid var(--line); border-radius: var(--r); padding: 16px; background: #fff; color: var(--ink); display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.exh a:hover { border-color: var(--blue); color: var(--ink); }
+.exh b { font-family: var(--font-display); font-size: 15px; }
+.exh small { color: var(--muted); font-size: 12px; }
+@media (max-width: 1024px) { .exh { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .exh { grid-template-columns: 1fr 1fr; } }
+.wh { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: center; }
+.wh .ph { aspect-ratio: 4/3; background: var(--mist); border: 1px solid var(--line); border-radius: var(--r-l); display: grid; place-items: center; padding: 24px; }
+.wh .ph svg { width: 60%; }
+@media (max-width: 860px) { .wh { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap" id="hero"></div></section>
+  <section class="section-tight"><div class="wrap"><div class="stats" id="stats"></div></div></section>
+  <section class="section"><div class="wrap"><div class="split"><div class="article" style="max-width:none"><h2 style="margin-top:0">Защищаем энергосистемы Казахстана с 2015 года</h2><p>AEC Kazakhstan (Almaty Electro Consult) поставляет и обслуживает системы гарантированного электропитания: источники бесперебойного питания, дизельные генераторные установки, аккумуляторные батареи, стабилизаторы напряжения, статические переключатели, выпрямители и инверторы. Работаем с бизнесом, промышленностью, медицинскими учреждениями, ЦОД и государственным сектором по всему Казахстану.</p><p>Мы не ограничиваемся поставкой. Инженеры AEC рассчитывают нагрузку и автономию, подбирают схему резервирования, монтируют и запускают оборудование, испытывают его под нагрузкой собственным модулем 150 кВт и берут объекты на сервисное обслуживание.</p></div>
+    <div class="timeline"><div><b>2015</b><p>Основание компании в Алматы, первые поставки ИБП и батарей</p></div><div><b>Дистрибуция</b><p>Официальный дистрибьютор Salicru и Tescom, партнёр Kehua, Hoppecke, BAE</p></div><div><b>Сервис</b><p>Собственная сервисная служба, нагрузочный модуль 150 кВт, Fluke VT521</p></div><div><b>2026</b><p>Проекты в 12 городах, участие в Power Expo, KIHE, KIOGE</p></div></div></div></div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2>Что мы делаем</h2></div></div><div class="req" id="what"></div></div></section>
+  <section class="section"><div class="wrap"><div class="wh"><div><h2>Склад и сервисная служба в Алматы</h2><p class="lead" style="margin-top:12px">Складская программа: ИБП Salicru и Kehua до 20 кВА, модули ADAPT2, батареи Ritar и EnerGrid 7–200 А·ч, стабилизаторы до 10 кВА. Отгрузка в день оплаты, доставка по Казахстану 1–5 дней.</p><ul class="icon-list" style="margin-top:20px" id="whList"></ul></div><div class="ph" id="whArt"></div></div></div></section>
+  <section class="section bg-mist" id="team-sec"><div class="wrap"><div class="sec-head"><div><h2>Команда</h2><p>Инженеры с допусками по электробезопасности, менеджеры проектов, сервисная служба. Фото сотрудников добавляются по решению компании.</p></div></div><div class="team" id="team"></div></div></section>
+  <section class="section" id="certs"><div class="wrap"><div class="sec-head"><div><h2>Сертификаты и дистрибьюторские письма</h2><p>Дистрибьюторские письма производителей, сертификаты соответствия ЕАЭС, благодарственные письма заказчиков. Нажмите, чтобы открыть, документы доступны для скачивания в PDF.</p></div></div><div class="cert-grid" id="certGrid"></div></div></section>
+  <section class="section bg-mist" id="exhibitions"><div class="wrap"><div class="sec-head"><div><h2>Выставки</h2><p>Ежегодно участвуем в отраслевых выставках Казахстана: энергетика, здравоохранение, нефтегаз.</p></div></div><div class="exh" id="exh"></div></div></section>
+  <section class="section"><div class="wrap"><div class="sec-head"><div><h2>Заказчики</h2></div><a class="more" href="projects.html">Проекты</a></div><div class="logo-row" id="clients"></div></div></section>
+  <section class="section bg-mist" id="requisites"><div class="wrap"><div class="split" style="align-items:flex-start"><div><h2>Реквизиты</h2><dl class="kv" style="margin-top:16px" id="req"></dl></div><div class="cta-band" style="padding:28px"><div><h2 style="font-size:24px">Нужны документы для тендера?</h2><p>Пришлём сертификаты, дистрибьюторские письма, референс-лист и реквизиты одним архивом.</p><button class="btn btn-light" style="margin-top:16px" data-open-modal data-title="Документы для тендера" data-type="Запрос документов для тендера">Запросить пакет документов</button></div></div></div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L, C = D.CONTACT;
+  U.init({ active: 'company' });
+  const crumbs = [{ name: 'Главная', href: L.home }, { name: 'О компании' }];
+  document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>AEC Kazakhstan: инжиниринг гарантированного электропитания</h1><p class="lead">Официальный дистрибьютор Salicru и Tescom, партнёр Kehua, Hoppecke и BAE. Склад и сервисная служба в Алматы, проекты по всему Казахстану с 2015 года.</p>`;
+  document.getElementById('stats').innerHTML = [['11', ' лет', 'на рынке Казахстана'], ['25', '', 'брендов оборудования'], ['570', '+', 'позиций в каталоге'], ['150', ' кВт', 'нагрузочный модуль для испытаний'], ['12', '', 'городов с проектами']].map(s => `<div><b class="num" data-count="${s[0]}" data-suffix="${s[1]}">${s[0]}${s[1]}</b><span>${s[2]}</span></div>`).join('');
+  document.getElementById('what').innerHTML = [['ruler', 'Подбор и проектирование', 'Расчёт нагрузки и автономии, схемы резервирования, спецификации и ТЗ для тендеров.'], ['truck', 'Поставка', 'Со склада в Алматы и напрямую с заводов Salicru, Tescom, Kehua, AGG Power, BAIFA.'], ['wrench', 'Монтаж и пусконаладка', 'Собственная бригада, испытания под нагрузкой, акт готовности и протоколы.'], ['shield', 'Сервис', 'ТО по регламенту, ремонт ИБП любых брендов, замена и диагностика батарей, сервисные договоры.']].map(w => `<div><span class="ic">${I(w[0])}</span><b>${w[1]}</b><p>${w[2]}</p></div>`).join('');
+  document.getElementById('whList').innerHTML = [['warehouse', 'Склад', 'ул. Чаплина 71/66, БЦ «Станица». Самовывоз и отгрузка транспортными компаниями.'], ['gauge', 'Испытательный стенд', 'Нагрузочный модуль 150 кВт, анализатор батарей Fluke VT521, устройство контрольного разряда.'], ['team', 'Сервисная служба', 'Выезд по Алматы в день обращения, по Казахстану 1–5 дней.']].map(w => `<li><span class="ic">${I(w[0])}</span><div><b>${w[1]}</b><p>${w[2]}</p></div></li>`).join('');
+  document.getElementById('whArt').innerHTML = U.img('proj-airastana-1.jpg', 'Склад и оборудование AEC', '', 'style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-l)" data-ph="bg"'); document.getElementById('whArt').style.padding = '0'; document.getElementById('whArt').style.overflow = 'hidden';
+  document.getElementById('team').innerHTML = D.TEAM.map(t => `<div><span class="av">${t.name[0]}</span><div><b>${t.name}</b><small>${t.role}</small></div></div>`).join('');
+  const certs = [['Дистрибьюторское письмо', 'Salicru, 2026'], ['Дистрибьюторское письмо', 'Tescom, 2026'], ['Сертификат соответствия ЕАЭС', 'ИБП Salicru SLC'], ['Сертификат соответствия ЕАЭС', 'ИБП Tescom TEOS, MTW'], ['Благодарственное письмо', 'КазАэроНавигация'], ['Благодарственное письмо', 'Степногорская ТЭЦ'], ['Благодарственное письмо', 'Клиника Хай-Тек'], ['Благодарственное письмо', 'TUSAŞ'], ['Благодарственное письмо', 'Эмирмед'], ['Благодарственное письмо', 'Зийлан КЗ'], ['Партнёрский сертификат', 'Kehua Tech'], ['Свидетельство', 'Официальный дистрибьютор Peli в РК']];
+  document.getElementById('certGrid').innerHTML = D.CERTS.map(c => `<a class="cert" href="#certs" onclick="AECUI.toast('В рабочей версии откроется скан документа с возможностью скачать PDF');return false;"><span class="doc" style="overflow:hidden">${U.img(c.slot, c.title + ' ' + c.from, '', 'style="width:100%;height:100%;object-fit:cover;object-position:top" data-ph="bg"')}</span><b>${c.title}</b><small>${c.from}</small></a>`).join('') + certs.slice(0, 4).map(c => `<a class="cert" href="#certs" onclick="AECUI.toast('Документ добавит заказчик');return false;"><span class="doc">${I('doc')}</span><b>${c[0]}</b><small>${c[1]}</small></a>`).join('');
+  document.getElementById('exh').innerHTML = D.EXHIBITIONS.map(e => `<a href="blog.html" style="padding:0;overflow:hidden"><span style="display:block;aspect-ratio:4/3;overflow:hidden">${U.img(e.photos[0], e.name, '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</span><span style="padding:12px 14px;display:block"><b>${e.name}</b><small style="display:block">${e.city}, ${e.year} · ${e.theme}</small></span></a>`).join('');
+  document.getElementById('clients').innerHTML = D.CLIENT_LOGOS.slice(0, 12).map(c => `<a href="projects.html" title="${c[1]}" style="padding:12px">${U.img(c[0], c[1], '', 'style="max-height:44px;width:auto;max-width:100%;object-fit:contain"')}</a>`).join('');
+  document.getElementById('req').innerHTML = [['Наименование', C.legal], ['БИН', C.bin], ['Адрес', C.address], ['Телефон', C.phone], ['E-mail', C.email], ['Режим работы', C.hours], ['Банк', 'АО «Kaspi Bank», БИК CASPKZKA'], ['Директор', 'Цой Денис Олегович']].map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
+  U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'AboutPage', name: 'О компании AEC Kazakhstan', mainEntity: { '@id': 'https://aecups.kz/#org' } }] });
+})();
+</script>
+</body>
+</html>

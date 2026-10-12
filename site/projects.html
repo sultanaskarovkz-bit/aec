@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Реализованные проекты | AEC Kazakhstan</title>
+<meta name="description" content="Проекты AEC Kazakhstan: ИБП для клиник, лабораторий и серверных, батареи и ЗВУ для КТЖ, оборудование для телеканала. Фильтры по отрасли, типу оборудования и году.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/aec.css">
+<link rel="stylesheet" href="assets/pages.css">
+</head>
+<body>
+<div id="app">
+<main>
+  <section class="page-hero"><div class="grid-bg"></div><div class="wrap" id="hero"></div></section>
+  <section class="section-tight"><div class="wrap">
+    <div class="filters-row" id="fInd"></div><div class="filters-row" id="fEq"></div><div class="filters-row" id="fYear"></div>
+    <p class="muted small" id="count" style="margin-bottom:16px"></p>
+    <div class="pj-grid" id="grid"></div>
+  </div></section>
+  <section class="section bg-mist"><div class="wrap"><div class="sec-head"><div><h2>Заказчики</h2><p>Компании и учреждения, для которых поставляли и обслуживали оборудование.</p></div></div><div class="logo-row" id="clients"></div></div></section>
+  <section class="section"><div class="wrap"><div class="cta-band"><div><h2>Хочу такой же проект</h2><p>Опишите объект: инженер подберёт решение по аналогии с реализованными проектами и подготовит КП в течение рабочего дня.</p></div>
+    <form class="form-grid" data-lead novalidate><input type="hidden" name="formType" value="Хочу такой же проект (список проектов)"><div class="field"><label for="pName">Имя <i>*</i></label><input class="input" id="pName" name="name" required><span class="hint"></span></div><div class="field"><label for="pPhone">Телефон <i>*</i></label><input class="input" id="pPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div><div class="field full"><label for="pMsg">Объект и задача</label><textarea class="textarea" id="pMsg" name="comment" style="min-height:72px"></textarea></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Отправить</button></div></form></div></div></section>
+</main>
+</div>
+<script src="assets/data.js"></script>
+<script src="assets/aec.js"></script>
+<script>
+(function () {
+  const D = AEC, U = AECUI, I = U.icon, L = U.L;
+  U.init({ active: 'projects' });
+  const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Проекты' }];
+  document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>Реализованные проекты</h1><p class="lead">Объекты по всему Казахстану: железная дорога, авиакомпания, лаборатории и клиники, телевидение. В каждом кейсе: задача, решение, поставленное оборудование и объём работ.</p>`;
+  const EQ = { ibp: 'ИБП', akb: 'Батареи и ЗВУ', dgu: 'ДГУ' };
+  const eqOf = p => p.equipment.some(e => /ИБП/.test(e)) ? 'ibp' : p.equipment.some(e => /АКБ|батаре/i.test(e)) ? 'akb' : 'dgu';
+  const st = { ind: '', eq: '', year: '' };
+  const inds = [...new Set(D.PROJECTS.map(p => p.industry))].map(id => D.INDUSTRIES.find(i => i.id === id));
+  const years = [...new Set(D.PROJECTS.map(p => p.year))].sort((a, b) => b - a);
+  function btns(id, key, items, label) { document.getElementById(id).innerHTML = `<button class="${st[key] === '' ? 'on' : ''}" data-k="${key}" data-v="">${label}</button>` + items.map(it => `<button class="${st[key] === it[0] ? 'on' : ''}" data-k="${key}" data-v="${it[0]}">${it[1]}</button>`).join(''); }
+  function render() {
+    btns('fInd', 'ind', inds.map(i => [i.id, i.name]), 'Все отрасли');
+    btns('fEq', 'eq', Object.entries(EQ), 'Любое оборудование');
+    btns('fYear', 'year', years.map(y => [String(y), String(y)]), 'Все годы');
+    const list = D.PROJECTS.filter(p => (!st.ind || p.industry === st.ind) && (!st.eq || eqOf(p) === st.eq) && (!st.year || String(p.year) === st.year)).sort((a, b) => b.year - a.year);
+    document.getElementById('count').textContent = list.length + ' ' + (list.length === 1 ? 'проект' : list.length < 5 ? 'проекта' : 'проектов');
+    document.getElementById('grid').innerHTML = list.map(p => `<a class="pj" href="${L.project(p.id)}"><div class="img" style="padding:0;overflow:hidden"><span class="badge badge-navy tag" style="z-index:1">${(D.INDUSTRIES.find(i => i.id === p.industry) || {}).name || ''}</span>${U.img(p.photos[0], p.title, '', 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div><div class="body"><div class="meta">${p.client} · ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="kva">${p.kva}</div></div></a>`).join('') || '<p class="muted">По выбранным фильтрам проектов нет.</p>';
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('.filters-row button'); if (!b) return; st[b.dataset.k] = b.dataset.v; render(); });
+  document.getElementById('clients').innerHTML = D.CLIENTS.map(c => `<a href="projects.html">${c}</a>`).join('');
+  render();
+  U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'ItemList', itemListElement: D.PROJECTS.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title, url: new URL(L.project(p.id), location.href).href })) }] });
+})();
+</script>
+</body>
+</html>
