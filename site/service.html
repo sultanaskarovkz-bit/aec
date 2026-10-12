@@ -81,8 +81,8 @@
     document.getElementById('svcNav').innerHTML = D.SERVICES.map(x => `<a href="${L.service(x.id)}" class="${x.id === s.id ? 'on' : ''}">${x.short}</a>`).join('');
     const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Услуги', href: L.service('montazh') }, { name: s.short }];
     document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${t.h1}</h1><p class="lead">${t.lead}</p><div class="cta"><a class="btn btn-lg btn-kp" href="#order">Оставить заявку</a><a class="btn btn-lg btn-outline-light" href="${C.whatsapp}" target="_blank" rel="noopener">${I('wa')} Написать в WhatsApp</a><a class="btn btn-lg btn-outline-light" href="tel:+${C.phoneRaw}">${I('phone')} ${C.phone}</a></div>`;
-    const SPH = { montazh: 'service-montazh.jpg', service: 'hero-service.jpg', remont: 'proj-airastana-2.jpg', zamena: 'proj-ktz-3.jpg', diagnostika: 'proj-ktz-1.jpg', obsledovanie: 'proj-lab-2.jpg', konsultaciya: 'proj-uralsk-2.jpg' };
-    document.getElementById('heroArt').innerHTML = `<div style="border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;max-width:420px;margin-inline:auto;box-shadow:var(--shadow)">${U.img(SPH[s.id] || 'service-montazh.jpg', t.h1, '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div>`;
+    const SPH = { montazh: 'proj-uralsk-3.jpg', service: 'hero-service.jpg', remont: 'proj-airastana-2.jpg', zamena: 'proj-ktz-3.jpg', diagnostika: 'proj-ktz-1.jpg', obsledovanie: 'proj-lab-2.jpg', konsultaciya: 'proj-uralsk-2.jpg' };
+    document.getElementById('heroArt').innerHTML = `<div style="border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;max-width:420px;margin-inline:auto;box-shadow:var(--shadow)">${U.img(SPH[s.id] || 'proj-uralsk-3.jpg', t.h1, '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div>`;
     document.getElementById('inclSub').textContent = s.text + '.';
     document.getElementById('incl').innerHTML = t.incl.map(x => `<div><span class="ic">${I('check')}</span><div><b>${x[0]}</b><p>${x[1]}</p></div></div>`).join('');
     document.getElementById('brandsLine').innerHTML = BR.map(b => `<span>${b}</span>`).join('');

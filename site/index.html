@@ -24,7 +24,8 @@
 .hero-ctrl button::after { content: ''; position: absolute; left: 0; top: 0; height: 2px; width: 0; background: #fff; }
 .hero-ctrl button.on { color: #fff; }
 .hero-ctrl button.on::after { width: 100%; transition: width var(--slide-ms, 7000ms) linear; }
-.hero-body { position: relative; z-index: 3; }
+.hero-body { position: relative; z-index: 3; pointer-events: none; }
+.hero-body > * { pointer-events: auto; }
 .hero-panel { background: #fff; max-width: 760px; margin-top: -140px; margin-left: -40px; padding: 36px 48px 0 40px; }
 .hero-panel h1 { font-size: clamp(28px, 3vw, 40px); line-height: 1.15; }
 .hero-panel p { margin-top: 14px; font-size: 16px; max-width: 58ch; }
@@ -244,7 +245,7 @@
   // Слайды первого экрана
   const SLIDES = [
     { tab: 'Оборудование', slot: 'proj-lab-1.jpg', alt: 'Модульный ИБП Tescom 300 кВА в лаборатории, Караганда', h: 'Системы гарантированного электропитания для промышленности, медицины и ЦОД', p: 'ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 1 до 4000 кВА. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.', a: ['catalog.html#ibp', 'Каталог оборудования'], b: ['kp.html', 'Запросить КП'] },
-    { tab: 'Сервис', slot: 'service-montazh.jpg', alt: 'Инженеры AEC на монтаже ИБП', h: 'Монтаж, обслуживание и ремонт ИБП и генераторов по всему Казахстану', p: 'Собственная сервисная служба: пусконаладка под нагрузкой, регламентное обслуживание, замена и диагностика батарей, ремонт с выездом на объект.', a: ['service.html#montazh', 'Услуги сервиса'], b: ['service.html#zamena', 'Замена батарей'] },
+    { tab: 'Сервис', slot: 'proj-uralsk-3.jpg', alt: 'Инженеры AEC на монтаже ИБП', h: 'Монтаж, обслуживание и ремонт ИБП и генераторов по всему Казахстану', p: 'Собственная сервисная служба: пусконаладка под нагрузкой, регламентное обслуживание, замена и диагностика батарей, ремонт с выездом на объект.', a: ['service.html#montazh', 'Услуги сервиса'], b: ['service.html#zamena', 'Замена батарей'] },
     { tab: 'Проекты', slot: 'proj-ktz-2.jpg', alt: 'Батареи OPzV на тяговой подстанции КТЖ', h: 'Резервное питание для АО «КТЖ»: 600 аккумуляторов OPzV и 10 ЗВУ', p: 'Замена батарей оперативного тока на тяговых подстанциях без остановки движения. Поставка, монтаж и ввод в эксплуатацию за один сезон.', a: ['project.html#ktz', 'О проекте'], b: ['projects.html', 'Все проекты'] }
   ];
   const media = document.getElementById('heroMedia'), ctrl = document.getElementById('heroCtrl');
@@ -284,7 +285,7 @@
   list.addEventListener('focusin', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
 
   // Сервис
-  document.getElementById('svcPhoto').innerHTML = pimg('service-montazh.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
+  document.getElementById('svcPhoto').innerHTML = pimg('proj-uralsk-2.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
   document.getElementById('svcList').innerHTML = D.SERVICES.map(s => `<li><a href="${L.service(s.id)}"><span><b>${s.short}</b><small>${s.text}</small></span>${I('chev')}</a></li>`).join('');
 
   // Проекты
