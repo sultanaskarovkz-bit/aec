@@ -1,6 +1,6 @@
 import asyncio, os, re
 from playwright.async_api import async_playwright
-SITE='/tmp/claude-0/-home-claude/9b3d563c-41fc-5ef3-9dd3-b7173320d1d3/scratchpad/aec/site'
+SITE=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'site')
 pages=['index.html','catalog.html','catalog.html#dgu','catalog.html#akb.12v','catalog.html#ibp.kva-20','product.html','product.html#tescom-tdj-125p','calc.html','calc.html#dgu','solution.html#med','solution.html#oil','service.html#remont','service.html#zamena','projects.html','project.html#lab','region.html#atyrau','brands.html','brand.html#tescom','about.html','contacts.html','blog.html','article.html#1','faq.html','docs.html','legal.html#warranty','thanks.html','404.html','kp.html','compare.html','favorites.html','search.html']
 async def main():
     bad=set(); errs=[]
