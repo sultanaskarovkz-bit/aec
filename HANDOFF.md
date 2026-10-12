@@ -2,7 +2,7 @@
 
 ## Что это
 Статический HTML-прототип нового сайта ТОО «AEC Kazakhstan» (ИБП, ДГУ, АКБ, стабилизаторы; Алматы).
-24 страницы, общая дизайн-система, демо-каталог на 140 позиций, калькулятор подбора, корзина КП,
+24 страницы, общая дизайн-система, реальный каталог WooCommerce (602 позиции с фото и PDF), калькулятор подбора, корзина КП,
 сравнение, избранное, поиск, SEO-разметка (title/description/H1 на каждое состояние, JSON-LD, хлебные крошки).
 Дальше прототип переносится в WordPress + WooCommerce (кастомная тема), текущий сайт на Bricks Builder.
 
@@ -21,40 +21,51 @@
   - assets/pages.css    стили внутренних страниц
   - assets/aec.js       window.AECUI: header/footer, img() с заглушкой, корзина КП/сравнение/избранное (localStorage),
                         модалка заявки, маска телефона, поиск с исправлением раскладки, JSON-LD, хлебные крошки
-  - assets/data.js      window.AEC: контакты, категории, отрасли, услуги, бренды, товары, проекты, выставки,
-                        отзывы, сертификаты, логотипы клиентов, статьи, FAQ, города, команда, карты фото
+  - assets/data.js      window.AEC: контакты, категории, отрасли, услуги, бренды (с логотипами), проекты, выставки,
+                        отзывы, сертификаты, логотипы клиентов, статьи (с обложками), FAQ, города, команда (с фото).
+                        PRODUCTS собирается из assets/catalog.js (window.AEC_CATALOG), не генерируется.
+  - assets/catalog.json полный каталог: 602 товара aecups.kz с атрибутами, таблицами характеристик, фото, PDF, исходными
+                        данными WooCommerce (id, slug, permalink, категории). Источник правды для переноса в WP.
+  - assets/catalog.js   компактная версия каталога для всех страниц (547 КБ); catalog-details.js: таблицы характеристик,
+                        описания и wc-данные по id, подключается только на product.html
+  - assets/img/products/ 132 фото товаров (уникальные файлы, имя файла как в медиатеке; связь товар -> файл в catalog.json)
+  - assets/docs/        100 PDF-спецификаций (161 МБ), ссылки в catalog.json docs[].file. В Vercel-превью не выкладываются.
   - assets/calc-page.js калькулятор (4 режима, Пекерт, батарейные стринги, подбор серий)
   - assets/images.json  манифест: имя файла в assets/img/ -> URL оригинала на aecups.kz (87 слотов)
   - assets/img/         ПУСТО. Сюда кладутся фото; пока их нет, img() рисует светлую заглушку через onerror
   - BUILD-GUIDE.md      соглашения по страницам и SEO-правила
 - tools/
   - fetch-images.sh     скачивает все файлы из images.json в site/assets/img (curl)
+  - crawl-products.py   обходит страницы товаров aecups.kz и собирает ссылки на PDF -> crawl/woo/pages.json
+  - build-catalog.py    собирает catalog.json / catalog.js / catalog-details.js из crawl/woo/*, скачивает PDF в assets/docs
   - optimize-images.py  приводит к веб-размеру (PIL): max 1600px, JPEG q82, логотипы до 600px
   - shot.py             скриншот страницы (Playwright): python3 tools/shot.py URL out.png 1440 900 no [scrollY]
   - links.py            обход всех страниц: битые внутренние ссылки + ошибки JS
   - overflow.py         поиск горизонтального переполнения на мобильной ширине
 - crawl/site-inventory.md  инвентаризация текущего aecups.kz: URL, объёмы каталога, контакты, ошибки
+- crawl/client-request.md  что запросить у клиента (нет на сайте): вектор логотипа, фото офиса, TEOS, 89 товаров без фото и т.д.
+- crawl/woo/               выгрузка Store API (products-N.json, categories.json), pages.json (PDF по товарам), posts.json, pdf-media.json
 - dist/index.html       копия главной без doctype/head для публикации артефактом (не нужна в проекте)
 
 ## Как запустить
 cd site && python3 -m http.server 8765   # затем http://localhost:8765/index.html
+Публичное превью: https://aecups-prototype.vercel.app (проект aecups-prototype, деплой: cd site && vercel deploy --prod; PDF исключены .vercelignore)
+Репозиторий: https://github.com/sultanaskarovkz-bit/aec
 Шрифт грузится с Google Fonts; офлайн в tools/shot.py есть локальный @font-face (site/_dev/fonts не входит в сборку).
 
-## Фото: что сделать
-1. bash tools/fetch-images.sh   (нужен доступ к aecups.kz)
-2. python3 tools/optimize-images.py
-3. Проверить, что заглушки пропали: главная, projects, project#ktz, about, brand#salicru, solution#czod.
-Чего нет на текущем сайте (запросить у клиента): фото команды (8 человек), обложки видео (video-*.jpg),
-фото ИБП Kehua и Tescom TEOS, логотип в векторе, фото офиса/склада.
-Слоты, которые ждут файлы, перечислены в images.json; названия слотов используются в data.js
-(PROJECTS[].photos, EXHIBITIONS[].photos, CERTS[].slot, CLIENT_LOGOS, CAT_PHOTOS, SERIES_PHOTOS).
+## Фото: состояние
+Все 159 слотов images.json скачаны и оптимизированы (tools/optimize-images.py, max 1600 px, товары 1200 px).
+Фото команды, логотипы брендов и фото POWER EXPO 2024 на сайте были, HANDOFF ранее ошибался. Чего нет: см. crawl/client-request.md.
 
 ## Каталог
-Демо-данные (140 позиций) генерируются в data.js. Реальный каталог: ~570 товаров в WooCommerce
-(ИБП 217, АКБ 176, стабилизаторы 124, ДГУ 22, STS 30). Выгрузка: WooCommerce -> Экспорт CSV,
-или WP REST /wp-json/wc/store/v1/products?per_page=100&page=N (без авторизации).
-Атрибуты для фильтров: мощность кВА, кВт, фазы вход/выход, топология, форм-фактор, архитектура,
-напряжение, ёмкость, бренд, серия. Габариты в исходнике битые («70 × 51 × 17 8 см»), чистить.
+Реальные данные: 607 товаров Store API -> 602 после удаления дублей (ИБП 233, АКБ 198, стабилизаторы 124, STS 25, ДГУ 22 серии).
+Пересборка: python tools/build-catalog.py (--no-download, если PDF уже на месте). Обновить выгрузку:
+  curl "https://aecups.kz/wp-json/wc/store/v1/products?per_page=100&page=N" -o crawl/woo/products-N.json; python tools/crawl-products.py
+Поля товара: id (w+wcId), slug, name, model, sku, brand/brandId (= /brand/<slug>/ текущего сайта), cat, series, sub[],
+kva/kw (у ДГУ kva…kvaMax диапазон серии), phases, topology, form, arch, pf, eff, battery, interfaces, ip, dims, weight,
+photo/photos (assets/img/products/), docs[{name,file,size}], spec{} (нормализованные ключи для UI), industries[].
+В catalog-details.js: table (полная таблица характеристик), desc, short, wc {id, slug, permalink, categories, tags}.
+Нет в данных: цены, остатки (везде stock 'order'), гарантия, габариты у Kehua/EverExceed/TSVR (185 позиций).
 
 ## SEO
 План SEO (15 разделов, 15 запросов из договора, структура URL, фильтровые посадочные, регионы) лежит в Claude Docs:

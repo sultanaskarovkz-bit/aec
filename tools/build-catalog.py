@@ -188,9 +188,9 @@ def series_of(cat, brand, model, p, t):
 
 def model_of(p, t, cat):
     mdl = tget(t, 'Модель')
-    if mdl and not mdl.lower().startswith(('ибп', 'стабилизатор', 'дизель', 'аккумул')): return ws(mdl)
+    if mdl and len(mdl) <= 40 and not re.search(r'стабилизатор|ибп|генератор|батарея|переключатель', mdl, re.I): return ws(mdl)
     name = p['name']
-    m = re.match(r'^(?:ИБП|Стабилизатор напряжения|Статический переключатель нагрузки|Аккумуляторная батарея|Дизельный генератор)\s+(?:Salicru|Tescom|KEHUA TECH|KEHUA|HOPPECKE|BAE Batterien|BAE|EnerGrid|EverExceed|RITAR|Sprinter|Exide|AGG Power|BAIFA Power)\s+([^,]+?)(?:,|\s+\d+\s*(?:кВА|А·ч|А)|$)', name)
+    m = re.match(r'^.*?\b(?:Salicru|Tescom|KEHUA TECH|KEHUA|HOPPECKE|BAE Batterien|BAE|EnerGrid|EverExceed|RITAR|Sprinter|Exide|AGG Power|BAIFA Power)\s+([^,]+?)(?:,|\s+\d+\s*(?:кВА|А·ч|А)|$)', name)
     return ws(m.group(1)) if m else ws(name)
 
 def fix_name(name):
@@ -254,6 +254,7 @@ for p in sorted(P, key=lambda x: x['id']):
         engine_brand = p['brands'][0]['name']
     model = model_of(p, t, cat)
     series = series_of(cat, brand, model, p, t)
+    if cat == 'dgu': model = series   # у ДГУ позиция = серия (диапазон моделей)
     # мощность / ёмкость / ток
     kva = kw = kva_max = kw_max = None
     if cat == 'ibp':
