@@ -31,6 +31,12 @@
   - assets/img/products/ 132 фото товаров (уникальные файлы, имя файла как в медиатеке; связь товар -> файл в catalog.json)
   - assets/docs/        100 PDF-спецификаций (161 МБ), ссылки в catalog.json docs[].file. В Vercel-превью не выкладываются.
   - assets/calc-page.js калькулятор (4 режима, Пекерт, батарейные стринги, подбор серий)
+  - assets/i18n.js      переключатель языков RU/KZ/EN (topline шапки и мобильное меню). Язык из localStorage aecLang
+                        или ?lang=; подключает только нужный словарь i18n-kz.js / i18n-en.js (window.AEC_I18N), переводит
+                        текстовые узлы и атрибуты (placeholder, title, alt, data-title/sub, content, value) по точному
+                        совпадению и по шаблонам с числами, MutationObserver на DOM, document.title, html lang = ru/kk/en.
+                        НЕ переводятся (первый этап): статьи (#body.article), описания и таблицы 602 товаров,
+                        названия моделей, отзывы. Для WP-этапа: Polylang/WPML, словари как основа.
   - assets/images.json  манифест: имя файла в assets/img/ -> URL оригинала на aecups.kz (87 слотов)
   - assets/img/         ПУСТО. Сюда кладутся фото; пока их нет, img() рисует светлую заглушку через onerror
   - BUILD-GUIDE.md      соглашения по страницам и SEO-правила
@@ -42,6 +48,10 @@
   - shot.py             скриншот страницы (Playwright): python3 tools/shot.py URL out.png 1440 900 no [scrollY]
   - links.py            обход всех страниц: битые внутренние ссылки + ошибки JS
   - overflow.py         поиск горизонтального переполнения на мобильной ширине
+  - i18n-extract.py     сбор русских строк со всех страниц (Playwright) -> crawl/i18n-strings-2.json
+  - i18n-check.py N     проверка выравнивания crawl/i18n/ru-N.json с en-N.json / kz-N.json (одинаковая длина, числа)
+  - i18n-build.py       сборка site/assets/i18n-kz.js и i18n-en.js из crawl/i18n/ru-*.json + en-*/kz-*.json
+- crawl/i18n/              словари: ru-N.json (исходные строки) + en-N.json, kz-N.json (массивы в том же порядке), 12 блоков, ~3000 строк
 - crawl/site-inventory.md  инвентаризация текущего aecups.kz: URL, объёмы каталога, контакты, ошибки
 - crawl/client-request.md  что запросить у клиента (нет на сайте): вектор логотипа, фото офиса, TEOS, 89 товаров без фото и т.д.
 - crawl/woo/               выгрузка Store API (products-N.json, categories.json), pages.json (PDF по товарам), posts.json, pdf-media.json

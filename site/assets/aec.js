@@ -134,7 +134,7 @@ window.AECUI = (function () {
     const cats = D.CATEGORIES.map(c => `<a href="${L_.cat(c.id)}"><span class="ic">${icon(c.img)}</span><span><b>${c.name}</b><small>${c.range}${c.soon ? ', по запросу' : ''}</small></span></a>`).join('');
     const inds = D.INDUSTRIES.map(i => `<a href="${L_.solution(i.id)}">${i.name}</a>`).join('');
     const svcs = D.SERVICES.map(s => `<a href="${L_.service(s.id)}">${s.short}</a>`).join('');
-    const top = `<div class="topline"><div class="wrap"><div><span><a href="mailto:${C.email}">${C.email}</a></span><span>${C.hours}</span></div><div><span><a href="${L_.docs}">Проектировщикам</a></span><span><a href="${L_.docs}">Документация</a></span><span><a href="${L_.certs}">Сертификаты</a></span><span><a href="${L_.contacts}">Контакты</a></span></div></div></div>`;
+    const top = `<div class="topline"><div class="wrap"><div><span><a href="mailto:${C.email}">${C.email}</a></span><span>${C.hours}</span></div><div>${window.AEC_I18N_UI ? window.AEC_I18N_UI.switcher() : ''}<span><a href="${L_.docs}">Проектировщикам</a></span><span><a href="${L_.docs}">Документация</a></span><span><a href="${L_.certs}">Сертификаты</a></span><span><a href="${L_.contacts}">Контакты</a></span></div></div></div>`;
     const h = `<header class="header" id="hdr"><div class="wrap">
       <a class="logo" href="${L_.home}" aria-label="AEC Kazakhstan, на главную"><img class="logo-img" src="assets/img/logo.png" alt="AEC Kazakhstan" onerror="this.onerror=null;this.parentNode.classList.add('nologo');this.remove()"><span class="logo-txt">AEC<small>Almaty Electro Consult</small></span></a>
       <nav class="nav" aria-label="Главное меню">
@@ -154,7 +154,7 @@ window.AECUI = (function () {
         <a class="btn btn-kp" href="${L_.kp}">${icon('kp')}<span>Запрос КП</span><i class="kp-count" data-n="0"></i></a>
         <button class="btn-icon burger" aria-label="Меню" data-open-menu>${icon('menu')}</button>
       </div></div></header>`;
-    const mm = `<div class="mmenu" id="mmenu" aria-hidden="true"><div class="mmenu-head"><a class="logo" href="${L_.home}"><img class="logo-img" src="assets/img/logo.png" alt="AEC Kazakhstan" onerror="this.onerror=null;this.parentNode.classList.add('nologo');this.remove()"><span class="logo-txt">AEC</span></a><button class="btn-icon" data-close-menu aria-label="Закрыть">${icon('close')}</button></div>
+    const mm = `<div class="mmenu" id="mmenu" aria-hidden="true"><div class="mmenu-head"><a class="logo" href="${L_.home}"><img class="logo-img" src="assets/img/logo.png" alt="AEC Kazakhstan" onerror="this.onerror=null;this.parentNode.classList.add('nologo');this.remove()"><span class="logo-txt">AEC</span></a>${window.AEC_I18N_UI ? window.AEC_I18N_UI.switcher('lang-m') : ''}<button class="btn-icon" data-close-menu aria-label="Закрыть">${icon('close')}</button></div>
       <details open><summary>Продукция ${icon('chev')}</summary>${D.CATEGORIES.map(c => `<a href="${L_.cat(c.id)}">${c.name} <small class="muted">${c.range}</small></a>`).join('')}</details>
       <details><summary>Решения по отраслям ${icon('chev')}</summary>${inds}</details>
       <details><summary>Сервис ${icon('chev')}</summary>${svcs}</details>
