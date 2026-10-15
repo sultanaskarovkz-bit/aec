@@ -38,7 +38,8 @@
                         НЕ переводятся (первый этап): статьи (#body.article), описания и таблицы 602 товаров,
                         названия моделей, отзывы. Для WP-этапа: Polylang/WPML, словари как основа.
   - assets/images.json  манифест: имя файла в assets/img/ -> URL оригинала на aecups.kz (87 слотов)
-  - assets/img/         ПУСТО. Сюда кладутся фото; пока их нет, img() рисует светлую заглушку через onerror
+  - assets/img/         фото сайта; cat-<id>-photo.jpg — фото категорий (gpes/zvu/inv/freq/trafo/ips взяты с сайтов AGG Power и Tescom,
+                        источники в crawl/client-request.md; нужно подтверждение клиента). img() рисует заглушку через onerror
   - BUILD-GUIDE.md      соглашения по страницам и SEO-правила
 - tools/
   - fetch-images.sh     скачивает все файлы из images.json в site/assets/img (curl)
