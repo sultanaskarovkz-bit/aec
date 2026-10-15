@@ -46,9 +46,6 @@
       <ol class="steps" id="steps"></ol>
       <h2 style="margin:40px 0 16px">Сроки и география</h2>
       <div class="geo" id="geo"></div>
-      <h2 style="margin:40px 0 16px">Стоимость</h2>
-      <div class="tbl-wrap"><table class="tbl price-tbl" id="price"></table></div>
-      <p class="small muted" style="margin-top:10px">Цены ориентировочные для Алматы, без стоимости запчастей и батарей. Точную стоимость укажем в КП после диагностики или по описанию задачи.</p>
     </div>
     <aside class="side-box" id="side"></aside>
   </div></div></section>
@@ -88,7 +85,6 @@
     document.getElementById('brandsLine').innerHTML = BR.map(b => `<span>${b}</span>`).join('');
     document.getElementById('steps').innerHTML = t.steps.map(x => `<li><b>${x[0]}</b><p>${x[1]}</p></li>`).join('');
     document.getElementById('geo').innerHTML = t.geo.map(x => `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
-    document.getElementById('price').innerHTML = '<thead><tr><th>Работы</th><th>Стоимость</th></tr></thead><tbody>' + t.price.map(x => `<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join('') + '</tbody>';
     document.getElementById('side').innerHTML = `<h3>${s.short}</h3><div class="big">${s.price}</div><p class="small muted">Ответ в рабочее время в течение часа. Выезд по Алматы в день обращения.</p><button class="btn btn-kp btn-block" data-open-modal data-title="Заявка: ${s.short}" data-type="Заявка на услугу: ${s.short}">Оставить заявку</button><a class="btn btn-wa btn-block" href="${C.whatsapp}" target="_blank" rel="noopener">${I('wa')} WhatsApp</a><a class="btn btn-ghost btn-block" href="tel:+${C.phoneRaw}">${I('phone')} ${C.phone}</a><div style="border-top:1px solid var(--line);padding-top:12px;font-size:14px"><b style="display:block;margin-bottom:6px">Другие услуги</b>${D.SERVICES.filter(x => x.id !== s.id).map(x => `<a href="${L.service(x.id)}" style="display:block;padding:4px 0">${x.short}</a>`).join('')}</div>`;
     const pj = s.id === 'zamena' || s.id === 'diagnostika' ? D.PROJECTS.filter(p => ['ktz', 'uralsk', 'lab'].includes(p.id)) : D.PROJECTS.slice(0, 3);
     document.getElementById('pj').innerHTML = pj.map(p => `<a class="pj" href="${L.project(p.id)}"><div class="img" style="padding:0;overflow:hidden"><span class="badge badge-navy tag" style="z-index:1">${p.city}, ${p.year}</span>${U.img(p.photos[0], p.title, '', 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div><div class="body"><div class="meta">${p.client}</div><h3>${p.title}</h3><div class="kva">${p.kva}</div></div></a>`).join('');

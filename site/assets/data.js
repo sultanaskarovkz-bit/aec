@@ -2,12 +2,12 @@
    который генерируется tools/build-catalog.py из выгрузки WooCommerce текущего сайта aecups.kz. */
 window.AEC = (function () {
   const CONTACT = {
-    phone: '+7 706 651 16 01',
-    phoneRaw: '77066511601',
+    phone: '+7 708 366 38 89',
+    phoneRaw: '77083663889',
     email: 'info@aecups.kz',
     address: 'г. Алматы, ул. Чаплина 71/66, БЦ «Станица», 4 этаж, офис А01',
     hours: 'Пн–Пт 9:00–18:00',
-    whatsapp: 'https://api.whatsapp.com/send/?phone=77066511601&text=' + encodeURIComponent('Здравствуйте! Пишу с сайта aecups.kz.'),
+    whatsapp: 'https://api.whatsapp.com/send/?phone=77083663889&text=' + encodeURIComponent('Здравствуйте! Пишу с сайта aecups.kz.'),
     instagram: 'https://www.instagram.com/aec_kazakhstan/',
     youtube: 'https://www.youtube.com/@AEC_Kazakhstan',
     twogis: 'https://2gis.kz/almaty/firm/70000001060760363',
@@ -16,7 +16,7 @@ window.AEC = (function () {
   };
 
   const CATEGORIES = [
-    { id: 'ibp', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/', name: 'ИБП', full: 'Источники бесперебойного питания', range: '0,7–1200 кВА', min: 0.7, max: 1200, unit: 'кВА', img: 'ups', count: 233,
+    { id: 'ibp', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/', name: 'ИБП', full: 'Источники бесперебойного питания', range: '0,7 кВА – 4800 кВт', min: 0.7, max: 1200, unit: 'кВА', img: 'ups', count: 233,
       subs: [
         { id: 'odnofaznye', name: 'Однофазные', hint: '1–10 кВА, серверные и кабинеты' },
         { id: 'tryohfaznye', name: 'Трёхфазные', hint: '10–1200 кВА' },
@@ -25,7 +25,7 @@ window.AEC = (function () {
         { id: 'batarejnye-shkafy', name: 'Батарейные шкафы и модули', hint: '' },
         { id: 'aksessuary', name: 'Аксессуары', hint: 'SNMP-карты, байпасы, датчики' }
       ] },
-    { id: 'dgu', slug: 'product-category/generatory-2/', name: 'Дизельные генераторы', full: 'Дизельные генераторные установки (ДГУ)', range: '10–3750 кВА', min: 10, max: 3750, unit: 'кВА', img: 'genset', count: 22,
+    { id: 'dgu', slug: 'product-category/generatory-2/', name: 'Дизельные генераторы', full: 'Дизельные генераторные установки (ДГУ)', range: '10 кВА – 4,25 МВА', min: 10, max: 3750, unit: 'кВА', img: 'genset', count: 22,
       subs: [
         { id: 'otkrytye', name: 'Открытого исполнения', hint: 'для машзалов' },
         { id: 'v-kozhuhe', name: 'В шумозащитном кожухе', hint: '≤ 72 дБ(А)' },
@@ -40,7 +40,7 @@ window.AEC = (function () {
         { id: 'li-ion', name: 'Литий-ионные', hint: 'LiFePO4' },
         { id: 'stellazhi', name: 'Стеллажи и шкафы', hint: '' }
       ] },
-    { id: 'stab', slug: 'product-category/stabilizatory/', name: 'Стабилизаторы напряжения', full: 'Стабилизаторы напряжения', range: '0,3–3200 кВА', min: 0.3, max: 3200, unit: 'кВА', img: 'stab', count: 124,
+    { id: 'stab', slug: 'product-category/stabilizatory/', name: 'Стабилизаторы напряжения', full: 'Стабилизаторы напряжения', range: '0,3–5000 кВА', min: 0.3, max: 3200, unit: 'кВА', img: 'stab', count: 124,
       subs: [
         { id: 'odnofaznye', name: 'Однофазные', hint: '220 В' },
         { id: 'tryohfaznye', name: 'Трёхфазные', hint: '380 В' },
@@ -53,6 +53,7 @@ window.AEC = (function () {
         { id: 'odnofaznye', name: 'Однофазные (STS2000)', hint: '' },
         { id: 'tryohfaznye', name: 'Трёхфазные (STS3000 / STS4000)', hint: '3- и 4-полюсные' }
       ] },
+    { id: 'gpes', slug: 'product-category/gazoporshnevye-elektrostancii/', name: 'Газопоршневые электростанции', full: 'Газопоршневые электростанции (ГПЭС)', range: '400–4500 кВт', img: 'genset', count: 0, soon: true, subs: [] },
     { id: 'zvu', slug: 'product-category/zvu-sopt/', name: 'Выпрямители и ЗВУ (СОПТ)', full: 'Выпрямители и зарядно-выпрямительные устройства', range: '12–220 В DC', img: 'rect', count: 0, soon: true, subs: [] },
     { id: 'inv', slug: 'product-category/invertory/', name: 'Инверторы', full: 'Инверторы DC/AC', range: '6–3500 кВт', img: 'inv', count: 0, soon: true, subs: [] },
     { id: 'freq', slug: 'product-category/preobrazovateli-chastoty/', name: 'Преобразователи частоты', full: 'Статические преобразователи 50/60/400 Гц', range: '50 / 60 / 400 Гц', img: 'freq', count: 0, soon: true, subs: [] },
@@ -73,10 +74,10 @@ window.AEC = (function () {
 
   const SERVICES = [
     { id: 'montazh', slug: 'uslugi/montazh-i-obsluzhivanie-ibp-i-generatorov/', name: 'Монтаж и пусконаладка ИБП и ДГУ', short: 'Монтаж и пусконаладка', text: 'Установка, подключение, пробный запуск под нагрузкой, акт готовности', icon: 'wrench', price: 'по запросу', query: 'монтаж и пусконаладка ибп' },
-    { id: 'service', slug: 'uslugi/obsluzhivanie-ibp/', name: 'Сервисное обслуживание ИБП', short: 'Сервисное обслуживание', text: 'Плановое ТО по регламенту, сервисный договор, SLA по выезду', icon: 'shield', price: 'от 45 000 ₸ / выезд', query: 'обслуживание источников бесперебойного питания' },
-    { id: 'remont', slug: 'uslugi/remont-ibp/', name: 'Ремонт ИБП', short: 'Ремонт ИБП', text: 'Диагностика, замена силовых модулей, плат, вентиляторов. Любые бренды', icon: 'repair', price: 'диагностика от 25 000 ₸', query: 'ремонт ибп' },
-    { id: 'zamena', slug: 'uslugi/zamena-batarej-ibp/', name: 'Замена батарей ИБП', short: 'Замена батарей', text: 'Подбор АКБ, замена без остановки нагрузки, утилизация старых батарей', icon: 'battery', price: 'работы от 35 000 ₸', query: 'замена батарей ибп' },
-    { id: 'diagnostika', slug: 'uslugi/diagnostika-batarej/', name: 'Диагностика батарей', short: 'Диагностика батарей', text: 'Контрольный разряд без отключения ИБП, Fluke VT521, отчёт по каждой банке', icon: 'gauge', price: 'от 60 000 ₸', query: 'диагностика аккумуляторов ибп' },
+    { id: 'service', slug: 'uslugi/obsluzhivanie-ibp/', name: 'Сервисное обслуживание ИБП', short: 'Сервисное обслуживание', text: 'Плановое ТО по регламенту, сервисный договор, SLA по выезду', icon: 'shield', price: 'по запросу', query: 'обслуживание источников бесперебойного питания' },
+    { id: 'remont', slug: 'uslugi/remont-ibp/', name: 'Ремонт ИБП', short: 'Ремонт ИБП', text: 'Диагностика, замена силовых модулей, плат, вентиляторов. Любые бренды', icon: 'repair', price: 'по запросу', query: 'ремонт ибп' },
+    { id: 'zamena', slug: 'uslugi/zamena-batarej-ibp/', name: 'Замена батарей ИБП', short: 'Замена батарей', text: 'Подбор АКБ, замена без остановки нагрузки, утилизация старых батарей', icon: 'battery', price: 'по запросу', query: 'замена батарей ибп' },
+    { id: 'diagnostika', slug: 'uslugi/diagnostika-batarej/', name: 'Диагностика батарей', short: 'Диагностика батарей', text: 'Контрольный разряд без отключения ИБП, Fluke VT521, отчёт по каждой банке', icon: 'gauge', price: 'по запросу', query: 'диагностика аккумуляторов ибп' },
     { id: 'obsledovanie', slug: 'uslugi/obsledovanie-sistemy/', name: 'Обследование системы электропитания', short: 'Обследование системы', text: 'Аудит нагрузок, тепловизионный контроль, отчёт с рекомендациями', icon: 'search', price: 'по запросу', query: 'аудит системы электроснабжения' },
     { id: 'konsultaciya', slug: 'uslugi/predproektnaya-konsultacziya/', name: 'Предпроектная консультация и подбор', short: 'Предпроектная консультация', text: 'Расчёт нагрузки и автономии, схема резервирования, спецификация для тендера', icon: 'ruler', price: 'бесплатно', query: 'подбор ибп' }
   ];
@@ -88,9 +89,10 @@ window.AEC = (function () {
     { id: 'hoppecke', name: 'Hoppecke', country: 'Германия', type: 'Аккумуляторы OPzS / OPzV', status: 'Партнёр' },
     { id: 'bae-batterien', name: 'BAE Batterien', country: 'Германия', type: 'Аккумуляторы Secura', status: 'Партнёр', logo: 'brand-bae-batterien.svg' },
     { id: 'energrid', name: 'EnerGrid', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
-    { id: 'everexceed', name: 'EverExceed', country: 'Китай', type: 'АКБ, стабилизаторы', status: 'Партнёр' },
-    { id: 'ritar', name: 'Ritar', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
-    { id: 'sprinter', name: 'Exide Sprinter', country: 'Германия', type: 'Аккумуляторы', status: 'Партнёр' },
+            { id: 'sprinter', name: 'Exide', country: 'Германия', type: 'Аккумуляторы', status: 'Партнёр' },
+    { id: 'bereli', name: 'Bereli', country: 'Турция', type: 'Аккумуляторы AGM', status: 'Партнёр' },
+    { id: 'yuasa', name: 'Yuasa', country: 'Япония', type: 'Аккумуляторы', status: 'Партнёр' },
+    { id: 'enersys', name: 'EnerSys', country: 'США', type: 'Аккумуляторы', status: 'Партнёр' },
     { id: 'agg', name: 'AGG Power', country: 'Великобритания / Китай', type: 'ДГУ', status: 'Партнёр' },
     { id: 'baifa', name: 'BAIFA Power', country: 'Китай', type: 'ДГУ', status: 'Партнёр', logo: 'brand-baifa.svg' },
     { id: 'socomec', name: 'Socomec', country: 'Франция', type: 'ИБП, STS', status: 'Под заказ', logo: 'brand-socomec.svg' },
@@ -179,7 +181,14 @@ window.AEC = (function () {
     { slug: 'blog/dizel-generatornaya-ustanovka-podrobnyj-razbor/', title: 'Дизель-генераторная установка: устройство, работа и сферы применения', cat: 'ДГУ', date: '2026-08-12', read: 11, cover: 'blog-dgu.jpg' },
     { slug: 'blog/aec-kazakhstan-na-vystavke-kioge-2026/', title: 'AEC Kazakhstan на выставке KIOGE 2026: бесперебойное питание для нефтегазовой отрасли', cat: 'Новости', date: '2026-10-02', read: 4, cover: 'blog-kioge-cover.jpg' },
     { slug: 'blog/chto-takoe-ibp-i-dlya-chego-nuzhen-besperebojnik/', title: 'Что такое ИБП и для чего нужен бесперебойник', cat: 'Основы', date: '2026-05-20', read: 6, cover: 'blog-chto-takoe-ibp.jpg' },
-    { slug: 'blog/vybiraem-stabilizator-napryazheniya-dlya-chastnogo-doma/', title: 'Выбираем стабилизатор напряжения для частного дома', cat: 'Подбор', date: '2026-04-11', read: 6, cover: 'blog-stab-dom.jpg' }
+    { slug: 'blog/vybiraem-stabilizator-napryazheniya-dlya-chastnogo-doma/', title: 'Выбираем стабилизатор напряжения для частного дома', cat: 'Подбор', date: '2026-04-11', read: 6, cover: 'blog-stab-dom.jpg' },
+    { slug: 'blog/inzhenernoe-rukovodstvo-sistemy-hraneniya-energii/', title: 'Инженерное руководство по проектированию, мониторингу и сервису промышленных систем хранения энергии', cat: 'Сервис', date: '2026-08-26', read: 8, cover: 'blog-ess.jpg' },
+    { slug: 'blog/kak-rasschitat-moshchnost-ibp/', title: 'Как рассчитать мощность ИБП: кВА, кВт и коэффициент мощности', cat: 'Подбор', date: '2026-10-08', read: 6, cover: 'proj-lab-2.jpg' },
+    { slug: 'blog/srok-sluzhby-batarej-ibp/', title: 'Сколько служат батареи ИБП и когда их менять', cat: 'Сервис', date: '2026-09-29', read: 6, cover: 'proj-ktz-3.jpg' },
+    { slug: 'blog/dizelnyj-generator-dlya-biznes-centra/', title: 'Дизельный генератор для бизнес-центра: мощность, АВР, шум и размещение', cat: 'ДГУ', date: '2026-09-22', read: 7, cover: 'dgu-photo-8.jpg' },
+    { slug: 'blog/ibp-dlya-medicinskogo-oborudovaniya/', title: 'ИБП для медицинского оборудования: рентген, КТ, МРТ и операционные', cat: 'Решения', date: '2026-09-10', read: 6, cover: 'proj-uralsk-3.jpg' },
+    { slug: 'blog/modulnyj-ili-monoblochnyj-ibp/', title: 'Модульный или моноблочный ИБП: что выбрать для серверной и ЦОД', cat: 'Подбор', date: '2026-08-14', read: 6, cover: 'proj-lab-1.jpg' },
+    { slug: 'blog/stabilizator-dlya-stankov-chpu/', title: 'Стабилизатор напряжения для станков с ЧПУ и производственных линий', cat: 'Подбор', date: '2026-07-22', read: 6, cover: 'cat-stab-photo.jpg' }
   ];
 
   const FAQ = [

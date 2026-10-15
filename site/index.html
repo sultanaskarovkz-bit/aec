@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AEC Kazakhstan</title>
-<meta name="description" content="AEC Kazakhstan: ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения. Подбор, поставка со склада в Алматы, монтаж и сервис по всему Казахстану с 2015 года.">
+<meta name="description" content="AEC Kazakhstan: ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения. Подбор, поставка со склада в Алматы, монтаж и сервис по всему Казахстану с 2021 года.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/aec.css">
 <link rel="stylesheet" href="assets/pages.css">
@@ -45,6 +45,9 @@
 .line h3 { min-height: 2.4em; }
 .line .im { aspect-ratio: 4 / 3; background: var(--mist); overflow: hidden; margin-bottom: 6px; }
 .line .im img { width: 100%; height: 100%; object-fit: cover; }
+.line .im.art { display: grid; place-items: center; color: var(--navy); }
+.line-cta .im.art { background: var(--navy); color: #fff; }
+.line .im.art svg { width: 44%; height: 44%; }
 .line h3 a { color: var(--ink); }
 .line h3 a:hover { color: var(--blue); }
 .line .rng { font-size: 14px; color: var(--muted); }
@@ -54,6 +57,7 @@
 .lines-more { border-top: 1px solid var(--line); margin-inline: -20px; padding: 16px 20px 0; font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .lines-more a { color: var(--ink); }
 .lines-more a:hover { color: var(--blue); }
+.line:nth-child(n+6) { border-top: 1px solid var(--line); }
 @media (max-width: 1024px) { .lines { grid-template-columns: repeat(3, minmax(0, 1fr)); } .line:nth-child(3n) { border-right: 0; } .line:nth-child(n+4) { border-top: 1px solid var(--line); } }
 @media (max-width: 640px) { .lines-more { margin-inline: -14px; padding-inline: 14px; } .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: -14px; } .line { padding: 18px 14px 20px; } .line h3 { min-height: 0; } .line:nth-child(3n) { border-right: 1px solid var(--line); } .line:nth-child(2n) { border-right: 0; } .line:nth-child(n+3) { border-top: 1px solid var(--line); } .line ul { display: none; } }
 /* ---- Отрасли: список слева, фото справа меняется при наведении ---- */
@@ -161,7 +165,7 @@
   <div class="wrap hero-body">
     <div class="hero-panel">
       <h1 id="heroTitle">Системы гарантированного электропитания для промышленности, медицины и ЦОД</h1>
-      <p id="heroText">ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 1 до 4000 кВА. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.</p>
+      <p id="heroText">ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 0,7 кВА до 4800 кВт. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.</p>
       <div class="links" id="heroLinks"><a class="btn btn-primary btn-lg" href="catalog.html#ibp">Каталог оборудования</a><a class="btn btn-ghost btn-lg" href="kp.html">Запросить КП</a></div>
     </div>
     <div class="hero-facts" id="heroFacts"></div>
@@ -203,7 +207,7 @@
   <div class="company">
     <div class="txt">
       <h2>AEC Kazakhstan</h2>
-      <p class="lead" style="margin-top:14px">Инженерная компания в области гарантированного электропитания. Работаем в Казахстане с 2015 года: проектируем, поставляем, монтируем и обслуживаем системы бесперебойного питания для объектов любого масштаба.</p>
+      <p class="lead" style="margin-top:14px">Инженерная компания в области гарантированного электропитания. Работаем в Казахстане с 2021 года: проектируем, поставляем, монтируем и обслуживаем системы бесперебойного питания для объектов любого масштаба.</p>
       <p>Официальный дистрибьютор Salicru, Tescom и Kehua, партнёр Hoppecke и BAE Batterien. Среди заказчиков Air Astana, АО «КТЖ», Национальный банк РК, телеканал «Казахстан», медицинские центры и промышленные предприятия.</p>
       <a class="more" href="about.html">Подробнее о компании</a>
     </div>
@@ -244,7 +248,7 @@
 
   // Слайды первого экрана
   const SLIDES = [
-    { tab: 'Оборудование', slot: 'proj-ktz-2.jpg', alt: 'Модульный ИБП Tescom 300 кВА в лаборатории, Караганда', h: 'Системы гарантированного электропитания для промышленности, медицины и ЦОД', p: 'ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 1 до 4000 кВА. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.', a: ['catalog.html#ibp', 'Каталог оборудования'], b: ['kp.html', 'Запросить КП'] },
+    { tab: 'Оборудование', slot: 'proj-ktz-2.jpg', alt: 'Модульный ИБП Tescom 300 кВА в лаборатории, Караганда', h: 'Системы гарантированного электропитания для промышленности, медицины и ЦОД', p: 'ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения от 0,7 кВА до 4800 кВт. Поставка со склада в Алматы, монтаж и сервис по всему Казахстану.', a: ['catalog.html#ibp', 'Каталог оборудования'], b: ['kp.html', 'Запросить КП'] },
     { tab: 'Сервис', slot: 'proj-uralsk-3.jpg', alt: 'Инженеры AEC на монтаже ИБП', h: 'Монтаж, обслуживание и ремонт ИБП и генераторов по всему Казахстану', p: 'Собственная сервисная служба: пусконаладка под нагрузкой, регламентное обслуживание, замена и диагностика батарей, ремонт с выездом на объект.', a: ['service.html#montazh', 'Услуги сервиса'], b: ['service.html#zamena', 'Замена батарей'] },
     { tab: 'Проекты', slot: 'proj-lab-2.jpg', alt: 'Модульный ИБП Tescom 300 кВА в лаборатории, Караганда', h: 'Модульный ИБП 300 кВА для лаборатории в Караганде', p: 'Защита анализаторов и серверов клинико-диагностической лаборатории: ИБП Tescom MTW с резервированием N+1, батарейные шкафы, монтаж и пусконаладка под нагрузкой.', a: ['project.html#lab', 'О проекте'], b: ['projects.html', 'Все проекты'] }
   ];
@@ -269,9 +273,9 @@
   document.getElementById('heroFacts').innerHTML = [['Официальный дистрибьютор', 'Salicru, Tescom, Kehua'], ['Склад в Алматы', 'ИБП и батареи в наличии'], ['Сервис', 'Алматы, Астана, выезд по РК']].map(f => `<div><b>${f[0]}</b>${f[1]}</div>`).join('');
 
   // Оборудование
-  const main = D.CATEGORIES.filter(c => !c.soon), soon = D.CATEGORIES.filter(c => c.soon);
-  document.getElementById('lines').innerHTML = main.map(c => `<div class="line"><a class="im" href="${L.cat(c.id)}">${pimg(D.CAT_PHOTOS[c.id], c.full || c.name)}</a><h3><a href="${L.cat(c.id)}">${c.id === 'sts' ? 'Переключатели STS' : c.name}</a></h3><div class="rng">${c.range}, ${c.count} моделей</div><ul>${c.subs.slice(0, 3).map(s => `<li><a href="${L.cat(c.id, s.id)}">${s.name}</a></li>`).join('')}</ul></div>`).join('');
-  document.getElementById('linesMore').innerHTML = '<span>Под проект:</span>' + soon.map(c => `<a href="${L.cat(c.id)}">${c.name}</a>`).join('') + `<a href="${L.calc}">Калькулятор подбора</a>`;
+  const main = D.CATEGORIES, soon = [];
+  document.getElementById('lines').innerHTML = main.map(c => `<div class="line"><a class="im${D.CAT_PHOTOS[c.id] ? '' : ' art'}" href="${L.cat(c.id)}">${D.CAT_PHOTOS[c.id] ? pimg(D.CAT_PHOTOS[c.id], c.full || c.name) : I(c.img)}</a><h3><a href="${L.cat(c.id)}">${c.id === 'sts' ? 'Переключатели STS' : c.name}</a></h3><div class="rng">${c.range}${c.count ? ', ' + c.count + ' моделей' : ', под проект'}</div><ul>${c.subs.slice(0, 3).map(s => `<li><a href="${L.cat(c.id, s.id)}">${s.name}</a></li>`).join('')}</ul></div>`).join('') + `<div class="line line-cta"><a class="im art" href="${L.kp}">${I('kp')}</a><h3><a href="${L.kp}">Не нашли нужное?</a></h3><div class="rng">Подбор под проект</div><ul><li><a href="${L.calc}">Калькулятор подбора</a></li><li><a href="${L.kp}">Запросить КП</a></li><li><a href="${L.contacts}">Связаться с инженером</a></li></ul></div>`;
+  document.getElementById('linesMore').innerHTML = `<span>Не нашли нужное?</span><a href="${L.calc}">Калькулятор подбора</a><a href="${L.kp}">Запросить КП</a>`;
 
   // Отрасли
   const IPH = { czod: 'proj-airastana-1.jpg', med: 'proj-uralsk-1.jpg', prom: 'proj-ktz-2.jpg', oil: 'prod-tescom-genset-1.jpg', office: 'proj-airastana-3.jpg', machines: 'proj-ktz-4.jpg', emergency: 'proj-lab-2.jpg', telecom: 'proj-tv-1.jpg' };
@@ -285,7 +289,7 @@
   list.addEventListener('focusin', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
 
   // Сервис
-  document.getElementById('svcPhoto').innerHTML = pimg('proj-uralsk-2.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
+  document.getElementById('svcPhoto').innerHTML = pimg('proj-airastana-4.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
   document.getElementById('svcList').innerHTML = D.SERVICES.map(s => `<li><a href="${L.service(s.id)}"><span><b>${s.short}</b><small>${s.text}</small></span>${I('chev')}</a></li>`).join('');
 
   // Проекты
@@ -293,7 +297,7 @@
   document.getElementById('proj').innerHTML = D.PROJECTS.slice(0, 3).map(p => `<a href="${L.project(p.id)}"><div class="im">${pimg(p.photos[0], p.title)}</div><div class="meta">${p.client}, ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="eq">${p.equipment[0]}</div></a>`).join('');
 
   // Компания
-  document.getElementById('numbers').innerHTML = [['2015', 'год основания'], ['25', 'брендов в портфеле'], ['570', 'позиций в каталоге'], ['12', 'городов с проектами']].map(s => `<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
+  document.getElementById('numbers').innerHTML = [['2021', 'год основания'], [String(D.BRANDS.length), 'брендов в портфеле'], [String(D.PRODUCTS.length), 'позиций в каталоге'], ['20', 'областей РК']].map(s => `<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join('');
   document.getElementById('brandRow').innerHTML = D.BRANDS.slice(0, 16).map(b => `<a href="${L.brand(b.id)}">${b.name}</a>`).join('');
   document.getElementById('clientLogos').innerHTML = D.CLIENT_LOGOS.slice(0, 8).map(c => `<div title="${c[1]}">${img(c[0], c[1])}</div>`).join('');
 
