@@ -16,7 +16,6 @@
 .hero-media .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
 .hero-media .slide.on { opacity: 1; }
 .hero-media .slide img { width: 100%; height: 100%; object-fit: cover; }
-.hero-media .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10, 37, 64, .28), rgba(10, 37, 64, 0) 45%); pointer-events: none; }
 .hero-ctrl { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; }
 .hero-ctrl .wrap { display: flex; justify-content: flex-end; gap: 28px; padding-bottom: 22px; }
 .hero-ctrl button { border: 0; background: transparent; color: rgba(255, 255, 255, .72); font: 500 13px/1 var(--font-body); padding: 10px 0 0; position: relative; cursor: pointer; }
@@ -39,7 +38,7 @@
   .hero-facts { grid-template-columns: 1fr; gap: 12px; margin-top: 24px; }
 }
 /* ---- Линейки оборудования: пять колонок с разделителями ---- */
-.lines { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-inline: -20px; }
+.lines { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-inline: -20px; }
 .line { display: flex; flex-direction: column; gap: 10px; padding: 24px 20px 28px; border-right: 1px solid var(--line); min-width: 0; }
 .line:last-child { border-right: 0; }
 .line h3 { min-height: 2.4em; }
@@ -57,7 +56,39 @@
 .lines-more { border-top: 1px solid var(--line); margin-inline: -20px; padding: 16px 20px 0; font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .lines-more a { color: var(--ink); }
 .lines-more a:hover { color: var(--blue); }
-.line:nth-child(n+6) { border-top: 1px solid var(--line); }
+.line:nth-child(4n) { border-right: 0; }
+.line:nth-child(n+5) { border-top: 1px solid var(--line); }
+
+/* Схема гарантированного электропитания на первом экране */
+.hero-media { background: var(--navy); }
+.scheme { position: absolute; inset: 0; display: flex; justify-content: flex-end; align-items: center; padding: 16px 40px 70px 0; }
+.scheme svg { width: min(100%, 1080px); height: 100%; max-height: 100%; overflow: visible; }
+.scheme .wire { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: 2; }
+.scheme .flow { fill: none; stroke: #4da3ff; stroke-width: 2.5; stroke-dasharray: 8 10; stroke-linecap: round; animation: flow 1.6s linear infinite; opacity: .95; }
+.scheme .flow.slow { animation-duration: 2.6s; stroke: #8fc4ff; opacity: .7; }
+.scheme .flow.off { opacity: 0; transition: opacity .6s; }
+.scheme .node rect { fill: #0f3159; stroke: rgba(255, 255, 255, .35); stroke-width: 1.5; }
+.scheme .node text { font-family: var(--font-body); font-size: 15px; font-weight: 600; fill: #fff; text-anchor: middle; }
+.scheme .node .sub { font-size: 12px; font-weight: 400; fill: rgba(255, 255, 255, .72); }
+.scheme .node.key rect { stroke: #4da3ff; stroke-width: 2; }
+.scheme .node .ic { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.scheme .pulse { fill: #4da3ff; animation: pulse 1.6s ease-in-out infinite; }
+.scheme .bat { fill: none; stroke: #4da3ff; stroke-width: 1.5; }
+.scheme .bat-fill { fill: #4da3ff; animation: charge 3.2s linear infinite; transform-origin: left; }
+.scheme .gen-wave { fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: 2; stroke-dasharray: 60 200; animation: flow 1.2s linear infinite; }
+.scheme .tag { font-family: var(--font-body); font-size: 12px; fill: rgba(255, 255, 255, .6); }
+.scheme .legend { font-family: var(--font-body); font-size: 13px; fill: rgba(255, 255, 255, .8); }
+.scheme .hl rect { fill: #0066cc; stroke: #fff; }
+.scheme .dim { opacity: .35; }
+.scheme .spark { fill: #fff; animation: spark 1.6s ease-in-out infinite; }
+@keyframes flow { to { stroke-dashoffset: -36; } }
+@keyframes pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+@keyframes charge { 0% { transform: scaleX(.2); opacity: .6; } 90% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes spark { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .scheme .flow, .scheme .pulse, .scheme .bat-fill, .scheme .gen-wave, .scheme .spark { animation: none; } }
+@media (max-width: 960px) { .scheme { padding: 16px 16px 70px; justify-content: center; } .scheme .node text { font-size: 17px; } .scheme .node .sub { font-size: 13px; } }
+@media (max-width: 640px) { .hero-media { height: clamp(300px, 72vw, 420px); } .scheme .legend { display: none; } }
+
 @media (max-width: 1024px) { .lines { grid-template-columns: repeat(3, minmax(0, 1fr)); } .line:nth-child(3n) { border-right: 0; } .line:nth-child(n+4) { border-top: 1px solid var(--line); } }
 @media (max-width: 640px) { .lines-more { margin-inline: -14px; padding-inline: 14px; } .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: -14px; } .line { padding: 18px 14px 20px; } .line h3 { min-height: 0; } .line:nth-child(3n) { border-right: 1px solid var(--line); } .line:nth-child(2n) { border-right: 0; } .line:nth-child(n+3) { border-top: 1px solid var(--line); } .line ul { display: none; } }
 /* ---- Отрасли: список слева, фото справа меняется при наведении ---- */
@@ -253,14 +284,63 @@
     { tab: 'Проекты', slot: 'proj-lab-2.jpg', alt: 'Модульный ИБП Tescom 300 кВА в лаборатории, Караганда', h: 'Модульный ИБП 300 кВА для лаборатории в Караганде', p: 'Защита анализаторов и серверов клинико-диагностической лаборатории: ИБП Tescom MTW с резервированием N+1, батарейные шкафы, монтаж и пусконаладка под нагрузкой.', a: ['project.html#lab', 'О проекте'], b: ['projects.html', 'Все проекты'] }
   ];
   const media = document.getElementById('heroMedia'), ctrl = document.getElementById('heroCtrl');
-  media.innerHTML = SLIDES.map((s, i) => `<div class="slide ${i === 0 ? 'on' : ''}">${pimg(s.slot, s.alt)}</div>`).join('');
+  // Схема гарантированного электропитания: сеть и ДГУ -> АВР -> стабилизатор -> ИБП (+АКБ) -> STS -> нагрузка
+  const node = (id, x, y, w, h, title, sub, icon) => `<g class="node" data-n="${id}"><rect x="${x}" y="${y}" width="${w}" height="${h}"/>${icon ? `<g class="ic" transform="translate(${x + w / 2 - 12}, ${y + 12})">${icon}</g>` : ''}<text x="${x + w / 2}" y="${y + (icon ? 56 : 36)}">${title}</text>${sub ? `<text class="sub" x="${x + w / 2}" y="${y + (icon ? 76 : 56)}">${sub}</text>` : ''}</g>`;
+  const IC = {
+    grid: '<path d="M12 2v6M4 8h16M6 8l-3 12M18 8l3 12M12 8v14M8 22h8"/>',
+    gen: '<rect x="2" y="7" width="20" height="12"/><circle cx="8" cy="13" r="3"/><path d="M14 11h5M14 15h5"/>',
+    avr: '<rect x="2" y="4" width="20" height="16"/><path d="M6 12h4l2-4 2 8 2-4h2"/>',
+    stab: '<rect x="2" y="4" width="20" height="16"/><path d="M5 14c2-6 4-6 6 0s4 6 6 0"/>',
+    ups: '<rect x="4" y="2" width="16" height="20"/><path d="M13 6l-4 7h4l-2 5"/>',
+    bat: '<rect x="2" y="7" width="18" height="10"/><path d="M20 10h2v4h-2M5 10v4M9 10v4M13 10v4"/>',
+    sts: '<path d="M3 7h6l6 10h6M3 17h6l6-10h6"/>',
+    load: '<rect x="3" y="3" width="18" height="18"/><path d="M7 9h10M7 13h10M7 17h6"/>'
+  };
+  media.innerHTML = `<div class="scheme" aria-hidden="true"><svg viewBox="0 0 980 420" xmlns="http://www.w3.org/2000/svg">
+    <!-- провода -->
+    <path class="wire" d="M150 100 H240 V175 H300"/><path class="wire" d="M150 290 H240 V215 H300"/>
+    <path class="wire" d="M440 195 H490"/><path class="wire" d="M630 195 H680"/><path class="wire" d="M560 255 V300"/>
+    <path class="wire" d="M820 195 H860 V110 H900"/><path class="wire" d="M860 195 H900"/><path class="wire" d="M860 195 V280 H900"/>
+    <!-- потоки -->
+    <path class="flow" id="f-grid" d="M150 100 H240 V175 H300"/>
+    <path class="flow slow off" id="f-gen" d="M150 290 H240 V215 H300"/>
+    <path class="flow" id="f-stab" d="M440 195 H490"/>
+    <path class="flow" id="f-ups" d="M630 195 H680"/>
+    <path class="flow slow" id="f-bat" d="M560 300 V255"/>
+    <path class="flow" id="f-l1" d="M820 195 H860 V110 H900"/><path class="flow" id="f-l2" d="M860 195 H900"/><path class="flow" id="f-l3" d="M860 195 V280 H900"/>
+    <!-- узлы -->
+    ${node('grid', 20, 60, 130, 84, 'Сеть', '380/400 В', IC.grid)}
+    ${node('gen', 20, 250, 130, 84, 'ДГУ / ГПЭС', 'резерв', IC.gen)}
+    ${node('avr', 300, 155, 140, 84, 'АВР', 'сеть / генератор', IC.avr)}
+    ${node('ups', 490, 140, 140, 110, 'ИБП', 'on-line, N+1', IC.ups)}
+    ${node('bat', 500, 300, 120, 70, 'АКБ', 'автономия', IC.bat)}
+    ${node('sts', 680, 155, 140, 84, 'STS / щит', 'два ввода', IC.sts)}
+    ${node('l1', 900, 70, 70, 70, 'ЦОД', '', IC.load)}
+    ${node('l2', 900, 160, 70, 70, 'Клиника', '', IC.load)}
+    ${node('l3', 900, 250, 70, 70, 'Цех', '', IC.load)}
+    <!-- индикаторы -->
+    <circle class="pulse" cx="560" cy="130" r="4"/><circle class="spark" cx="85" cy="212" r="3"/>
+    <text class="legend" x="20" y="28" id="schemeLegend">Электропитание без перерывов: сеть, резерв, ИБП и батареи под управлением одной схемы</text>
+  </svg></div>`;
+  const modes = {
+    0: { legend: 'Электропитание без перерывов: сеть, резерв, ИБП и батареи в одной схеме', gen: false, hl: ['ups', 'bat', 'sts'] },
+    1: { legend: 'Сервис: диагностика батарей, обслуживание ИБП и ДГУ, выезд по Казахстану', gen: true, hl: ['gen', 'ups', 'bat'] },
+    2: { legend: 'Проекты: ЦОД, клиники, производство и транспорт по всему Казахстану', gen: false, hl: ['l1', 'l2', 'l3'] }
+  };
+  function schemeMode(i) {
+    const m = modes[i] || modes[0];
+    document.getElementById('f-gen').classList.toggle('off', !m.gen); document.getElementById('f-grid').classList.toggle('off', m.gen);
+    media.querySelectorAll('.node').forEach(n => n.classList.toggle('hl', m.hl.includes(n.dataset.n)));
+    document.getElementById('schemeLegend').textContent = m.legend;
+  }
+  schemeMode(0);
   ctrl.innerHTML = SLIDES.map((s, i) => `<button type="button" class="${i === 0 ? 'on' : ''}" data-i="${i}" aria-label="Слайд ${i + 1}: ${s.tab}">${s.tab}</button>`).join('');
   const hT = document.getElementById('heroTitle'), hP = document.getElementById('heroText'), hL = document.getElementById('heroLinks');
   let cur = 0, timer;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function show(i) {
     cur = i; const s = SLIDES[i];
-    media.querySelectorAll('.slide').forEach((el, k) => el.classList.toggle('on', k === i));
+    schemeMode(i);
     ctrl.querySelectorAll('button').forEach((el, k) => { el.classList.remove('on'); if (k === i) { void el.offsetWidth; el.classList.add('on'); } });
     hT.textContent = s.h; hP.textContent = s.p;
     hL.innerHTML = `<a class="btn btn-primary btn-lg" href="${s.a[0]}">${s.a[1]}</a><a class="btn btn-ghost btn-lg" href="${s.b[0]}">${s.b[1]}</a>`;
