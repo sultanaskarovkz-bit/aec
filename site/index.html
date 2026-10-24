@@ -5,117 +5,170 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AEC Kazakhstan</title>
 <meta name="description" content="AEC Kazakhstan: ИБП, дизельные генераторы, аккумуляторные батареи и стабилизаторы напряжения. Подбор, поставка со склада в Алматы, монтаж и сервис по всему Казахстану с 2021 года.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
 <link rel="stylesheet" href="assets/aec.css">
 <link rel="stylesheet" href="assets/pages.css">
 <style>
-/* ---- Главная: тёмная шапка поверх первого экрана, белеет при прокрутке ---- */
-:root { --deep: #061a33; }
-body.home .header { transition: background .3s var(--ease), box-shadow .2s, border-color .3s; }
-body.home .header:not(.scrolled) { background: var(--navy); border-bottom-color: rgba(255, 255, 255, .08); }
-body.home .header:not(.scrolled) .logo-img { filter: brightness(0) invert(1); }
-body.home .header:not(.scrolled) .logo { color: #fff; }
-body.home .header:not(.scrolled) .nav > a, body.home .header:not(.scrolled) .nav > .has-mega > a { color: #fff; }
-body.home .header:not(.scrolled) .nav > a:hover, body.home .header:not(.scrolled) .nav > .has-mega:hover > a { border-bottom-color: #fff; color: #fff; }
-body.home .header:not(.scrolled) .has-mega > a svg { color: rgba(255, 255, 255, .6); }
-body.home .header:not(.scrolled) .search-btn { background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .18); color: rgba(255, 255, 255, .72); }
-body.home .header:not(.scrolled) .hdr-phone a { color: #fff; }
-body.home .header:not(.scrolled) .hdr-phone small { color: rgba(255, 255, 255, .6); }
-body.home .header:not(.scrolled) .btn-icon { background: transparent; border-color: rgba(255, 255, 255, .25); color: #fff; }
-body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
+/* ---- Главная: контраст белого и чёрного, узкая гарнитура для крупных заголовков ---- */
+:root { --ink0: #0b0d10; --ink1: #14181d; --amber-hi: #ffb000; --amber-glow: #ffcf6b; --ice: #9fd0ff; --font-cond: 'IBM Plex Sans Condensed', 'IBM Plex Sans', Arial, sans-serif; }
+body.home { background: #fff; }
+body.home .header { transition: background .5s var(--ease), border-color .5s; }
+body.home.is-dark .header { background: var(--ink0); border-bottom-color: rgba(255, 255, 255, .1); box-shadow: none; }
+body.home.is-dark .header .logo-img { filter: brightness(0) invert(1); }
+body.home.is-dark .header .nav > a, body.home.is-dark .header .nav > .has-mega > a { color: #fff; }
+body.home.is-dark .header .nav > a:hover, body.home.is-dark .header .nav > .has-mega:hover > a { border-bottom-color: #fff; color: #fff; }
+body.home.is-dark .header .has-mega > a svg { color: rgba(255, 255, 255, .6); }
+body.home.is-dark .header .search-btn { background: rgba(255, 255, 255, .07); border-color: rgba(255, 255, 255, .18); color: rgba(255, 255, 255, .72); }
+body.home.is-dark .header .hdr-phone a { color: #fff; }
+body.home.is-dark .header .hdr-phone small { color: rgba(255, 255, 255, .6); }
+body.home.is-dark .header .btn-icon { background: transparent; border-color: rgba(255, 255, 255, .25); color: #fff; }
+body.home.is-dark .header .kp-count { border-color: var(--ink0); }
+.h-cond { font-family: var(--font-cond); font-weight: 700; letter-spacing: -.02em; line-height: .95; text-wrap: balance; }
+h2.h-cond { font-size: clamp(40px, 5.4vw, 80px); }
+.sec-head .lead-s { font-size: clamp(16px, 1.3vw, 19px); color: var(--muted); max-width: 52ch; margin-top: 14px; line-height: 1.5; }
+.dark { background: var(--ink0); color: rgba(255, 255, 255, .78); }
+.dark h2, .dark h3 { color: #fff; }
+.dark .sec-head .lead-s { color: rgba(255, 255, 255, .62); }
+.dark .sec-head .more { color: #fff; border-bottom: 1px solid rgba(255, 255, 255, .4); }
+.dark .sec-head .more:hover { border-color: #fff; }
 
-/* ---- Первый экран: заголовок слева, живая схема электропитания справа ---- */
-.hero { position: relative; background: linear-gradient(180deg, var(--navy) 0%, var(--deep) 100%); color: #fff; overflow: hidden; }
-.hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, #000 20%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, #000 20%, transparent 100%); pointer-events: none; }
-.hero::after { content: ''; position: absolute; width: 900px; height: 900px; right: -200px; top: -250px; background: radial-gradient(circle, rgba(0, 102, 204, .32) 0%, rgba(0, 102, 204, 0) 60%); pointer-events: none; }
-.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: clamp(32px, 4vw, 64px); align-items: center; min-height: calc(100vh - var(--header-h) - 36px); padding-block: clamp(40px, 6vh, 72px) clamp(32px, 5vh, 56px); }
-.hero h1 { color: #fff; font-size: clamp(38px, 4.9vw, 72px); line-height: 1.02; letter-spacing: -.032em; font-weight: 500; max-width: 12ch; }
-.hero .hero-text { margin-top: clamp(18px, 2vw, 26px); font-size: clamp(16px, 1.25vw, 19px); line-height: 1.55; color: rgba(255, 255, 255, .78); max-width: 50ch; }
-.hero .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: clamp(24px, 3vw, 36px); }
-.hero .btn-light { background: #fff; color: var(--navy); }
-.hero .btn-light:hover { background: #e9f2fc; }
-.hero-trust { display: grid; gap: 10px; margin-top: clamp(32px, 5vw, 56px); padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, .14); font-size: 15px; line-height: 1.45; max-width: 56ch; }
-.hero-trust b { font-weight: 600; color: #fff; }
-.hero-trust b::after { content: ': '; }
-.hero-trust span { color: rgba(255, 255, 255, .66); }
-.hero-vis { min-width: 0; }
-.scheme { position: relative; }
-.scheme svg { width: 100%; height: auto; overflow: visible; display: block; }
-.scheme .wire { fill: none; stroke: rgba(255, 255, 255, .18); stroke-width: 2; }
-.scheme .flow { fill: none; stroke: #4da3ff; stroke-width: 3; stroke-dasharray: 10 12; stroke-linecap: round; animation: flow 1.4s linear infinite; opacity: 1; transition: opacity .5s; }
-.scheme .flow.slow { animation-duration: 2.6s; stroke: #8fc4ff; stroke-width: 2.5; opacity: .75; }
-.scheme .flow.off { opacity: 0; }
-.scheme .node rect.box { fill: #0d2d52; stroke: rgba(255, 255, 255, .32); stroke-width: 1.5; transition: stroke .4s, fill .4s; }
-.scheme .node .t { font-family: var(--font-body); font-size: 25px; font-weight: 600; fill: #fff; text-anchor: middle; }
-.scheme .node .s { font-family: var(--font-body); font-size: 16px; font-weight: 400; fill: rgba(255, 255, 255, .7); text-anchor: middle; transition: fill .4s; }
-.scheme .node .ic { fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.scheme .load .t { font-size: 21px; }
-.scheme .sch-h .ic { transform-box: fill-box; }
-.scheme .sch-v { display: none; }
-@media (max-width: 700px) { .scheme .sch-h { display: none; } .scheme .sch-v { display: block; max-width: 420px; margin-inline: auto; } .scheme .node .t { font-size: 18px; } .scheme .node .s { font-size: 13px; } .scheme .load .t { font-size: 15px; } }
-.scheme .led { fill: #34d399; }
-.scheme .led-ring { fill: none; stroke: #34d399; stroke-width: 1.5; opacity: .45; animation: ring 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
-.scheme .glow { fill: #0066cc; opacity: 0; filter: url(#blur); transition: opacity .6s; }
-.scheme .bar { fill: #4da3ff; transition: opacity .5s; }
-.scheme .bar.dim { opacity: .18; }
-.scheme .wave { fill: none; stroke: #8fc4ff; stroke-width: 2; stroke-dasharray: 40 200; opacity: 0; transition: opacity .4s; }
-.scheme .alert { fill: #f59e0b; opacity: 0; transition: opacity .3s; }
-/* режимы сценария */
-.scheme.s-fail .n-grid rect.box, .scheme.s-gen .n-grid rect.box { stroke: #f59e0b; }
-.scheme.s-fail .n-grid .s, .scheme.s-gen .n-grid .s { fill: #fbbf24; }
-.scheme.s-fail .n-grid .alert, .scheme.s-gen .n-grid .alert { opacity: 1; animation: blink 1s steps(2, start) infinite; }
-.scheme.s-fail .n-ups rect.box { stroke: #4da3ff; stroke-width: 2.5; }
-.scheme.s-fail .glow { opacity: .55; }
-.scheme.s-fail .n-bat rect.box { stroke: #4da3ff; }
-.scheme.s-gen .n-gen rect.box, .scheme.s-restore .n-gen rect.box { stroke: #4da3ff; }
-.scheme.s-gen .wave { opacity: 1; animation: flow 1s linear infinite; }
-.scheme.s-gen .n-gen .s { fill: #8fc4ff; }
-.hero-log { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; counter-reset: st; }
-.hero-log li { position: relative; padding: 12px 0 0; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, .5); transition: color .3s; }
-.hero-log li::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgba(255, 255, 255, .14); }
-.hero-log li::after { content: ''; position: absolute; left: 0; top: 0; height: 2px; width: 0; background: #4da3ff; }
-.hero-log li b { display: block; color: rgba(255, 255, 255, .8); font-weight: 600; font-size: 14px; margin-bottom: 3px; transition: color .3s; }
-.hero-log li.on { color: rgba(255, 255, 255, .82); }
-.hero-log li.on b { color: #fff; }
-.hero-log li.on::after { width: 100%; transition: width var(--ph-ms, 5000ms) linear; }
-.hero-log li.done::after { width: 100%; background: rgba(77, 163, 255, .5); }
-@keyframes flow { to { stroke-dashoffset: -44; } }
-@keyframes blink { to { visibility: hidden; } }
-@keyframes ring { 0% { transform: scale(.6); opacity: .6; } 100% { transform: scale(2.4); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .scheme .flow, .scheme .wave, .scheme .led-ring, .scheme .alert { animation: none !important; } .hero-log li.on::after { transition: none; } }
-@media (max-width: 1100px) { .hero h1 { font-size: clamp(36px, 4.4vw, 56px); } }
+/* ---- История на прокрутке: день -> ночь -> отключение сети ---- */
+.story { position: relative; height: 230vh; --p: 0; }
+.story-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; background: #fff; transition: background .6s var(--ease); }
+.story.night .story-pin, .story.blackout .story-pin { background: var(--ink0); }
+.scene { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; display: block; }
+.scene .ridge { transition: fill .8s var(--ease), stroke .8s; }
+.scene .far { fill: #eef2f6; stroke: #cbd5e1; stroke-width: 1.2; }
+.scene .mid { fill: #dfe6ee; stroke: #94a3b8; stroke-width: 1.4; }
+.scene .near { fill: #c9d4df; stroke: #64748b; stroke-width: 1.6; }
+.story.night .scene .far, .story.blackout .scene .far { fill: #0f141a; stroke: rgba(255, 255, 255, .12); }
+.story.night .scene .mid, .story.blackout .scene .mid { fill: #121922; stroke: rgba(159, 208, 255, .35); }
+.story.night .scene .near, .story.blackout .scene .near { fill: #161e28; stroke: rgba(159, 208, 255, .45); }
+.scene .snow { fill: none; stroke: #0a2540; stroke-width: 2.2; stroke-linecap: round; transition: stroke .8s; }
+.story.night .scene .snow, .story.blackout .scene .snow { stroke: var(--ice); }
+.scene .turb { stroke: #0a2540; stroke-width: 3; stroke-linecap: round; fill: none; transition: stroke .8s; }
+.scene .turb .hub { fill: #0a2540; stroke: none; transition: fill .8s; }
+.story.night .scene .turb, .story.blackout .scene .turb { stroke: #e2e8f0; }
+.story.night .scene .turb .hub, .story.blackout .scene .turb .hub { fill: #e2e8f0; }
+.scene .blades { transform-box: fill-box; transform-origin: center; animation: spin 11s linear infinite; }
+.scene .turb.t2 .blades { animation-duration: 8s; animation-delay: -3s; }
+.scene .turb.t3 .blades { animation-duration: 14s; animation-delay: -6s; }
+.scene .pylon { stroke: #334155; stroke-width: 2; fill: none; stroke-linejoin: round; transition: stroke .8s; }
+.story.night .scene .pylon, .story.blackout .scene .pylon { stroke: rgba(255, 255, 255, .45); }
+.scene .wire { fill: none; stroke: #64748b; stroke-width: 1.4; transition: stroke .8s; }
+.story.night .scene .wire { stroke: rgba(159, 208, 255, .8); }
+.story.blackout .scene .wire { stroke: rgba(255, 255, 255, .18); }
+.scene .spark { fill: var(--ice); opacity: 0; transition: opacity .4s; }
+.story.night .scene .spark { opacity: 1; }
+.scene .city { fill: var(--amber-glow); opacity: 0; transition: opacity .9s var(--ease); }
+.story.night .scene .city { opacity: 1; animation: flick 4s ease-in-out infinite; }
+.story.blackout .scene .city { opacity: 0; transition-duration: .35s; animation: none; }
+.scene .keep { fill: var(--amber-hi); opacity: 0; transition: opacity .6s; }
+.scene .keep-ring { fill: none; stroke: var(--amber-hi); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.story.night .scene .keep { opacity: 1; }
+.story.blackout .scene .keep { opacity: 1; }
+.story.blackout .scene .keep-ring { opacity: .7; animation: ring 2.2s ease-out infinite; }
+.scene .keep-lbl { font-family: var(--font-body); font-size: 15px; font-weight: 600; fill: #fff; opacity: 0; transition: opacity .6s .3s; }
+.scene .keep-lbl tspan.s { font-weight: 400; fill: var(--amber-glow); font-size: 13px; }
+.story.blackout .scene .keep-lbl { opacity: 1; }
+.scene .glow-k { fill: var(--amber-hi); opacity: 0; filter: url(#soft); transition: opacity .8s; }
+.story.blackout .scene .glow-k { opacity: .55; }
+.story-copy { position: absolute; left: 0; right: 0; top: calc(62px + clamp(24px, 5vh, 64px)); z-index: 2; }
+@media (min-width: 961px) { .story-copy h1, .story-sub, .story-after { padding-right: clamp(200px, 22vw, 330px); } }
+.story-copy h1 { font-family: var(--font-cond); font-weight: 700; font-size: clamp(40px, 5.9vw, 88px); line-height: .94; letter-spacing: -.025em; color: var(--ink0); transition: color .6s; }
+.story.night .story-copy h1, .story.blackout .story-copy h1 { color: #fff; }
+.story-sub { margin-top: clamp(16px, 2vw, 26px); max-width: 52ch; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.5; color: var(--text); transition: color .6s, opacity .5s; }
+.story.night .story-sub, .story.blackout .story-sub { color: rgba(255, 255, 255, .74); }
+.story-after { max-width: 44ch; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.45; color: #fff; opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); margin-top: 18px; }
+.story-after b { color: var(--amber-glow); font-weight: 600; }
+.story.blackout .story-after { opacity: 1; transform: none; }
+.story-copy .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: clamp(22px, 3vw, 34px); }
+.story .btn-primary { background: var(--ink0); }
+.story.night .btn-primary, .story.blackout .btn-primary { background: #fff; color: var(--ink0); }
+.story.night .btn-primary:hover, .story.blackout .btn-primary:hover { background: #e2e8f0; }
+.story-hint { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 2; font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: center; transition: opacity .4s, color .6s; cursor: pointer; }
+.story-hint i { width: 1px; height: 28px; background: currentColor; display: block; animation: hint 1.6s ease-in-out infinite; }
+.story.blackout .story-hint { opacity: 0; }
+.story.night .story-hint { color: rgba(255, 255, 255, .6); }
+/* рубильник */
+.mains { position: absolute; right: clamp(20px, 6vw, 120px); top: calc(62px + clamp(24px, 5vh, 64px)); z-index: 3; width: clamp(150px, 15vw, 220px); cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+.mains svg { width: 100%; height: auto; display: block; overflow: visible; }
+.mains .plate { fill: #fff; stroke: var(--ink0); stroke-width: 2; transition: fill .6s, stroke .6s; }
+.mains .jaw, .mains .pivot { fill: var(--ink0); transition: fill .6s; }
+.mains .lever { transform-box: view-box; transform-origin: 100px 190px; transform: rotate(0deg); transition: transform .5s cubic-bezier(.5, 0, .3, 1.4); }
+.mains .lever rect { fill: var(--ink0); transition: fill .6s; }
+.mains .lever .grip { fill: var(--amber-hi); }
+.mains .lbl { font-family: var(--font-cond); font-weight: 700; font-size: 20px; fill: var(--ink0); text-anchor: middle; letter-spacing: .02em; transition: fill .6s; }
+.mains .st { font-family: var(--font-cond); font-weight: 700; font-size: 26px; fill: #15803d; text-anchor: middle; transition: fill .3s; }
+.mains .led { fill: #22c55e; transition: fill .3s; }
+.story.night .mains .plate, .story.blackout .mains .plate { fill: var(--ink1); stroke: rgba(255, 255, 255, .5); }
+.story.night .mains .jaw, .story.blackout .mains .jaw, .story.night .mains .pivot, .story.blackout .mains .pivot, .story.night .mains .lever rect, .story.blackout .mains .lever rect { fill: #e2e8f0; }
+.story.night .mains .lbl, .story.blackout .mains .lbl { fill: #fff; }
+.story.blackout .mains .lever { transform: rotate(58deg); }
+.story.blackout .mains .st { fill: #f87171; }
+.story.blackout .mains .led { fill: #ef4444; }
+.mains-chip { position: absolute; right: clamp(20px, 6vw, 120px); top: calc(62px + clamp(24px, 5vh, 64px) + clamp(150px, 15vw, 220px) * 1.42); z-index: 3; width: clamp(150px, 15vw, 220px); font-size: 13px; line-height: 1.4; color: #fff; opacity: 0; transform: translateY(10px); transition: opacity .5s .25s, transform .5s .25s; }
+.mains-chip b { display: block; font-family: var(--font-cond); font-weight: 700; font-size: 40px; line-height: 1; color: var(--amber-glow); letter-spacing: -.01em; }
+.story.blackout .mains-chip { opacity: 1; transform: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes flick { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+@keyframes ring { 0% { transform: scale(.5); opacity: .8; } 100% { transform: scale(3); opacity: 0; } }
+@keyframes hint { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 @media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; min-height: 0; gap: 32px; padding-block: 36px 32px; }
-  .hero h1 { max-width: none; }
-  .hero-trust { gap: 8px; margin-top: 28px; font-size: 14px; }
-  .hero-log { grid-template-columns: 1fr 1fr; }
+  .story { height: 210vh; }
+  .story-copy h1 { font-size: clamp(38px, 10.5vw, 64px); }
+  .mains { width: clamp(90px, 24vw, 120px); top: auto; bottom: 96px; right: 16px; }
+  .mains-chip { display: none; }
+  .scene .keep-lbl { display: none; }
+  .story-hint { bottom: 86px; }
+  .mains-chip b { font-size: 30px; }
+  .story-after { margin-top: 16px; font-size: 15px; }
+  .story-sub { font-size: 15px; }
 }
-@media (max-width: 520px) { .hero-log { grid-template-columns: 1fr; gap: 6px; } .hero-log li { padding-top: 8px; } .hero-log li b { font-size: 13px; } .hero-log li { font-size: 12px; } }
+@media (max-width: 520px) { .story-copy { top: calc(var(--header-h) + 16px); } .story-copy .links .btn { min-height: 46px; padding: 0 16px; font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) {
+  .story { height: auto; }
+  .story-pin { position: relative; height: auto; min-height: 560px; padding-top: 62px; }
+  .scene .blades, .scene .city, .scene .keep-ring, .story-hint i { animation: none !important; }
+  .story-hint { display: none; }
+}
 
 /* ---- Лента заказчиков ---- */
-.marq-band { border-bottom: 1px solid var(--line); padding-block: 22px; overflow: hidden; }
+.marq-band { padding-block: 22px; overflow: hidden; border-bottom: 1px solid rgba(255, 255, 255, .1); }
 .marq-band .wrap { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; }
-.marq-band .lbl { font-size: 14px; color: var(--muted); white-space: nowrap; }
+.marq-band .lbl { font-size: 14px; color: rgba(255, 255, 255, .6); white-space: nowrap; }
 .marq { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .marq-track { display: flex; gap: 64px; width: max-content; animation: marq 48s linear infinite; }
 .marq:hover .marq-track { animation-play-state: paused; }
 .marq-track div { height: 48px; display: grid; place-items: center; flex: none; }
-.marq-track img { max-height: 40px; max-width: 150px; width: auto; object-fit: contain; filter: grayscale(1); opacity: .7; }
+.marq-track img { max-height: 40px; max-width: 150px; width: auto; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); opacity: .75; }
 .marq-track img.ph { display: none; }
 @keyframes marq { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marq-track { animation: none; flex-wrap: wrap; width: auto; gap: 24px 40px; } }
 @media (max-width: 720px) { .marq-band .wrap { grid-template-columns: 1fr; gap: 12px; } }
 
+/* ---- Появление при прокрутке ---- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-rv] { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+  [data-rv].in { opacity: 1; transform: none; }
+  [data-rv="clip"], [data-rv="mask"] { opacity: 1; transform: none; position: relative; }
+  [data-rv="clip"]::after, [data-rv="mask"]::after { content: ''; position: absolute; inset: -2px -6px -14px; background: #fff; z-index: 5; transform: scaleY(1); transform-origin: top; transition: transform 1s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); pointer-events: none; }
+  [data-rv="mask"]::after { transform-origin: bottom; }
+  [data-rv="clip"].in::after, [data-rv="mask"].in::after { transform: scaleY(0); }
+  .dark [data-rv="clip"]::after, .dark [data-rv="mask"]::after { background: var(--ink0); }
+  .bg-mist [data-rv="clip"]::after, .bg-mist [data-rv="mask"]::after { background: var(--mist); }
+}
+
 /* ---- Линейки оборудования ---- */
-.lines { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-inline: -20px; }
+.lines { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink0); margin-inline: -20px; }
 .line { display: flex; flex-direction: column; gap: 10px; padding: 24px 20px 28px; border-right: 1px solid var(--line); min-width: 0; }
 .line:last-child { border-right: 0; }
-.line h3 { min-height: 2.4em; }
+.line h3 { min-height: 2.4em; font-family: var(--font-cond); font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
 .line .im { aspect-ratio: 4 / 3; background: var(--mist); overflow: hidden; margin-bottom: 6px; }
-.line .im img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
-.line:hover .im img { transform: scale(1.05); }
+.line .im img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+.line:hover .im img { transform: scale(1.06); }
 .line .im.art { display: grid; place-items: center; color: var(--navy); }
-.line-cta .im.art { background: var(--navy); color: #fff; }
+.line-cta .im.art { background: var(--amber-hi); color: var(--ink0); }
 .line .im.art svg { width: 44%; height: 44%; }
 .line h3 a { color: var(--ink); }
 .line h3 a:hover { color: var(--blue); }
@@ -129,25 +182,59 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
 .line:nth-child(4n) { border-right: 0; }
 .line:nth-child(n+5) { border-top: 1px solid var(--line); }
 @media (max-width: 1024px) { .lines { grid-template-columns: repeat(3, minmax(0, 1fr)); } .line:nth-child(3n) { border-right: 0; } .line:nth-child(n+4) { border-top: 1px solid var(--line); } }
-@media (max-width: 640px) { .lines-more { margin-inline: -14px; padding-inline: 14px; } .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: -14px; } .line { padding: 18px 14px 20px; } .line h3 { min-height: 0; } .line:nth-child(3n) { border-right: 1px solid var(--line); } .line:nth-child(2n) { border-right: 0; } .line:nth-child(n+3) { border-top: 1px solid var(--line); } .line ul { display: none; } }
+@media (max-width: 640px) { .lines-more { margin-inline: -14px; padding-inline: 14px; } .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: -14px; } .line { padding: 18px 14px 20px; } .line h3 { min-height: 0; font-size: 19px; } .line:nth-child(3n) { border-right: 1px solid var(--line); } .line:nth-child(2n) { border-right: 0; } .line:nth-child(n+3) { border-top: 1px solid var(--line); } .line ul { display: none; } }
 
-/* ---- Отрасли: список слева, фото справа меняется при наведении ---- */
+/* ---- Проекты: чёрная секция, большие фото ---- */
+.cases { display: grid; grid-template-columns: 1.45fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; }
+.cases a { position: relative; display: block; overflow: hidden; background: var(--ink1); color: #fff; min-height: 250px; }
+.cases a:first-child { grid-row: 1 / 3; min-height: 560px; }
+.cases a img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease), filter .6s; filter: saturate(.85); }
+.cases a:hover img { transform: scale(1.04); filter: saturate(1); }
+.cases .ov { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 28px 24px; background: linear-gradient(180deg, rgba(11, 13, 16, 0) 0%, rgba(11, 13, 16, .6) 40%, rgba(11, 13, 16, .95) 100%); }
+.cases .meta { font-size: 13px; color: rgba(255, 255, 255, .7); }
+.cases h3 { color: #fff; font-family: var(--font-cond); font-size: 28px; font-weight: 700; margin-top: 6px; line-height: 1.05; max-width: 26ch; letter-spacing: -.01em; }
+.cases a:first-child h3 { font-size: clamp(30px, 3.2vw, 46px); }
+.cases .eq { margin-top: 10px; font-size: 14px; color: rgba(255, 255, 255, .78); }
+.cases .kva { position: absolute; top: 18px; left: 22px; font-family: var(--font-cond); font-weight: 700; font-size: 16px; background: var(--amber-hi); color: var(--ink0); padding: 6px 10px; }
+@media (max-width: 960px) { .cases { grid-template-columns: 1fr; grid-template-rows: none; } .cases a:first-child { grid-row: auto; min-height: 380px; } .cases a { min-height: 280px; } }
+
+/* ---- Отрасли ---- */
 .ind-split { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
-.ind-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
-.ind-list a { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; padding: 15px 0 15px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 17px; font-weight: 500; position: relative; }
-.ind-list a small { font-size: 13px; color: var(--muted); font-weight: 400; white-space: nowrap; }
-.ind-list a::before { content: ''; position: absolute; left: -20px; top: 0; bottom: 0; width: 3px; background: transparent; }
-.ind-list li.on a { color: var(--navy); }
-.ind-list li.on a::before { background: var(--amber); }
+.ind-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink0); }
+.ind-list a { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-family: var(--font-cond); font-size: 24px; font-weight: 600; position: relative; transition: padding-left .3s var(--ease); }
+.ind-list a small { font-family: var(--font-body); font-size: 13px; color: var(--muted); font-weight: 400; white-space: nowrap; }
+.ind-list li.on a { color: var(--ink0); padding-left: 18px; }
+.ind-list li.on a::before { content: ''; position: absolute; left: 0; top: 50%; width: 10px; height: 10px; margin-top: -5px; background: var(--amber-hi); }
 .ind-media { position: sticky; top: calc(var(--header-h) + 24px); }
 .ind-media .frame { position: relative; aspect-ratio: 4 / 3; background: var(--mist-2); overflow: hidden; }
-.ind-media .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s ease; }
-.ind-media .frame img.on { opacity: 1; }
+.ind-media .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .5s ease, transform 1.2s var(--ease); transform: scale(1.06); }
+.ind-media .frame img.on { opacity: 1; transform: none; }
 .ind-media .cap { padding: 14px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; font-size: 14px; color: var(--muted); }
 .ind-media .cap b { display: block; color: var(--ink); font-weight: 500; font-size: 15px; margin-bottom: 2px; }
-@media (max-width: 960px) { .ind-split { grid-template-columns: 1fr; gap: 24px; } .ind-media { position: static; order: -1; } .ind-list a::before { left: -12px; } }
+@media (max-width: 960px) { .ind-split { grid-template-columns: 1fr; gap: 24px; } .ind-media { position: static; order: -1; } .ind-list a { font-size: 20px; } }
 
-/* ---- Сервис: фото уходит в левый край, список услуг справа ---- */
+/* ---- Цифры и бренды: чёрная секция ---- */
+.numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.numbers div { border-top: 1px solid rgba(255, 255, 255, .2); padding-top: 18px; }
+.numbers b { display: block; font-family: var(--font-cond); font-size: clamp(64px, 8vw, 136px); font-weight: 700; color: #fff; line-height: .9; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.numbers b i { font-style: normal; font-size: .38em; color: var(--amber-glow); margin-left: 8px; letter-spacing: 0; }
+.numbers span { display: block; font-size: 15px; color: rgba(255, 255, 255, .66); margin-top: 12px; }
+.co-text { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
+.co-text p { font-size: 17px; line-height: 1.6; max-width: 54ch; }
+.co-text p + p { margin-top: 12px; font-size: 16px; color: rgba(255, 255, 255, .62); }
+.co-text .more { display: inline-block; margin-top: 22px; font-weight: 500; color: #fff; border-bottom: 1px solid rgba(255, 255, 255, .4); }
+.brands-row { margin-top: clamp(40px, 5vw, 64px); }
+.brands-row .lbl { font-size: 14px; color: rgba(255, 255, 255, .6); margin-bottom: 14px; }
+.brands-row .logo-row { grid-template-columns: repeat(8, 1fr); gap: 0; border: 1px solid rgba(255, 255, 255, .16); }
+.brands-row .logo-row a { border: 0; border-right: 1px solid rgba(255, 255, 255, .16); min-height: 64px; font-size: 15px; color: #fff; }
+.brands-row .logo-row a:hover { background: var(--amber-hi); color: var(--ink0); }
+.brands-row .logo-row a:nth-child(8n) { border-right: 0; }
+.brands-row .logo-row a:nth-child(n+9) { border-top: 1px solid rgba(255, 255, 255, .16); }
+@media (max-width: 1024px) { .brands-row .logo-row { grid-template-columns: repeat(4, 1fr); } .brands-row .logo-row a:nth-child(4n) { border-right: 0; } .brands-row .logo-row a:nth-child(n+5) { border-top: 1px solid rgba(255, 255, 255, .16); } .numbers { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 960px) { .co-text { grid-template-columns: 1fr; gap: 24px; } }
+@media (max-width: 560px) { .brands-row .logo-row { grid-template-columns: repeat(2, 1fr); } .brands-row .logo-row a:nth-child(2n) { border-right: 0; } .brands-row .logo-row a:nth-child(n+3) { border-top: 1px solid rgba(255, 255, 255, .16); } .numbers { gap: 24px 20px; } }
+
+/* ---- Сервис ---- */
 .svc-sec { overflow: hidden; }
 .svc-split2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: stretch; }
 .svc-photo { position: relative; min-height: 520px; background: var(--mist-2); margin-left: calc(-1 * clamp(20px, (100vw - 1240px) / 2, 240px)); overflow: hidden; }
@@ -155,66 +242,27 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
 .svc-photo .cap { position: absolute; left: clamp(20px, (100vw - 1240px) / 2, 240px); bottom: 0; background: #fff; padding: 12px 18px 0 0; font-size: 13px; color: var(--muted); max-width: 320px; }
 .svc-text { padding-block: 8px; }
 .svc-text > p { margin-top: 14px; max-width: 52ch; }
-.svc-rows { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid var(--line-2); }
+.svc-rows { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid var(--ink0); }
 .svc-rows a { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
 .svc-rows a b { font-weight: 500; font-size: 16px; display: block; }
 .svc-rows a small { display: block; font-size: 13px; color: var(--muted); margin-top: 1px; }
-.svc-rows a svg { width: 18px; height: 18px; color: var(--muted); transform: rotate(-90deg); }
+.svc-rows a svg { width: 18px; height: 18px; color: var(--muted); transform: rotate(-90deg); transition: transform .25s var(--ease), color .25s; }
 .svc-rows a:hover b { color: var(--blue); }
+.svc-rows a:hover svg { transform: rotate(-90deg) translateY(4px); color: var(--ink0); }
 .svc-text .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
 @media (max-width: 960px) { .svc-split2 { grid-template-columns: 1fr; gap: 24px; } .svc-photo { min-height: 0; aspect-ratio: 16 / 10; margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); } .svc-photo .cap { left: var(--gutter); } }
 
-/* ---- Проекты: большие фото с подписью на изображении ---- */
-.cases { display: grid; grid-template-columns: 1.45fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; }
-.cases a { position: relative; display: block; overflow: hidden; background: var(--navy); color: #fff; min-height: 240px; }
-.cases a:first-child { grid-row: 1 / 3; min-height: 520px; }
-.cases a img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
-.cases a:hover img { transform: scale(1.04); }
-.cases .ov { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 28px 24px; background: linear-gradient(180deg, rgba(6, 26, 51, 0) 0%, rgba(6, 26, 51, .55) 35%, rgba(6, 26, 51, .92) 100%); }
-.cases .meta { font-size: 13px; color: rgba(255, 255, 255, .7); }
-.cases h3 { color: #fff; font-size: 22px; font-weight: 600; margin-top: 6px; line-height: 1.25; max-width: 30ch; }
-.cases a:first-child h3 { font-size: clamp(22px, 2.2vw, 30px); }
-.cases .eq { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, .8); }
-.cases .kva { position: absolute; top: 20px; left: 24px; font-family: var(--font-display); font-weight: 600; font-size: 14px; background: rgba(6, 26, 51, .7); color: #fff; padding: 6px 10px; backdrop-filter: blur(4px); }
-@media (max-width: 960px) { .cases { grid-template-columns: 1fr; grid-template-rows: none; } .cases a:first-child { grid-row: auto; min-height: 360px; } .cases a { min-height: 260px; } }
-
-/* ---- Компания: тёмный блок с цифрами и брендами ---- */
-.co-dark { background: var(--navy); color: rgba(255, 255, 255, .8); position: relative; overflow: hidden; }
-.co-dark::after { content: ''; position: absolute; width: 700px; height: 700px; left: -300px; bottom: -400px; background: radial-gradient(circle, rgba(0, 102, 204, .3) 0%, rgba(0, 102, 204, 0) 60%); pointer-events: none; }
-.co-dark .wrap { position: relative; z-index: 1; }
-.co-dark h2 { color: #fff; font-size: clamp(28px, 3.2vw, 44px); letter-spacing: -.025em; max-width: 20ch; }
-.company { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.company .txt p { margin-top: 18px; max-width: 54ch; font-size: 17px; line-height: 1.6; }
-.company .txt p + p { margin-top: 12px; font-size: 16px; color: rgba(255, 255, 255, .68); }
-.company .txt .more { display: inline-block; margin-top: 24px; font-weight: 500; color: #fff; border-bottom: 1px solid rgba(255, 255, 255, .4); }
-.company .txt .more:hover { border-color: #fff; }
-.numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 32px; }
-.numbers div { border-top: 1px solid rgba(255, 255, 255, .18); padding-top: 16px; }
-.numbers b { display: block; font-size: clamp(44px, 4.6vw, 72px); font-weight: 500; color: #fff; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-.numbers b i { font-style: normal; font-size: .5em; color: rgba(255, 255, 255, .6); margin-left: 6px; letter-spacing: 0; }
-.numbers span { display: block; font-size: 15px; color: rgba(255, 255, 255, .66); margin-top: 10px; }
-.brands-row { margin-top: clamp(40px, 5vw, 64px); }
-.brands-row .lbl { font-size: 14px; color: rgba(255, 255, 255, .6); margin-bottom: 14px; }
-.brands-row .logo-row { grid-template-columns: repeat(8, 1fr); gap: 0; border: 1px solid rgba(255, 255, 255, .16); }
-.brands-row .logo-row a { border: 0; border-right: 1px solid rgba(255, 255, 255, .16); min-height: 64px; font-size: 15px; color: #fff; }
-.brands-row .logo-row a:hover { background: rgba(255, 255, 255, .06); color: #fff; }
-.brands-row .logo-row a:nth-child(8n) { border-right: 0; }
-.brands-row .logo-row a:nth-child(n+9) { border-top: 1px solid rgba(255, 255, 255, .16); }
-@media (max-width: 1024px) { .brands-row .logo-row { grid-template-columns: repeat(4, 1fr); } .brands-row .logo-row a:nth-child(4n) { border-right: 0; } .brands-row .logo-row a:nth-child(n+5) { border-top: 1px solid rgba(255, 255, 255, .16); } }
-@media (max-width: 960px) { .company { grid-template-columns: 1fr; gap: 32px; } }
-@media (max-width: 560px) { .brands-row .logo-row { grid-template-columns: repeat(2, 1fr); } .brands-row .logo-row a:nth-child(2n) { border-right: 0; } .brands-row .logo-row a:nth-child(n+3) { border-top: 1px solid rgba(255, 255, 255, .16); } .numbers { gap: 24px 20px; } }
-
-/* ---- Новости и события ---- */
+/* ---- Новости ---- */
 .news-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; }
 .news-main { color: var(--ink); display: block; }
 .news-main .im { aspect-ratio: 16 / 9; background: var(--mist-2); overflow: hidden; margin-bottom: 14px; }
 .news-main .im img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
 .news-main:hover .im img { transform: scale(1.03); }
 .news-main .meta { font-size: 13px; color: var(--muted); }
-.news-main h3 { font-size: 22px; margin-top: 6px; line-height: 1.3; }
-.news-main p { margin-top: 8px; font-size: 15px; color: var(--text); }
+.news-main h3 { font-family: var(--font-cond); font-size: 30px; font-weight: 700; margin-top: 6px; line-height: 1.05; }
+.news-main p { margin-top: 10px; font-size: 15px; color: var(--text); }
 .news-main:hover h3 { color: var(--blue); }
-.news-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.news-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink0); }
 .news-list a { display: grid; grid-template-columns: 128px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink); }
 .news-list .dt { font-size: 13px; color: var(--muted); padding-top: 3px; font-variant-numeric: tabular-nums; }
 .news-list b { font-weight: 500; font-size: 16px; line-height: 1.35; display: block; }
@@ -222,17 +270,19 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
 .news-list a:hover b { color: var(--blue); }
 @media (max-width: 960px) { .news-grid { grid-template-columns: 1fr; gap: 24px; } }
 
-/* ---- Контакты и форма ---- */
+/* ---- Контакты ---- */
 .contact2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.contact2 .kv2 { margin: 26px 0 0; display: grid; gap: 0; border-top: 1px solid var(--line-2); }
-.contact2 .kv2 div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
-.contact2 .kv2 dt { color: var(--muted); }
-.contact2 .kv2 dd { margin: 0; color: var(--ink); }
-.contact2 .kv2 a { color: var(--ink); font-weight: 500; }
-.contact2 .kv2 a:hover { color: var(--blue); }
+.contact2 .kv2 { margin: 26px 0 0; display: grid; gap: 0; border-top: 1px solid rgba(255, 255, 255, .3); }
+.contact2 .kv2 div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, .12); font-size: 15px; }
+.contact2 .kv2 dt { color: rgba(255, 255, 255, .6); }
+.contact2 .kv2 dd { margin: 0; color: #fff; }
+.contact2 .kv2 a { color: #fff; font-weight: 500; }
+.contact2 .kv2 a:hover { color: var(--amber-glow); }
 .contact2 .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-.cform { border: 1px solid var(--line); padding: 28px; background: #fff; }
-.cform h3 { grid-column: 1 / -1; font-size: 18px; }
+.contact2 .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .5); }
+.contact2 .btn-ghost:hover { background: #fff; color: var(--ink0); border-color: #fff; }
+.cform { padding: 28px; background: #fff; color: var(--text); }
+.cform h3 { grid-column: 1 / -1; font-family: var(--font-cond); font-size: 26px; font-weight: 700; }
 .cform .note-s { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
 @media (max-width: 960px) { .contact2 { grid-template-columns: 1fr; gap: 28px; } .contact2 .kv2 div { grid-template-columns: 110px 1fr; } }
 </style>
@@ -240,89 +290,93 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
 <body class="home">
 <div id="app">
 <main>
-<!-- 1. Первый экран -->
-<section class="hero" aria-label="Главное">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <h1 id="heroTitle">Электропитание, которое не выключается</h1>
-      <p class="hero-text" id="heroText">ИБП, дизельные и газопоршневые электростанции, аккумуляторные батареи и стабилизаторы от 0,7 кВА до 4,25 МВА. Проектируем, поставляем со склада в Алматы, монтируем и обслуживаем по всему Казахстану.</p>
-      <div class="links"><a class="btn btn-light btn-lg" href="catalog.html#ibp">Каталог оборудования</a><a class="btn btn-kp btn-lg" href="kp.html">Запросить КП</a></div>
-      <div class="hero-trust" id="heroFacts"></div>
+<!-- 1. История на прокрутке -->
+<section class="story" id="story" aria-label="Главное">
+  <div class="story-pin">
+    <svg class="scene" id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+    <div class="wrap story-copy">
+      <h1 id="heroTitle">Об отключении сети<br>вы узнаете<br>из новостей</h1>
+      <p class="story-sub" id="heroText">ИБП, дизельные и газопоршневые электростанции, аккумуляторные батареи и стабилизаторы от 0,7 кВА до 4,25 МВА. Проектируем, поставляем со склада в Алматы, монтируем и обслуживаем по всему Казахстану.</p>
+      <p class="story-after">Город без света, а ваши серверы, операционные и линии работают: <b>ИБП подхватил нагрузку за 0 мс</b>, генератор запустился через 10 секунд.</p>
+      <div class="links"><a class="btn btn-primary btn-lg" href="catalog.html#ibp">Каталог оборудования</a><a class="btn btn-kp btn-lg" href="kp.html">Запросить КП</a></div>
     </div>
-    <div class="hero-vis">
-      <div class="scheme s-normal" id="scheme" aria-hidden="true"></div>
-      <ol class="hero-log" id="heroLog" aria-label="Как работает схема гарантированного электропитания">
-        <li><b>Штатный режим</b>Сеть 400 В в норме, нагрузка питается через ИБП, батареи заряжены</li>
-        <li><b>Провал сети</b>ИБП перешёл на батареи за 0 мс, оборудование не заметило</li>
-        <li><b>Запуск ДГУ</b>АВР запустил генератор, нагрузка переведена, батареи заряжаются</li>
-        <li><b>Сеть восстановлена</b>ДГУ остановлен, схема вернулась в штатный режим</li>
-      </ol>
+    <div class="mains" id="mains" role="button" tabindex="0" aria-label="Рубильник: отключить сеть">
+      <svg viewBox="0 0 200 270">
+        <rect class="plate" x="10" y="30" width="180" height="230"/>
+        <text class="lbl" x="100" y="58">СЕТЬ 400 В</text>
+        <rect class="jaw" x="86" y="78" width="12" height="40"/><rect class="jaw" x="102" y="78" width="12" height="40"/>
+        <g class="lever"><rect x="94" y="88" width="12" height="104"/><rect class="grip" x="84" y="72" width="32" height="22"/></g>
+        <circle class="pivot" cx="100" cy="190" r="14"/><circle class="led" cx="100" cy="190" r="6"/>
+        <text class="st" x="100" y="242" id="mainsState">ВКЛ</text>
+      </svg>
     </div>
+    <div class="mains-chip"><b>0 мс</b>переход ИБП на батареи</div>
+    <div class="story-hint" id="storyHint"><i></i><span>Прокрутите, чтобы отключить сеть</span></div>
   </div>
 </section>
 
 <!-- 2. Заказчики -->
-<section class="marq-band" aria-label="Среди заказчиков"><div class="wrap"><div class="lbl">Среди заказчиков</div><div class="marq"><div class="marq-track" id="clientLogos"></div></div></div></section>
+<section class="marq-band dark" aria-label="Среди заказчиков"><div class="wrap"><div class="lbl">Среди заказчиков</div><div class="marq"><div class="marq-track" id="clientLogos"></div></div></div></section>
 
 <!-- 3. Оборудование -->
-<section class="section" style="padding-top:clamp(40px,5vw,64px)"><div class="wrap">
-  <div class="sec-head"><div><h2>Оборудование</h2><p>Двенадцать категорий: от ИБП для серверной стойки до электростанций на 4,25 МВА. Со склада в Алматы и под проект.</p></div><a class="more" href="catalog.html#ibp">Весь каталог</a></div>
+<section class="section"><div class="wrap">
+  <div class="sec-head"><div><h2 class="h-cond" data-rv="mask">Оборудование</h2><p class="lead-s" data-rv>Двенадцать категорий: от ИБП для серверной стойки до электростанций на 4,25 МВА. Со склада в Алматы и под проект.</p></div><a class="more" href="catalog.html#ibp">Весь каталог</a></div>
   <div class="lines" id="lines"></div>
   <div class="lines-more" id="linesMore"></div>
 </div></section>
 
-<!-- 4. Решения по отраслям -->
-<section class="section bg-mist"><div class="wrap">
-  <div class="sec-head"><div><h2>Решения по отраслям</h2><p>Комплектуем системы под требования отрасли: пиковые токи медицинского оборудования, резервирование N+1 для ЦОД, запылённость и индуктивные нагрузки производств.</p></div></div>
-  <div class="ind-split"><ul class="ind-list" id="indList"></ul><div class="ind-media" id="indMedia"></div></div>
-</div></section>
-
-<!-- 5. Проекты -->
-<section class="section"><div class="wrap">
-  <div class="sec-head"><div><h2>Реализованные проекты</h2><p>Авиакомпания, железная дорога, телеканал, клиники и лаборатории: объекты, где перерыв в питании стоит дорого.</p></div><a class="more" href="projects.html">Все проекты</a></div>
+<!-- 4. Проекты -->
+<section class="section dark"><div class="wrap">
+  <div class="sec-head"><div><h2 class="h-cond" data-rv="mask">Объекты, где перерыв в питании стоит дорого</h2><p class="lead-s" data-rv>Авиакомпания, железная дорога, телеканал, клиники и лаборатории по всему Казахстану.</p></div><a class="more" href="projects.html">Все проекты</a></div>
   <div class="cases" id="proj"></div>
 </div></section>
 
-<!-- 6. Сервис -->
-<section class="section svc-sec bg-mist"><div class="wrap svc-split2">
-  <div class="svc-photo" id="svcPhoto"></div>
+<!-- 5. Решения по отраслям -->
+<section class="section"><div class="wrap">
+  <div class="sec-head"><div><h2 class="h-cond" data-rv="mask">Решения по отраслям</h2><p class="lead-s" data-rv>Пиковые токи медицинского оборудования, резервирование N+1 для ЦОД, запылённость и индуктивные нагрузки производств.</p></div></div>
+  <div class="ind-split"><ul class="ind-list" id="indList"></ul><div class="ind-media" id="indMedia" data-rv="clip"></div></div>
+</div></section>
+
+<!-- 6. Компания в цифрах -->
+<section class="section dark"><div class="wrap">
+  <div class="co-text">
+    <h2 class="h-cond" data-rv="mask">Инженерная компания из Алматы</h2>
+    <div data-rv>
+      <p>Работаем в Казахстане с 2021 года: проектируем, поставляем, монтируем и обслуживаем системы бесперебойного питания для объектов любого масштаба.</p>
+      <p>Официальный дистрибьютор Salicru, Tescom и Kehua, партнёр Hoppecke и BAE Batterien. Среди заказчиков Air Astana, АО «КТЖ», Национальный банк РК, телеканал «Казахстан», медицинские центры и промышленные предприятия.</p>
+      <a class="more" href="about.html">Подробнее о компании</a>
+    </div>
+  </div>
+  <div class="numbers" id="numbers"></div>
+  <div class="brands-row" data-rv><div class="lbl">Официальный дистрибьютор и партнёр производителей</div><div class="logo-row" id="brandRow"></div></div>
+</div></section>
+
+<!-- 7. Сервис -->
+<section class="section svc-sec"><div class="wrap svc-split2">
+  <div class="svc-photo" id="svcPhoto" data-rv="clip"></div>
   <div class="svc-text">
-    <h2>Сервисная служба</h2>
-    <p>Собственные инженеры, допуски к работам, нагрузочный модуль 150 кВт и анализатор батарей Fluke VT521. Выезд по Алматы в день обращения, по Казахстану по графику.</p>
+    <h2 class="h-cond" data-rv="mask">Сервисная служба</h2>
+    <p data-rv>Собственные инженеры, допуски к работам, нагрузочный модуль 150 кВт и анализатор батарей Fluke VT521. Выезд по Алматы в день обращения, по Казахстану по графику.</p>
     <ul class="svc-rows" id="svcList"></ul>
     <div class="links"><a class="btn btn-primary" href="service.html#montazh">Все услуги</a><button class="btn btn-ghost" data-open-modal data-title="Заявка на сервис" data-type="Заявка на услугу (главная)">Оставить заявку</button></div>
   </div>
 </div></section>
 
-<!-- 7. Компания -->
-<section class="section co-dark"><div class="wrap">
-  <div class="company">
-    <div class="txt">
-      <h2>Инженерная компания гарантированного электропитания</h2>
-      <p>Работаем в Казахстане с 2021 года: проектируем, поставляем, монтируем и обслуживаем системы бесперебойного питания для объектов любого масштаба.</p>
-      <p>Официальный дистрибьютор Salicru, Tescom и Kehua, партнёр Hoppecke и BAE Batterien. Среди заказчиков Air Astana, АО «КТЖ», Национальный банк РК, телеканал «Казахстан», медицинские центры и промышленные предприятия.</p>
-      <a class="more" href="about.html">Подробнее о компании</a>
-    </div>
-    <div class="numbers" id="numbers"></div>
-  </div>
-  <div class="brands-row"><div class="lbl">Официальный дистрибьютор и партнёр производителей</div><div class="logo-row" id="brandRow"></div></div>
-</div></section>
-
 <!-- 8. Новости и события -->
-<section class="section"><div class="wrap">
-  <div class="sec-head"><div><h2>Новости и события</h2></div><a class="more" href="blog.html">Все материалы</a></div>
-  <div class="news-grid"><a class="news-main" id="newsMain" href="article.html#3"></a><ul class="news-list" id="newsList"></ul></div>
+<section class="section bg-mist"><div class="wrap">
+  <div class="sec-head"><div><h2 class="h-cond" data-rv="mask">Новости и события</h2></div><a class="more" href="blog.html">Все материалы</a></div>
+  <div class="news-grid"><a class="news-main" id="newsMain" href="article.html#3" data-rv></a><ul class="news-list" id="newsList" data-rv style="--i:2"></ul></div>
 </div></section>
 
 <!-- 9. Контакты -->
-<section class="section bg-mist"><div class="wrap contact2">
+<section class="section dark"><div class="wrap contact2">
   <div>
-    <h2>Отдел продаж</h2>
-    <p style="margin-top:14px;max-width:50ch">Подберём оборудование под объект, подготовим коммерческое предложение и спецификацию. Ответ в течение рабочего дня.</p>
+    <h2 class="h-cond" data-rv="mask">Отдел продаж</h2>
+    <p style="margin-top:14px;max-width:50ch" data-rv>Подберём оборудование под объект, подготовим коммерческое предложение и спецификацию. Ответ в течение рабочего дня.</p>
     <dl class="kv2" id="kv"></dl>
     <div class="links"><a class="btn btn-ghost" id="ctaWa" href="#" target="_blank" rel="noopener">Написать в WhatsApp</a><a class="btn btn-ghost" href="contacts.html">Как добраться</a></div>
   </div>
-  <form class="form-grid cform" data-lead id="finalForm" novalidate><h3>Запросить КП или консультацию</h3><input type="hidden" name="formType" value="Заявка на КП/консультацию (главная)"><div class="field"><label for="fName">Имя <i>*</i></label><input class="input" id="fName" name="name" required><span class="hint"></span></div><div class="field"><label for="fPhone">Телефон <i>*</i></label><input class="input" id="fPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div><div class="field"><label for="fCompany">Компания</label><input class="input" id="fCompany" name="company"></div><div class="field"><label for="fEmail">E-mail</label><input class="input" id="fEmail" name="email" type="email"></div><div class="field full"><label for="fMsg">Задача</label><textarea class="textarea" id="fMsg" name="comment" style="min-height:90px" placeholder="Например: ИБП 40 кВА для операционной, автономия 20 минут, Шымкент"></textarea></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg" type="submit">Отправить запрос</button></div><p class="note-s">Заявка уходит в отдел продаж и менеджеру в WhatsApp. Файлы спецификаций можно приложить в ответном письме.</p></form>
+  <form class="form-grid cform" data-lead id="finalForm" novalidate data-rv style="--i:2"><h3>Запросить КП или консультацию</h3><input type="hidden" name="formType" value="Заявка на КП/консультацию (главная)"><div class="field"><label for="fName">Имя <i>*</i></label><input class="input" id="fName" name="name" required><span class="hint"></span></div><div class="field"><label for="fPhone">Телефон <i>*</i></label><input class="input" id="fPhone" name="phone" required data-mask placeholder="+7 (___) ___-__-__" inputmode="tel"><span class="hint"></span></div><div class="field"><label for="fCompany">Компания</label><input class="input" id="fCompany" name="company"></div><div class="field"><label for="fEmail">E-mail</label><input class="input" id="fEmail" name="email" type="email"></div><div class="field full"><label for="fMsg">Задача</label><textarea class="textarea" id="fMsg" name="comment" style="min-height:90px" placeholder="Например: ИБП 40 кВА для операционной, автономия 20 минут, Шымкент"></textarea></div><label class="check full"><input type="checkbox" required><span>Согласен на обработку персональных данных</span></label><div class="full"><button class="btn btn-kp btn-lg" type="submit">Отправить запрос</button></div><p class="note-s">Заявка уходит в отдел продаж и менеджеру в WhatsApp. Файлы спецификаций можно приложить в ответном письме.</p></form>
 </div></section>
 </main>
 </div>
@@ -337,69 +391,53 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
   const pimg = (slot, alt) => img(slot, alt, '', 'data-ph="bg"');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  document.getElementById('heroFacts').innerHTML = [['Официальный дистрибьютор', 'Salicru, Tescom и Kehua, партнёр Hoppecke и BAE'], ['Склад в Алматы', 'ИБП, батареи и стабилизаторы: отгрузка в день оплаты'], ['Сервис по Казахстану', 'Собственные инженеры, выезд в 20 областей']].map(f => `<div><b>${f[0]}</b><span>${f[1]}</span></div>`).join('');
+  // ---- Сцена: хребет Заилийского Алатау и ветряки из логотипа, ЛЭП, огни города ----
+  let seed = 7; const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+  const ridge = (pts, base) => 'M' + pts.map(p => p.join(' ')).join(' L') + ` L1600 ${base} L0 ${base} Z`;
+  const far = [[0, 560], [120, 520], [240, 545], [360, 470], [470, 505], [580, 440], [700, 480], [820, 430], [930, 470], [1050, 420], [1180, 455], [1300, 410], [1420, 450], [1520, 425], [1600, 460]];
+  const mid = [[0, 660], [110, 610], [200, 640], [290, 560], [360, 600], [430, 520], [500, 560], [560, 470], [620, 540], [690, 500], [760, 560], [850, 520], [960, 590], [1060, 540], [1160, 600], [1260, 560], [1380, 620], [1480, 590], [1600, 640]];
+  const near = [[0, 760], [140, 720], [300, 745], [460, 700], [640, 735], [820, 690], [1000, 725], [1180, 695], [1360, 730], [1520, 705], [1600, 720]];
+  // снежные штрихи у вершин, как на логотипе
+  const snow = [[560, 470], [430, 520], [690, 500], [290, 560], [1060, 540]].map(([x, y]) => `<path class="snow" d="M${x} ${y + 6} l-14 26 M${x + 6} ${y + 10} l-10 20 M${x - 8} ${y + 14} l-12 22 M${x + 14} ${y + 16} l8 18"/>`).join('');
+  const turbine = (x, y, s, cls) => `<g class="turb ${cls}" transform="translate(${x} ${y}) scale(${s})"><path d="M0 0 L-6 -120 L6 -120 Z"/><g class="blades"><path d="M0 -120 L0 -192 M0 -120 L62 -84 M0 -120 L-62 -84"/></g><circle class="hub" cx="0" cy="-120" r="5"/></g>`;
+  const pylon = (x, y, s) => `<g class="pylon" transform="translate(${x} ${y}) scale(${s})"><path d="M-22 0 L-8 -150 L8 -150 L22 0 M-18 -40 L18 -40 M-15 -80 L15 -80 M-12 -115 L12 -115 M-40 -115 L40 -115 M-34 -80 L34 -80 M-18 -40 L15 -80 M18 -40 L-15 -80 M-15 -80 L12 -115 M15 -80 L-12 -115"/></g>`;
+  const wire = (x1, y1, x2, y2) => { const mx = (x1 + x2) / 2, my = Math.max(y1, y2) + 46; return `M${x1} ${y1} Q${mx} ${my} ${x2} ${y2}`; };
+  const W = [wire(905, 582, 1125, 572), wire(1125, 572, 1345, 590), wire(1345, 590, 1600, 560), wire(905, 582, 700, 605)];
+  const sparks = W.map((d, i) => `<circle class="spark" r="4"><animateMotion dur="${2.6 + i * .4}s" repeatCount="indefinite" path="${d}"/></circle>`).join('');
+  // огни города вдоль предгорий
+  let city = '';
+  for (let i = 0; i < 170; i++) { const x = 40 + rnd() * 1520, y = 700 + rnd() * 110, r = .9 + rnd() * 1.9; city += `<circle class="city" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" style="animation-delay:${(-rnd() * 4).toFixed(1)}s"/>`; }
+  const keeps = [[790, 838, 'Клиника', 'ИБП 80 кВА, N+1'], [1010, 775, 'ЦОД', 'модульный ИБП 300 кВА'], [1350, 818, 'Цех', 'ДГУ 1 МВА, АВР']].map(([x, y, t, s]) => `<circle class="glow-k" cx="${x}" cy="${y}" r="22"/><circle class="keep-ring" cx="${x}" cy="${y}" r="7"/><circle class="keep" cx="${x}" cy="${y}" r="4"/><text class="keep-lbl" x="${x + 16}" y="${y - 6}">${t}<tspan class="s" x="${x + 16}" dy="18">${s}</tspan></text>`).join('');
+  document.getElementById('scene').innerHTML = `<defs><filter id="soft" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="14"/></filter></defs>
+    <g class="lyr far"><path class="ridge far" d="${ridge(far, 900)}"/></g>
+    <g class="lyr midl"><path class="ridge mid" d="${ridge(mid, 900)}"/>${snow}${turbine(430, 522, .8, 't1')}${turbine(560, 472, 1, 't2')}${turbine(690, 502, .72, 't3')}</g>
+    <g class="lyr nearl"><path class="ridge near" d="${ridge(near, 900)}"/>${W.map(d => `<path class="wire" d="${d}"/>`).join('')}${sparks}${pylon(905, 735, 1)}${pylon(1125, 712, .95)}${pylon(1345, 727, 1)}${city}${keeps}</g>`;
 
-  // Схема гарантированного электропитания: сеть и ДГУ -> АВР -> ИБП (+АКБ) -> STS -> нагрузка. Сценарий: норма -> провал сети -> ДГУ -> восстановление
-  const IC = {
-    grid: '<path d="M12 2v6M4 8h16M6 8l-3 12M18 8l3 12M12 8v14M8 22h8"/>',
-    gen: '<rect x="2" y="7" width="20" height="12"/><circle cx="8" cy="13" r="3"/><path d="M14 11h5M14 15h5"/>',
-    avr: '<rect x="2" y="4" width="20" height="16"/><path d="M6 12h4l2-4 2 8 2-4h2"/>',
-    ups: '<rect x="4" y="2" width="16" height="20"/><path d="M13 6l-4 7h4l-2 5"/>',
-    bat: '<rect x="2" y="7" width="18" height="10"/><path d="M20 10h2v4h-2M5 10v4M9 10v4M13 10v4"/>',
-    sts: '<path d="M3 7h6l6 10h6M3 17h6l6-10h6"/>',
-    load: '<rect x="3" y="3" width="18" height="18"/><path d="M7 9h10M7 13h10M7 17h6"/>'
-  };
-  // Две раскладки одной схемы: горизонтальная (десктоп) и вертикальная (телефон); CSS показывает одну из них
-  const LAY = {
-    h: { vb: '0 0 1160 500', grid: [0, 40, 170, 110], gen: [0, 330, 170, 110], avr: [290, 185, 170, 110], ups: [560, 160, 190, 160], bat: [570, 380, 170, 126], sts: [830, 185, 150, 110], loads: [[1030, 65, 130, 60], [1030, 210, 130, 60], [1030, 355, 130, 60]],
-      w: { grid: 'M170 95 H230 V220 H290', gen: 'M170 385 H230 V260 H290', avr: 'M460 240 H560', chg: 'M655 320 V380', dis: 'M655 380 V320', sts: 'M750 240 H830', l1: 'M980 240 H1005 V95 H1030', l2: 'M980 240 H1030', l3: 'M1005 240 V385 H1030' }, alert: [160, 52], wave: 'M18 342 q8 -8 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0' },
-    v: { vb: '0 0 400 640', grid: [10, 0, 180, 100], gen: [210, 0, 180, 100], avr: [110, 150, 180, 90], ups: [20, 290, 200, 120], bat: [240, 290, 150, 120], sts: [110, 460, 180, 80], loads: [[0, 590, 125, 50], [137, 590, 125, 50], [275, 590, 125, 50]],
-      w: { grid: 'M100 100 V125 H160 V150', gen: 'M300 100 V125 H240 V150', avr: 'M200 240 V265 H120 V290', chg: 'M220 350 H240', dis: 'M240 350 H220', sts: 'M120 410 V435 H200 V460', l1: 'M200 540 V565 H62 V590', l2: 'M200 540 V590', l3: 'M200 565 H337 V590' }, alert: [180, 12], wave: 'M226 12 q8 -8 16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0 t16 0' }
-  };
-  function build(Lk) {
-    const Ly = LAY[Lk];
-    const K = Lk === 'h' ? 1.35 : 1, node = (cls, b, title, sub, icon, extra) => { const [x, y, w, h] = b; const big = h >= 150, iy = big ? 26 : Math.round(h * .11), ty = big ? 96 : Math.round(h * .64), sy = ty + (big ? 26 : 23); return `<g class="node ${cls}"><rect class="box" x="${x}" y="${y}" width="${w}" height="${h}"/>${extra || ''}<g class="ic" transform="translate(${x + w / 2 - 12 * K}, ${y + iy}) scale(${K})">${icon}</g><text class="t" x="${x + w / 2}" y="${y + ty}">${title}</text><text class="s" x="${x + w / 2}" y="${y + sy}">${sub}</text></g>`; };
-    const bat = b => { const [x, y, w, h] = b; const bx = x + (w - 118) / 2; const bars = [0, 1, 2, 3, 4].map(i => `<rect class="bar" data-b="${i + 1}" x="${bx + i * 25}" y="${y + h - 26}" width="18" height="16"/>`).join(''); return `<g class="node n-bat"><rect class="box" x="${x}" y="${y}" width="${w}" height="${h}"/><g class="ic" transform="translate(${x + w / 2 - 12 * K}, ${y + 8}) scale(${K})">${IC.bat}</g><text class="t" x="${x + w / 2}" y="${y + 62}">АКБ</text><text class="s" x="${x + w / 2}" y="${y + 82}">заряд 100 %</text>${bars}</g>`; };
-    const load = (b, title) => { const [x, y, w, h] = b; return `<g class="node load"><rect class="box" x="${x}" y="${y}" width="${w}" height="${h}"/><circle class="led-ring" cx="${x + 20}" cy="${y + h / 2}" r="5"/><circle class="led" cx="${x + 20}" cy="${y + h / 2}" r="4"/><text class="t" x="${x + w / 2 + 10}" y="${y + h / 2 + 6}">${title}</text></g>`; };
-    const W = Ly.w, wire = k => `<path class="wire" d="${W[k]}"/>`, flow = (k, cls) => `<path class="flow ${cls || ''}" data-f="${k}" d="${W[k]}"/>`;
-    return `<svg class="sch-${Lk}" viewBox="${Ly.vb}" xmlns="http://www.w3.org/2000/svg">
-      <defs><filter id="blur-${Lk}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter></defs>
-      ${['grid', 'gen', 'avr', 'chg', 'sts', 'l1', 'l2', 'l3'].map(wire).join('')}
-      <rect class="glow" style="filter:url(#blur-${Lk})" x="${Ly.ups[0]}" y="${Ly.ups[1]}" width="${Ly.ups[2]}" height="${Ly.ups[3]}"/>
-      ${flow('grid')}${flow('gen', 'off')}${flow('avr')}${flow('chg', 'slow')}${flow('dis', 'off')}${flow('sts')}${flow('l1')}${flow('l2')}${flow('l3')}
-      ${node('n-grid', Ly.grid, 'Сеть', '400 В, норма', IC.grid, `<circle class="alert" cx="${Ly.alert[0]}" cy="${Ly.alert[1]}" r="5"/>`)}
-      ${node('n-gen', Ly.gen, 'ДГУ / ГПЭС', 'в резерве', IC.gen, `<path class="wave" d="${Ly.wave}"/>`)}
-      ${node('n-avr', Ly.avr, 'АВР', 'сеть / генератор', IC.avr)}
-      ${node('n-ups', Ly.ups, 'ИБП', 'on-line, N+1', IC.ups)}
-      ${bat(Ly.bat)}
-      ${node('n-sts', Ly.sts, 'STS', 'два ввода', IC.sts)}
-      ${load(Ly.loads[0], 'ЦОД')}${load(Ly.loads[1], 'Клиника')}${load(Ly.loads[2], 'Цех')}
-    </svg>`;
+  // ---- Прокрутка: день -> ночь -> отключение сети, параллакс слоёв, рубильник ----
+  const story = document.getElementById('story'), pin = story.querySelector('.story-pin'), mains = document.getElementById('mains'), stTxt = document.getElementById('mainsState');
+  const lyr = { far: document.querySelector('.lyr.far'), mid: document.querySelector('.lyr.midl'), near: document.querySelector('.lyr.nearl') };
+  let cur = -1;
+  function apply(p) {
+    const st = p < .3 ? 0 : p < .58 ? 1 : 2;
+    if (st !== cur) { cur = st; story.classList.toggle('night', st === 1); story.classList.toggle('blackout', st === 2); document.body.classList.toggle('is-dark', st > 0); stTxt.textContent = st === 2 ? 'ОТКЛ' : 'ВКЛ'; mains.setAttribute('aria-label', st === 2 ? 'Рубильник: включить сеть' : 'Рубильник: отключить сеть'); }
+    if (!reduce) { lyr.far.style.transform = `translateY(${p * 70}px)`; lyr.mid.style.transform = `translateY(${p * 38}px)`; lyr.near.style.transform = `translateY(${p * 10}px)`; }
   }
-  document.getElementById('scheme').innerHTML = build('h') + build('v');
-  const sch = document.getElementById('scheme'), logEl = document.getElementById('heroLog');
-  const sub = (cls, t) => { sch.querySelectorAll('.' + cls + ' .s').forEach(e => { e.textContent = t; }); };
-  const level = n => sch.querySelectorAll('.bar').forEach(b => b.classList.toggle('dim', +b.dataset.b > n));
-  const F = k => ({ add: c => sch.querySelectorAll('[data-f="' + k + '"]').forEach(e => e.classList.add(c)), remove: c => sch.querySelectorAll('[data-f="' + k + '"]').forEach(e => e.classList.remove(c)) });
-  const PH = [
-    { k: 'normal', ms: 5200, run: () => { F('grid').remove('off'); F('gen').add('off'); F('chg').remove('off'); F('dis').add('off'); sub('n-grid', '400 В, норма'); sub('n-gen', 'в резерве'); sub('n-ups', 'on-line, N+1'); sub('n-bat', 'заряд 100 %'); level(5); } },
-    { k: 'fail', ms: 4800, run: () => { F('grid').add('off'); F('chg').add('off'); F('dis').remove('off'); sub('n-grid', 'авария'); sub('n-ups', 'питание от АКБ'); sub('n-bat', 'разряд'); sub('n-gen', 'запуск…'); setTimeout(() => level(4), 1600); setTimeout(() => level(3), 3300); } },
-    { k: 'gen', ms: 5600, run: () => { F('gen').remove('off'); F('dis').add('off'); F('chg').remove('off'); sub('n-gen', 'работает'); sub('n-ups', 'питание от ДГУ'); sub('n-bat', 'заряд'); setTimeout(() => level(4), 2200); setTimeout(() => level(5), 4400); } },
-    { k: 'restore', ms: 3400, run: () => { F('grid').remove('off'); F('gen').add('off'); sub('n-grid', '400 В, норма'); sub('n-gen', 'остановка'); sub('n-ups', 'on-line, N+1'); sub('n-bat', 'заряд 100 %'); } }
-  ];
-  let ph = 0, timer;
-  function phase(i) {
-    ph = i; const p = PH[i];
-    sch.className = 'scheme s-' + p.k;
-    logEl.style.setProperty('--ph-ms', p.ms + 'ms');
-    logEl.querySelectorAll('li').forEach((li, k) => { li.classList.remove('on', 'done'); if (k < i) li.classList.add('done'); if (k === i) { void li.offsetWidth; li.classList.add('on'); } });
-    p.run();
-    clearTimeout(timer);
-    if (!reduce) timer = setTimeout(() => phase((i + 1) % PH.length), p.ms);
+  function onScroll() {
+    const total = story.offsetHeight - pin.offsetHeight; if (total <= 0) { apply(0); return; }
+    const p = Math.min(1, Math.max(0, (-story.getBoundingClientRect().top) / total)); apply(p);
   }
-  phase(0);
-  logEl.addEventListener('click', e => { const li = e.target.closest('li'); if (!li) return; phase([...logEl.children].indexOf(li)); });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) clearTimeout(timer); else phase(ph); });
+  if (reduce) { apply(0); } else { window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll(); }
+  const go = p => { const total = story.offsetHeight - pin.offsetHeight; window.scrollTo({ top: story.offsetTop + total * p, behavior: reduce ? 'auto' : 'smooth' }); };
+  mains.addEventListener('click', () => go(cur === 2 ? 0 : .8));
+  mains.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(cur === 2 ? 0 : .8); } });
+  document.getElementById('storyHint').addEventListener('click', () => go(.8));
+
+  // ---- Появление блоков при прокрутке ----
+  if (!reduce && 'IntersectionObserver' in window) {
+    const rv = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); } }), { threshold: .15, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('[data-rv]').forEach(el => rv.observe(el));
+    window.rvObserve = el => rv.observe(el);
+  } else { document.querySelectorAll('[data-rv]').forEach(el => el.classList.add('in')); window.rvObserve = el => el.classList.add('in'); }
 
   // Заказчики: бегущая лента логотипов
   const logos = D.CLIENT_LOGOS.map(c => `<div title="${c[1]}">${img(c[0], c[1])}</div>`).join('');
@@ -407,7 +445,7 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
 
   // Оборудование
   const main = D.CATEGORIES;
-  document.getElementById('lines').innerHTML = main.map(c => `<div class="line"><a class="im${D.CAT_PHOTOS[c.id] ? '' : ' art'}" href="${L.cat(c.id)}">${D.CAT_PHOTOS[c.id] ? pimg(D.CAT_PHOTOS[c.id], c.full || c.name) : I(c.img)}</a><h3><a href="${L.cat(c.id)}">${c.id === 'sts' ? 'Переключатели STS' : c.name}</a></h3><div class="rng">${c.range}${c.count ? ', ' + c.count + ' моделей' : ', под проект'}</div><ul>${c.subs.slice(0, 3).map(s => `<li><a href="${L.cat(c.id, s.id)}">${s.name}</a></li>`).join('')}</ul></div>`).join('') + `<div class="line line-cta"><a class="im art" href="${L.kp}">${I('kp')}</a><h3><a href="${L.kp}">Не нашли нужное?</a></h3><div class="rng">Подбор под проект</div><ul><li><a href="${L.calc}">Калькулятор подбора</a></li><li><a href="${L.kp}">Запросить КП</a></li><li><a href="${L.contacts}">Связаться с инженером</a></li></ul></div>`;
+  document.getElementById('lines').innerHTML = main.map((c, i) => `<div class="line" data-rv style="--i:${i % 4}"><a class="im${D.CAT_PHOTOS[c.id] ? '' : ' art'}" href="${L.cat(c.id)}">${D.CAT_PHOTOS[c.id] ? pimg(D.CAT_PHOTOS[c.id], c.full || c.name) : I(c.img)}</a><h3><a href="${L.cat(c.id)}">${c.id === 'sts' ? 'Переключатели STS' : c.name}</a></h3><div class="rng">${c.range}${c.count ? ', ' + c.count + ' моделей' : ', под проект'}</div><ul>${c.subs.slice(0, 3).map(s => `<li><a href="${L.cat(c.id, s.id)}">${s.name}</a></li>`).join('')}</ul></div>`).join('') + `<div class="line line-cta" data-rv style="--i:3"><a class="im art" href="${L.kp}">${I('kp')}</a><h3><a href="${L.kp}">Не нашли нужное?</a></h3><div class="rng">Подбор под проект</div><ul><li><a href="${L.calc}">Калькулятор подбора</a></li><li><a href="${L.kp}">Запросить КП</a></li><li><a href="${L.contacts}">Связаться с инженером</a></li></ul></div>`;
   document.getElementById('linesMore').innerHTML = `<span>Не нашли нужное?</span><a href="${L.calc}">Калькулятор подбора</a><a href="${L.kp}">Запросить КП</a>`;
 
   // Отрасли
@@ -421,23 +459,24 @@ body.home .header:not(.scrolled) .kp-count { border-color: var(--navy); }
   list.addEventListener('mouseover', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
   list.addEventListener('focusin', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
 
-  // Сервис
-  document.getElementById('svcPhoto').innerHTML = pimg('proj-airastana-4.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
-  document.getElementById('svcList').innerHTML = D.SERVICES.map(s => `<li><a href="${L.service(s.id)}"><span><b>${s.short}</b><small>${s.text}</small></span>${I('chev')}</a></li>`).join('');
-
   // Проекты
   const COVER = { ktz: 'proj-ktz-2.jpg', lab: 'proj-lab-2.jpg' };
-  document.getElementById('proj').innerHTML = D.PROJECTS.slice(0, 3).map(p => `<a href="${L.project(p.id)}">${pimg(COVER[p.id] || p.photos[0], p.title)}<span class="kva">${p.kva}</span><div class="ov"><div class="meta">${p.client}, ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="eq">${p.equipment[0]}</div></div></a>`).join('');
+  document.getElementById('proj').innerHTML = D.PROJECTS.slice(0, 3).map((p, i) => `<a href="${L.project(p.id)}" data-rv="clip" style="--i:${i}">${pimg(COVER[p.id] || p.photos[0], p.title)}<span class="kva">${p.kva}</span><div class="ov"><div class="meta">${p.client}, ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="eq">${p.equipment[0]}</div></div></a>`).join('');
+
+  // Сервис
+  document.getElementById('svcPhoto').innerHTML = pimg('proj-airastana-4.jpg', 'Монтаж ИБП инженерами AEC') + '<div class="cap">Монтаж модульного ИБП, Алматы</div>';
+  document.getElementById('svcList').innerHTML = D.SERVICES.map((s, i) => `<li data-rv style="--i:${i}"><a href="${L.service(s.id)}"><span><b>${s.short}</b><small>${s.text}</small></span>${I('chev')}</a></li>`).join('');
 
   // Компания: цифры с анимацией счёта
-  const NUM = [['2021', 'год основания', false], [String(D.BRANDS.length), 'брендов в портфеле', true], [String(D.PRODUCTS.length), 'позиций в каталоге', true], ['20', 'областей Казахстана', true]];
+  const NUM = [['2021', '', 'год основания', false], [String(D.BRANDS.length), '', 'брендов в портфеле', true], [String(D.PRODUCTS.length), '', 'позиций в каталоге', true], ['4,25', 'МВА', 'максимальная мощность электростанции', false]];
   const numEl = document.getElementById('numbers');
-  numEl.innerHTML = NUM.map(s => `<div><b data-n="${s[0]}" data-count="${s[2] ? 1 : 0}">${s[2] && !reduce ? '0' : s[0]}</b><span>${s[1]}</span></div>`).join('');
+  numEl.innerHTML = NUM.map((s, i) => `<div data-rv style="--i:${i}"><b data-n="${s[0]}" data-count="${s[3] ? 1 : 0}">${s[3] && !reduce ? '0' : s[0]}${s[1] ? `<i>${s[1]}</i>` : ''}</b><span>${s[2]}</span></div>`).join('');
   if (!reduce && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => { es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); const b = e.target, to = +b.dataset.n, t0 = performance.now(), dur = 1400; const step = now => { const k = Math.min(1, (now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - k, 3))); b.textContent = String(v); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }); }, { threshold: .4 });
+    const io = new IntersectionObserver(es => { es.forEach(e => { if (!e.isIntersecting) return; io.unobserve(e.target); const b = e.target, to = +b.dataset.n, t0 = performance.now(), dur = 1500; const step = now => { const k = Math.min(1, (now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - k, 3))); b.textContent = String(v); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }); }, { threshold: .4 });
     numEl.querySelectorAll('b[data-count="1"]').forEach(b => io.observe(b));
   }
   document.getElementById('brandRow').innerHTML = D.BRANDS.slice(0, 16).map(b => `<a href="${L.brand(b.id)}">${b.name}</a>`).join('');
+  document.querySelectorAll('.line, .cases a, .svc-rows li, .numbers > div').forEach(el => window.rvObserve(el));
 
   // Новости и события
   const a3 = D.ARTICLES[3];
