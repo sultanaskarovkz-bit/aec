@@ -52,9 +52,9 @@
     const dCity = x => Math.min(1, Math.max(0, (x - 860) / 760)) * .2 + rnd() * .05;
     let stars = '';
     for (let i = 0; i < 90; i++) { const x = rnd() * 1600, y = 20 + rnd() * 400, r = .6 + rnd() * 1.4; stars += `<circle class="star${rnd() < .35 ? ' twinkle' : ''}" style="opacity:${(.4 + rnd() * .6).toFixed(2)};animation-delay:${(-rnd() * 3.4).toFixed(2)}s" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}"/>`; }
-    const gusts = [[180, 0], [250, -1.4], [320, -2.8], [380, -4.1], [215, -3.3], [440, -5.2]].map(([y, d], i) => `<path class="gust" style="animation-delay:${d}s;animation-duration:${5 + i * .7}s" d="M760 ${y} C 980 ${y - 30}, 1140 ${y + 26}, 1300 ${y - 6} S 1560 ${y - 30}, 1760 ${y}"/>`).join('');
+    const gusts = [[150, 0], [205, -.9], [262, -1.7], [318, -2.6], [372, -.4], [428, -3.1], [182, -2.2], [292, -1.2], [348, -2.9], [470, -1.6]].map(([y, d], i) => `<path class="gust" style="animation-delay:${d}s;animation-duration:${(2.6 + (i % 4) * .45).toFixed(2)}s;stroke-width:${(1.1 + (i % 3) * .55).toFixed(2)}" d="M1000 ${y} C 1160 ${y - 26}, 1280 ${y + 22}, 1400 ${y - 6} S 1600 ${y - 26}, 1780 ${y}"/>`).join('');
     let flakes = '';
-    [[1040, 640], [1250, 650], [1480, 668], [1070, 470], [1230, 440], [1390, 418]].forEach(([x, y]) => { for (let k = 0; k < 4; k++) flakes += `<circle class="flake" style="animation-delay:${(-rnd() * 3.6).toFixed(2)}s" cx="${x + 4 + k * 3}" cy="${y + 8 + k * 4}" r="${(1.2 + rnd()).toFixed(1)}"/>`; });
+    [[1040, 640], [1250, 650], [1480, 668], [1070, 470], [1230, 440], [1390, 418], [900, 520], [1150, 512], [1540, 432]].forEach(([x, y]) => { for (let k = 0; k < 4; k++) flakes += `<circle class="flake" style="animation-delay:${(-rnd() * 2.4).toFixed(2)}s" cx="${(x - 6 + rnd() * 26).toFixed(0)}" cy="${(y + 4 + rnd() * 24).toFixed(0)}" r="${(1 + rnd() * 1.4).toFixed(1)}"/>`; });
     // задний ряд города
     let back = '', x = 860;
     while (x < 1600) { const w = 24 + rnd() * 34, h = 36 + rnd() * 92; back += `<rect class="bld-b" x="${x.toFixed(0)}" y="${(base - h).toFixed(0)}" width="${w.toFixed(0)}" height="${(h + 10).toFixed(0)}"/>` + windows(x, base - h, w, h - 8, 'win-l', dCity); x += w + 2 + rnd() * 6; }
@@ -67,6 +67,21 @@
     const dc = `<rect class="bld-k" x="1230" y="772" width="110" height="90"/>` + dcRows;
     const fac = `<path class="bld-k" d="M1380 862 V804 L1405 790 V804 L1430 790 V804 L1455 790 V804 L1480 790 V862 Z"/><rect class="bld-k" x="1456" y="742" width="13" height="56"/>` + windows(1382, 812, 96, 40, 'k');
     const gen = `<rect class="gen-box" x="1488" y="824" width="52" height="30"/><rect class="gen-box" x="1528" y="812" width="5" height="14"/><circle class="gen-led" cx="1498" cy="834" r="3.4"/>` + [0, .6, 1.2].map(d => `<circle class="puff" style="animation-delay:${d}s" cx="1530" cy="810" r="5"/>`).join('');
+    // трава вдоль переднего края, волна ветра слева направо
+    let grass = '';
+    for (let g = 0; g < 10; g++) {
+      let d = '';
+      for (let gx = g * 160; gx < g * 160 + 160; gx += 8 + rnd() * 7) { const gy = 866 - (gx > 860 ? 6 : 0) + rnd() * 5, h = 14 + rnd() * 20, w = 2.6 + rnd() * 2; d += `M${gx.toFixed(1)} ${gy.toFixed(1)} Q${(gx + w * .3).toFixed(1)} ${(gy - h * .6).toFixed(1)} ${(gx + w * 1.4).toFixed(1)} ${(gy - h).toFixed(1)} Q${(gx + w * .9).toFixed(1)} ${(gy - h * .5).toFixed(1)} ${(gx + w).toFixed(1)} ${gy.toFixed(1)} Z `; }
+      grass += `<path class="grass" style="animation-delay:${(-g * .16).toFixed(2)}s" d="${d}"/>`;
+    }
+    // дорога, фонари и машины (ночью)
+    let lamps = ''; for (let lx = 40; lx < 1600; lx += 74) lamps += `<circle class="lamp" style="--d:${(Math.min(1, Math.max(0, (lx - 860) / 760)) * .2 + .02).toFixed(3)}" cx="${lx}" cy="878" r="2.2"/>`;
+    let cars = '';
+    for (let c = 0; c < 6; c++) { const dir = c % 2, dur = (7 + rnd() * 6).toFixed(1), beg = (-rnd() * 10).toFixed(1); const path = dir ? 'M1660 888 H-60' : 'M-60 892 H1660'; cars += `<g><circle class="${dir ? 'hl' : 'tl'}" r="2.1" cx="0" cy="0"/><circle class="${dir ? 'hl' : 'tl'}" r="2.1" cx="${dir ? 7 : -7}" cy="0"/><animateMotion dur="${dur}s" begin="${beg}s" repeatCount="indefinite" path="${path}"/></g>`; }
+    // солнце, птицы
+    const sun = `<g class="sunwrap"><g id="sunG"><circle class="sun-halo" cx="1340" cy="250" r="120"/><circle class="sun" cx="1340" cy="250" r="34"/></g></g>`;
+    const bird = (x, y, s2) => `<path class="bird" style="animation-delay:${(-rnd()).toFixed(2)}s" d="M${x} ${y} q${6 * s2} ${-6 * s2} ${12 * s2} 0 q${6 * s2} ${-6 * s2} ${12 * s2} 0"/>`;
+    const birds = `<g class="birds"><g class="flock">${bird(0, 210, 1)}${bird(30, 196, .8)}${bird(54, 218, .9)}${bird(80, 204, .7)}${bird(18, 232, .75)}</g><g class="flock f2">${bird(0, 150, .7)}${bird(22, 140, .6)}${bird(40, 156, .65)}</g></g>`;
     const pylX = [140, 380, 620, 860], pylS = [.92, .96, 1, 1.02];
     const tops = pylX.map((px, i) => [px, base - 132 * pylS[i] * .82]);
     const W = [];
@@ -78,22 +93,25 @@
     const glow = [[1135, 800], [1285, 815], [1440, 825]].map(([gx, gy]) => `<circle class="glow" cx="${gx}" cy="${gy}" r="90"/>`).join('');
     const rings = '<g class="rings">' + [[1135, 728], [1285, 772], [1462, 742]].map(([rx, ry]) => `<circle class="ring" cx="${rx}" cy="${ry}" r="9"/>`).join('') + '</g>';
     const svg = $('#scene');
-    svg.innerHTML = `<defs><radialGradient id="glowG"><stop offset="0" stop-color="#ffb000" stop-opacity=".85"/><stop offset=".45" stop-color="#ffb000" stop-opacity=".28"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient></defs>
+    svg.innerHTML = `<defs><radialGradient id="glowG"><stop offset="0" stop-color="#ffb000" stop-opacity=".85"/><stop offset=".45" stop-color="#ffb000" stop-opacity=".28"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient><radialGradient id="sunG"><stop offset="0" stop-color="#ffd27a" stop-opacity=".55"/><stop offset=".35" stop-color="#ffe6b0" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
       <g class="cam">
-        <g class="sky"><g class="stars">${stars}</g><circle class="moon" cx="1470" cy="140" r="24"/><circle style="fill:color-mix(in srgb, var(--ink0) calc(var(--n) * 100%), #fff);opacity:var(--n)" cx="1481" cy="132" r="21"/>
-          <g class="clouds"><g class="drift">${cloud(0, 120, 1)}</g><g class="drift d2">${cloud(0, 230, .7)}</g><g class="drift d3">${cloud(0, 70, .55)}</g></g>${gusts}</g>
-        <path class="far" d="${ridgePath(far)}"/>${caps(far, 560, 'cap-far')}
-        ${turbine(1310, yAt(far, 1310), .42, 4.6)}${turbine(1450, yAt(far, 1450), .38, 5.2)}${turbine(1150, yAt(far, 1150), .36, 4.1)}
-        <path class="mid" d="${ridgePath(mid)}"/>${caps(mid, 700, 'cap-mid')}
-        ${turbine(1040, yAt(mid, 1040), .9, 3.6)}${turbine(1250, yAt(mid, 1250), .78, 4.2)}${turbine(1480, yAt(mid, 1480), .72, 3.9)}
-        ${flakes}
-        ${back}
-        ${W.map(d => `<path class="wire" d="${d}"/>`).join('')}${sparks}${pylX.map((px, i) => pylon(px, base + 6, pylS[i])).join('')}
-        ${glow}${front}${hosp}${dc}${fac}${gen}
-        ${ground}
-        <path class="gflow" d="M1488 870 H1090"/>
-        ${rings}
-        ${tag(1084, 660, 'Клиника', 'ИБП 80 кВА, N+1', 140)}${tag(1228, 708, 'ЦОД', 'ИБП 300 кВА, N+1', 146)}${tag(1384, 660, 'Производство', 'ДГУ 1 МВА + АВР', 140)}
+        <g class="sky"><g class="stars">${stars}</g>${sun}<g id="moonG"><circle class="moon" cx="1470" cy="140" r="24"/><circle style="fill:color-mix(in srgb, var(--ink0) calc(var(--n) * 100%), #fff);opacity:var(--n)" cx="1481" cy="132" r="21"/></g>
+          <g class="clouds"><g class="drift">${cloud(0, 120, 1)}</g><g class="drift d2">${cloud(0, 230, .7)}</g><g class="drift d3">${cloud(0, 70, .55)}</g><g class="drift d4">${cloud(0, 300, .5)}</g><g class="drift d5">${cloud(0, 170, .8)}</g></g>${birds}${gusts}</g>
+        <g class="p-far"><path class="far" d="${ridgePath(far)}"/>${caps(far, 560, 'cap-far')}
+          ${turbine(1310, yAt(far, 1310), .42, 2.9)}${turbine(1450, yAt(far, 1450), .38, 3.3)}${turbine(1150, yAt(far, 1150), .36, 2.6)}</g>
+        <g class="p-mid"><path class="mid" d="${ridgePath(mid)}"/>${caps(mid, 700, 'cap-mid')}
+          ${turbine(1040, yAt(mid, 1040), .9, 2.3)}${turbine(1250, yAt(mid, 1250), .78, 2.7)}${turbine(1480, yAt(mid, 1480), .72, 2.5)}
+          ${flakes}</g>
+        <g class="p-near">
+          ${back}
+          ${W.map(d => `<path class="wire" d="${d}"/>`).join('')}${sparks}${pylX.map((px, i) => pylon(px, base + 6, pylS[i])).join('')}
+          ${glow}${front}${hosp}${dc}${fac}${gen}
+          ${ground}${grass}
+          <path class="road" d="M0 890 H1600"/>${lamps}<g class="cars">${cars}</g>
+          <path class="gflow" d="M1488 870 H1090"/>
+          ${rings}
+          ${tag(1084, 660, 'Клиника', 'ИБП 80 кВА, N+1', 140)}${tag(1228, 708, 'ЦОД', 'ИБП 300 кВА, N+1', 146)}${tag(1384, 660, 'Производство', 'ДГУ 1 МВА + АВР', 140)}
+        </g>
       </g>`;
   }
   buildScene();
@@ -182,6 +200,15 @@
 
     $$('[data-dark]').forEach((sec, i) => ScrollTrigger.create({ trigger: sec, start: () => 'top ' + hdr(), end: () => 'bottom ' + hdr(), onToggle: self => { self.isActive ? darkOn.add('s' + i) : darkOn.delete('s' + i); syncHeader(); } }));
 
+    /* ---------- Камера сцены: приближение вокруг защищённых объектов ---------- */
+    const camEl = $('#scene .cam'), camIntro = { s: 1 }, camStory = { s: 1 };
+    const renderCam = () => { const s = camIntro.s * camStory.s; camEl.setAttribute('transform', s === 1 ? '' : `translate(1300 820) scale(${s.toFixed(4)}) translate(-1300 -820)`); };
+
+    /* ---------- Пауза анимаций сцены, когда первый экран не виден ---------- */
+    const heroEl = $('#hero'), sceneEl = $('#scene');
+    const pauseScene = on => { heroEl.classList.toggle('paused', on); try { on ? sceneEl.pauseAnimations() : sceneEl.unpauseAnimations(); } catch (e) { /* без SMIL */ } };
+    ScrollTrigger.create({ start: 0, endTrigger: '.clients-band', end: 'top top', refreshPriority: -1, onLeave: () => pauseScene(true), onEnterBack: () => pauseScene(false) });
+
     /* ---------- Вход первого экрана ---------- */
     const introSplit = new SplitText('#heroTitle', { type: 'lines', mask: 'lines', linesClass: 'split-line' });
     const intro = gsap.timeline({ paused: true, onStart: ready });
@@ -189,35 +216,36 @@
       .from('#heroText', { y: 24, autoAlpha: 0, duration: .9, ease: 'power3.out' }, .35)
       .from('#intro .links .btn', { y: 20, autoAlpha: 0, duration: .8, ease: 'power3.out', stagger: .08 }, .5)
       .from('#cue', { autoAlpha: 0, duration: .8 }, .9)
-      .from('#scene .cam', { scale: 1.08, duration: 2.4, ease: 'expo.out', svgOrigin: '1300 820' }, 0);
+      .fromTo(camIntro, { s: 1.16 }, { s: 1, duration: 2.6, ease: 'expo.out', onUpdate: renderCam }, 0);
 
     /* ---------- Загрузочный экран ---------- */
     if (root.classList.contains('intro')) {
       if (lenis) lenis.stop();
-      const cnt = { v: 0 };
-      const lt = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
+      const cnt = { v: 0 }, path = $('#ldPath'), dot = $('#ldDot'), L0 = path.getTotalLength(), mv = { t: 0 };
+      const sine = $('#loaderSine'), W = { a: 26, k: 0, ph: 0, noise: 1 };
+      const drawSine = () => { let d = ''; for (let x = 0; x <= 560; x += 5) { const n = W.noise * (Math.sin(x * .37 + W.ph * 3.1) * .6 + Math.sin(x * .11 - W.ph * 2.3) * .4) * 16; d += `${d ? ' L' : 'M'}${x} ${(32 + Math.sin(x / 560 * Math.PI * 6 + W.ph) * W.a * W.k + n * W.k).toFixed(2)}`; } sine.setAttribute('d', d); };
+      const tick = () => { W.ph += .14; drawSine(); };
+      gsap.ticker.add(tick);
+      const nameSplit = new SplitText('#ldName', { type: 'chars', charsClass: 'ch' });
       gsap.set('.loader-mark .m-line, .loader-mark .m-snow', { strokeDasharray: 1, strokeDashoffset: 1 });
       gsap.set('.loader-mark .m-turb', { scaleY: 0, transformOrigin: '50% 100%' });
       gsap.set('.loader-mark .m-fill', { clipPath: 'inset(100% 0 0 0)' });
-      // синусоида: сначала помехи, потом ровная волна, как напряжение после ИБП
-      const sine = $('#loaderSine'), W = { a: 26, k: 0, ph: 0, noise: 1 };
-      const drawSine = () => { let d = ''; for (let x = 0; x <= 560; x += 6) { const n = W.noise * (Math.sin(x * .37 + W.ph * 3.1) * .6 + Math.sin(x * .11 - W.ph * 2.3) * .4) * 14; d += `${d ? ' L' : 'M'}${x} ${(30 + Math.sin(x / 560 * Math.PI * 6 + W.ph) * W.a * W.k + n * W.k).toFixed(2)}`; } sine.setAttribute('d', d); };
-      const tick = () => { W.ph += .12; drawSine(); };
-      gsap.ticker.add(tick);
-      lt.to('.loader-mark .m-line', { strokeDashoffset: 0, duration: 1.1, stagger: .15 }, 0)
-        .to('.loader-mark .m-snow', { strokeDashoffset: 0, duration: .6 }, .6)
-        .to('.loader-mark .m-fill', { clipPath: 'inset(0% 0 0 0)', duration: .9, ease: 'expo.inOut' }, .8)
-        .to('.loader-mark .m-line, .loader-mark .m-snow', { stroke: '#fff', duration: .3 }, 1.25)
+      const lt = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
+      lt.to('#ldPath', { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, 0)
+        .to(mv, { t: 1, duration: 1.1, ease: 'power2.inOut', onUpdate: () => { const p = path.getPointAtLength(mv.t * L0); dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); } }, 0)
+        .to('.loader-mark .m-line:not(#ldPath)', { strokeDashoffset: 0, duration: .8 }, .4)
+        .to('.loader-mark .m-fill', { clipPath: 'inset(0% 0 0 0)', duration: .9, ease: 'expo.inOut' }, .75)
+        .to('.loader-mark .m-snow', { strokeDashoffset: 0, duration: .5 }, 1.05)
+        .to('.loader-mark .m-turb', { scaleY: 1, duration: .7, stagger: .1, ease: 'back.out(1.7)' }, .9)
+        .to(dot, { attr: { r: 0 }, duration: .3 }, 1.15)
+        .from(nameSplit.chars, { yPercent: 120, autoAlpha: 0, duration: .7, stagger: .022, ease: 'expo.out' }, .55)
         .to(W, { k: 1, duration: .5, ease: 'power2.out' }, .1)
-        .to(W, { noise: 0, duration: .9, ease: 'power2.inOut' }, .8)
-        .to('.loader-mark .m-turb', { scaleY: 1, duration: .7, stagger: .1, ease: 'back.out(1.6)' }, .55)
-        .from('.loader-name span', { yPercent: 110, duration: .8, ease: 'expo.out' }, .7)
-        .to(cnt, { v: 100, duration: 1.6, ease: 'power2.inOut', onUpdate: () => { $('#loaderCount').textContent = Math.round(cnt.v); } }, 0)
-        .to('#loaderBar', { scaleX: 1, duration: 1.6, ease: 'power2.inOut' }, 0)
-        .fromTo('#loaderVeil', { y: 0, yPercent: 100 }, { yPercent: 0, duration: .75, ease: 'expo.inOut' }, 1.7)
-        .set('#loader', { autoAlpha: 0 }, 2.45)
-        .to('#loaderVeil', { yPercent: -100, duration: .9, ease: 'expo.inOut' }, 2.5)
-        .add(() => { gsap.ticker.remove(tick); endIntro(); if (lenis) lenis.start(); ScrollTrigger.refresh(); intro.play(); }, 2.55);
+        .to(W, { noise: 0, duration: 1, ease: 'power2.inOut' }, .85)
+        .to(cnt, { v: 100, duration: 1.8, ease: 'power2.inOut', onUpdate: () => { $('#loaderCount').textContent = Math.round(cnt.v); } }, 0)
+        .to('#ldCenter, .loader-foot', { autoAlpha: 0, scale: .97, duration: .45, ease: 'power2.in' }, 1.95)
+        .to('#ldLine', { scaleX: 1, duration: .55, ease: 'expo.inOut' }, 2.15)
+        .to('#loader', { clipPath: 'inset(50% 0 50% 0)', duration: .85, ease: 'expo.inOut' }, 2.6)
+        .add(() => { gsap.ticker.remove(tick); endIntro(); if (lenis) lenis.start(); ScrollTrigger.refresh(); intro.play(0); }, 2.75);
     } else { endIntro(); if (reduce) { intro.progress(1); ready(); } else intro.play(); }
 
     /* ---------- Сценарий аварии ---------- */
@@ -242,6 +270,8 @@
       tl.to('#intro', { y: -70, autoAlpha: 0, duration: 1, ease: 'power2.in' }, 0)
         .to('#cue', { autoAlpha: 0, duration: .4 }, 0)
         .to(hero, { '--n': 1, duration: 1.4 }, .2)
+        .fromTo('#sunG', { y: 0 }, { y: 360, duration: 1.4, ease: 'power1.in' }, 0)
+        .fromTo('#moonG', { y: 420 }, { y: 0, duration: 1.6, ease: 'power2.out' }, .6)
         .to(hero, { '--city': 1.25, duration: 1.2 }, .7)
         .to(hero, { '--keep': 1, duration: .8 }, .9)
         .fromTo('#stepsUi', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1);
@@ -251,7 +281,7 @@
       });
       tl.to(hero, { '--grid': 0, duration: .35 }, 2.9)
         .to(hero, { '--city': 0, duration: 1.1, ease: 'power1.in' }, 3.0)
-        .to('#scene .cam', { scale: () => innerWidth < 600 ? 1 : 1.1, duration: 2.4, ease: 'power1.inOut', svgOrigin: '1300 820' }, 4.0)
+        .to(camStory, { s: () => innerWidth < 600 ? 1 : 1.1, duration: 2.4, ease: 'power1.inOut', onUpdate: renderCam }, 4.0)
         .to(hero, { '--glow': 1, duration: .6 }, 4.5)
         .to(hero, { '--lbl': 1, duration: .5 }, 4.8)
         .to(hero, { '--gen': 1, duration: .5 }, 6.0)
@@ -260,7 +290,7 @@
         .to(hero, { '--city': 1.25, duration: 1 }, 7.9)
         .to(hero, { '--flow': 0, '--gen': 0, duration: .5 }, 8.3)
         .to(hero, { '--glow': .25, '--lbl': 0, duration: .6 }, 8.6)
-        .to('#scene .cam', { scale: 1, duration: 1.4, ease: 'power1.inOut', svgOrigin: '1300 820' }, 8.4)
+        .to(camStory, { s: 1, duration: 1.4, ease: 'power1.inOut', onUpdate: renderCam }, 8.4)
         .to({}, { duration: .3 }, 9.7);
       window.__aec = Object.assign(window.__aec || {}, { heroST: tl.scrollTrigger, lenis });
       $('#cue').addEventListener('click', () => { const st = tl.scrollTrigger; scrollTo(st.start + (st.end - st.start) * .2); });
@@ -274,13 +304,19 @@
     });
     if (!reduce) ScrollTrigger.batch('.js-up', { start: 'top 90%', once: true, onEnter: els => gsap.from(els, { y: 36, autoAlpha: 0, duration: 1, ease: 'power3.out', stagger: .1, overwrite: true }) });
 
-    /* ---------- Манифест: слова проявляются по мере прокрутки ---------- */
+    /* ---------- Как мы работаем: слова, линия этапов, синусоида ---------- */
     const mf = $('#manifest');
-    const strongWords = ['Salicru,', 'Tescom', 'Kehua', '2021'];
-    if (!reduce) SplitText.create(mf, { type: 'words', wordsClass: 'w', autoSplit: true, onSplit: self => {
-      self.words.forEach(w => { if (strongWords.some(s => w.textContent.startsWith(s))) w.innerHTML = `<strong>${w.textContent}</strong>`; });
-      return gsap.to(self.words, { opacity: 1, ease: 'none', stagger: .1, scrollTrigger: { trigger: mf, start: 'top 80%', end: 'bottom 45%', scrub: true } });
-    } });
+    if (!reduce) SplitText.create(mf, { type: 'words', wordsClass: 'w', autoSplit: true, onSplit: self => gsap.to(self.words, { opacity: 1, ease: 'none', stagger: .1, scrollTrigger: { trigger: mf, start: 'top 82%', end: 'bottom 50%', scrub: true } }) });
+    const stepsLi = $$('#mfSteps li'), rail = $('#mfSteps .mf-rail i');
+    const vertical = () => innerWidth <= 860;
+    const mfWave = $('#mfWave'), mw = { k: 0, ph: 0 };
+    const drawWave = () => { let d = ''; for (let x = 0; x <= 1600; x += 8) { const noise = (1 - mw.k) * (Math.sin(x * .05) * .5 + Math.sin(x * .013 + 1.7) * .5) * 34 * Math.sin(x * .23); d += `${d ? ' L' : 'M'}${x} ${(60 + Math.sin(x / 1600 * Math.PI * 10 - mw.ph) * 30 * (.3 + mw.k * .7) + noise * Math.cos(mw.ph * 1.7 + x * .01)).toFixed(1)}`; } mfWave.setAttribute('d', d); };
+    drawWave();
+    const waveTick = () => { mw.ph += .045; drawWave(); };
+    if (!reduce) ScrollTrigger.create({ trigger: '.manifest', start: 'top bottom', end: 'bottom top', onToggle: self => self.isActive ? gsap.ticker.add(waveTick) : gsap.ticker.remove(waveTick) });
+    ScrollTrigger.create({ trigger: '#mfSteps', start: 'top 85%', end: 'bottom 55%', scrub: reduce ? false : .4,
+      onUpdate: self => { const p = reduce ? 1 : self.progress; rail.style.transform = vertical() ? `scaleY(${p})` : `scaleX(${p})`; stepsLi.forEach((li, i) => li.classList.toggle('on', p >= i / stepsLi.length + .02 || p >= .999)); mw.k = p; drawWave(); },
+      onRefresh: self => { if (reduce) { rail.style.transform = 'none'; stepsLi.forEach(li => li.classList.add('on')); mw.k = 1; drawWave(); } } });
 
     /* ---------- Оборудование ---------- */
     if (!reduce) ScrollTrigger.batch('.eq', { start: 'top 92%', once: true, onEnter: els => gsap.from(els, { y: 50, autoAlpha: 0, duration: .9, ease: 'power3.out', stagger: .07, overwrite: true }) });
@@ -309,6 +345,12 @@
 
     /* ---------- Параллакс фото сервиса ---------- */
     if (!reduce) { const sp = $('#svcPh img'); if (sp) gsap.fromTo(sp, { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '#svcPh', start: 'top bottom', end: 'bottom top', scrub: true } }); }
+
+    /* ---------- Параллакс сцены от мыши ---------- */
+    if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const lay = [['.p-far', 8, 4], ['.p-mid', 18, 7], ['.p-near', 30, 10], ['.sky .clouds', 12, 5]].map(([sel, ax, ay]) => ({ x: gsap.quickTo(sel, 'x', { duration: 1.2, ease: 'power3.out' }), y: gsap.quickTo(sel, 'y', { duration: 1.2, ease: 'power3.out' }), ax, ay }));
+      $('#hero').addEventListener('mousemove', e => { const mx = e.clientX / innerWidth - .5, my = e.clientY / innerHeight - .5; lay.forEach(l => { l.x(-mx * l.ax); l.y(-my * l.ay); }); });
+    }
 
     /* ---------- Магнитные кнопки (только мышь) ---------- */
     if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {

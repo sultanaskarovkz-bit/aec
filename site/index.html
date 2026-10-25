@@ -51,26 +51,26 @@ body.home.hdr-dark .header .kp-count { border-color: var(--ink0); }
 
 /* ---------- Загрузочный экран ---------- */
 .loader { display: none; }
-html.intro .loader { display: grid; position: fixed; inset: 0; z-index: 300; place-items: center; background: #fff; color: var(--ink0); animation: loaderFailsafe 0s 5s forwards; }
+html.intro .loader { display: grid; position: fixed; inset: 0; z-index: 300; place-items: center; background: var(--ink0); color: #fff; clip-path: inset(0 0 0 0); animation: loaderFailsafe 0s 6s forwards; }
 html.intro body { overflow: hidden; }
-.loader-veil { position: fixed; inset: 0; z-index: 301; background: var(--navy); transform: translateY(100%); pointer-events: none; display: none; }
-html.intro .loader-veil { display: block; }
-.loader-mark { width: min(340px, 68vw); margin-inline: auto; }
-.loader-mark .m-fill { fill: var(--navy); }
-.loader-wave { display: block; width: min(560px, 84vw); height: 60px; margin: 26px auto 0; overflow: visible; }
-.loader-wave path { fill: none; stroke: var(--lamp); stroke-width: 2.5; stroke-linecap: round; }
-.loader-wave .base { stroke: var(--line); stroke-width: 1; }
+.ld-center { text-align: center; }
+.loader-mark { width: min(360px, 70vw); margin-inline: auto; }
 .loader-mark svg { width: 100%; height: auto; overflow: visible; }
-.loader-mark .m-line { fill: none; stroke: var(--navy); stroke-width: 3.2; stroke-linejoin: round; stroke-linecap: round; }
-.loader-mark .m-snow { fill: none; stroke: var(--navy); stroke-width: 2.4; stroke-linecap: round; }
-.loader-mark .m-tower { fill: var(--navy); }
-.loader-mark .m-blades path { fill: var(--navy); }
-.loader-name { margin-top: 22px; text-align: center; font-family: var(--font-cond); font-weight: 600; font-size: clamp(20px, 2vw, 26px); letter-spacing: .01em; color: var(--ink0); overflow: hidden; }
-.loader-name span { display: inline-block; }
+.loader-mark .m-fill { fill: #12345a; }
+.loader-mark .m-line { fill: none; stroke: #fff; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+.loader-mark .m-snow { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; }
+.loader-mark .m-tower, .loader-mark .m-blades path { fill: #fff; }
+.loader-mark .m-dot { fill: var(--lamp); filter: drop-shadow(0 0 6px var(--lamp)) drop-shadow(0 0 14px rgba(255, 176, 0, .7)); }
+.loader-name { margin-top: 26px; font-family: var(--font-cond); font-weight: 600; font-size: clamp(22px, 2.2vw, 30px); letter-spacing: .01em; color: #fff; }
+.loader-name .ch { display: inline-block; }
+.loader-wave { display: block; width: min(620px, 86vw); height: 64px; margin: 22px auto 0; overflow: visible; }
+.loader-wave path { fill: none; stroke: var(--lamp); stroke-width: 2.5; stroke-linecap: round; filter: drop-shadow(0 0 5px rgba(255, 176, 0, .55)); }
+.loader-wave .base { stroke: rgba(255, 255, 255, .14); stroke-width: 1; filter: none; }
 .loader-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 clamp(20px, 4vw, 48px) clamp(20px, 4vh, 40px); display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
-.loader-foot small { font-size: 14px; color: var(--muted); max-width: 28ch; line-height: 1.4; }
-.loader-count { font-family: var(--font-cond); font-weight: 700; font-size: clamp(72px, 12vw, 180px); line-height: .8; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-.loader-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--lamp); transform-origin: left; transform: scaleX(0); }
+.loader-foot small { font-size: 14px; color: rgba(255, 255, 255, .5); max-width: 28ch; line-height: 1.4; }
+.loader-count { font-family: var(--font-cond); font-weight: 700; font-size: clamp(72px, 12vw, 180px); line-height: .8; letter-spacing: -.03em; font-variant-numeric: tabular-nums; color: #fff; }
+.loader-count i { font-style: normal; color: var(--lamp); font-size: .4em; margin-left: .06em; }
+.ld-line { position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: var(--lamp); box-shadow: 0 0 18px var(--lamp); transform: scaleX(0); }
 @keyframes loaderFailsafe { to { visibility: hidden; opacity: 0; } }
 
 /* ---------- Полоса прогресса прокрутки ---------- */
@@ -102,11 +102,13 @@ html.intro .loader-veil { display: block; }
 .scene .moon { fill: #f4e7c5; opacity: var(--n); }
 .scene .clouds { opacity: calc(1 - var(--n)); }
 .scene .cloud { fill: #e9eef3; }
-.scene .drift { animation: drift 70s linear infinite; }
-.scene .drift.d2 { animation-duration: 95s; animation-delay: -40s; }
-.scene .drift.d3 { animation-duration: 120s; animation-delay: -80s; }
-.scene .gust { fill: none; stroke: color-mix(in srgb, #9fb6cc calc(var(--n) * 100%), #0a2540); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 90 900; opacity: .35; animation: gust 6s cubic-bezier(.4, 0, .6, 1) infinite; }
-.scene .flake { fill: #fff; animation: flake 3.6s linear infinite; opacity: 0; }
+.scene .drift { animation: drift 38s linear infinite; }
+.scene .drift.d2 { animation-duration: 52s; animation-delay: -20s; }
+.scene .drift.d3 { animation-duration: 64s; animation-delay: -44s; }
+.scene .drift.d4 { animation-duration: 46s; animation-delay: -8s; }
+.scene .drift.d5 { animation-duration: 58s; animation-delay: -33s; }
+.scene .gust { fill: none; stroke: color-mix(in srgb, #9fb6cc calc(var(--n) * 100%), #0a2540); stroke-linecap: round; stroke-dasharray: 160 1000; opacity: .42; animation: gust 3.4s cubic-bezier(.45, 0, .55, 1) infinite; }
+.scene .flake { fill: #fff; animation: flake 2.4s cubic-bezier(.3, 0, .7, 1) infinite; opacity: 0; }
 .scene .glow { fill: url(#glowG); opacity: calc(var(--glow) * .75); }
 .scene .rings { opacity: var(--glow); }
 .scene .ring { fill: none; stroke: var(--lamp); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ring 2.4s ease-out infinite; }
@@ -119,10 +121,27 @@ html.intro .loader-veil { display: block; }
 .scene .puff { fill: #9aa7b6; opacity: 0; }
 .hero.gen-on .scene .puff { animation: puff 1.8s ease-out infinite; }
 .scene .gflow { fill: none; stroke: var(--lamp); stroke-width: 3; stroke-dasharray: 8 10; opacity: var(--flow); animation: dash 1s linear infinite; }
+.scene .sun { fill: #ffd27a; }
+.scene .sun-halo { fill: url(#sunG); }
+.scene .sunwrap { opacity: calc(1 - var(--n)); }
+.scene .bird { fill: none; stroke: #0a2540; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transform-box: fill-box; transform-origin: center; animation: flap .5s ease-in-out infinite alternate; }
+.scene .birds { opacity: calc(1 - var(--n) * 1.6); }
+.scene .flock { animation: fly 26s linear infinite; }
+.scene .flock.f2 { animation-duration: 34s; animation-delay: -15s; }
+.scene .grass { fill: color-mix(in srgb, #1c2532 calc(var(--n) * 100%), #2b5a8c); transform-box: fill-box; transform-origin: 50% 100%; animation: sway 1.4s ease-in-out infinite alternate; }
+.hero.paused .scene * { animation-play-state: paused !important; }
+.scene .lamp { fill: var(--lamp-2); opacity: clamp(0, calc((var(--city) - var(--d)) * 7), 1); }
+.scene .road { stroke: color-mix(in srgb, #1d2632 calc(var(--n) * 100%), #163a63); stroke-width: 1.5; stroke-dasharray: 14 12; fill: none; }
+.scene .cars { opacity: var(--n); }
+.scene .hl { fill: #fff; }
+.scene .tl { fill: #ff4d4d; }
+@keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(.35); } }
+@keyframes fly { from { transform: translate(-260px, 0); } 50% { transform: translate(800px, -30px); } to { transform: translate(1900px, 10px); } }
+@keyframes sway { from { transform: skewX(4deg); } to { transform: skewX(-22deg); } }
 @keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 @keyframes drift { from { transform: translateX(-420px); } to { transform: translateX(2000px); } }
-@keyframes gust { 0% { stroke-dashoffset: 990; } 100% { stroke-dashoffset: 0; } }
-@keyframes flake { 0% { opacity: 0; transform: translate(0, 0); } 15% { opacity: .9; } 100% { opacity: 0; transform: translate(150px, -40px); } }
+@keyframes gust { 0% { stroke-dashoffset: 1160; } 100% { stroke-dashoffset: 0; } }
+@keyframes flake { 0% { opacity: 0; transform: translate(0, 0); } 12% { opacity: 1; } 100% { opacity: 0; transform: translate(320px, -70px); } }
 @keyframes ring { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
 @keyframes puff { 0% { opacity: .7; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(26px, -60px) scale(2.2); } }
 @keyframes dash { to { stroke-dashoffset: -36; } }
@@ -182,12 +201,42 @@ html.intro .loader-veil { display: block; }
 @keyframes marq { to { transform: translateX(-50%); } }
 @media (max-width: 720px) { .clients-band .wrap { grid-template-columns: 1fr; gap: 14px; } .marq-track div { width: 120px; height: 64px; } }
 
-/* ---------- Манифест: слова проявляются при прокрутке ---------- */
-.manifest { padding-block: clamp(80px, 12vw, 180px); }
-.manifest p { font-family: var(--font-cond); font-weight: 600; font-size: clamp(28px, 3.9vw, 62px); line-height: 1.08; letter-spacing: -.018em; color: #fff; max-width: 24em; }
-.manifest p .w { opacity: .18; }
-.manifest p strong { color: var(--lamp); font-weight: 600; }
-.manifest .who { margin-top: clamp(36px, 5vw, 64px); display: flex; gap: 22px; flex-wrap: wrap; align-items: center; }
+/* ---------- Как мы работаем ---------- */
+.manifest { padding-block: clamp(80px, 11vw, 170px); position: relative; overflow: hidden; }
+.mf-wave { display: block; width: 100vw; max-width: none; margin: clamp(40px, 5vw, 72px) 0 0 calc(50% - 50vw); height: 120px; pointer-events: none; overflow: visible; }
+.mf-wave path { fill: none; stroke: var(--lamp); stroke-width: 2; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 6px rgba(255, 176, 0, .45)); }
+.mf-wave path + path { stroke: rgba(255, 255, 255, .1); stroke-width: 1; filter: none; }
+.manifest .wrap { position: relative; }
+.mf-lead { font-family: var(--font-cond); font-weight: 600; font-size: clamp(32px, 4.4vw, 70px); line-height: 1.02; letter-spacing: -.02em; color: #fff; max-width: 17em; }
+.mf-lead .w { opacity: .16; }
+.mf-steps-wrap { position: relative; margin-top: clamp(40px, 5vw, 72px); }
+.mf-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); position: relative; }
+.mf-rail { position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: rgba(255, 255, 255, .12); }
+.mf-rail i { position: absolute; inset: 0; background: var(--lamp); box-shadow: 0 0 12px rgba(255, 176, 0, .6); transform-origin: left; transform: scaleX(0); }
+.mf-steps li { position: relative; padding-top: 40px; }
+.mf-steps li::before { content: ''; position: absolute; left: 0; top: 0; width: 16px; height: 16px; background: var(--ink0); border: 2px solid rgba(255, 255, 255, .3); transition: background .35s, border-color .35s, box-shadow .35s; }
+.mf-steps li.on::before { background: var(--lamp); border-color: var(--lamp); box-shadow: 0 0 16px rgba(255, 176, 0, .7); }
+.mf-steps em { display: block; font-style: normal; font-family: var(--font-cond); font-weight: 600; font-size: 15px; color: rgba(255, 255, 255, .4); transition: color .35s; }
+.mf-steps b { display: block; margin-top: 6px; font-family: var(--font-cond); font-weight: 700; font-size: clamp(26px, 2.4vw, 38px); line-height: 1; letter-spacing: -.015em; color: rgba(255, 255, 255, .5); transition: color .35s; }
+.mf-steps span { display: block; margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, .45); transition: color .35s; max-width: 30ch; }
+.mf-steps li.on em { color: var(--lamp); }
+.mf-steps li.on b { color: #fff; }
+.mf-steps li.on span { color: rgba(255, 255, 255, .72); }
+.mf-brands { margin-top: clamp(56px, 7vw, 100px); display: flex; align-items: center; gap: clamp(20px, 4vw, 64px); flex-wrap: wrap; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .12); }
+.mf-brands small { font-size: 14px; color: rgba(255, 255, 255, .5); margin-right: auto; }
+.mf-brands a { display: block; width: 150px; height: 40px; opacity: .85; transition: opacity .3s; }
+.mf-brands a:hover { opacity: 1; }
+.mf-brands a.tescom img { transform: scale(1.75); }
+.mf-brands img { height: 100%; width: 100%; object-fit: contain; filter: brightness(0) invert(1); }
+@media (max-width: 860px) {
+  .mf-steps { grid-template-columns: 1fr; gap: 30px; padding-left: 36px; }
+  .mf-steps li::before { left: -36px; }
+  .mf-rail { left: 7px; right: auto; top: 8px; bottom: 8px; width: 2px; height: auto; }
+  .mf-rail i { transform-origin: top; transform: scaleY(0); }
+  .mf-steps li { padding-top: 0; }
+  .mf-brands small { width: 100%; }
+  .mf-brands a { width: 104px; height: 30px; }
+}
 
 /* ---------- Оборудование ---------- */
 .eq-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink0); }
@@ -197,7 +246,7 @@ html.intro .loader-veil { display: block; }
 .eq .im { aspect-ratio: 1 / 1; margin: -4px -4px 14px; display: grid; place-items: center; overflow: hidden; background: #fff; transition: background .55s var(--ease); }
 .eq .im img { width: 88%; height: 88%; object-fit: contain; mix-blend-mode: multiply; transition: transform .7s var(--ease); }
 .eq .im svg { width: 38%; height: 38%; color: var(--navy); }
-.eq h3 { font-family: var(--font-cond); font-weight: 700; font-size: clamp(20px, 1.6vw, 24px); line-height: 1.05; letter-spacing: -.01em; color: inherit; transition: color .4s; }
+.eq h3 { font-family: var(--font-cond); font-weight: 700; font-size: clamp(20px, 1.6vw, 24px); line-height: 1.05; letter-spacing: -.01em; color: inherit; transition: color .4s; overflow-wrap: anywhere; hyphens: auto; }
 .eq .rng { margin-top: 8px; font-size: 14px; color: var(--muted); transition: color .4s; }
 .eq .go { position: absolute; right: 18px; top: 18px; width: 38px; height: 38px; display: grid; place-items: center; background: var(--lamp); color: var(--ink0); transform: scale(0) rotate(-45deg); transition: transform .45s var(--ease); }
 .eq .go svg { width: 18px; height: 18px; transform: rotate(-135deg); }
@@ -216,7 +265,7 @@ html.intro .loader-veil { display: block; }
 .eq.cta p { margin-top: 12px; font-size: 14px; color: rgba(11, 13, 16, .72); transition: color .4s; }
 @media (hover: hover) { .eq.cta:hover p { color: rgba(255, 255, 255, .7); } }
 @media (max-width: 1024px) { .eq-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .eq:nth-child(4n) { border-right: 1px solid var(--line); } .eq:nth-child(3n) { border-right: 0; } }
-@media (max-width: 640px) { .eq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: calc(-1 * var(--gutter)); } .eq { padding: 14px 14px 18px; } .eq:nth-child(3n) { border-right: 1px solid var(--line); } .eq:nth-child(2n) { border-right: 0; } .eq h3 { font-size: 18px; } .eq .rng { font-size: 12.5px; } }
+@media (max-width: 640px) { .eq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-inline: calc(-1 * var(--gutter)); } .eq { padding: 14px 14px 18px; } .eq:nth-child(3n) { border-right: 1px solid var(--line); } .eq:nth-child(2n) { border-right: 0; } .eq h3 { font-size: 17px; } .eq .rng { font-size: 12.5px; } }
 
 /* ---------- Бегущие слова ---------- */
 .words { padding-block: clamp(40px, 6vw, 90px); overflow: hidden; border-top: 1px solid var(--line); }
@@ -350,30 +399,31 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
 @media (prefers-reduced-motion: reduce) {
   .scene .twinkle, .scene .drift, .scene .gust, .scene .flake, .scene .ring, .cue i::after, .marq-track { animation: none !important; }
   .scene .flake, .scene .gust { display: none; }
+  .scene .bird, .scene .flock, .scene .grass, .mf-wave { animation: none !important; }
 }
 </style>
 </head>
 <body class="home">
 <div class="loader" id="loader" aria-hidden="true">
-  <div>
+  <div class="ld-center" id="ldCenter">
     <div class="loader-mark">
       <svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg">
         <path class="m-fill" d="M8 160 L70 92 L96 116 L132 62 L170 108 L192 88 L252 160 Z"/>
-        <path class="m-line" pathLength="1" d="M8 160 L70 92 L96 116 L132 62 L170 108 L192 88 L252 160"/>
+        <path class="m-line" id="ldPath" pathLength="1" d="M8 160 L70 92 L96 116 L132 62 L170 108 L192 88 L252 160"/>
         <path class="m-snow" pathLength="1" d="M132 62 L118 84 M132 62 L140 82 M132 70 L126 94 M70 92 L60 108 M192 88 L184 104"/>
         <path class="m-line" pathLength="1" d="M20 160 Q130 150 240 160"/>
-        <g class="m-turb" transform="translate(96 116)"><path class="m-tower" d="M-2 0 L-1.2 -70 L1.2 -70 L2 0Z"/><g class="m-blades" transform="translate(0 -70)"><path d="M-1.6 0 Q0 -30 1.6 0Z"/><path d="M-1.6 0 Q0 -30 1.6 0Z" transform="rotate(120)"/><path d="M-1.6 0 Q0 -30 1.6 0Z" transform="rotate(240)"/></g></g>
-        <g class="m-turb" transform="translate(132 62)"><path class="m-tower" d="M-2.4 0 L-1.4 -56 L1.4 -56 L2.4 0Z"/><g class="m-blades" transform="translate(0 -56)"><path d="M-1.8 0 Q0 -36 1.8 0Z"/><path d="M-1.8 0 Q0 -36 1.8 0Z" transform="rotate(120)"/><path d="M-1.8 0 Q0 -36 1.8 0Z" transform="rotate(240)"/></g></g>
-        <g class="m-turb" transform="translate(170 108)"><path class="m-tower" d="M-2 0 L-1.2 -62 L1.2 -62 L2 0Z"/><g class="m-blades" transform="translate(0 -62)"><path d="M-1.6 0 Q0 -28 1.6 0Z"/><path d="M-1.6 0 Q0 -28 1.6 0Z" transform="rotate(120)"/><path d="M-1.6 0 Q0 -28 1.6 0Z" transform="rotate(240)"/></g></g>
+        <g class="m-turb" transform="translate(96 116)"><path class="m-tower" d="M-2 0 L-1.2 -70 L1.2 -70 L2 0Z"/><g class="m-blades" transform="translate(0 -70)"><path d="M-1.6 0 Q0 -30 1.6 0Z"/><path d="M-1.6 0 Q0 -30 1.6 0Z" transform="rotate(120)"/><path d="M-1.6 0 Q0 -30 1.6 0Z" transform="rotate(240)"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.1s" repeatCount="indefinite" additive="sum"/></g></g>
+        <g class="m-turb" transform="translate(132 62)"><path class="m-tower" d="M-2.4 0 L-1.4 -56 L1.4 -56 L2.4 0Z"/><g class="m-blades" transform="translate(0 -56)"><path d="M-1.8 0 Q0 -36 1.8 0Z"/><path d="M-1.8 0 Q0 -36 1.8 0Z" transform="rotate(120)"/><path d="M-1.8 0 Q0 -36 1.8 0Z" transform="rotate(240)"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.4s" repeatCount="indefinite" additive="sum"/></g></g>
+        <g class="m-turb" transform="translate(170 108)"><path class="m-tower" d="M-2 0 L-1.2 -62 L1.2 -62 L2 0Z"/><g class="m-blades" transform="translate(0 -62)"><path d="M-1.6 0 Q0 -28 1.6 0Z"/><path d="M-1.6 0 Q0 -28 1.6 0Z" transform="rotate(120)"/><path d="M-1.6 0 Q0 -28 1.6 0Z" transform="rotate(240)"/><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.2s" repeatCount="indefinite" additive="sum"/></g></g>
+        <circle class="m-dot" id="ldDot" cx="8" cy="160" r="4.5"/>
       </svg>
     </div>
-    <div class="loader-name"><span>Almaty Electro Consult</span></div>
-    <svg class="loader-wave" viewBox="0 0 560 60" preserveAspectRatio="none"><path class="base" d="M0 30 H560"/><path class="sine" id="loaderSine" d="M0 30 H560"/></svg>
+    <div class="loader-name" id="ldName">Almaty Electro Consult</div>
+    <svg class="loader-wave" viewBox="0 0 560 64" preserveAspectRatio="none"><path class="base" d="M0 32 H560"/><path id="loaderSine" d="M0 32 H560"/></svg>
   </div>
-  <div class="loader-foot"><small>Системы гарантированного электропитания</small><div class="loader-count" id="loaderCount">0</div></div>
-  <div class="loader-bar" id="loaderBar"></div>
+  <div class="loader-foot"><small>Системы гарантированного электропитания</small><div class="loader-count"><span id="loaderCount">0</span><i>%</i></div></div>
+  <div class="ld-line" id="ldLine"></div>
 </div>
-<div class="loader-veil" id="loaderVeil"></div>
 <div class="progress" id="progress"></div>
 <div id="app">
 <main>
@@ -403,11 +453,21 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
 <!-- 2. Заказчики -->
 <section class="clients-band dark" data-dark aria-label="Среди заказчиков"><div class="wrap"><div class="lbl">Среди заказчиков</div><div class="marq"><div class="marq-track" id="clientLogos"></div></div></div></section>
 
-<!-- 3. Манифест -->
-<section class="manifest dark" data-dark><div class="wrap">
-  <p class="js-words" id="manifest">AEC Kazakhstan проектирует, поставляет и обслуживает системы гарантированного электропитания с 2021 года. Мы официальный дистрибьютор Salicru, Tescom и Kehua и отвечаем за результат от расчёта нагрузки до пусконаладки на объекте.</p>
-  <div class="who"><a class="ulink" href="about.html">О компании</a><a class="ulink" href="projects.html">Проекты</a><a class="ulink" href="contacts.html">Контакты</a></div>
-</div></section>
+<!-- 3. Как мы работаем -->
+<section class="manifest dark" data-dark>
+  <div class="wrap">
+    <p class="mf-lead" id="manifest">Отвечаем за электропитание объекта целиком: от расчёта нагрузки до сервиса после запуска.</p>
+    <svg class="mf-wave" viewBox="0 0 1600 120" preserveAspectRatio="none" aria-hidden="true"><path id="mfWave" d="M0 60 H1600"/><path d="M0 60 H1600"/></svg>
+    <div class="mf-steps-wrap" id="mfSteps"><div class="mf-rail" aria-hidden="true"><i></i></div>
+    <ol class="mf-steps">
+      <li><em>01</em><b>Расчёт</b><span>Нагрузка, автономия и резервирование. Подбор оборудования и однолинейная схема.</span></li>
+      <li><em>02</em><b>Поставка</b><span>Со склада в Алматы или с завода производителя, с документами для тендера.</span></li>
+      <li><em>03</em><b>Монтаж</b><span>Установка, пусконаладка под нагрузкой и обучение персонала заказчика.</span></li>
+      <li><em>04</em><b>Сервис</b><span>Регламентное обслуживание, диагностика батарей и выезд инженера по Казахстану.</span></li>
+    </ol></div>
+    <div class="mf-brands"><small>Официальный дистрибьютор</small><a href="brand.html#salicru" aria-label="Salicru"><img src="assets/img/brand-salicru.svg" alt="Salicru"></a><a class="tescom" href="brand.html#tescom" aria-label="Tescom"><img src="assets/img/brand-tescom.svg" alt="Tescom"></a><a href="brand.html#kehua" aria-label="Kehua"><img src="assets/img/brand-kehua-tech.svg" alt="Kehua Tech"></a></div>
+  </div>
+</section>
 
 <!-- 4. Оборудование -->
 <section class="sec" id="equipment"><div class="wrap">
