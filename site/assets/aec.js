@@ -278,19 +278,19 @@ window.AECUI = (function () {
   // ---------- Карточка товара (общая) ----------
   function productCard(p, list) {
     const u = D.unit(p.cat);
-    const st = p.stock === 'in' ? '<span class="stock stock-in">В наличии в Алматы</span>' : p.stock === 'eol' ? '<span class="stock stock-eol">Снят с производства</span>' : '<span class="stock stock-order">Под заказ · ' + p.lead + '</span>';
+    const st = p.stock === 'in' ? '<span class="stock stock-in">В наличии в Алматы</span>' : p.stock === 'eol' ? '<span class="stock stock-eol">Снят с производства</span>' : '<span class="stock stock-order">Под заказ, ' + p.lead + '</span>';
     const specs = p.cat === 'akb' ? [['Ёмкость', p.kva + ' А·ч'], ['Напряжение', p.form], ['Технология', (p.topology || '').split(' ')[0]], ['Срок службы', p.spec['Срок службы (проектный)'] || '']]
       : p.cat === 'dgu' ? [['Мощность', powerTxt(p)], ['Двигатель', p.spec['Двигатель'] || ''], ['Исполнение', p.form], ['АВР', 'опция']]
         : p.cat === 'sts' ? [['Ток', p.kva + ' А'], ['Фазы', p.phases], ['Переключение', '< 4 мс'], ['Исполнение', p.form]]
           : p.cat === 'stab' ? [['Мощность', p.kva + ' кВА'], ['Фазы', p.phases], ['Тип', (p.topology || '').split(' ')[0]], ['Точность', p.spec['Точность стабилизации'] || '']]
-            : [['Мощность', p.kva + ' кВА / ' + p.kw + ' кВт'], ['Фазы', p.phases], ['Исполнение', p.form], ['АКБ', p.battery]];
+            : [['Мощность', p.kva + ' кВА / ' + p.kw + ' кВт'], ['Фазы', p.phases], ['Исполнение', p.form], ['Топология', (p.topology || '').replace(/\s*\(.*\)/, '') || p.battery]];
     return `<article class="pcard${list ? ' list' : ''}" data-id="${p.id}">
       <button class="fav${FAV.has(p.id) ? ' on' : ''}" data-fav="${p.id}" aria-label="В избранное">${icon('heart')}</button>
       <a class="pimg" href="${L_.product(p.slug)}" aria-hidden="true" tabindex="-1">${pphoto(p)}</a>
       <div class="pbody"><div class="brand">${p.brand} · ${p.series}</div><h3><a href="${L_.product(p.slug)}">${p.name}</a></h3>
-        <div class="specs">${specs.map(s => `<span>${s[0]}: <b>${s[1]}</b></span>`).join('')}</div>${st}
-        <div class="price">${D.fmtPrice(p.price)}</div>
-        <div class="pact"><button class="btn btn-sm btn-primary" data-quote="${p.id}">Запросить цену</button><button class="btn-icon" title="В запрос КП" data-kp="${p.id}" aria-label="В запрос КП">${icon('kp')}</button><button class="btn-icon${CMP.has(p.id) ? ' on' : ''}" title="Сравнить" data-cmp="${p.id}" aria-label="Сравнить">${icon('compare')}</button></div></div></article>`;
+        <div class="specs">${specs.map(s => `<div><span>${s[0]}</span><b title="${String(s[1] || '').replace(/"/g, '&quot;')}">${s[1] && String(s[1]).trim() ? s[1] : '—'}</b></div>`).join('')}</div>
+        <div class="pfoot"><div class="pmeta">${st}<div class="price">${D.fmtPrice(p.price)}</div></div>
+        <div class="pact"><button class="btn btn-sm btn-primary" data-quote="${p.id}">Запросить цену</button><button class="btn-icon" title="В запрос КП" data-kp="${p.id}" aria-label="В запрос КП">${icon('kp')}</button><button class="btn-icon${CMP.has(p.id) ? ' on' : ''}" title="Сравнить" data-cmp="${p.id}" aria-label="Сравнить">${icon('compare')}</button></div></div></div></article>`;
   }
 
   // ---------- Рендер счётчиков и делегирование ----------

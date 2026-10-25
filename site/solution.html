@@ -19,9 +19,10 @@
 .series { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .ser { border: 1px solid var(--line); border-radius: var(--r); padding: 18px; background: #fff; display: flex; flex-direction: column; gap: 8px; color: var(--ink); }
 .ser:hover { border-color: var(--blue); color: var(--ink); }
-.ser .art { height: 110px; display: grid; place-items: center; background: var(--mist); border-radius: var(--r-s); }
+.ser .art { position: relative; height: 170px; display: grid; place-items: center; background: #f6f8fa; border-radius: var(--r-s); overflow: hidden; }
 .ser .art svg { height: 90px; width: auto; }
-.ser .art img { height: 100%; width: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.ser .art img, .ser .art img.pphoto { position: absolute; inset: 12px 16px; width: calc(100% - 32px); height: calc(100% - 24px); object-fit: contain; object-position: center; mix-blend-mode: multiply; transition: transform .45s var(--ease); }
+.ser:hover .art img { transform: scale(1.04); }
 .ser b { font-family: var(--font-display); font-size: 17px; font-weight: 600; }
 .ser small { color: var(--muted); font-size: 13px; }
 .ser .why { font-size: 13px; color: var(--text); }
