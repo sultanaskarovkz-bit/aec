@@ -77,77 +77,67 @@ html.intro body { overflow: hidden; }
 .progress { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 120; background: var(--lamp); transform-origin: left; transform: scaleX(0); pointer-events: none; }
 
 /* ---------- Первый экран: сценарий аварии на прокрутке ---------- */
-.hero { position: relative; height: var(--hero-h); min-height: 520px; overflow: hidden; --n: 0; --city: 0; --keep: 0; --grid: 1; --glow: 0; --gen: 0; --lbl: 0; --flow: 0; background: color-mix(in srgb, color-mix(in srgb, var(--ink0) calc(var(--n) * 100%), #12345a) calc(min(1, var(--n) * 1.8) * 100%), #fff); }
-.scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.scene .far { fill: color-mix(in srgb, #161f2a calc(var(--n) * 100%), #e4eaf1); }
-.scene .mid { fill: color-mix(in srgb, #1e2a38 calc(var(--n) * 100%), #12345a); }
-.scene .cap-far { fill: color-mix(in srgb, #3c4a5a calc(var(--n) * 100%), #fff); }
-.scene .cap-mid { fill: color-mix(in srgb, #9fb4c8 calc(var(--n) * 100%), #fff); }
-.scene .ground { fill: color-mix(in srgb, #0b0d10 calc(var(--n) * 100%), #0a2540); }
-.scene .bld-b { fill: color-mix(in srgb, #141b24 calc(var(--n) * 100%), #24456c); }
-.scene .bld-f { fill: color-mix(in srgb, #1a222d calc(var(--n) * 100%), #1a3a60); }
-.scene .bld-k { fill: color-mix(in srgb, #222c38 calc(var(--n) * 100%), #1a3a60); }
-.scene .win { fill: color-mix(in srgb, #222d3a calc(var(--n) * 100%), #4c6c92); }
-.scene .win-l { fill: var(--lamp-2); opacity: clamp(0, calc((var(--city) - var(--d)) * 7), 1); }
-.scene .win-k { fill: var(--lamp); opacity: var(--keep); }
-.scene .cross { fill: color-mix(in srgb, #ff5a5a calc(var(--keep) * 100%), #e2e8f0); }
-.scene .turb-t { fill: color-mix(in srgb, #c3cfdb calc(var(--n) * 100%), #0a2540); }
-.scene .turb-b path { fill: color-mix(in srgb, #dbe4ee calc(var(--n) * 100%), #0a2540); }
-.scene .pyl { fill: none; stroke: color-mix(in srgb, #4f5d6d calc(var(--n) * 100%), #0a2540); stroke-width: 2; stroke-linejoin: round; }
-.scene .wire { fill: none; stroke-width: 1.6; stroke: color-mix(in srgb, color-mix(in srgb, var(--volt) calc(var(--grid) * 100%), #2a3442) calc(var(--n) * 100%), #0a2540); }
-.scene .spark { fill: var(--volt); opacity: calc(var(--grid) * var(--n)); }
-.scene .stars { opacity: var(--n); }
-.scene .star { fill: #fff; }
-.scene .twinkle { animation: twinkle 3.4s ease-in-out infinite; }
-.scene .moon { fill: #f4e7c5; opacity: var(--n); }
-.scene .clouds { opacity: calc(1 - var(--n)); }
-.scene .cloud { fill: #e9eef3; }
-.scene .drift { animation: drift 38s linear infinite; }
-.scene .drift.d2 { animation-duration: 52s; animation-delay: -20s; }
-.scene .drift.d3 { animation-duration: 64s; animation-delay: -44s; }
-.scene .drift.d4 { animation-duration: 46s; animation-delay: -8s; }
-.scene .drift.d5 { animation-duration: 58s; animation-delay: -33s; }
-.scene .gust { fill: none; stroke: color-mix(in srgb, #9fb6cc calc(var(--n) * 100%), #0a2540); stroke-linecap: round; stroke-dasharray: 160 1000; opacity: .42; animation: gust 3.4s cubic-bezier(.45, 0, .55, 1) infinite; }
-.scene .flake { fill: #fff; animation: flake 2.4s cubic-bezier(.3, 0, .7, 1) infinite; opacity: 0; }
-.scene .glow { fill: url(#glowG); opacity: calc(var(--glow) * .75); }
-.scene .rings { opacity: var(--glow); }
-.scene .ring { fill: none; stroke: var(--lamp); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ring 2.4s ease-out infinite; }
-.scene .tag rect { fill: var(--ink0); stroke: var(--lamp); stroke-width: 1.5; }
-.scene .tag text { font-family: var(--font-body); font-weight: 600; font-size: 17px; fill: #fff; }
-.scene .tag .t2 { font-weight: 400; font-size: 14px; fill: var(--lamp-2); }
-.scene .tag { opacity: var(--lbl); }
-.scene .gen-box { fill: color-mix(in srgb, #2b3644 calc(var(--n) * 100%), #1a3a60); }
-.scene .gen-led { fill: color-mix(in srgb, #22c55e calc(var(--gen) * 100%), #3a4553); }
-.scene .puff { fill: #9aa7b6; opacity: 0; }
-.hero.gen-on .scene .puff { animation: puff 1.8s ease-out infinite; }
-.scene .gflow { fill: none; stroke: var(--lamp); stroke-width: 3; stroke-dasharray: 8 10; opacity: var(--flow); animation: dash 1s linear infinite; }
-.scene .sun { fill: #ffd27a; }
-.scene .sun-halo { fill: url(#sunG); }
-.scene .sunwrap { opacity: calc(1 - var(--n)); }
-.scene .bird { fill: none; stroke: #0a2540; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transform-box: fill-box; transform-origin: center; animation: flap .5s ease-in-out infinite alternate; }
-.scene .birds { opacity: calc(1 - var(--n) * 1.6); }
-.scene .flock { animation: fly 26s linear infinite; }
-.scene .flock.f2 { animation-duration: 34s; animation-delay: -15s; }
-.scene .grass { fill: color-mix(in srgb, #1c2532 calc(var(--n) * 100%), #2b5a8c); transform-box: fill-box; transform-origin: 50% 100%; animation: sway 1.4s ease-in-out infinite alternate; }
-.hero.paused .scene * { animation-play-state: paused !important; }
-.scene .lamp { fill: var(--lamp-2); opacity: clamp(0, calc((var(--city) - var(--d)) * 7), 1); }
-.scene .road { stroke: color-mix(in srgb, #1d2632 calc(var(--n) * 100%), #163a63); stroke-width: 1.5; stroke-dasharray: 14 12; fill: none; }
-.scene .cars { opacity: var(--n); }
-.scene .hl { fill: #fff; }
-.scene .tl { fill: #ff4d4d; }
+.hero { position: relative; height: var(--hero-h); min-height: 520px; overflow: hidden; background: #fff; }
+.stage-wrap { position: absolute; inset: 0; overflow: hidden; contain: strict; }
+.stage { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; transform-origin: 0 0; }
+.stage .cam, .stage .cam2, .stage .g { position: absolute; inset: 0; transform-origin: 1300px 820px; }
+.stage .lyr { position: absolute; display: block; max-width: none; user-select: none; pointer-events: none; }
+.stage .op { will-change: opacity; }
+.stage .clouds, .stage .birds, .stage .grasses, .stage .cars, .stage .rings, .stage .genon, .stage .gflow, .stage .sparks, .stage .tags { will-change: auto; }
+.stage .bird.still { animation: none; }
+.stage .nt { opacity: 0; will-change: opacity; }
+.stage .sky-n, .stage .dusk { position: absolute; inset: -300px; opacity: 0; }
+.stage .sky-n { background: #0b0d10; }
+.stage .dusk { background: #12345a; }
+.stage .stars { position: absolute; inset: 0; opacity: 0; }
+.stage .stars .tw { animation: twinkle 3.4s ease-in-out infinite; will-change: opacity; }
+.stage .sun { position: absolute; left: 1220px; top: 130px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, #ffd27a 0 33px, rgba(255, 214, 130, .4) 35px, rgba(255, 230, 176, .16) 72px, rgba(255, 255, 255, 0) 120px); will-change: transform, opacity; }
+.stage .moon { position: absolute; left: 1446px; top: 116px; width: 48px; height: 48px; border-radius: 50%; box-shadow: inset 13px -9px 0 0 #f4e7c5; opacity: 0; will-change: transform, opacity; }
+.stage .clouds, .stage .birds, .stage .gusts, .stage .grasses, .stage .cars, .stage .rings, .stage .tags, .stage .sparks, .stage .genon { position: absolute; inset: 0; }
+.stage .drift { position: absolute; left: 0; animation: drift 40s linear infinite; }
+.stage .drift img, .stage .bird img, .stage .gust img, .stage .grass img, .stage .flake img { display: block; width: 100%; max-width: none; }
+.stage .flock { position: absolute; left: 0; animation: fly 26s linear infinite; }
+.stage .flock.f2 { animation-duration: 34s; animation-delay: -15s; }
+.stage .bird { position: absolute; display: block; animation: flap .5s ease-in-out infinite alternate; transform-origin: 50% 70%; }
+.stage .gust { position: absolute; width: 420px; height: 60px; opacity: 0; animation: gust 3.2s cubic-bezier(.45, 0, .55, 1) infinite; }
+.stage .rotor { position: absolute; animation: spin 2.5s linear infinite; }
+.stage .rotor img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; max-width: none; }
+.stage .flake { position: absolute; width: 30px; height: 28px; opacity: 0; animation: flake 2.4s cubic-bezier(.3, 0, .7, 1) infinite; }
+.stage .grass { position: absolute; top: 826px; width: 326px; height: 46px; transform-origin: 50% 100%; animation: sway 1.4s ease-in-out infinite alternate; }
+.stage .car { position: absolute; left: 0; width: 11px; height: 4px; animation: carR 10s linear infinite; }
+.stage .car::before { content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 4px; border-radius: 50%; background: #ff4d4d; box-shadow: 7px 0 0 #ff4d4d; }
+.stage .car.l { animation-name: carL; }
+.stage .car.l::before { background: #fff; box-shadow: 7px 0 0 #fff, 0 0 6px rgba(255, 255, 255, .8); }
+.stage .spark { position: absolute; left: 0; top: 0; width: 7px; height: 7px; border-radius: 50%; background: #4da3ff; box-shadow: 0 0 8px #4da3ff; offset-anchor: center; offset-rotate: 0deg; animation: spark 2.6s linear infinite; }
+.stage .genon .led { position: absolute; left: 1494.6px; top: 830.6px; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+.stage .puff { position: absolute; left: 1525px; top: 805px; width: 10px; height: 10px; border-radius: 50%; background: #9aa7b6; opacity: 0; animation: puff 1.8s ease-out infinite; }
+.stage .gflow { position: absolute; left: 1090px; top: 868px; width: 398px; height: 3px; overflow: hidden; }
+.stage .gflow i { position: absolute; left: 0; top: 0; width: calc(100% + 36px); height: 100%; background: repeating-linear-gradient(90deg, #ffb000 0 8px, transparent 8px 18px); animation: gfl 1s linear infinite; }
+.stage .rings i { position: absolute; width: 18px; height: 18px; border: 2px solid #ffb000; border-radius: 50%; animation: ring 2.4s ease-out infinite; }
+.stage .tag { position: absolute; min-height: 52px; padding: 7px 12px 6px; background: #0b0d10; border: 1.5px solid #ffb000; font-family: var(--font-body); color: #fff; line-height: 1.2; white-space: nowrap; }
+.stage .tag b { display: block; font-size: 17px; font-weight: 600; }
+.stage .tag span { display: block; margin-top: 2px; font-size: 14px; color: #ffcf6b; }
+.hero .scrim { position: absolute; left: 0; right: 0; top: 0; height: 66%; z-index: 1; pointer-events: none; display: none; }
+.hero .scrim-d { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, .82) 50%, rgba(255, 255, 255, 0) 100%); }
+.hero .scrim-n { background: linear-gradient(180deg, #0b0d10 0%, rgba(11, 13, 16, .82) 50%, rgba(11, 13, 16, 0) 100%); opacity: 0; will-change: opacity; }
+@media (max-width: 1023px) { .hero .scrim { display: block; } }
+.hero.paused .stage *, .stage .zz, .stage .zz * { animation-play-state: paused !important; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes drift { from { transform: translate3d(-420px, 0, 0); } to { transform: translate3d(2000px, 0, 0); } }
+@keyframes fly { from { transform: translate3d(-260px, 0, 0); } 50% { transform: translate3d(800px, -30px, 0); } to { transform: translate3d(1900px, 10px, 0); } }
 @keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(.35); } }
-@keyframes fly { from { transform: translate(-260px, 0); } 50% { transform: translate(800px, -30px); } to { transform: translate(1900px, 10px); } }
+@keyframes gust { 0% { opacity: 0; transform: translate3d(-160px, 0, 0) scaleX(.6); } 25% { opacity: .6; } 70% { opacity: .42; } 100% { opacity: 0; transform: translate3d(280px, 0, 0) scaleX(1.1); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
+@keyframes flake { 0% { opacity: 0; transform: translate3d(0, 0, 0); } 12% { opacity: 1; } 100% { opacity: 0; transform: translate3d(320px, -70px, 0); } }
 @keyframes sway { from { transform: skewX(4deg); } to { transform: skewX(-22deg); } }
-@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
-@keyframes drift { from { transform: translateX(-420px); } to { transform: translateX(2000px); } }
-@keyframes gust { 0% { stroke-dashoffset: 1160; } 100% { stroke-dashoffset: 0; } }
-@keyframes flake { 0% { opacity: 0; transform: translate(0, 0); } 12% { opacity: 1; } 100% { opacity: 0; transform: translate(320px, -70px); } }
+@keyframes carR { from { transform: translate3d(-60px, 0, 0); } to { transform: translate3d(1660px, 0, 0); } }
+@keyframes carL { from { transform: translate3d(1660px, 0, 0); } to { transform: translate3d(-60px, 0, 0); } }
+@keyframes spark { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+@keyframes puff { 0% { opacity: .7; transform: translate3d(0, 0, 0) scale(.6); } 100% { opacity: 0; transform: translate3d(26px, -60px, 0) scale(2.2); } }
+@keyframes gfl { to { transform: translate3d(-18px, 0, 0); } }
 @keyframes ring { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
-@keyframes puff { 0% { opacity: .7; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(26px, -60px) scale(2.2); } }
-@keyframes dash { to { stroke-dashoffset: -36; } }
 /* тексты первого экрана */
 .hero-ui { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-@media (max-width: 1023px) { .hero::before { content: ''; position: absolute; inset: 0 0 auto; height: 66%; z-index: 1; pointer-events: none; background: linear-gradient(180deg, color-mix(in srgb, var(--ink0) calc(var(--n) * 100%), #fff) 0%, color-mix(in srgb, color-mix(in srgb, var(--ink0) calc(var(--n) * 100%), #fff) 82%, transparent) 50%, transparent 100%); } }
 .hero-ui .wrap { position: relative; height: 100%; }
 .hero-ui a, .hero-ui button { pointer-events: auto; }
 .intro { position: absolute; left: var(--gutter); top: clamp(28px, 6vh, 72px); max-width: min(760px, 62vw); }
@@ -191,11 +181,15 @@ html.intro body { overflow: hidden; }
 .clients-band { padding-block: 28px; border-bottom: 1px solid rgba(255, 255, 255, .08); overflow: hidden; }
 .clients-band .wrap { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; }
 .clients-band .lbl { font-size: 14px; color: rgba(255, 255, 255, .5); white-space: nowrap; }
-.marq { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-.marq-track { display: flex; gap: 12px; width: max-content; animation: marq 60s linear infinite; }
-.marq:hover .marq-track { animation-play-state: paused; }
+.marq { overflow: hidden; position: relative; }
+.marq::before, .marq::after { content: ''; position: absolute; top: 0; bottom: 0; width: 12%; z-index: 1; pointer-events: none; }
+.marq::before { left: 0; background: linear-gradient(90deg, var(--ink0), rgba(11, 13, 16, 0)); }
+.marq::after { right: 0; background: linear-gradient(270deg, var(--ink0), rgba(11, 13, 16, 0)); }
+.marq-track { display: flex; gap: 12px; width: max-content; animation: marq 60s linear infinite; will-change: transform; }
+.marq:hover .marq-track, .offscreen .marq-track, .cue.offscreen i::after { animation-play-state: paused; }
+.offscreen .marq-track { will-change: auto; }
 .marq-track div { width: 150px; height: 76px; padding: 12px 18px; display: grid; place-items: center; flex: none; background: #fff; }
-.marq-track img { max-height: 46px; max-width: 100%; width: auto; object-fit: contain; filter: grayscale(1); opacity: .72; mix-blend-mode: multiply; transition: opacity .3s, filter .3s; }
+.marq-track img { max-height: 46px; max-width: 100%; width: auto; object-fit: contain; filter: grayscale(1); opacity: .72; transition: opacity .3s, filter .3s; }
 .marq-track div:hover img { opacity: 1; filter: none; }
 .marq-track img.ph { display: none; }
 @keyframes marq { to { transform: translateX(-50%); } }
@@ -333,8 +327,9 @@ html.intro body { overflow: hidden; }
 .nums b i { font-style: normal; font-size: .36em; color: var(--lamp); margin-left: .12em; letter-spacing: 0; }
 .nums > div > span { display: block; margin-top: 14px; font-size: 15px; color: rgba(255, 255, 255, .6); max-width: 22ch; }
 .brands { margin-top: clamp(56px, 7vw, 100px); display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); border-top: 1px solid rgba(255, 255, 255, .16); border-left: 1px solid rgba(255, 255, 255, .16); }
-.brands a { min-height: 76px; display: grid; place-items: center; text-align: center; padding: 10px; border-right: 1px solid rgba(255, 255, 255, .16); border-bottom: 1px solid rgba(255, 255, 255, .16); color: #fff; font-family: var(--font-cond); font-weight: 600; font-size: 17px; transition: background .3s, color .3s; }
+.brands a, .brands span { min-height: 76px; display: grid; place-items: center; text-align: center; padding: 10px; border-right: 1px solid rgba(255, 255, 255, .16); border-bottom: 1px solid rgba(255, 255, 255, .16); color: #fff; font-family: var(--font-cond); font-weight: 600; font-size: 17px; transition: background .3s, color .3s; }
 .brands a:hover { background: var(--lamp); color: var(--ink0); }
+.brands span { display: grid; place-items: center; text-align: center; padding: 10px; border-right: 1px solid rgba(255, 255, 255, .16); border-bottom: 1px solid rgba(255, 255, 255, .16); color: #fff; font-family: var(--font-cond); font-weight: 600; font-size: 17px; }
 .brands-lbl { margin-top: clamp(56px, 7vw, 100px); margin-bottom: 16px; font-size: 14px; color: rgba(255, 255, 255, .5); }
 .brands-lbl + .brands { margin-top: 0; }
 @media (max-width: 1024px) { .nums { grid-template-columns: 1fr 1fr; } .nums > div:nth-child(3) { padding-left: 0; border-left: 0; } .nums > div:nth-child(n+3) { margin-top: 32px; } .brands { grid-template-columns: repeat(4, 1fr); } }
@@ -375,6 +370,40 @@ html.intro body { overflow: hidden; }
 .news-list small { display: block; margin-top: 3px; font-size: 13px; color: var(--muted); }
 @media (max-width: 960px) { .news { grid-template-columns: 1fr; } .news-list a { grid-template-columns: 96px 1fr; gap: 12px; } }
 
+/* ---------- Отзывы и карта 2ГИС ---------- */
+.rv { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: stretch; }
+.rv-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.rv-score { display: flex; align-items: center; gap: 16px; }
+.rv-score b { font-family: var(--font-cond); font-weight: 700; font-size: clamp(56px, 6vw, 88px); line-height: .85; letter-spacing: -.03em; color: var(--ink0); }
+.rv-score .stars { color: var(--lamp); font-size: 20px; letter-spacing: 2px; line-height: 1; }
+.rv-score small { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); }
+.rv-list { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rv-list li { border: 1px solid var(--line); padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 10px; background: #fff; }
+.rv-list .who { display: flex; align-items: center; gap: 10px; }
+.rv-list .ava { width: 36px; height: 36px; flex: none; display: grid; place-items: center; background: var(--ink0); color: #fff; font-family: var(--font-cond); font-weight: 700; font-size: 15px; }
+.rv-list .who b { display: block; font-size: 15px; font-weight: 600; color: var(--ink0); line-height: 1.2; }
+.rv-list .who small { display: block; font-size: 12.5px; color: var(--muted); }
+.rv-list .st { color: var(--lamp); font-size: 13px; letter-spacing: 1px; }
+.rv-list p { font-size: 14.5px; line-height: 1.5; color: var(--text); }
+.rv-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.rv-map { position: relative; min-height: 520px; background: var(--mist-2); border: 1px solid var(--line); overflow: hidden; }
+.rv-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.rv-map .lock { position: absolute; inset: 0; z-index: 2; display: flex; align-items: flex-end; justify-content: center; padding: 16px; background: transparent; border: 0; cursor: pointer; }
+.rv-map .lock span { background: var(--ink0); color: #fff; font-size: 13px; padding: 8px 12px; }
+.rv-map.on .lock { display: none; }
+.rv-map .addr { position: absolute; left: 0; top: 0; z-index: 3; background: #fff; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 16px; font-size: 14px; line-height: 1.4; color: var(--ink0); width: min(420px, calc(100% - 48px)); white-space: normal; pointer-events: none; }
+.rv-map .addr b { display: block; font-weight: 600; }
+@media (max-width: 960px) {
+  .rv { grid-template-columns: minmax(0, 1fr); }
+  .rv > div { min-width: 0; }
+  .rv-head { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .rv-list { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  .rv-list::-webkit-scrollbar { display: none; }
+  .rv-list li { flex: none; width: min(80vw, 320px); scroll-snap-align: start; }
+  .rv-map { min-height: 400px; }
+  .rv-map .addr { width: auto; right: 0; border-right: 0; font-size: 13px; }
+}
+
 /* ---------- Контакты ---------- */
 .contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
 .contact .big-phone { display: inline-block; margin-top: 28px; font-family: var(--font-cond); font-weight: 700; font-size: clamp(36px, 4.4vw, 68px); line-height: 1; letter-spacing: -.02em; color: #fff; background: linear-gradient(var(--lamp), var(--lamp)) 0 100% / 0 3px no-repeat; transition: background-size .45s var(--ease); padding-bottom: 6px; }
@@ -397,9 +426,8 @@ html.intro body { overflow: hidden; }
 html.anim .intro h1, html.anim .intro p, html.anim .intro .links, html.anim .cue { visibility: hidden; }
 html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .links, html.anim.ready .cue { visibility: visible; }
 @media (prefers-reduced-motion: reduce) {
-  .scene .twinkle, .scene .drift, .scene .gust, .scene .flake, .scene .ring, .cue i::after, .marq-track { animation: none !important; }
-  .scene .flake, .scene .gust { display: none; }
-  .scene .bird, .scene .flock, .scene .grass, .mf-wave { animation: none !important; }
+  .stage *, .cue i::after, .marq-track { animation: none !important; }
+  .stage .flake, .stage .gust, .stage .spark, .stage .car { display: none; }
 }
 </style>
 </head>
@@ -429,7 +457,7 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
 <main>
 <!-- 1. Первый экран и сценарий аварии -->
 <section class="hero" id="hero" aria-label="Системы гарантированного электропитания">
-  <svg class="scene" id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"></svg>
+  <div class="stage-wrap" aria-hidden="true"><div class="stage" id="stage"></div></div><div class="scrim scrim-d"></div><div class="scrim scrim-n"></div>
   <div class="hero-ui">
     <div class="wrap">
       <div class="intro" id="intro">
@@ -497,7 +525,7 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
 
 <!-- 8. Цифры и бренды -->
 <section class="sec dark" data-dark><div class="wrap">
-  <div class="sec-top"><div><h2 class="h-xl js-lines">AEC Kazakhstan в цифрах</h2></div></div>
+  <div class="sec-top"><div><h2 class="h-xl js-lines">AEC Kazakhstan | Almaty Electro Consult</h2></div></div>
   <div class="nums" id="nums"></div>
   <div class="brands-lbl js-up">Официальный дистрибьютор и партнёр производителей</div>
   <div class="brands" id="brands"></div>
@@ -518,6 +546,19 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
 <section class="sec bg-mist"><div class="wrap">
   <div class="sec-top"><div><h2 class="h-xl js-lines">Новости и события</h2></div><a class="ulink js-up" href="blog.html">Все материалы</a></div>
   <div class="news"><a class="news-main js-up" id="newsMain" href="article.html#3"></a><ul class="news-list js-up" id="newsList"></ul></div>
+</div></section>
+
+<!-- 10a. Отзывы и карта -->
+<section class="sec" id="reviews"><div class="wrap rv">
+  <div>
+    <div class="rv-head">
+      <div><h2 class="h-xl js-lines">Отзывы клиентов</h2></div>
+      <a class="rv-score js-up" id="rvScore" target="_blank" rel="noopener"></a>
+    </div>
+    <ul class="rv-list" id="rvList"></ul>
+    <div class="rv-links"><a class="btn btn-primary" id="rvAll" target="_blank" rel="noopener">Все отзывы в 2ГИС</a><a class="btn btn-ghost" id="rvWrite" target="_blank" rel="noopener">Оставить отзыв</a></div>
+  </div>
+  <div class="rv-map js-up" id="rvMap"></div>
 </div></section>
 
 <!-- 11. Контакты -->

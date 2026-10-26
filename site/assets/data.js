@@ -11,6 +11,7 @@ window.AEC = (function () {
     instagram: 'https://www.instagram.com/aec_kazakhstan/',
     youtube: 'https://www.youtube.com/@AEC_Kazakhstan',
     twogis: 'https://2gis.kz/almaty/firm/70000001060760363',
+    geo: [43.285354, 76.982936], twogisRating: '5,0', twogisReviews: 9,
     bin: '211240034245',
     legal: 'ТОО «AEC Kazakhstan» (Almaty Electro Consult)'
   };
@@ -83,9 +84,9 @@ window.AEC = (function () {
   ];
 
   const BRANDS = [
+    { id: 'tescom', name: 'Tescom', country: 'Турция', type: 'ИБП, ДГУ, стабилизаторы, STS', status: 'Официальный дистрибьютор', logo: 'brand-tescom.svg' },
     { id: 'salicru', name: 'Salicru', country: 'Испания', type: 'ИБП, стабилизаторы', status: 'Официальный дистрибьютор', logo: 'brand-salicru.svg' },
     { id: 'kehua-tech', name: 'Kehua Tech', country: 'Китай', type: 'ИБП, модульные системы', status: 'Официальный партнёр', logo: 'brand-kehua-tech.svg' },
-    { id: 'tescom', name: 'Tescom', country: 'Турция', type: 'ИБП, ДГУ, стабилизаторы, STS', status: 'Официальный дистрибьютор', logo: 'brand-tescom.svg' },
     { id: 'hoppecke', name: 'Hoppecke', country: 'Германия', type: 'Аккумуляторы OPzS / OPzV', status: 'Партнёр' },
     { id: 'bae-batterien', name: 'BAE Batterien', country: 'Германия', type: 'Аккумуляторы Secura', status: 'Партнёр', logo: 'brand-bae-batterien.svg' },
     { id: 'energrid', name: 'EnerGrid', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
@@ -95,6 +96,7 @@ window.AEC = (function () {
     { id: 'enersys', name: 'EnerSys', country: 'США', type: 'Аккумуляторы', status: 'Партнёр' },
     { id: 'agg', name: 'AGG Power', country: 'Великобритания / Китай', type: 'ДГУ', status: 'Партнёр' },
     { id: 'baifa', name: 'BAIFA Power', country: 'Китай', type: 'ДГУ', status: 'Партнёр', logo: 'brand-baifa.svg' },
+    { id: 'everexceed', name: 'EverExceed', country: 'Китай', type: 'Аккумуляторы, стабилизаторы', status: 'Партнёр' },
     { id: 'socomec', name: 'Socomec', country: 'Франция', type: 'ИБП, STS', status: 'Под заказ', logo: 'brand-socomec.svg' },
     { id: 'leega', name: 'LEEGA', country: 'Китай', type: 'ДГУ', status: 'Под заказ', logo: 'brand-leega.svg' },
     { id: 'cummins', name: 'Cummins', country: 'США', type: 'Двигатели ДГУ', status: 'Двигатели', logo: 'brand-cummins.svg' },

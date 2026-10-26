@@ -78,7 +78,7 @@
     nav.innerHTML = D.INDUSTRIES.map(x => `<a href="${L.solution(x.id)}" class="${x.id === ind.id ? 'on' : ''}">${I(x.icon)}${x.name}</a>`).join('');
     const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Решения по отраслям', href: L.solution('czod') }, { name: ind.name }];
     document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${ind.h1}</h1><p class="lead">${t.lead}</p><div class="cta"><a class="btn btn-lg btn-light" href="calc.html">Подобрать оборудование</a><button class="btn btn-lg btn-kp" data-open-modal data-title="КП: ${ind.name}" data-type="Запрос КП (${ind.name})">Запросить КП</button></div>`;
-    const IPH = { czod: 'proj-airastana-1.jpg', med: 'proj-uralsk-1.jpg', prom: 'proj-ktz-2.jpg', oil: 'prod-tescom-genset-1.jpg', office: 'proj-airastana-3.jpg', machines: 'proj-ktz-4.jpg', emergency: 'proj-lab-2.jpg', telecom: 'proj-tv-1.jpg' };
+    const IPH = { czod: 'proj-airastana-1.jpg', med: 'proj-uralsk-1.jpg', prom: 'proj-ktz-2.jpg', oil: 'prod-tescom-genset-1.jpg', office: 'proj-airastana-3.jpg', machines: 'ind-machines.jpg', emergency: 'proj-lab-2.jpg', telecom: 'proj-tv-1.jpg' };
     document.getElementById('heroArt').innerHTML = `<div style="border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;max-width:420px;margin-inline:auto;box-shadow:var(--shadow)">${U.img(IPH[ind.id], ind.h1, '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div>`;
     document.getElementById('reqTitle').textContent = 'Что важно: ' + ind.name;
     document.getElementById('reqSub').textContent = 'Требования отрасли, которые мы закладываем в расчёт и спецификацию.';

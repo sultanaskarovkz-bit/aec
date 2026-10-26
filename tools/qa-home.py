@@ -17,8 +17,8 @@ OVERLAP_JS = r'''() => {
   document.querySelectorAll('#caps .cap').forEach(c => { if (!vis(c)) return; c.querySelectorAll('b, p, .btn').forEach(e => items.push(box(e, 'cap'))); });
   document.querySelectorAll('#stepsUi').forEach(e => vis(e) && items.push(box(e, 'steps')));
   document.querySelectorAll('#cue').forEach(e => vis(e) && items.push(box(e, 'cue')));
-  const hero = document.querySelector('#hero'); const lbl = parseFloat(getComputedStyle(hero).getPropertyValue('--lbl')) || 0;
-  if (lbl > .35) document.querySelectorAll('#scene .tag rect').forEach(e => items.push(box(e, 'tag')));
+  const tg = document.querySelector('#stage .tags'); const lbl = tg ? parseFloat(getComputedStyle(tg).opacity) : 0;
+  if (lbl > .35) document.querySelectorAll('#stage .tag').forEach(e => items.push(box(e, 'tag')));
   const vw = innerWidth, vh = innerHeight, bad = [];
   document.querySelectorAll('#intro h1, #caps .cap b, .h-xl, .cap p, #intro p').forEach(e => { if (vis(e) && e.scrollWidth > e.clientWidth + 2) bad.push('TEXT-OVERFLOW "' + (e.textContent||'').trim().slice(0, 30) + '" ' + e.scrollWidth + '>' + e.clientWidth); });
   for (let i = 0; i < items.length; i++) {
