@@ -179,7 +179,7 @@ img.ph { object-fit: cover; }
 .tile:hover { border-color: var(--navy); color: var(--ink); }
 .tile .ic { width: 44px; height: 44px; border-radius: 2px; background: var(--mist-2); color: var(--navy); display: grid; place-items: center; }
 .tile .ic svg { width: 26px; height: 26px; }
-.tile h3 { font-size: 18px; }
+.tile h3 { font-size: 18px; overflow-wrap: anywhere; hyphens: auto; }
 .tile p { color: var(--muted); font-size: 14px; }
 .tile .range { margin-top: auto; font-family: var(--font-display); font-weight: 600; color: var(--navy); font-size: 15px; }
 .tile.soon { background: var(--mist); }

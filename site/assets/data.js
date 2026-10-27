@@ -182,15 +182,15 @@ window.AEC = (function () {
     { slug: 'blog/tehnicheskoe-obsluzhivanie-promyshlennyh-ibp-pravila-i-reglamenty/', title: 'Техническое обслуживание промышленных ИБП: правила и регламенты', cat: 'Сервис', date: '2026-08-30', read: 7, cover: 'blog-to-ibp.jpg' },
     { slug: 'blog/dizel-generatornaya-ustanovka-podrobnyj-razbor/', title: 'Дизель-генераторная установка: устройство, работа и сферы применения', cat: 'ДГУ', date: '2026-08-12', read: 11, cover: 'blog-dgu.jpg' },
     { slug: 'blog/aec-kazakhstan-na-vystavke-kioge-2026/', title: 'AEC Kazakhstan на выставке KIOGE 2026: бесперебойное питание для нефтегазовой отрасли', cat: 'Новости', date: '2026-10-02', read: 4, cover: 'blog-kioge-cover.jpg' },
-    { slug: 'blog/chto-takoe-ibp-i-dlya-chego-nuzhen-besperebojnik/', title: 'Что такое ИБП и для чего нужен бесперебойник', cat: 'Основы', date: '2026-05-20', read: 6, cover: 'blog-chto-takoe-ibp.jpg' },
-    { slug: 'blog/vybiraem-stabilizator-napryazheniya-dlya-chastnogo-doma/', title: 'Выбираем стабилизатор напряжения для частного дома', cat: 'Подбор', date: '2026-04-11', read: 6, cover: 'blog-stab-dom.jpg' },
+    { slug: 'blog/chto-takoe-ibp-i-dlya-chego-nuzhen-besperebojnik/', title: 'Что такое ИБП и для чего нужен бесперебойник', cat: 'Основы', date: '2026-05-20', read: 6, cover: 'proj-airastana-5.jpg' },
+    { slug: 'blog/vybiraem-stabilizator-napryazheniya-dlya-chastnogo-doma/', title: 'Выбираем стабилизатор напряжения для частного дома', cat: 'Подбор', date: '2026-04-11', read: 6, cover: 'staff-1.png' },
     { slug: 'blog/inzhenernoe-rukovodstvo-sistemy-hraneniya-energii/', title: 'Инженерное руководство по проектированию, мониторингу и сервису промышленных систем хранения энергии', cat: 'Сервис', date: '2026-08-26', read: 8, cover: 'blog-ess.jpg' },
     { slug: 'blog/kak-rasschitat-moshchnost-ibp/', title: 'Как рассчитать мощность ИБП: кВА, кВт и коэффициент мощности', cat: 'Подбор', date: '2026-10-08', read: 6, cover: 'proj-lab-2.jpg' },
     { slug: 'blog/srok-sluzhby-batarej-ibp/', title: 'Сколько служат батареи ИБП и когда их менять', cat: 'Сервис', date: '2026-09-29', read: 6, cover: 'proj-ktz-3.jpg' },
-    { slug: 'blog/dizelnyj-generator-dlya-biznes-centra/', title: 'Дизельный генератор для бизнес-центра: мощность, АВР, шум и размещение', cat: 'ДГУ', date: '2026-09-22', read: 7, cover: 'dgu-photo-8.jpg' },
+    { slug: 'blog/dizelnyj-generator-dlya-biznes-centra/', title: 'Дизельный генератор для бизнес-центра: мощность, АВР, шум и размещение', cat: 'ДГУ', date: '2026-09-22', read: 7, cover: 'staff-6.png' },
     { slug: 'blog/ibp-dlya-medicinskogo-oborudovaniya/', title: 'ИБП для медицинского оборудования: рентген, КТ, МРТ и операционные', cat: 'Решения', date: '2026-09-10', read: 6, cover: 'proj-uralsk-3.jpg' },
     { slug: 'blog/modulnyj-ili-monoblochnyj-ibp/', title: 'Модульный или моноблочный ИБП: что выбрать для серверной и ЦОД', cat: 'Подбор', date: '2026-08-14', read: 6, cover: 'proj-lab-1.jpg' },
-    { slug: 'blog/stabilizator-dlya-stankov-chpu/', title: 'Стабилизатор напряжения для станков с ЧПУ и производственных линий', cat: 'Подбор', date: '2026-07-22', read: 6, cover: 'cat-stab-photo.jpg' }
+    { slug: 'blog/stabilizator-dlya-stankov-chpu/', title: 'Стабилизатор напряжения для станков с ЧПУ и производственных линий', cat: 'Подбор', date: '2026-07-22', read: 6, cover: 'proj-ktz-5.jpg' }
   ];
 
   const FAQ = [

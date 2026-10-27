@@ -28,10 +28,11 @@
     return out;
   };
   const FAR = [[0, 730], [120, 705], [230, 712], [340, 668], [450, 684], [540, 620], [630, 646], [720, 580], [810, 606], [900, 520], [980, 556], [1070, 470], [1150, 512], [1230, 440], [1310, 478], [1390, 418], [1470, 458], [1540, 432], [1600, 452]];
+  const HAZE = [[0, 560], [120, 520], [260, 545], [400, 470], [520, 510], [660, 440], [800, 490], [940, 430], [1060, 470], [1180, 400], [1300, 445], [1420, 390], [1540, 430], [1600, 420]];
   const MID = [[0, 812], [160, 790], [300, 806], [440, 760], [560, 778], [680, 726], [800, 752], [920, 700], [1040, 640], [1150, 690], [1250, 650], [1360, 702], [1480, 668], [1600, 708]];
   const PAL = {
-    day: { far: '#e4eaf1', mid: '#12345a', capFar: '#ffffff', capMid: '#ffffff', ground: '#0a2540', bldB: '#24456c', bldF: '#1a3a60', bldK: '#1a3a60', win: '#4c6c92', turb: '#0a2540', pyl: '#0a2540', wire: '#0a2540', cross: '#e2e8f0', gen: '#1a3a60', led: '#3a4553', road: '#163a63' },
-    night: { far: '#161f2a', mid: '#1e2a38', capFar: '#3c4a5a', capMid: '#9fb4c8', ground: '#0b0d10', bldB: '#141b24', bldF: '#1a222d', bldK: '#222c38', win: '#222d3a', turb: '#c3cfdb', pyl: '#4f5d6d', wire: '#2a3442', cross: '#e2e8f0', gen: '#2b3644', led: '#3a4553', road: '#1d2632' }
+    day: { haze: '#eef2f6', tree: '#163355', far: '#e4eaf1', mid: '#12345a', capFar: '#ffffff', capMid: '#ffffff', ground: '#0a2540', bldB: '#24456c', bldF: '#1a3a60', bldK: '#1a3a60', win: '#4c6c92', turb: '#0a2540', pyl: '#0a2540', wire: '#0a2540', cross: '#e2e8f0', gen: '#1a3a60', led: '#3a4553', road: '#163a63' },
+    night: { haze: '#11171f', tree: '#121820', far: '#161f2a', mid: '#1e2a38', capFar: '#3c4a5a', capMid: '#9fb4c8', ground: '#0b0d10', bldB: '#141b24', bldF: '#1a222d', bldK: '#222c38', win: '#222d3a', turb: '#c3cfdb', pyl: '#4f5d6d', wire: '#2a3442', cross: '#e2e8f0', gen: '#2b3644', led: '#3a4553', road: '#1d2632' }
   };
   const BASE = 852;
   const TURB = [['far', 1150, .36, 2.6], ['far', 1310, .42, 2.9], ['far', 1450, .38, 3.3], ['mid', 1040, .9, 2.3], ['mid', 1250, .78, 2.7], ['mid', 1480, .72, 2.5]].map(([d, x, s, dur]) => ({ d, x, s, dur, y: yAt(d === 'far' ? FAR : MID, x) }));
@@ -46,20 +47,29 @@
     const wins = (x, y, w, h) => { const out = [], cols = Math.max(1, Math.floor((w - 8) / 11)), rows = Math.max(1, Math.floor((h - 10) / 15)); for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { if (rnd() < .22) continue; out.push([x + 6 + c * 11, y + 8 + r * 15]); } return out; };
     const back = [], front = [];
     let x = 860; while (x < 1600) { const w = 24 + rnd() * 34, h = 36 + rnd() * 92; back.push({ x, w, h, wins: wins(x, BASE - h, w, h - 8) }); x += w + 2 + rnd() * 6; }
-    [[880, 1080], [1186, 1226], [1344, 1376], [1544, 1600]].forEach(([a, b]) => { let x2 = a; while (x2 < b - 14) { const w = Math.min(b - x2, 22 + rnd() * 30), h = 24 + rnd() * 50; front.push({ x: x2, w, h, wins: wins(x2, BASE - h, w, h - 6) }); x2 += w + 3; } });
+    [[880, 1030], [1186, 1226], [1344, 1376], [1544, 1600]].forEach(([a, b]) => { let x2 = a; while (x2 < b - 14) { const w = Math.min(b - x2, 22 + rnd() * 30), h = 24 + rnd() * 50; front.push({ x: x2, w, h, wins: wins(x2, BASE - h, w, h - 6) }); x2 += w + 3; } });
     const keepWins = [...wins(1090, 752, 90, 96), ...wins(1382, 812, 96, 40)];
-    const pylX = [140, 380, 620, 860], pylS = [.92, .96, 1, 1.02];
+    const pylX = [140, 380, 620, 860, 1010], pylS = [.92, .96, 1, 1.02, .88];
     const tops = pylX.map((px, i) => [px, BASE - 132 * pylS[i] * .82]);
     const wires = [`M-20 ${f1(tops[0][1] - 6)} Q60 ${f1(tops[0][1] + 24)} ${f1(tops[0][0] - 32 * pylS[0])} ${f1(tops[0][1])}`];
-    for (let i = 0; i < tops.length; i++) { const a = tops[i], b = i < tops.length - 1 ? tops[i + 1] : [990, 772]; [-32, 32].forEach(dx => { const ax = a[0] + dx * pylS[i], bx = b[0] + (i < tops.length - 1 ? dx * pylS[i + 1] : 0); wires.push(`M${f1(ax)} ${f1(a[1])} Q${f1((ax + bx) / 2)} ${f1(Math.max(a[1], b[1]) + 30)} ${f1(bx)} ${f1(b[1])}`); }); }
+    for (let i = 0; i < tops.length; i++) { const a = tops[i], b = i < tops.length - 1 ? tops[i + 1] : [1063, 824]; [-32, 32].forEach(dx => { const ax = a[0] + dx * pylS[i], bx = b[0] + (i < tops.length - 1 ? dx * pylS[i + 1] : 0); wires.push(`M${f1(ax)} ${f1(a[1])} Q${f1((ax + bx) / 2)} ${f1(Math.max(a[1], b[1]) + 30)} ${f1(bx)} ${f1(b[1])}`); }); }
     const lamps = []; for (let lx = 40; lx < 1600; lx += 74) lamps.push(lx);
-    return { back, front, keepWins, pylX, pylS, wires, lamps };
+    // высотки заднего плана с антеннами и детали крыш
+    const towers = [[1192, 34, 172], [1356, 30, 150], [1522, 36, 188], [905, 28, 140]].map(([x, w, h]) => ({ x, w, h, wins: wins(x, BASE - h, w, h - 8) }));
+    towers.forEach(t => back.push(t));
+    const roof = back.map(b => { const r = rnd(); return r < .18 ? { k: 'ant', x: b.x + b.w * .5, y: BASE - b.h } : r < .34 ? { k: 'tank', x: b.x + 4, y: BASE - b.h } : r < .5 ? { k: 'ac', x: b.x + b.w - 12, y: BASE - b.h } : null; }).filter(Boolean);
+    // деревья вдоль дороги между зданиями переднего плана
+    const trees = []; let tx = 872;
+    while (tx < 1600) { const inKeep = [[1086, 1184], [1226, 1344], [1376, 1484], [1484, 1544]].some(([a, b]) => tx > a - 8 && tx < b + 8); if (!inKeep) trees.push({ x: tx, r: 8 + rnd() * 6 }); tx += 60 + rnd() * 70; }
+    return { back, front, keepWins, pylX, pylS, wires, lamps, towers, roof, trees };
   }
   const G = cityGeometry();
   const GROUND = 'M0 868 C 300 854, 600 864, 900 852 S 1400 850, 1600 846 L1600 900 L0 900 Z';
   function nearLayer(P) {
     let s = '';
     G.back.forEach(b => { s += `<rect fill="${P.bldB}" x="${f1(b.x)}" y="${f1(BASE - b.h)}" width="${f1(b.w)}" height="${f1(b.h + 10)}"/>` + b.wins.map(([x, y]) => `<rect fill="${P.win}" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join(''); });
+    G.towers.forEach(t => { s += `<rect fill="${P.bldB}" x="${f1(t.x - 1.2 + t.w / 2)}" y="${f1(BASE - t.h - 26)}" width="2.4" height="26"/>`; });
+    G.roof.forEach(r => { s += r.k === 'ant' ? `<rect fill="${P.pyl}" x="${f1(r.x - .8)}" y="${f1(r.y - 14)}" width="1.6" height="14"/><rect fill="${P.pyl}" x="${f1(r.x - 4)}" y="${f1(r.y - 10)}" width="8" height="1.2"/>` : r.k === 'tank' ? `<rect fill="${P.bldF}" x="${f1(r.x)}" y="${f1(r.y - 8)}" width="9" height="8" rx="1"/>` : `<rect fill="${P.bldF}" x="${f1(r.x)}" y="${f1(r.y - 5)}" width="10" height="5"/>`; });
     s += `<g fill="none" stroke="${P.wire}" stroke-width="1.6">${G.wires.map(d => `<path d="${d}"/>`).join('')}</g>`;
     s += `<path fill="none" stroke="${P.pyl}" stroke-width="2" stroke-linejoin="round" d="${G.pylX.map((x, i) => pylonPath(x, G.pylS[i])).join(' ')}"/>`;
     G.front.forEach(b => { s += `<rect fill="${P.bldF}" x="${f1(b.x)}" y="${f1(BASE - b.h)}" width="${f1(b.w)}" height="${f1(b.h + 10)}"/>` + b.wins.map(([x, y]) => `<rect fill="${P.win}" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join(''); });
@@ -68,16 +78,25 @@
     s += `<path fill="${P.bldK}" d="M1380 862 V804 L1405 790 V804 L1430 790 V804 L1455 790 V804 L1480 790 V862 Z"/><rect fill="${P.bldK}" x="1456" y="742" width="13" height="56"/>`;
     s += G.keepWins.map(([x, y]) => `<rect fill="${P.win}" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join('');
     s += `<rect fill="${P.gen}" x="1488" y="824" width="52" height="30"/><rect fill="${P.gen}" x="1528" y="812" width="5" height="14"/><circle fill="${P.led}" cx="1498" cy="834" r="3.4"/>`;
+    // подстанция: трансформатор с изоляторами, забор
+    s += `<rect fill="${P.gen}" x="1040" y="828" width="46" height="34"/><rect fill="${P.pyl}" x="1046" y="818" width="3" height="10"/><rect fill="${P.pyl}" x="1061" y="818" width="3" height="10"/><rect fill="${P.pyl}" x="1076" y="818" width="3" height="10"/><rect fill="${P.pyl}" x="1037" y="824" width="52" height="2"/>`;
+    s += `<path fill="none" stroke="${P.pyl}" stroke-width="1" d="M1032 848 H1094 M1032 856 H1094 M1034 844 V862 M1092 844 V862"/>`;
+    // деревья и фонарные столбы
+    G.trees.forEach(t => { s += `<rect fill="${P.tree}" x="${f1(t.x - 1.2)}" y="${f1(866 - t.r)}" width="2.4" height="${f1(t.r + 2)}"/><circle fill="${P.tree}" cx="${f1(t.x)}" cy="${f1(858 - t.r)}" r="${f1(t.r)}"/><circle fill="${P.tree}" cx="${f1(t.x - t.r * .5)}" cy="${f1(862 - t.r * .7)}" r="${f1(t.r * .7)}"/><circle fill="${P.tree}" cx="${f1(t.x + t.r * .5)}" cy="${f1(862 - t.r * .7)}" r="${f1(t.r * .7)}"/>`; });
+    G.lamps.forEach(lx => { s += `<rect fill="${P.pyl}" x="${lx - 1}" y="852" width="2" height="26"/><rect fill="${P.pyl}" x="${lx - 5}" y="850" width="10" height="3"/>`; });
     s += `<path fill="${P.ground}" d="${GROUND}"/><path fill="none" stroke="${P.road}" stroke-width="1.5" stroke-dasharray="14 12" d="M0 890 H1600"/>`;
     return s;
   }
-  function farLayer(P) { return `<path fill="${P.far}" d="${ridgePath(FAR)}"/>` + capPaths(FAR, 560, P.capFar) + TURB.filter(t => t.d === 'far').map(t => tower(t, P.turb)).join(''); }
+  function hazeLayer(P) { return `<path fill="${P.haze}" d="${ridgePath(HAZE)}"/>`; }
+  // телебашня Кок-Тобе на дальнем хребте
+  function tvTower(P) { const x = 1500, y = yAt(FAR, 1500) + 2, h = 118; return `<g fill="none" stroke="${P.turb}" stroke-width="1.6" stroke-linejoin="round"><path d="M${x - 9} ${y} L${x - 2.2} ${y - h} L${x + 2.2} ${y - h} L${x + 9} ${y} M${x - 7} ${y - h * .22} L${x + 7} ${y - h * .22} M${x - 5.2} ${y - h * .45} L${x + 5.2} ${y - h * .45} M${x - 3.6} ${y - h * .68} L${x + 3.6} ${y - h * .68} M${x - 7} ${y - h * .22} L${x + 5.2} ${y - h * .45} M${x + 7} ${y - h * .22} L${x - 5.2} ${y - h * .45} M${x - 5.2} ${y - h * .45} L${x + 3.6} ${y - h * .68} M${x + 5.2} ${y - h * .45} L${x - 3.6} ${y - h * .68}"/><rect fill="${P.turb}" stroke="none" x="${x - 6}" y="${y - h * .82}" width="12" height="9"/><rect fill="${P.turb}" stroke="none" x="${x - 1.2}" y="${y - h - 18}" width="2.4" height="18"/></g>`; }
+  function farLayer(P) { return `<path fill="${P.far}" d="${ridgePath(FAR)}"/>` + capPaths(FAR, 560, P.capFar) + tvTower(P) + TURB.filter(t => t.d === 'far').map(t => tower(t, P.turb)).join(''); }
   function midLayer(P) { return `<path fill="${P.mid}" d="${ridgePath(MID)}"/>` + capPaths(MID, 700, P.capMid) + TURB.filter(t => t.d === 'mid').map(t => tower(t, P.turb)).join(''); }
   const LIT_BANDS = [[0, 1110, .02], [1110, 1360, .1], [1360, 1600, .18]];
   function litBand(x0, x1) {
     let s = '';
     [...G.back, ...G.front].forEach(b => b.wins.forEach(([x, y]) => { if (x >= x0 && x < x1) s += `<rect fill="#ffcf6b" x="${x}" y="${f1(y)}" width="5" height="7"/>`; }));
-    G.lamps.forEach(lx => { if (lx >= x0 && lx < x1) s += `<circle fill="#ffcf6b" cx="${lx}" cy="878" r="2.2"/>`; });
+    G.lamps.forEach(lx => { if (lx >= x0 && lx < x1) s += `<circle fill="#ffcf6b" cx="${lx}" cy="855" r="2.4"/><ellipse fill="#ffcf6b" opacity=".16" cx="${lx}" cy="872" rx="14" ry="7"/>`; });
     return s;
   }
   const CROPS = w => w < 600 ? [1020, 0, 560, 900] : w < 1024 ? [800, 0, 800, 900] : [120, 60, 1480, 840];
@@ -110,7 +129,18 @@
     const glowSvg = `<defs><radialGradient id="g"><stop offset="0" stop-color="#ffb000" stop-opacity=".85"/><stop offset=".45" stop-color="#ffb000" stop-opacity=".28"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient></defs>` + [[1135, 800], [1285, 815], [1440, 825]].map(([x, y]) => `<circle fill="url(#g)" cx="${x}" cy="${y}" r="90"/>`).join('');
     const keepSvg = G.keepWins.map(([x, y]) => `<rect fill="#ffb000" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join('') + Array.from({ length: 4 }, (_, r) => `<rect fill="#ffb000" x="1240" y="${786 + r * 15}" width="90" height="4"/>`).join('') + `<rect fill="#ff5a5a" x="1129" y="731" width="12" height="10"/><rect fill="#ff5a5a" x="1131" y="729" width="8" height="14"/>`;
     const tag = (x, y, t1, t2, w) => `<div class="tag" style="left:${x}px;top:${y}px;width:${w}px"><b>${t1}</b><span>${t2}</span></div>`;
-    stage.innerHTML = `<div class="cam"><div class="cam2">
+    // гроза: два яруса туч, дождь из плитки, молния в подстанцию, вспышка, искры
+    const band = (base, amp, c, seedK) => { let d = `<rect fill="${c}" x="-40" y="-40" width="2080" height="${base + 40}"/>`; let x = -40; while (x < 2060) { const r = amp * (.55 + rnd() * .9); d += `<circle fill="${c}" cx="${x.toFixed(0)}" cy="${(base - r * .35 + rnd() * amp * .3).toFixed(0)}" r="${r.toFixed(0)}"/>`; x += r * .9; } return d; };
+    const stormBack = svgDoc([0, 0, 2000, 320], band(150, 70, '#232d3a'));
+    const stormFront = svgDoc([0, 0, 2000, 320], band(205, 58, '#151b23'));
+    const rainTile = (w, h, x1, x2, op, sw) => 'data:image/svg+xml,' + encodeURIComponent(svgDoc([0, 0, w, h], `<path stroke="rgba(230,240,255,${op})" stroke-width="${sw}" stroke-linecap="round" d="M${x1} 2 L${x2} ${h * .48}"/>`));
+    const bolt = `<svg class="bolt" viewBox="1000 -60 200 900" style="left:1000px;top:-60px;width:200px;height:900px"><defs><filter id="bg" x="-50%" y="-5%" width="200%" height="110%"><feGaussianBlur stdDeviation="6"/></filter></defs><path filter="url(#bg)" fill="none" stroke="#9fd0ff" stroke-width="9" stroke-linejoin="round" d="M1132 -50 L1096 180 L1120 262 L1068 470 L1094 562 L1056 742 L1063 824"/><path fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" d="M1132 -50 L1096 180 L1120 262 L1068 470 L1094 562 L1056 742 L1063 824"/><path fill="none" stroke="#dbeeff" stroke-width="1.6" stroke-linejoin="round" d="M1120 262 L1142 330 L1126 372 M1094 562 L1118 640"/></svg>`;
+    const burst = `<svg class="burst" viewBox="0 0 120 120" style="left:1003px;top:764px;width:120px;height:120px"><g stroke="#fff3c4" stroke-width="2.4" stroke-linecap="round">${Array.from({ length: 12 }, (_, i) => { const a = i / 12 * Math.PI * 2, r1 = 12 + rnd() * 8, r2 = 34 + rnd() * 22; return `<path d="M${(60 + Math.cos(a) * r1).toFixed(1)} ${(60 + Math.sin(a) * r1).toFixed(1)} L${(60 + Math.cos(a) * r2).toFixed(1)} ${(60 + Math.sin(a) * r2).toFixed(1)}"/>`; }).join('')}</g><circle fill="#fff" cx="60" cy="60" r="9"/></svg>`;
+    // мерцающие окна (три группы) и серверные индикаторы ЦОД
+    const flickWins = [...G.back, ...G.front].flatMap(b => b.wins).filter(([x]) => x > 870); const flick = (small ? [0, 1] : [0, 1, 2]).map(k => layer('fl op fl' + k, [860, 640, 740, 230], flickWins.filter((_, i) => i % 11 === k * 3 + 1).map(([x, y]) => `<rect fill="#ffe29a" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join(''))).join('');
+    const leds = [0, 1, 2].map(k => layer('led op led' + k, [1236, 782, 100, 62], Array.from({ length: 4 }, (_, r) => Array.from({ length: 5 }, (_, c) => ((r * 5 + c + k) % 3 === 0) ? `<rect fill="${c % 2 ? '#7cf5a1' : '#8fd0ff'}" x="${1244 + c * 16 - 1236}" y="${786 + r * 15 - 782 + 1}" width="3" height="2"/>` : '').join('')).join(''))).join('');
+    const beacon = `<i class="beacon" style="left:1497.6px;top:${f1(yAt(FAR, 1500) + 2 - 118 - 20)}px"></i>`;
+    stage.innerHTML = `<div class="cam"><div class="cam2"><div class="cam3">
       <div class="g g-sky">
         <div class="sky-n op"></div><div class="dusk op"></div>
         <div class="stars op">${layer('', [0, 0, 1600, 440], stA + stB)}</div>
@@ -118,24 +148,30 @@
         <div class="clouds op">${clouds}</div>
         <div class="birds op">${birds}</div>
         <div class="gusts">${gusts}</div>
+        <i class="shoot op"></i>
+        <div class="storm op">${small ? '' : `<div class="st-back"><img alt="" src="data:image/svg+xml,${encodeURIComponent(stormBack)}"></div>`}<div class="st-front"><img alt="" src="data:image/svg+xml,${encodeURIComponent(stormFront)}"></div></div>
       </div>
-      <div class="g g-far">${layer('dy', [0, 400, 1600, 500], farLayer(PAL.day))}${layer('nt', [0, 400, 1600, 500], farLayer(PAL.night))}${rotors('far')}</div>
-      <div class="g g-mid">${layer('dy', [0, 600, 1600, 300], midLayer(PAL.day))}${layer('nt', [0, 600, 1600, 300], midLayer(PAL.night))}${rotors('mid')}${flakes}</div>
+      <div class="g g-far">${layer('dy', [0, 360, 1600, 540], hazeLayer(PAL.day))}${layer('nt', [0, 360, 1600, 540], hazeLayer(PAL.night))}<div class="haze op"></div>${layer('dy', [0, 300, 1600, 600], farLayer(PAL.day))}${layer('nt', [0, 300, 1600, 600], farLayer(PAL.night))}${beacon}${rotors('far')}</div>
+      <div class="g g-mid">${layer('dy', [0, 430, 1600, 470], midLayer(PAL.day))}${layer('nt', [0, 430, 1600, 470], midLayer(PAL.night))}${rotors('mid')}${flakes}</div>
       <div class="g g-near">
         ${layer('dy', [0, 640, 1600, 260], nearLayer(PAL.day))}${layer('nt', [0, 640, 1600, 260], nearLayer(PAL.night))}
-        ${mobile ? '' : layer('live op', [0, 680, 1000, 180], `<g fill="none" stroke="#4da3ff" stroke-width="1.8">${G.wires.map(d => `<path d="${d}"/>`).join('')}</g>`)}
+        ${mobile ? '' : layer('live op', [0, 640, 1100, 230], `<g fill="none" stroke="#4da3ff" stroke-width="1.8">${G.wires.map(d => `<path d="${d}"/>`).join('')}</g>`)}
         <div class="sparks op">${sparks}</div>
         ${layer('glow op', [1030, 700, 520, 220], glowSvg)}
         ${LIT_BANDS.map(([a, b], i) => layer('lit op lit' + i, [a, 640, b - a, 250], litBand(a, b))).join('')}
         ${layer('keep op', [1080, 720, 410, 145], keepSvg)}
+        <div class="flicks op">${flick}</div><div class="leds op">${leds}</div>
         <div class="genon op"><i class="led"></i><i class="puff"></i><i class="puff" style="animation-delay:.6s"></i><i class="puff" style="animation-delay:1.2s"></i></div>
         <div class="gflow op"><i></i></div>
         <div class="cars op">${cars}</div>
         <div class="grasses op">${grass}</div>
         <div class="rings op"><i style="left:1126px;top:719px"></i><i style="left:1276px;top:763px"></i><i style="left:1453px;top:733px"></i></div>
         <div class="tags op">${tag(1084, 660, 'Клиника', 'ИБП 80 кВА, N+1', 140)}${tag(1228, 708, 'ЦОД', 'ИБП 300 кВА, N+1', 146)}${tag(1384, 660, 'Производство', 'ДГУ 1 МВА + АВР', 140)}</div>
+        ${bolt}${burst}
       </div>
-    </div></div>`;
+      <div class="rain op" style="left:${CROPS(innerWidth)[0] - 80}px;width:${CROPS(innerWidth)[2] + 160}px"><div class="r1" style="background-image:url('${rainTile(44, 120, 28, 17, .26, 1)}')"></div>${small ? '' : `<div class="r2" style="background-image:url('${rainTile(72, 190, 50, 30, .14, .9)}')"></div>`}</div>
+      <div class="vig op"></div><div class="flash op"></div>
+    </div></div></div>`;
   }
   buildScene();
   // кадр сцены: имитация viewBox + slice через transform сцены
@@ -149,25 +185,33 @@
   let lastW = innerWidth; addEventListener('resize', () => { layoutStage(); if ((lastW < 1024) !== (innerWidth < 1024)) { lastW = innerWidth; buildScene(); applyScene(true); } });
 
   // Состояние сценария и его применение: только opacity и transform
-  const S = { n: 0, city: 0, keep: 0, grid: 1, glow: 0, gen: 0, lbl: 0, flow: 0, sun: 0, moon: 420 };
+  const S = { n: 0, city: 0, keep: 0, grid: 1, glow: 0, gen: 0, lbl: 0, flow: 0, sun: 0, moon: 420, storm: 0, rain: 0, bolt: 0, flash: 0, vg: 400, src: 0 };
   const lastOp = new WeakMap();
   const setOp = (el, v) => { if (!el) return; v = Math.round(Math.max(0, Math.min(1, v)) * 1000) / 1000; if (lastOp.get(el) === v) return; lastOp.set(el, v); el.style.opacity = v; const off = v <= .001 && !el.classList.contains('lyr'); if (el._off !== off) { el._off = off; el.style.visibility = off ? 'hidden' : ''; el.classList.toggle('zz', off); } };
   const clamp01 = v => Math.max(0, Math.min(1, v));
   let E = null;
-  const cacheEls = () => { const g = s => $('#stage ' + s); E = { nt: $$('#stage .nt'), dy: $$('#stage .dy'), skyN: g('.sky-n'), dusk: g('.dusk'), stars: g('.stars'), moon: g('.moon'), sun: g('.sun'), clouds: g('.clouds'), birds: g('.birds'), grass: g('.grasses'), cars: g('.cars'), live: g('.live'), sparks: g('.sparks'), lit: LIT_BANDS.map((_, i) => g('.lit' + i)), keep: g('.keep'), glow: g('.glow'), rings: g('.rings'), tags: g('.tags'), gen: g('.genon'), flow: g('.gflow'), sd: $('#hero .scrim-d'), sn: $('#hero .scrim-n') }; };
-  let lastSun = null, lastMoon = null;
+  const cacheEls = () => { const g = s => $('#stage ' + s); E = { nt: $$('#stage .nt'), dy: $$('#stage .dy'), skyN: g('.sky-n'), dusk: g('.dusk'), stars: g('.stars'), moon: g('.moon'), sun: g('.sun'), clouds: g('.clouds'), birds: g('.birds'), grass: g('.grasses'), cars: g('.cars'), live: g('.live'), sparks: g('.sparks'), lit: LIT_BANDS.map((_, i) => g('.lit' + i)), keep: g('.keep'), glow: g('.glow'), rings: g('.rings'), tags: g('.tags'), gen: g('.genon'), flow: g('.gflow'), sd: $('#hero .scrim-d'), sn: $('#hero .scrim-n'), sb: $('#hero .scrim-b'), storm: g('.storm'), rain: g('.rain'), bolt: g('.bolt'), burst: g('.burst'), flash: g('.flash'), vig: g('.vig'), haze: g('.haze'), beacon: g('.beacon'), shoot: g('.shoot'), flicks: g('.flicks'), leds: g('.leds') }; };
+  let lastSun = null, lastMoon = null, lastStorm = null;
   function applyScene(force) {
     if (!E || force) { cacheEls(); lastSun = lastMoon = null; }
     const n = S.n;
     E.nt.forEach(e => setOp(e, n)); E.dy.forEach(e => setOp(e, n >= .999 ? 0 : 1));
     setOp(E.skyN, n); setOp(E.dusk, Math.sin(Math.PI * Math.min(1, n)) * .55); setOp(E.stars, n); setOp(E.moon, n); setOp(E.sun, 1 - n);
-    setOp(E.clouds, 1 - n); setOp(E.birds, 1 - n * 1.6); setOp(E.grass, 1 - n); setOp(E.cars, n); setOp(E.sd, 1 - n); setOp(E.sn, n);
+    setOp(E.clouds, 1 - n); setOp(E.birds, 1 - n * 1.6); setOp(E.grass, 1 - n); setOp(E.cars, n); setOp(E.sd, 1 - n); setOp(E.sn, n); setOp(E.sb, n);
     setOp(E.live, S.grid * n); setOp(E.sparks, S.grid * n);
     LIT_BANDS.forEach((b, i) => setOp(E.lit[i], clamp01((S.city - b[2]) * 5)));
     setOp(E.keep, S.keep); setOp(E.glow, S.glow * .75); setOp(E.rings, S.glow); setOp(E.tags, S.lbl); setOp(E.gen, S.gen); setOp(E.flow, S.flow);
     const su = Math.round(S.sun), mo = Math.round(S.moon);
     if (su !== lastSun) { lastSun = su; E.sun.style.transform = `translate3d(0, ${su}px, 0)`; }
     if (mo !== lastMoon) { lastMoon = mo; E.moon.style.transform = `translate3d(0, ${mo}px, 0)`; }
+    const hudG = E.hudG || (E.hudG = $('#hudGrid')), hudS = E.hudS || (E.hudS = $('#hudSrc'));
+    if (hudG) { const vg = Math.round(S.vg); if (hudG._v !== vg) { hudG._v = vg; hudG.textContent = vg + ' В'; hudG.classList.toggle('off', vg < 100); } }
+    if (hudS) { const src = S.src | 0; if (hudS._v !== src) { hudS._v = src; hudS.textContent = ['от сети', 'от батарей ИБП', 'от дизель-генератора'][src]; hudS.classList.toggle('amber', src > 0); } }
+    setOp(E.storm, S.storm); setOp(E.rain, S.rain * .62); setOp(E.bolt, S.bolt); setOp(E.burst, S.bolt); setOp(E.flash, S.flash);
+    setOp(E.vig, n * .6); setOp(E.haze, Math.sin(Math.PI * Math.min(1, n)) * .5); setOp(E.beacon, n); setOp(E.shoot, n > .95 && S.storm < .2 ? 1 : 0);
+    setOp(E.flicks, n > .5 ? clamp01((S.city - .15) * 4) : 0); setOp(E.leds, S.glow);
+    const sto = Math.round((1 - S.storm) * -760);
+    if (sto !== lastStorm) { lastStorm = sto; E.storm.style.transform = `translate3d(${sto}px, 0, 0)`; }
   }
   applyScene();
 
@@ -275,8 +319,8 @@
     $$('[data-dark]').forEach((sec, i) => ScrollTrigger.create({ trigger: sec, start: () => 'top ' + hdr(), end: () => 'bottom ' + hdr(), onToggle: self => { self.isActive ? darkOn.add('s' + i) : darkOn.delete('s' + i); syncHeader(); } }));
 
     /* ---------- Камера сцены: приближение вокруг защищённых объектов ---------- */
-    const camIntro = { s: 1 }, camStory = { s: 1 };
-    const renderCam = () => { const c1 = $('#stage .cam'), c2 = $('#stage .cam2'); if (c1) c1.style.transform = camIntro.s === 1 ? '' : `scale(${camIntro.s.toFixed(4)})`; if (c2) c2.style.transform = camStory.s === 1 ? '' : `scale(${camStory.s.toFixed(4)})`; };
+    const camIntro = { s: 1 }, camStory = { s: 1 }, camShake = { x: 0, y: 0 };
+    const renderCam = () => { const c1 = $('#stage .cam'), c2 = $('#stage .cam2'); if (c1) c1.style.transform = camIntro.s === 1 ? '' : `scale(${camIntro.s.toFixed(4)})`; if (c2) c2.style.transform = (camStory.s === 1 && !camShake.x && !camShake.y) ? '' : `translate3d(${camShake.x.toFixed(1)}px, ${camShake.y.toFixed(1)}px, 0) scale(${camStory.s.toFixed(4)})`; };
 
     /* ---------- Пауза анимаций сцены, когда первый экран не виден ---------- */
     const heroEl = $('#hero');
@@ -326,7 +370,7 @@
     /* ---------- Сценарий аварии ---------- */
     const mm = gsap.matchMedia();
     mm.add({ motion: '(prefers-reduced-motion: no-preference)', reduce: '(prefers-reduced-motion: reduce)' }, ctx => {
-      if (ctx.conditions.reduce) { gsap.set('#cue, #caps, #stepsUi', { display: 'none' }); return; }
+      if (ctx.conditions.reduce) { gsap.set('#cue, #caps, #stepsUi, #hud', { display: 'none' }); return; }
       const hero = $('#hero'), capsEl = $$('#caps .cap'), steps = $$('#stepsUi li');
       const at = [1.3, 3.0, 4.6, 6.2, 7.9, 10];
       const tl = gsap.timeline({
@@ -352,8 +396,23 @@
         tl.fromTo(c, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: .6, ease: 'power3.out' }, at[i]);
         if (i < 4) tl.to(c, { autoAlpha: 0, y: -40, duration: .5, ease: 'power2.in' }, at[i + 1] - .55);
       });
-      tl.to(S, { grid: 0, duration: .35, onUpdate: applyScene }, 2.9)
-        .to(S, { city: 0, duration: 1.1, ease: 'power1.in', onUpdate: applyScene }, 3.0)
+      // гроза приходит, начинается дождь
+      tl.to(S, { storm: 1, duration: 1.3, ease: 'power1.inOut', onUpdate: applyScene }, 1.5)
+        .to(S, { rain: 1, duration: .7, onUpdate: applyScene }, 2.2)
+        // молния бьёт в подстанцию: вспышка, тряска камеры, город мигает и гаснет
+        .to(S, { bolt: 1, duration: .03, onUpdate: applyScene }, 2.84).to(S, { bolt: 0, duration: .22, ease: 'power2.in', onUpdate: applyScene }, 2.9)
+        .to(S, { flash: 1, duration: .04, onUpdate: applyScene }, 2.84).to(S, { flash: 0, duration: .16, onUpdate: applyScene }, 2.88)
+        .to(S, { flash: .5, duration: .03, onUpdate: applyScene }, 3.04).to(S, { flash: 0, duration: .1, onUpdate: applyScene }, 3.07)
+        .fromTo(camShake, { x: 0, y: 0 }, { x: -7, y: 5, duration: .04, onUpdate: renderCam, immediateRender: false }, 2.85).to(camShake, { x: 6, y: -4, duration: .05, onUpdate: renderCam }, 2.89).to(camShake, { x: -3, y: 2, duration: .05, onUpdate: renderCam }, 2.94).to(camShake, { x: 0, y: 0, duration: .08, onUpdate: renderCam }, 2.99)
+        .to(S, { city: .3, duration: .05, onUpdate: applyScene }, 2.86).to(S, { city: 1.1, duration: .06, onUpdate: applyScene }, 2.91).to(S, { city: .2, duration: .05, onUpdate: applyScene }, 2.97).to(S, { city: .9, duration: .06, onUpdate: applyScene }, 3.02)
+        .to(S, { vg: 212, duration: .04, onUpdate: applyScene }, 2.86).to(S, { vg: 388, duration: .05, onUpdate: applyScene }, 2.9).to(S, { vg: 0, duration: .1, onUpdate: applyScene }, 3.02)
+        .to(S, { grid: 0, duration: .25, onUpdate: applyScene }, 2.95)
+        .to(S, { city: 0, duration: .3, ease: 'power3.in', onUpdate: applyScene }, 3.08)
+        .to(S, { src: 1, duration: .01, onUpdate: applyScene }, 3.0).to(S, { src: 2, duration: .01, onUpdate: applyScene }, 6.3).to(S, { src: 0, duration: .01, onUpdate: applyScene }, 7.9)
+        .to(S, { vg: 400, duration: .3, onUpdate: applyScene }, 7.8)
+        .to(S, { rain: 0, duration: .7, onUpdate: applyScene }, 7.9)
+        .to(S, { storm: 0, duration: 1.5, ease: 'power1.inOut', onUpdate: applyScene }, 8.0)
+        .fromTo('#hud', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1)
         .to(camStory, { s: () => innerWidth < 600 ? 1 : 1.1, duration: 2.4, ease: 'power1.inOut', onUpdate: renderCam }, 4.0)
         .to(S, { glow: 1, duration: .6, onUpdate: applyScene }, 4.5)
         .to(S, { lbl: 1, duration: .5, onUpdate: applyScene }, 4.8)
@@ -365,7 +424,10 @@
         .to(S, { glow: .25, lbl: 0, duration: .6, onUpdate: applyScene }, 8.6)
         .to(camStory, { s: 1, duration: 1.4, ease: 'power1.inOut', onUpdate: renderCam }, 8.4)
         .to({}, { duration: .3 }, 9.7);
-      window.__aec = Object.assign(window.__aec || {}, { heroST: tl.scrollTrigger, lenis });
+      // после refresh GSAP возвращает значения S без onUpdate: переносим их в сцену вручную
+      ScrollTrigger.addEventListener('refresh', () => { applyScene(); renderCam(); });
+      applyScene(); renderCam();
+      window.__aec = Object.assign(window.__aec || {}, { heroST: tl.scrollTrigger, lenis, S, tl });
       $('#cue').addEventListener('click', () => { const st = tl.scrollTrigger; scrollTo(st.start + (st.end - st.start) * .2); });
       return () => { darkOn.delete('hero'); syncHeader(); };
     });

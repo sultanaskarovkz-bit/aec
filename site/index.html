@@ -120,6 +120,7 @@ html.intro body { overflow: hidden; }
 .hero .scrim { position: absolute; left: 0; right: 0; top: 0; height: 66%; z-index: 1; pointer-events: none; display: none; }
 .hero .scrim-d { background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, .82) 50%, rgba(255, 255, 255, 0) 100%); }
 .hero .scrim-n { background: linear-gradient(180deg, #0b0d10 0%, rgba(11, 13, 16, .82) 50%, rgba(11, 13, 16, 0) 100%); opacity: 0; will-change: opacity; }
+.hero .scrim-b { top: auto; bottom: 0; height: 26%; background: linear-gradient(0deg, rgba(11, 13, 16, .92) 0%, rgba(11, 13, 16, .6) 45%, rgba(11, 13, 16, 0) 100%); opacity: 0; will-change: opacity; }
 @media (max-width: 1023px) { .hero .scrim { display: block; } }
 .hero.paused .stage *, .stage .zz, .stage .zz * { animation-play-state: paused !important; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -136,6 +137,45 @@ html.intro body { overflow: hidden; }
 @keyframes puff { 0% { opacity: .7; transform: translate3d(0, 0, 0) scale(.6); } 100% { opacity: 0; transform: translate3d(26px, -60px, 0) scale(2.2); } }
 @keyframes gfl { to { transform: translate3d(-18px, 0, 0); } }
 @keyframes ring { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+.stage .haze { position: absolute; left: 0; top: 360px; width: 1600px; height: 540px; background: linear-gradient(180deg, rgba(255, 150, 80, .28) 0%, rgba(255, 120, 60, .1) 40%, rgba(255, 120, 60, 0) 100%); opacity: 0; }
+.stage .beacon { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #ff3b3b; box-shadow: 0 0 6px #ff3b3b; opacity: 0; animation: blink 1.4s steps(2, end) infinite; }
+.stage .shoot { position: absolute; left: 1300px; top: 60px; width: 110px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff); opacity: 0; transform: rotate(28deg); animation: shoot 11s ease-in infinite; animation-delay: 3s; }
+.stage .storm { position: absolute; left: -200px; top: -40px; width: 2000px; height: 320px; opacity: 0; transform: translate3d(-760px, 0, 0); }
+.stage .st-back, .stage .st-front { position: absolute; inset: 0; }
+.stage .st-back { animation: stormDrift 70s linear infinite; }
+.stage .st-front { animation: stormDrift 46s linear infinite reverse; opacity: .96; }
+.stage .st-back img, .stage .st-front img { display: block; width: 100%; height: 100%; max-width: none; }
+.stage .rain { position: absolute; inset: 0; opacity: 0; overflow: hidden; pointer-events: none; }
+.stage .rain .r1, .stage .rain .r2 { position: absolute; left: 0; top: -440px; width: calc(100% + 110px); height: calc(100% + 440px); background-repeat: repeat; will-change: transform; }
+.stage .rain .r1 { animation: rain1 .55s linear infinite; }
+.stage .rain .r2 { animation: rain2 .9s linear infinite; }
+.stage .vig { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 62% 58%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, .5) 100%); opacity: 0; pointer-events: none; }
+.stage .flash { position: absolute; inset: -400px; background: #dceeff; opacity: 0; pointer-events: none; }
+.stage .bolt, .stage .burst { position: absolute; opacity: 0; overflow: visible; }
+.stage .flicks, .stage .leds { position: absolute; inset: 0; }
+.stage .fl0 { animation: wink 4.1s steps(1, end) infinite; }
+.stage .fl1 { animation: wink 6.3s steps(1, end) infinite; animation-delay: -2.2s; }
+.stage .fl2 { animation: wink 5.2s steps(1, end) infinite; animation-delay: -4s; }
+.stage .led0 { animation: blink .9s steps(2, end) infinite; }
+.stage .led1 { animation: blink 1.3s steps(2, end) infinite; animation-delay: -.4s; }
+.stage .led2 { animation: blink .7s steps(2, end) infinite; animation-delay: -.2s; }
+.stage .cam3 { position: absolute; inset: 0; }
+@keyframes blink { 50% { opacity: .15; } }
+@keyframes wink { 0%, 62% { opacity: 1; } 63%, 70% { opacity: .1; } 71%, 100% { opacity: 1; } }
+@keyframes shoot { 0%, 88% { opacity: 0; transform: translate3d(0, 0, 0) rotate(28deg); } 90% { opacity: 1; } 100% { opacity: 0; transform: translate3d(-520px, 280px, 0) rotate(28deg); } }
+@keyframes stormDrift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-140px, 0, 0); } }
+@keyframes rain1 { to { transform: translate3d(-104px, 288px, 0); } }
+@keyframes rain2 { to { transform: translate3d(-80px, 440px, 0); } }
+@keyframes breathe { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(-10px, 4px, 0) scale(1.018); } }
+/* панель напряжения */
+.hud { position: absolute; left: var(--gutter); bottom: calc(clamp(18px, 3.5vh, 36px) + 52px); display: flex; gap: 28px; visibility: hidden; color: #fff; font-family: var(--font-body); }
+.hud > div { padding-left: 12px; border-left: 2px solid rgba(255, 255, 255, .25); }
+.hud small { display: block; font-size: 12px; color: rgba(255, 255, 255, .55); letter-spacing: .02em; }
+.hud b { display: block; margin-top: 2px; font-family: var(--font-cond); font-weight: 700; font-size: 30px; line-height: 1; letter-spacing: -.01em; font-variant-numeric: tabular-nums; transition: color .2s; }
+.hud b.off { color: #ff6b6b; }
+.hud em { display: block; margin-top: 3px; font-style: normal; font-size: 12.5px; color: rgba(255, 255, 255, .7); }
+.hud em.amber { color: var(--lamp-2); }
+.cap b.amber { text-shadow: 0 0 28px rgba(255, 176, 0, .35); }
 /* тексты первого экрана */
 .hero-ui { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .hero-ui .wrap { position: relative; height: 100%; }
@@ -169,6 +209,11 @@ html.intro body { overflow: hidden; }
   .intro .links .btn-lg { min-height: 48px; padding: 0 18px; font-size: 15px; }
   .caps { width: auto; right: var(--gutter); top: 56px; }
   .steps-ui { top: 16px; bottom: auto; max-width: none; }
+  .hud { bottom: clamp(16px, 3vh, 30px); gap: 14px; }
+  .hud > div { padding-left: 9px; }
+  .hud b { font-size: 22px; }
+  .hud small { font-size: 10.5px; }
+  .hud em { font-size: 11px; }
   .cap b { font-size: clamp(42px, 12.4vw, 84px); }
   .cap p { font-size: 15px; margin-top: 12px; }
   .cue { font-size: 13px; }
@@ -427,6 +472,7 @@ html.anim .intro h1, html.anim .intro p, html.anim .intro .links, html.anim .cue
 html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .links, html.anim.ready .cue { visibility: visible; }
 @media (prefers-reduced-motion: reduce) {
   .stage *, .cue i::after, .marq-track { animation: none !important; }
+  .stage .rain, .stage .storm, .stage .shoot { display: none; }
   .stage .flake, .stage .gust, .stage .spark, .stage .car { display: none; }
 }
 </style>
@@ -457,7 +503,7 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
 <main>
 <!-- 1. Первый экран и сценарий аварии -->
 <section class="hero" id="hero" aria-label="Системы гарантированного электропитания">
-  <div class="stage-wrap" aria-hidden="true"><div class="stage" id="stage"></div></div><div class="scrim scrim-d"></div><div class="scrim scrim-n"></div>
+  <div class="stage-wrap" aria-hidden="true"><div class="stage" id="stage"></div></div><div class="scrim scrim-d"></div><div class="scrim scrim-n"></div><div class="scrim scrim-b"></div>
   <div class="hero-ui">
     <div class="wrap">
       <div class="intro" id="intro">
@@ -473,6 +519,7 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
         <div class="cap"><b>Сеть восстановлена</b><p>Система автоматически возвращается к питанию от сети. Без перезагрузок, потери данных и остановки процессов.</p><a class="btn btn-kp btn-lg" href="kp.html">Подобрать систему для объекта</a></div>
       </div>
       <button class="cue" id="cue" type="button"><i></i><span>Прокрутите: что происходит при аварии в сети</span></button>
+      <div class="hud" id="hud" aria-hidden="true"><div><small>Городская сеть</small><b id="hudGrid">400 В</b></div><div><small>Объект</small><b>400 В</b><em id="hudSrc">от сети</em></div></div>
       <ol class="steps-ui" id="stepsUi" aria-hidden="true"><li><i></i>Норма</li><li><i></i>Авария</li><li><i></i>ИБП</li><li><i></i>Генератор</li><li><i></i>Сеть</li></ol>
     </div>
   </div>
