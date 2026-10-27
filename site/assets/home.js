@@ -182,7 +182,10 @@
     st.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${s.toFixed(5)})`;
   }
   layoutStage();
-  let lastW = innerWidth; addEventListener('resize', () => { layoutStage(); if ((lastW < 1024) !== (innerWidth < 1024)) { lastW = innerWidth; buildScene(); applyScene(true); } });
+  // при закреплённом первом экране ширина обновляется после refresh ScrollTrigger, поэтому раскладка повторяется с задержкой и на refresh
+  let lastW = innerWidth, relayoutT = 0;
+  addEventListener('resize', () => { layoutStage(); clearTimeout(relayoutT); relayoutT = setTimeout(layoutStage, 400); if ((lastW < 1024) !== (innerWidth < 1024)) { lastW = innerWidth; buildScene(); applyScene(true); } });
+  addEventListener('load', layoutStage);
 
   // Состояние сценария и его применение: только opacity и transform
   const S = { n: 0, city: 0, keep: 0, grid: 1, glow: 0, gen: 0, lbl: 0, flow: 0, sun: 0, moon: 420, storm: 0, rain: 0, bolt: 0, flash: 0, vg: 400, src: 0 };
@@ -425,7 +428,7 @@
         .to(camStory, { s: 1, duration: 1.4, ease: 'power1.inOut', onUpdate: renderCam }, 8.4)
         .to({}, { duration: .3 }, 9.7);
       // после refresh GSAP возвращает значения S без onUpdate: переносим их в сцену вручную
-      ScrollTrigger.addEventListener('refresh', () => { applyScene(); renderCam(); });
+      ScrollTrigger.addEventListener('refresh', () => { layoutStage(); applyScene(); renderCam(); });
       applyScene(); renderCam();
       window.__aec = Object.assign(window.__aec || {}, { heroST: tl.scrollTrigger, lenis, S, tl });
       $('#cue').addEventListener('click', () => { const st = tl.scrollTrigger; scrollTo(st.start + (st.end - st.start) * .2); });
