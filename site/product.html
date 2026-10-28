@@ -138,7 +138,7 @@
   };
 
   /* ---------- SVG: схема подключения и габаритный чертёж ---------- */
-  const NV = '#0a2540', BL = '#0066cc', AM = '#4da3ff', LN = '#cbd5e1';
+  const NV = '#0a2540', BL = '#0066cc', AM = '#0a2540', LN = '#cbd5e1';
   function node(x, y, w, h, label, sub, fill) { return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${fill || '#fff'}" stroke="${NV}" stroke-width="1.8"/><text x="${x + w / 2}" y="${y + h / 2 + (sub ? -2 : 4)}" text-anchor="middle" font-family="Golos Text, Arial" font-size="11" font-weight="600" fill="${fill ? '#fff' : NV}">${label}</text>${sub ? `<text x="${x + w / 2}" y="${y + h / 2 + 12}" text-anchor="middle" font-family="Golos Text, Arial" font-size="9" fill="${fill ? '#c9d7e6' : '#64748b'}">${sub}</text>` : ''}`; }
   function edge(d, col, lbl, lx, ly) { return `<path d="${d}" fill="none" stroke="${col || NV}" stroke-width="2" marker-end="url(#ar)"/>${lbl ? `<text x="${lx}" y="${ly}" text-anchor="middle" font-family="Golos Text, Arial" font-size="9" fill="#64748b">${lbl}</text>` : ''}`; }
   const DEFS = `<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="${NV}"/></marker></defs>`;

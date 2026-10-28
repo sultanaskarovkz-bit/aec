@@ -25,7 +25,7 @@
                         Дальше: лента заказчиков (логотипы цветные), «Как мы работаем» с этапами (синусоида убрана по просьбе клиента), 12 категорий, бегущие слова,
                         горизонтальная лента проектов (десктоп), отрасли, цифры, сервис, новости, отзывы с картой 2ГИС,
                         контакты. prefers-reduced-motion: без сценария и анимаций. Шрифт только IBM Plex Sans (Condensed
-                        убран 28.10.2026), акцент синий --accent (оранжевый убран по просьбе клиента), на тёмной сцене --volt #4da3ff.
+                        убран 28.10.2026), акцент тёмно-синий --accent #0a2540 (оранжевый и голубой убраны по просьбе клиента), на тёмной сцене --volt #4da3ff.
   - catalog.html        каталог с фильтрами по атрибутам, состояние в hash: #ibp.tryohfaznye.kva-20
   - product.html        карточка товара: #slug
   - solution.html       8 отраслевых решений: #czod | med | prom | oil | office | machines | emergency | telecom
@@ -33,7 +33,7 @@
   - projects.html, project.html#id, brands.html, brand.html#id, about.html (#certs, #exhibitions),
     contacts.html, blog.html, article.html#i, faq.html, docs.html, region.html#slug (12 городов),
     calc.html (#ibp.kw18.min30), kp.html, compare.html, favorites.html, search.html, legal.html, thanks.html, 404.html
-  - assets/aec.css      дизайн-система: токены (navy #0a2540, blue #0066cc, акцент --accent #0066cc вместо оранжевого), шрифт IBM Plex Sans,
+  - assets/aec.css      дизайн-система: токены (navy #0a2540, blue #0066cc, акцент --accent тёмно-синий #0a2540 вместо оранжевого), шрифт IBM Plex Sans,
                         шапка с мега-меню во всю ширину, кнопки, карточки, формы, подвал
   - assets/pages.css    стили внутренних страниц
   - assets/aec.js       window.AECUI: header/footer, img() с заглушкой, корзина КП/сравнение/избранное (localStorage),

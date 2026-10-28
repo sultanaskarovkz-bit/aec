@@ -14,7 +14,7 @@
 <style>
 /* =========================================================================
    Главная AEC Kazakhstan
-   Цвета: белый, графит #0b0d10, тёмно-синий из логотипа #0a2540, акцент #0066cc (--accent из aec.css), на тёмной сцене ток #4da3ff
+   Цвета: белый, графит #0b0d10, тёмно-синий из логотипа #0a2540, акцент тёмно-синий #0a2540 (--accent из aec.css), на тёмной сцене ток #4da3ff
    Шрифт: IBM Plex Sans (по просьбе клиента без Condensed)
    ========================================================================= */
 :root { --ink0: #0b0d10; --ink1: #13171c; --ink2: #1b2129; --navy: #0a2540; --volt: #4da3ff; --font-cond: var(--font-display); --hero-h: calc(100svh - var(--header-h) - 36px); } /* 36px: верхняя полоса с контактами */
@@ -138,8 +138,6 @@ body.home .header { transition: background .45s var(--ease), border-color .45s, 
 .intro h1 { font-family: var(--font-cond); font-weight: 600; font-size: clamp(36px, 4.5vw, 70px); line-height: 1.04; letter-spacing: -.028em; color: var(--ink0); }
 .intro p { margin-top: clamp(16px, 2.2vh, 26px); font-size: clamp(16px, 1.2vw, 19px); line-height: 1.55; color: #334155; max-width: 50ch; }
 .intro .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: clamp(20px, 3vh, 34px); }
-.intro .btn-primary { background: var(--ink0); }
-.intro .btn-primary:hover { background: #1f2933; }
 .cue svg { width: 18px; height: 18px; flex: none; }
 .sc-ctl { position: absolute; right: var(--gutter); bottom: clamp(18px, 3.5vh, 36px); display: flex; gap: 8px; visibility: hidden; pointer-events: auto; z-index: 3; }
 .sc-ctl button { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .35); color: #fff; font: 500 13px/1 var(--font-body); cursor: pointer; transition: background .25s, border-color .25s; }
@@ -203,10 +201,10 @@ body.home .header { transition: background .45s var(--ease), border-color .45s, 
 .mf-steps-wrap { position: relative; margin-top: clamp(40px, 5vw, 72px); }
 .mf-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); position: relative; }
 .mf-rail { position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: rgba(11, 13, 16, .12); }
-.mf-rail i { position: absolute; inset: 0; background: var(--accent); box-shadow: 0 0 12px rgba(0, 102, 204, .45); transform-origin: left; transform: scaleX(0); }
+.mf-rail i { position: absolute; inset: 0; background: var(--accent); box-shadow: 0 0 12px rgba(10, 37, 64, .35); transform-origin: left; transform: scaleX(0); }
 .mf-steps li { position: relative; padding-top: 40px; }
 .mf-steps li::before { content: ''; position: absolute; left: 0; top: 0; width: 16px; height: 16px; background: #fff; border: 2px solid rgba(11, 13, 16, .3); transition: background .35s, border-color .35s, box-shadow .35s; }
-.mf-steps li.on::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 16px rgba(0, 102, 204, .5); }
+.mf-steps li.on::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 16px rgba(10, 37, 64, .4); }
 .mf-steps em { display: block; font-style: normal; font-family: var(--font-cond); font-weight: 600; font-size: 15px; color: rgba(11, 13, 16, .4); transition: color .35s; }
 .mf-steps b { display: block; margin-top: 6px; font-family: var(--font-cond); font-weight: 600; font-size: clamp(22px, 2vw, 32px); line-height: 1.05; letter-spacing: -.015em; color: rgba(11, 13, 16, .4); transition: color .35s; }
 .mf-steps span { display: block; margin-top: 12px; font-size: 15px; line-height: 1.5; color: rgba(11, 13, 16, .5); transition: color .35s; max-width: 30ch; }
@@ -439,7 +437,7 @@ html.anim.ready .intro h1, html.anim.ready .intro p, html.anim.ready .intro .lin
       <div class="intro" id="intro">
         <h1 id="heroTitle">Системы гарантированного электропитания</h1>
         <p id="heroText">ИБП, дизельные и газопоршневые электростанции, аккумуляторные батареи и стабилизаторы от 0,7 кВА до 4,8 МВА. Проектируем, поставляем со склада в Алматы, монтируем и обслуживаем по всему Казахстану.</p>
-        <div class="links"><a class="btn btn-primary btn-lg magnetic" href="catalog.html#ibp">Каталог оборудования</a><a class="btn btn-kp btn-lg magnetic" href="kp.html">Запросить КП</a><button class="btn btn-ghost btn-lg magnetic cue" id="cue" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Что происходит при аварии</button></div>
+        <div class="links"><a class="btn btn-ghost btn-lg magnetic" href="catalog.html#ibp">Каталог оборудования</a><a class="btn btn-kp btn-lg magnetic" href="kp.html">Запросить КП</a><button class="btn btn-ghost btn-lg magnetic cue" id="cue" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Что происходит при аварии</button></div>
       </div>
       <div class="caps" id="caps" aria-live="polite">
         <div class="cap"><b>Штатный режим</b><p>Объект питается от городской сети. ИБП работает в режиме двойного преобразования и держит батареи заряженными.</p></div>

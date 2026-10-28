@@ -1,10 +1,10 @@
 /* AEC Kazakhstan — дизайн-система прототипа
-   Палитра клиента: navy #0a2540, blue #0066cc. Акцент синий (по просьбе клиента оранжевый убран).
+   Палитра клиента: navy #0a2540, blue #0066cc. Акцент тёмно-синий из логотипа (по просьбе клиента: не оранжевый и не голубой).
    Layout: 12-колоночная сетка 1280, левое выравнивание, один акцентный момент на страницу. */
 :root {
   --navy: #0a2540; --navy-2: #10355f; --navy-3: #163f6e;
   --blue: #0066cc; --blue-d: #004f9e; --blue-l: #e9f2fc; --blue-l2: #d6e7f8;
-  --accent: #0066cc; --accent-d: #004f9e; --accent-l: #e9f2fc;
+  --accent: #0a2540; --accent-d: #10355f; --accent-l: #e8edf3;
   --ink: #0f1f33; --text: #334155; --muted: #64748b; --faint: #94a3b8;
   --line: #e2e8f0; --line-2: #cbd5e1; --mist: #f8fafc; --mist-2: #f1f5f9; --paper: #ffffff;
   --ok: #15803d; --ok-l: #e7f6ec; --warn: #b45309; --warn-l: #fdf3e3; --err: #b91c1c; --err-l: #fde8e8;
