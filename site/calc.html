@@ -11,7 +11,7 @@
 /* ---- Hero ---- */
 .page-hero .pts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 20px; font-size: 14px; color: #9fb3c8; }
 .page-hero .pts span { display: inline-flex; align-items: center; gap: 7px; }
-.page-hero .pts svg { width: 16px; height: 16px; color: var(--amber); flex: none; }
+.page-hero .pts svg { width: 16px; height: 16px; color: var(--accent); flex: none; }
 
 /* ---- Калькулятор ---- */
 .calc-layout { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(20px, 3vw, 36px); align-items: start; margin-top: 22px; }
@@ -57,14 +57,14 @@
 .bar .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; background: var(--blue-l2); transition: width .45s var(--ease); min-width: 3px; }
 .bar.b2 .fill { background: var(--blue); }
 .bar.b3 .fill { background: var(--navy); }
-.bar.b4 .fill { background: var(--amber); }
+.bar.b4 .fill { background: var(--accent); }
 .bar .val { position: absolute; left: 10px; top: 0; line-height: 28px; font-size: 12px; font-weight: 600; color: var(--ink); white-space: nowrap; }
 .bar.b2 .val, .bar.b3 .val, .bar.b4 .val { color: #fff; }
 .bar.lo .val { color: var(--ink); left: auto; }
 @media (max-width: 480px) { .bar { grid-template-columns: 1fr; gap: 3px; } .bar .lbl { font-size: 12px; } }
 .batsvg svg { width: 100%; height: auto; display: block; }
 .batsvg .bk { fill: var(--blue-l); stroke: var(--navy); stroke-width: 1.2; }
-.batsvg .tm { fill: var(--amber); }
+.batsvg .tm { fill: var(--accent); }
 .batsvg .wire { stroke: var(--navy); stroke-width: 1.4; fill: none; }
 .batsvg .lb { font: 500 12px var(--font-body); fill: var(--muted); }
 .batsvg .lbn { font: 600 12px var(--font-display); fill: var(--navy); }
@@ -92,7 +92,7 @@
 .svcl { display: grid; gap: 10px; }
 .svcl a { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-s); color: var(--ink); }
 .svcl a:hover { border-color: var(--blue); color: var(--ink); }
-.svcl .ic { width: 36px; height: 36px; border-radius: 8px; background: var(--amber-l); color: var(--amber-d); display: grid; place-items: center; flex: none; }
+.svcl .ic { width: 36px; height: 36px; border-radius: 8px; background: var(--accent-l); color: var(--accent-d); display: grid; place-items: center; flex: none; }
 .svcl .ic svg { width: 20px; height: 20px; }
 .svcl b { display: block; font-size: 14px; font-weight: 600; }
 .svcl small { color: var(--muted); font-size: 12px; }

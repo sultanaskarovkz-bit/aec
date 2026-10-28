@@ -69,7 +69,7 @@
 .doc small { color: var(--muted); font-size: 12px; }
 .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .opt { border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
-.opt .ic { width: 38px; height: 38px; flex: none; border-radius: 8px; background: var(--amber-l); color: var(--amber-d); display: grid; place-items: center; }
+.opt .ic { width: 38px; height: 38px; flex: none; border-radius: 8px; background: var(--accent-l); color: var(--accent-d); display: grid; place-items: center; }
 .opt .ic svg { width: 20px; height: 20px; }
 .opt b { display: block; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
 .opt p { font-size: 14px; color: var(--muted); }
@@ -83,7 +83,7 @@
 .svc3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .svc3 a { padding: 20px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; display: flex; flex-direction: column; gap: 8px; color: var(--ink); transition: border-color .2s; }
 .svc3 a:hover { border-color: var(--blue); color: var(--ink); }
-.svc3 .ic { width: 40px; height: 40px; border-radius: 8px; background: var(--amber-l); color: var(--amber-d); display: grid; place-items: center; }
+.svc3 .ic { width: 40px; height: 40px; border-radius: 8px; background: var(--accent-l); color: var(--accent-d); display: grid; place-items: center; }
 .svc3 .ic svg { width: 22px; height: 22px; }
 .svc3 h3 { font-size: 17px; }
 .svc3 p { font-size: 14px; color: var(--muted); }
@@ -138,7 +138,7 @@
   };
 
   /* ---------- SVG: схема подключения и габаритный чертёж ---------- */
-  const NV = '#0a2540', BL = '#0066cc', AM = '#d97706', LN = '#cbd5e1';
+  const NV = '#0a2540', BL = '#0066cc', AM = '#4da3ff', LN = '#cbd5e1';
   function node(x, y, w, h, label, sub, fill) { return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${fill || '#fff'}" stroke="${NV}" stroke-width="1.8"/><text x="${x + w / 2}" y="${y + h / 2 + (sub ? -2 : 4)}" text-anchor="middle" font-family="Golos Text, Arial" font-size="11" font-weight="600" fill="${fill ? '#fff' : NV}">${label}</text>${sub ? `<text x="${x + w / 2}" y="${y + h / 2 + 12}" text-anchor="middle" font-family="Golos Text, Arial" font-size="9" fill="${fill ? '#c9d7e6' : '#64748b'}">${sub}</text>` : ''}`; }
   function edge(d, col, lbl, lx, ly) { return `<path d="${d}" fill="none" stroke="${col || NV}" stroke-width="2" marker-end="url(#ar)"/>${lbl ? `<text x="${lx}" y="${ly}" text-anchor="middle" font-family="Golos Text, Arial" font-size="9" fill="#64748b">${lbl}</text>` : ''}`; }
   const DEFS = `<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="${NV}"/></marker></defs>`;
@@ -337,7 +337,7 @@
 
     <section class="section" style="padding-top:clamp(24px,3vw,40px)"><div class="wrap"><div class="cta-band">
       <div><h2>Запросить КП на ${esc(p.model)}</h2><p>Укажите количество, нужную автономию и город объекта. Пришлём коммерческое предложение с батареями, доставкой и монтажом в течение рабочего дня.</p>
-        <div style="margin-top:22px;display:grid;gap:10px;font-size:15px"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--amber);display:flex">${I('phone')}</span><a href="tel:+${C.phoneRaw}" style="color:#fff;font-family:var(--font-display);font-size:20px;font-weight:600">${C.phone}</a></span><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--amber);display:flex">${I('mail')}</span><a href="mailto:${C.email}" style="color:#d7e3f0">${C.email}</a></span></div></div>
+        <div style="margin-top:22px;display:grid;gap:10px;font-size:15px"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent);display:flex">${I('phone')}</span><a href="tel:+${C.phoneRaw}" style="color:#fff;font-family:var(--font-display);font-size:20px;font-weight:600">${C.phone}</a></span><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent);display:flex">${I('mail')}</span><a href="mailto:${C.email}" style="color:#d7e3f0">${C.email}</a></span></div></div>
       <form class="form-grid" data-lead novalidate>
         <input type="hidden" name="formType" value="Запрос КП (карточка товара)"><input type="hidden" name="product" value="${esc(p.name)}${p.sku ? ' (арт. ' + esc(p.sku) + ')' : ''}">
         <div class="field"><label for="qName">Имя <i>*</i></label><input class="input" id="qName" name="name" required autocomplete="name"><span class="hint"></span></div>

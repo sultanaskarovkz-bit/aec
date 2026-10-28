@@ -18,7 +18,7 @@
 .sch-ln { stroke: var(--navy); stroke-width: 2; fill: none; }
 .sch-bx { fill: #fff; stroke: var(--navy); stroke-width: 1.8; }
 .sch-bx.hi { fill: var(--blue-l); stroke: var(--blue); }
-.sch-bx.am { fill: var(--amber-l); stroke: var(--amber); }
+.sch-bx.am { fill: var(--accent-l); stroke: var(--accent); }
 .sch-t { font: 500 11px var(--font-body); fill: var(--ink); }
 .sch-s { font: 400 9.5px var(--font-body); fill: var(--muted); }
 .seo { max-width: 78ch; }

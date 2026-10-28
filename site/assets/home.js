@@ -1,4 +1,4 @@
-/* Главная AEC Kazakhstan: данные, сцена первого экрана, сценарий аварии на прокрутке, загрузочный экран, эффекты.
+/* Главная AEC Kazakhstan: данные, сцена первого экрана, сценарий аварии (проигрывается по кнопке), эффекты.
    Библиотеки: GSAP 3.13 (ScrollTrigger, SplitText), Lenis 1.3 — локально в assets/vendor. */
 (function () {
   'use strict';
@@ -109,11 +109,6 @@
     const cloudSvg = svgDoc([0, 0, 190, 64], `<g fill="#e9eef3"><rect x="0" y="18" width="190" height="34" rx="17"/><circle cx="62" cy="22" r="28"/><circle cx="108" cy="16" r="36"/><circle cx="148" cy="28" r="22"/></g>`);
     const cloudSrc = 'data:image/svg+xml,' + encodeURIComponent(cloudSvg);
     const clouds = (small ? [[120, 1, 30, 0], [210, .7, 40, -16]] : [[120, 1, 38, 0], [230, .7, 52, -20], [170, .8, 58, -33]]).map(([y, s, d, dl]) => `<div class="drift" style="top:${y}px;width:${190 * s}px;animation-duration:${d}s;animation-delay:${dl}s"><img alt="" src="${cloudSrc}"></div>`).join('');
-    const birdSrc = 'data:image/svg+xml,' + encodeURIComponent(svgDoc([0, -7, 26, 9], '<path fill="none" stroke="#0a2540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M1 0 q6 -6 12 0 q6 -6 12 0"/>'));
-    const bird = (x, y, s) => `<i class="bird${small ? ' still' : ''}" style="left:${x}px;top:${y}px;width:${26 * s}px;animation-delay:${(-rnd()).toFixed(2)}s"><img alt="" src="${birdSrc}"></i>`;
-    const birds = `<div class="flock" style="top:200px">${bird(0, 10, 1)}${bird(30, -4, .8)}${bird(54, 18, .9)}${bird(80, 4, .7)}${bird(18, 32, .75)}</div><div class="flock f2" style="top:140px">${bird(0, 10, .7)}${bird(22, 0, .6)}${bird(40, 16, .65)}</div>`;
-    const gustSrc = (wd) => 'data:image/svg+xml,' + encodeURIComponent(svgDoc([0, -30, 420, 60], `<path fill="none" stroke="#7d93ab" stroke-width="${wd}" stroke-linecap="round" d="M0 0 C 90 -18, 160 14, 240 -4 S 360 -16, 420 0"/>`));
-    const gusts = [[150, 0], [262, -1.7], [372, -.4], [428, -3.1], [205, -2.2], [318, -1.2], [470, -2.6]].filter((_, i) => !small || i < 3).map(([y, d], i) => `<div class="gust" style="left:${1040 + (i % 3) * 60}px;top:${y - 30}px;animation-delay:${d}s;animation-duration:${(2.6 + (i % 4) * .45).toFixed(2)}s"><img alt="" src="${gustSrc((1.1 + (i % 3) * .55).toFixed(2))}"></div>`).join('');
     // ветряки: мачты в слоях, роторы отдельно и крутятся видеокартой
     const rotors = d => TURB.filter(t => t.d === d && t.x + 80 > cutX).map(t => { const rd = rotor(t, PAL.day.turb), rn = rotor(t, PAL.night.turb); return `<div class="rotor" style="left:${f1(t.x - rd.R)}px;top:${f1(t.y - 170 * t.s - rd.R)}px;width:${2 * rd.R}px;height:${2 * rd.R}px;animation-duration:${t.dur}s"><img alt="" src="data:image/svg+xml,${encodeURIComponent(rd.svg)}"><img class="nt" alt="" src="data:image/svg+xml,${encodeURIComponent(rn.svg)}"></div>`; }).join('');
     // снег с вершин: одна анимация на вершину, внутри 3 снежинки
@@ -126,8 +121,8 @@
     let cars = ''; for (let c = 0; c < (small ? 2 : 4); c++) { const dir = c % 2; cars += `<i class="car ${dir ? 'l' : 'r'}" style="top:${dir ? 886 : 890}px;animation-duration:${(7 + rnd() * 6).toFixed(1)}s;animation-delay:${(-rnd() * 10).toFixed(1)}s"></i>`; }
     // искры вдоль проводов (только десктоп)
     const sparks = '';
-    const glowSvg = `<defs><radialGradient id="g"><stop offset="0" stop-color="#ffb000" stop-opacity=".85"/><stop offset=".45" stop-color="#ffb000" stop-opacity=".28"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient></defs>` + [[1135, 800], [1285, 815], [1440, 825]].map(([x, y]) => `<circle fill="url(#g)" cx="${x}" cy="${y}" r="90"/>`).join('');
-    const keepSvg = G.keepWins.map(([x, y]) => `<rect fill="#ffb000" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join('') + Array.from({ length: 4 }, (_, r) => `<rect fill="#ffb000" x="1240" y="${786 + r * 15}" width="90" height="4"/>`).join('') + `<rect fill="#ff5a5a" x="1129" y="731" width="12" height="10"/><rect fill="#ff5a5a" x="1131" y="729" width="8" height="14"/>`;
+    const glowSvg = `<defs><radialGradient id="g"><stop offset="0" stop-color="#4da3ff" stop-opacity=".8"/><stop offset=".45" stop-color="#4da3ff" stop-opacity=".26"/><stop offset="1" stop-color="#4da3ff" stop-opacity="0"/></radialGradient></defs>` + [[1135, 800], [1285, 815], [1440, 825]].map(([x, y]) => `<circle fill="url(#g)" cx="${x}" cy="${y}" r="90"/>`).join('');
+    const keepSvg = G.keepWins.map(([x, y]) => `<rect fill="#ffcf6b" x="${x}" y="${f1(y)}" width="5" height="7"/>`).join('') + Array.from({ length: 4 }, (_, r) => `<rect fill="#ffcf6b" x="1240" y="${786 + r * 15}" width="90" height="4"/>`).join('') + `<rect fill="#ff5a5a" x="1129" y="731" width="12" height="10"/><rect fill="#ff5a5a" x="1131" y="729" width="8" height="14"/>`;
     const tag = (x, y, t1, t2, w) => `<div class="tag" style="left:${x}px;top:${y}px;width:${w}px"><b>${t1}</b><span>${t2}</span></div>`;
     // гроза: два яруса туч, дождь из плитки, молния в подстанцию, вспышка, искры
     const band = (base, amp, c, seedK) => { let d = `<rect fill="${c}" x="-40" y="-40" width="2080" height="${base + 40}"/>`; let x = -40; while (x < 2060) { const r = amp * (.55 + rnd() * .9); d += `<circle fill="${c}" cx="${x.toFixed(0)}" cy="${(base - r * .35 + rnd() * amp * .3).toFixed(0)}" r="${r.toFixed(0)}"/>`; x += r * .9; } return d; };
@@ -146,8 +141,6 @@
         <div class="stars op">${layer('', [0, 0, 1600, 440], stA + stB)}</div>
         <div class="sun op"></div><div class="moon op"></div>
         <div class="clouds op">${clouds}</div>
-        <div class="birds op">${birds}</div>
-        <div class="gusts">${gusts}</div>
         <i class="shoot op"></i>
         <div class="storm op">${small ? '' : `<div class="st-back"><img alt="" src="data:image/svg+xml,${encodeURIComponent(stormBack)}"></div>`}<div class="st-front"><img alt="" src="data:image/svg+xml,${encodeURIComponent(stormFront)}"></div></div>
       </div>
@@ -193,14 +186,14 @@
   const setOp = (el, v) => { if (!el) return; v = Math.round(Math.max(0, Math.min(1, v)) * 1000) / 1000; if (lastOp.get(el) === v) return; lastOp.set(el, v); el.style.opacity = v; const off = v <= .001 && !el.classList.contains('lyr'); if (el._off !== off) { el._off = off; el.style.visibility = off ? 'hidden' : ''; el.classList.toggle('zz', off); } };
   const clamp01 = v => Math.max(0, Math.min(1, v));
   let E = null;
-  const cacheEls = () => { const g = s => $('#stage ' + s); E = { nt: $$('#stage .nt'), dy: $$('#stage .dy'), skyN: g('.sky-n'), dusk: g('.dusk'), stars: g('.stars'), moon: g('.moon'), sun: g('.sun'), clouds: g('.clouds'), birds: g('.birds'), grass: g('.grasses'), cars: g('.cars'), live: g('.live'), sparks: g('.sparks'), lit: LIT_BANDS.map((_, i) => g('.lit' + i)), keep: g('.keep'), glow: g('.glow'), rings: g('.rings'), tags: g('.tags'), gen: g('.genon'), flow: g('.gflow'), sd: $('#hero .scrim-d'), sn: $('#hero .scrim-n'), sb: $('#hero .scrim-b'), storm: g('.storm'), rain: g('.rain'), bolt: g('.bolt'), burst: g('.burst'), flash: g('.flash'), vig: g('.vig'), haze: g('.haze'), beacon: g('.beacon'), shoot: g('.shoot'), flicks: g('.flicks'), leds: g('.leds') }; };
+  const cacheEls = () => { const g = s => $('#stage ' + s); E = { nt: $$('#stage .nt'), dy: $$('#stage .dy'), skyN: g('.sky-n'), dusk: g('.dusk'), stars: g('.stars'), moon: g('.moon'), sun: g('.sun'), clouds: g('.clouds'), grass: g('.grasses'), cars: g('.cars'), live: g('.live'), sparks: g('.sparks'), lit: LIT_BANDS.map((_, i) => g('.lit' + i)), keep: g('.keep'), glow: g('.glow'), rings: g('.rings'), tags: g('.tags'), gen: g('.genon'), flow: g('.gflow'), sd: $('#hero .scrim-d'), sn: $('#hero .scrim-n'), sb: $('#hero .scrim-b'), storm: g('.storm'), rain: g('.rain'), bolt: g('.bolt'), burst: g('.burst'), flash: g('.flash'), vig: g('.vig'), haze: g('.haze'), beacon: g('.beacon'), shoot: g('.shoot'), flicks: g('.flicks'), leds: g('.leds') }; };
   let lastSun = null, lastMoon = null, lastStorm = null;
   function applyScene(force) {
     if (!E || force) { cacheEls(); lastSun = lastMoon = null; }
     const n = S.n;
     E.nt.forEach(e => setOp(e, n)); E.dy.forEach(e => setOp(e, n >= .999 ? 0 : 1));
     setOp(E.skyN, n); setOp(E.dusk, Math.sin(Math.PI * Math.min(1, n)) * .55); setOp(E.stars, n); setOp(E.moon, n); setOp(E.sun, 1 - n);
-    setOp(E.clouds, 1 - n); setOp(E.birds, 1 - n * 1.6); setOp(E.grass, 1 - n); setOp(E.cars, n); setOp(E.sd, 1 - n); setOp(E.sn, n); setOp(E.sb, n);
+    setOp(E.clouds, 1 - n); setOp(E.grass, 1 - n); setOp(E.cars, n); setOp(E.sd, 1 - n); setOp(E.sn, n); setOp(E.sb, n);
     setOp(E.live, S.grid * n); setOp(E.sparks, S.grid * n);
     LIT_BANDS.forEach((b, i) => setOp(E.lit[i], clamp01((S.city - b[2]) * 5)));
     setOp(E.keep, S.keep); setOp(E.glow, S.glow * .75); setOp(E.rings, S.glow); setOp(E.tags, S.lbl); setOp(E.gen, S.gen); setOp(E.flow, S.flow);
@@ -224,7 +217,7 @@
   // бесконечные CSS-анимации работают только пока блок на экране
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('offscreen', !e.isIntersecting)), { rootMargin: '100px 0px' });
-    ['.clients-band', '.cue'].forEach(s => { const el = $(s); if (el) io.observe(el); });
+    ['.clients-band'].forEach(s => { const el = $(s); if (el) io.observe(el); });
   }
 
   $('#eqGrid').innerHTML = D.CATEGORIES.map(c => {
@@ -246,7 +239,7 @@
   list.addEventListener('mouseover', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
   list.addEventListener('focusin', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
 
-  const NUM = [['2021', '', 'год основания', 0], [String(D.BRANDS.length), '', 'брендов в портфеле', 1], [String(D.PRODUCTS.length), '', 'позиций в каталоге', 1], ['4,25', 'МВА', 'максимальная мощность электростанции', 0]];
+  const NUM = [['2021', '', 'год основания', 0], [String(D.BRANDS.length), '', 'брендов в портфеле', 1], [String(D.PRODUCTS.length), '', 'позиций в каталоге', 1], ['4,8', 'МВА', 'максимальная мощность электростанции', 0]];
   $('#nums').innerHTML = NUM.map(n => `<div class="js-up"><b><span class="cnt" data-to="${n[3] ? n[0] : ''}">${n[0]}</span>${n[1] ? `<i>${n[1]}</i>` : ''}</b><span>${n[2]}</span></div>`).join('');
   const ROW = ['tescom', 'salicru', 'kehua-tech', 'hoppecke', 'bae-batterien', 'energrid', 'sprinter', 'bereli', 'yuasa', 'enersys', 'agg', 'baifa', 'socomec', 'everexceed', 'RSE', 'RID'];
   $('#brands').innerHTML = ROW.map(id => { const br = D.BRANDS.find(x => x.id === id); return br ? `<a href="${L.brand(br.id)}">${br.name}</a>` : `<span>${id}</span>`; }).join('');
@@ -322,7 +315,8 @@
     const heroEl = $('#hero');
     const stageWrap = $('#hero .stage-wrap');
     const pauseScene = on => { heroEl.classList.toggle('paused', on); stageWrap.style.display = on ? 'none' : ''; };
-    ScrollTrigger.create({ start: 0, endTrigger: '.clients-band', end: 'top top', refreshPriority: -1, onLeave: () => pauseScene(true), onEnterBack: () => pauseScene(false) });
+    let tlHeld = false;
+    ScrollTrigger.create({ start: 0, endTrigger: '.clients-band', end: 'top top', refreshPriority: -1, onLeave: () => { pauseScene(true); if (tl.isActive()) { tl.pause(); tlHeld = true; } }, onEnterBack: () => { pauseScene(false); if (tlHeld) { tlHeld = false; tl.resume(); } } });
 
     /* ---------- Вход первого экрана ---------- */
     const introSplit = new SplitText('#heroTitle', { type: 'lines', mask: 'lines', linesClass: 'split-line' });
@@ -330,75 +324,72 @@
     intro.from(introSplit.lines, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .09 })
       .from('#heroText', { y: 24, autoAlpha: 0, duration: .9, ease: 'power3.out' }, .35)
       .from('#intro .links .btn', { y: 20, autoAlpha: 0, duration: .8, ease: 'power3.out', stagger: .08 }, .5)
-      .from('#cue', { autoAlpha: 0, duration: .8 }, .9)
       .fromTo(camIntro, { s: 1.16 }, { s: 1, duration: 2.6, ease: 'expo.out', onUpdate: renderCam }, 0);
 
     if (reduce) { intro.progress(1); ready(); } else intro.play();
 
-    /* ---------- Сценарий аварии ---------- */
-    const mm = gsap.matchMedia();
-    mm.add({ motion: '(prefers-reduced-motion: no-preference)', reduce: '(prefers-reduced-motion: reduce)' }, ctx => {
-      if (ctx.conditions.reduce) { gsap.set('#cue, #caps, #stepsUi, #hud', { display: 'none' }); return; }
-      const hero = $('#hero'), capsEl = $$('#caps .cap'), steps = $$('#stepsUi li');
-      const at = [1.3, 3.0, 4.6, 6.2, 7.9, 10];
-      const tl = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: {
-          trigger: hero, start: () => 'top ' + hdr(), end: () => '+=' + Math.round(innerHeight * (innerWidth < 768 ? 3.4 : 3.8)), pin: true, scrub: touch ? .45 : .6, anticipatePin: 1, invalidateOnRefresh: true, fastScrollEnd: true,
-          onUpdate: self => {
-            const t = self.progress * 10;
-            if (t > .15 && intro.progress() < 1) intro.progress(1); // прокрутка во время вступления: показываем сцену сразу
-            steps.forEach((li, i) => { const k = Math.round(gsap.utils.clamp(0, 1, (t - at[i]) / (at[i + 1] - at[i])) * 1000) / 1000; if (li._k !== k) { li._k = k; li.firstChild.style.transform = `scaleX(${k})`; } const on = t >= at[i] && t < at[i + 1] + (i === 4 ? 1 : 0); if (li._on !== on) { li._on = on; li.classList.toggle('on', on); } });
-          }
-        }
-      });
-      tl.to('#intro', { y: -70, autoAlpha: 0, duration: 1, ease: 'power2.in' }, 0)
-        .to('#cue', { autoAlpha: 0, duration: .4 }, 0)
-        .to(S, { n: 1, duration: 1.4, onUpdate: applyScene }, .2)
-        .fromTo(S, { sun: 0 }, { sun: 360, duration: 1.4, ease: 'power1.in', onUpdate: applyScene, immediateRender: false }, 0)
-        .fromTo(S, { moon: 420 }, { moon: 0, duration: 1.6, ease: 'power2.out', onUpdate: applyScene, immediateRender: false }, .6)
-        .to(S, { city: 1.25, duration: 1.2, onUpdate: applyScene }, .7)
-        .to(S, { keep: 1, duration: .8, onUpdate: applyScene }, .9)
-        .fromTo('#stepsUi', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1);
-      capsEl.forEach((c, i) => {
-        tl.fromTo(c, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: .6, ease: 'power3.out' }, at[i]);
-        if (i < 4) tl.to(c, { autoAlpha: 0, y: -40, duration: .5, ease: 'power2.in' }, at[i + 1] - .55);
-      });
-      // гроза приходит, начинается дождь
-      tl.to(S, { storm: 1, duration: 1.3, ease: 'power1.inOut', onUpdate: applyScene }, 1.5)
-        .to(S, { rain: 1, duration: .7, onUpdate: applyScene }, 2.2)
-        // молния бьёт в подстанцию: вспышка, тряска камеры, город мигает и гаснет
-        .to(S, { bolt: 1, duration: .03, onUpdate: applyScene }, 2.84).to(S, { bolt: 0, duration: .22, ease: 'power2.in', onUpdate: applyScene }, 2.9)
-        .to(S, { flash: 1, duration: .04, onUpdate: applyScene }, 2.84).to(S, { flash: 0, duration: .16, onUpdate: applyScene }, 2.88)
-        .to(S, { flash: .5, duration: .03, onUpdate: applyScene }, 3.04).to(S, { flash: 0, duration: .1, onUpdate: applyScene }, 3.07)
-        .fromTo(camShake, { x: 0, y: 0 }, { x: -7, y: 5, duration: .04, onUpdate: renderCam, immediateRender: false }, 2.85).to(camShake, { x: 6, y: -4, duration: .05, onUpdate: renderCam }, 2.89).to(camShake, { x: -3, y: 2, duration: .05, onUpdate: renderCam }, 2.94).to(camShake, { x: 0, y: 0, duration: .08, onUpdate: renderCam }, 2.99)
-        .to(S, { city: .3, duration: .05, onUpdate: applyScene }, 2.86).to(S, { city: 1.1, duration: .06, onUpdate: applyScene }, 2.91).to(S, { city: .2, duration: .05, onUpdate: applyScene }, 2.97).to(S, { city: .9, duration: .06, onUpdate: applyScene }, 3.02)
-        .to(S, { vg: 212, duration: .04, onUpdate: applyScene }, 2.86).to(S, { vg: 388, duration: .05, onUpdate: applyScene }, 2.9).to(S, { vg: 0, duration: .1, onUpdate: applyScene }, 3.02)
-        .to(S, { grid: 0, duration: .25, onUpdate: applyScene }, 2.95)
-        .to(S, { city: 0, duration: .3, ease: 'power3.in', onUpdate: applyScene }, 3.08)
-        .to(S, { src: 1, duration: .01, onUpdate: applyScene }, 3.0).to(S, { src: 2, duration: .01, onUpdate: applyScene }, 6.3).to(S, { src: 0, duration: .01, onUpdate: applyScene }, 7.9)
-        .to(S, { vg: 400, duration: .3, onUpdate: applyScene }, 7.8)
-        .to(S, { rain: 0, duration: .7, onUpdate: applyScene }, 7.9)
-        .to(S, { storm: 0, duration: 1.5, ease: 'power1.inOut', onUpdate: applyScene }, 8.0)
-        .fromTo('#hud', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1)
-        .to(camStory, { s: () => innerWidth < 600 ? 1 : 1.1, duration: 2.4, ease: 'power1.inOut', onUpdate: renderCam }, 4.0)
-        .to(S, { glow: 1, duration: .6, onUpdate: applyScene }, 4.5)
-        .to(S, { lbl: 1, duration: .5, onUpdate: applyScene }, 4.8)
-        .to(S, { gen: 1, duration: .5, onUpdate: applyScene }, 6.0)
-        .to(S, { flow: 1, duration: .5, onUpdate: applyScene }, 6.3)
-        .to(S, { grid: 1, duration: .4, onUpdate: applyScene }, 7.8)
-        .to(S, { city: 1.25, duration: 1, onUpdate: applyScene }, 7.9)
-        .to(S, { flow: 0, gen: 0, duration: .5, onUpdate: applyScene }, 8.3)
-        .to(S, { glow: .25, lbl: 0, duration: .6, onUpdate: applyScene }, 8.6)
-        .to(camStory, { s: 1, duration: 1.4, ease: 'power1.inOut', onUpdate: renderCam }, 8.4)
-        .to({}, { duration: .3 }, 9.7);
-      // после refresh GSAP возвращает значения S без onUpdate: переносим их в сцену вручную
-      ScrollTrigger.addEventListener('refresh', () => { layoutStage(); applyScene(); renderCam(); });
-      applyScene(); renderCam();
-      window.__aec = Object.assign(window.__aec || {}, { heroST: tl.scrollTrigger, lenis, S, tl });
-      $('#cue').addEventListener('click', () => { const st = tl.scrollTrigger; scrollTo(st.start + (st.end - st.start) * .2); });
-      return () => {};
+    /* ---------- Сценарий аварии: проигрывается по кнопке, страница прокручивается обычно ---------- */
+    const capsEl = $$('#caps .cap'), steps = $$('#stepsUi li'), cue = $('#cue');
+    const at = [1.3, 3.0, 4.6, 6.2, 7.9, 10];
+    const tl = gsap.timeline({
+      paused: true, defaults: { ease: 'none' },
+      onUpdate: () => {
+        const t = tl.time();
+        steps.forEach((li, i) => { const k = Math.round(gsap.utils.clamp(0, 1, (t - at[i]) / (at[i + 1] - at[i])) * 1000) / 1000; if (li._k !== k) { li._k = k; li.firstChild.style.transform = `scaleX(${k})`; } const on = t >= at[i] && t < at[i + 1] + (i === 4 ? 1 : 0); if (li._on !== on) { li._on = on; li.classList.toggle('on', on); } });
+      },
+      onComplete: () => heroEl.classList.add('played'),
+      onReverseComplete: () => { tl.pause(0); tl.timeScale(1); heroEl.classList.remove('playing', 'played'); } // в GSAP 3 обратный ход = отрицательный timeScale, поэтому сначала пауза
     });
+    tl.to('#intro', { y: -70, autoAlpha: 0, duration: 1, ease: 'power2.in' }, 0)
+      .to(S, { n: 1, duration: 1.4, onUpdate: applyScene }, .2)
+      .fromTo(S, { sun: 0 }, { sun: 360, duration: 1.4, ease: 'power1.in', onUpdate: applyScene, immediateRender: false }, 0)
+      .fromTo(S, { moon: 420 }, { moon: 0, duration: 1.6, ease: 'power2.out', onUpdate: applyScene, immediateRender: false }, .6)
+      .to(S, { city: 1.25, duration: 1.2, onUpdate: applyScene }, .7)
+      .to(S, { keep: 1, duration: .8, onUpdate: applyScene }, .9)
+      .fromTo('#stepsUi', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1)
+      .fromTo('#scCtl', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1);
+    capsEl.forEach((c, i) => {
+      tl.fromTo(c, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: .6, ease: 'power3.out' }, at[i]);
+      if (i < 4) tl.to(c, { autoAlpha: 0, y: -40, duration: .5, ease: 'power2.in' }, at[i + 1] - .55);
+    });
+    // гроза приходит, начинается дождь
+    tl.to(S, { storm: 1, duration: 1.3, ease: 'power1.inOut', onUpdate: applyScene }, 1.5)
+      .to(S, { rain: 1, duration: .7, onUpdate: applyScene }, 2.2)
+      // молния бьёт в подстанцию: вспышка, тряска камеры, город мигает и гаснет
+      .to(S, { bolt: 1, duration: .03, onUpdate: applyScene }, 2.84).to(S, { bolt: 0, duration: .22, ease: 'power2.in', onUpdate: applyScene }, 2.9)
+      .to(S, { flash: 1, duration: .04, onUpdate: applyScene }, 2.84).to(S, { flash: 0, duration: .16, onUpdate: applyScene }, 2.88)
+      .to(S, { flash: .5, duration: .03, onUpdate: applyScene }, 3.04).to(S, { flash: 0, duration: .1, onUpdate: applyScene }, 3.07)
+      .fromTo(camShake, { x: 0, y: 0 }, { x: -7, y: 5, duration: .04, onUpdate: renderCam, immediateRender: false }, 2.85).to(camShake, { x: 6, y: -4, duration: .05, onUpdate: renderCam }, 2.89).to(camShake, { x: -3, y: 2, duration: .05, onUpdate: renderCam }, 2.94).to(camShake, { x: 0, y: 0, duration: .08, onUpdate: renderCam }, 2.99)
+      .to(S, { city: .3, duration: .05, onUpdate: applyScene }, 2.86).to(S, { city: 1.1, duration: .06, onUpdate: applyScene }, 2.91).to(S, { city: .2, duration: .05, onUpdate: applyScene }, 2.97).to(S, { city: .9, duration: .06, onUpdate: applyScene }, 3.02)
+      .to(S, { vg: 212, duration: .04, onUpdate: applyScene }, 2.86).to(S, { vg: 388, duration: .05, onUpdate: applyScene }, 2.9).to(S, { vg: 0, duration: .1, onUpdate: applyScene }, 3.02)
+      .to(S, { grid: 0, duration: .25, onUpdate: applyScene }, 2.95)
+      .to(S, { city: 0, duration: .3, ease: 'power3.in', onUpdate: applyScene }, 3.08)
+      .to(S, { src: 1, duration: .01, onUpdate: applyScene }, 3.0).to(S, { src: 2, duration: .01, onUpdate: applyScene }, 6.3).to(S, { src: 0, duration: .01, onUpdate: applyScene }, 7.9)
+      .to(S, { vg: 400, duration: .3, onUpdate: applyScene }, 7.8)
+      .to(S, { rain: 0, duration: .7, onUpdate: applyScene }, 7.9)
+      .to(S, { storm: 0, duration: 1.5, ease: 'power1.inOut', onUpdate: applyScene }, 8.0)
+      .fromTo('#hud', { autoAlpha: 0 }, { autoAlpha: 1, duration: .4 }, 1)
+      .to(camStory, { s: () => innerWidth < 600 ? 1 : 1.1, duration: 2.4, ease: 'power1.inOut', onUpdate: renderCam }, 4.0)
+      .to(S, { glow: 1, duration: .6, onUpdate: applyScene }, 4.5)
+      .to(S, { lbl: 1, duration: .5, onUpdate: applyScene }, 4.8)
+      .to(S, { gen: 1, duration: .5, onUpdate: applyScene }, 6.0)
+      .to(S, { flow: 1, duration: .5, onUpdate: applyScene }, 6.3)
+      .to(S, { grid: 1, duration: .4, onUpdate: applyScene }, 7.8)
+      .to(S, { city: 1.25, duration: 1, onUpdate: applyScene }, 7.9)
+      .to(S, { flow: 0, gen: 0, duration: .5, onUpdate: applyScene }, 8.3)
+      .to(S, { glow: .25, lbl: 0, duration: .6, onUpdate: applyScene }, 8.6)
+      .to(camStory, { s: 1, duration: 1.4, ease: 'power1.inOut', onUpdate: renderCam }, 8.4)
+      .to({}, { duration: .3 }, 9.7);
+    // после refresh GSAP возвращает значения S без onUpdate: переносим их в сцену вручную
+    ScrollTrigger.addEventListener('refresh', () => { layoutStage(); applyScene(); renderCam(); });
+    applyScene(); renderCam();
+    const play = () => { intro.progress(1); heroEl.classList.add('playing'); heroEl.classList.remove('played'); tl.timeScale(1).play(0); };
+    const close = () => { tl.timeScale(5).reverse(); };
+    cue.addEventListener('click', play);
+    $('#scReplay').addEventListener('click', play);
+    $('#scClose').addEventListener('click', close);
+    if (reduce) { gsap.set('#caps, #stepsUi, #hud, #scCtl', { display: 'none' }); cue.style.display = 'none'; }
+    window.__aec = Object.assign(window.__aec || {}, { tl, play, close, S, lenis });
 
     /* ---------- Заголовки секций: строки выезжают из-под маски ---------- */
     $$('.js-lines').forEach(h => {
@@ -412,14 +403,15 @@
     if (!reduce) SplitText.create(mf, { type: 'words', wordsClass: 'w', autoSplit: true, onSplit: self => gsap.to(self.words, { opacity: 1, ease: 'none', stagger: .1, scrollTrigger: { trigger: mf, start: 'top 82%', end: 'bottom 50%', scrub: true } }) });
     const stepsLi = $$('#mfSteps li'), rail = $('#mfSteps .mf-rail i');
     const vertical = () => innerWidth <= 860;
-    const mfWave = $('#mfWave'), mw = { k: 0, ph: 0 };
-    const drawWave = () => { let d = ''; for (let x = 0; x <= 1600; x += 8) { const noise = (1 - mw.k) * (Math.sin(x * .05) * .5 + Math.sin(x * .013 + 1.7) * .5) * 34 * Math.sin(x * .23); d += `${d ? ' L' : 'M'}${x} ${(60 + Math.sin(x / 1600 * Math.PI * 10 - mw.ph) * 30 * (.3 + mw.k * .7) + noise * Math.cos(mw.ph * 1.7 + x * .01)).toFixed(1)}`; } mfWave.setAttribute('d', d); };
+    // ровная синусоида (символ переменного тока), медленно плывёт, пока блок на экране
+    const mfWave = $('#mfWave'), mw = { ph: 0 };
+    const drawWave = () => { let d = ''; for (let x = 0; x <= 1600; x += 8) d += `${d ? ' L' : 'M'}${x} ${(60 + Math.sin(x / 1600 * Math.PI * 8 - mw.ph) * 28).toFixed(1)}`; mfWave.setAttribute('d', d); };
     drawWave();
-    const waveTick = () => { mw.ph += .045; drawWave(); };
+    const waveTick = () => { mw.ph += .03; drawWave(); };
     if (!reduce) ScrollTrigger.create({ trigger: '.manifest', start: 'top bottom', end: 'bottom top', onToggle: self => self.isActive ? gsap.ticker.add(waveTick) : gsap.ticker.remove(waveTick) });
     ScrollTrigger.create({ trigger: '#mfSteps', start: 'top 85%', end: 'bottom 55%', scrub: reduce ? false : .4,
-      onUpdate: self => { const p = reduce ? 1 : self.progress; rail.style.transform = vertical() ? `scaleY(${p})` : `scaleX(${p})`; stepsLi.forEach((li, i) => li.classList.toggle('on', p >= i / stepsLi.length + .02 || p >= .999)); mw.k = p; drawWave(); },
-      onRefresh: self => { if (reduce) { rail.style.transform = 'none'; stepsLi.forEach(li => li.classList.add('on')); mw.k = 1; drawWave(); } } });
+      onUpdate: self => { const p = reduce ? 1 : self.progress; rail.style.transform = vertical() ? `scaleY(${p})` : `scaleX(${p})`; stepsLi.forEach((li, i) => li.classList.toggle('on', p >= i / stepsLi.length + .02 || p >= .999)); },
+      onRefresh: self => { if (reduce) { rail.style.transform = 'none'; stepsLi.forEach(li => li.classList.add('on')); } } });
 
     /* ---------- Оборудование ---------- */
     if (!reduce) ScrollTrigger.batch('.eq', { start: 'top 92%', once: true, onEnter: els => gsap.from(els, { y: 50, autoAlpha: 0, duration: .9, ease: 'power3.out', stagger: .07, overwrite: true }) });

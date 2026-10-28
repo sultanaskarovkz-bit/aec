@@ -26,7 +26,7 @@ window.AEC = (function () {
         { id: 'batarejnye-shkafy', name: 'Батарейные шкафы и модули', hint: '' },
         { id: 'aksessuary', name: 'Аксессуары', hint: 'SNMP-карты, байпасы, датчики' }
       ] },
-    { id: 'dgu', slug: 'product-category/generatory-2/', name: 'Дизельные генераторы', full: 'Дизельные генераторные установки (ДГУ)', range: '10 кВА – 4,25 МВА', min: 10, max: 3750, unit: 'кВА', img: 'genset', count: 22,
+    { id: 'dgu', slug: 'product-category/generatory-2/', name: 'Дизельные генераторы', full: 'Дизельные генераторные установки (ДГУ)', range: '10 кВА – 4,8 МВА', min: 10, max: 3750, unit: 'кВА', img: 'genset', count: 22,
       subs: [
         { id: 'otkrytye', name: 'Открытого исполнения', hint: 'для машзалов' },
         { id: 'v-kozhuhe', name: 'В шумозащитном кожухе', hint: '≤ 72 дБ(А)' },
@@ -77,7 +77,7 @@ window.AEC = (function () {
   ];
   // Блок «Решения по отраслям» на главной: порядок и фото от заказчика (ЦОД: фото проекта Air Astana)
   const HOME_INDUSTRIES = ['czod', 'telecom', 'oil', 'med', 'office', 'banks', 'gov', 'energy'];
-  const INDUSTRY_PHOTOS = { czod: 'proj-airastana-1.jpg', med: 'ind-med.jpg', prom: 'proj-ktz-2.jpg', oil: 'ind-oil.jpg', office: 'ind-office.jpg', machines: 'ind-machines.jpg', emergency: 'proj-lab-2.jpg', telecom: 'ind-telecom.jpg', banks: 'ind-banks.jpg', gov: 'ind-gov.jpg', energy: 'ind-energy.jpg' };
+  const INDUSTRY_PHOTOS = { czod: 'ind-czod.jpg', med: 'ind-med.jpg', prom: 'proj-ktz-2.jpg', oil: 'ind-oil.jpg', office: 'ind-office.jpg', machines: 'ind-machines.jpg', emergency: 'proj-lab-2.jpg', telecom: 'ind-telecom.jpg', banks: 'ind-banks.jpg', gov: 'ind-gov.jpg', energy: 'ind-energy.jpg' };
 
   const SERVICES = [
     { id: 'montazh', slug: 'uslugi/montazh-i-obsluzhivanie-ibp-i-generatorov/', name: 'Монтаж и пусконаладка ИБП и ДГУ', short: 'Монтаж и пусконаладка', text: 'Установка, подключение, пробный запуск под нагрузкой, акт готовности', icon: 'wrench', price: 'по запросу', query: 'монтаж и пусконаладка ибп' },

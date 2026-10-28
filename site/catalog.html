@@ -52,7 +52,7 @@
 .dr input[type=range]::-webkit-slider-thumb { pointer-events: auto; -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 2px solid var(--blue); margin-top: -7px; cursor: pointer; box-shadow: var(--shadow-s); }
 .dr input[type=range]::-moz-range-thumb { pointer-events: auto; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--blue); cursor: pointer; }
 .dr input[type=range]:focus-visible { outline: none; }
-.dr input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--amber); outline-offset: 2px; }
+.dr input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent); outline-offset: 2px; }
 .rng-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--faint); padding: 0 2px; }
 
 /* ---- Тулбар, чипы, сетка ---- */
@@ -63,7 +63,7 @@
 .toolbar .seg button { padding: 8px 10px; display: inline-flex; }
 .toolbar .seg svg { width: 18px; height: 18px; }
 .fbtn { display: none; }
-.fbtn i { font-style: normal; background: var(--amber); color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: inline-grid; place-items: center; padding: 0 4px; }
+.fbtn i { font-style: normal; background: var(--accent); color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: inline-grid; place-items: center; padding: 0 4px; }
 .fbtn i:empty { display: none; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 0 0; }
 .chips:empty { display: none; }
@@ -439,7 +439,7 @@
       `<section class="section-tight bg-mist"><div class="wrap"><div class="sec-head" style="margin-bottom:18px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Популярные подборки</h2><p>Готовые страницы по мощности, исполнению и бренду: цены, модели, подбор.</p></div></div><div class="pop">${pop.map(x => `<a href="catalog.html#${x[1]}">${esc(x[0])}</a>`).join('')}</div></div></section>` +
       `<section class="section"><div class="wrap"><div class="split seo-split"><div class="seo">${SEO[st.cat] || ''}</div><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Вопросы и ответы</h2><p class="muted" style="margin:10px 0 18px">Коротко о выборе и эксплуатации. <a href="${L.faq}">Все вопросы</a></p><div class="acc">${faqs.map(q => `<details><summary>${esc(q[0])}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${esc(q[1])}</div></details>`).join('')}</div></div></div></div></section>` +
       `<section class="section" style="padding-top:0"><div class="wrap"><div class="cta-band"><div><h2>Помощь в подборе: ${esc(n.short)}</h2><p>Укажите нагрузку, нужную автономию и город объекта или приложите спецификацию из тендера. Инженер проверит расчёт, предложит 2–3 варианта и пришлёт КП в течение рабочего дня.</p>
-        <div style="margin-top:22px;display:grid;gap:10px;font-size:15px"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--amber);display:flex">${I('phone')}</span><a href="tel:+${D.CONTACT.phoneRaw}" style="color:#fff;font-family:var(--font-display);font-size:20px;font-weight:600">${D.CONTACT.phone}</a></span><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--amber);display:flex">${I('mail')}</span><a href="mailto:${D.CONTACT.email}" style="color:#d7e3f0">${D.CONTACT.email}</a></span><a class="btn btn-sm btn-outline-light" style="justify-self:start" href="${L.calc}">Калькулятор подбора</a></div></div>
+        <div style="margin-top:22px;display:grid;gap:10px;font-size:15px"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent);display:flex">${I('phone')}</span><a href="tel:+${D.CONTACT.phoneRaw}" style="color:#fff;font-family:var(--font-display);font-size:20px;font-weight:600">${D.CONTACT.phone}</a></span><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent);display:flex">${I('mail')}</span><a href="mailto:${D.CONTACT.email}" style="color:#d7e3f0">${D.CONTACT.email}</a></span><a class="btn btn-sm btn-outline-light" style="justify-self:start" href="${L.calc}">Калькулятор подбора</a></div></div>
         ${leadForm('Помощь в подборе (' + n.title + ')', '', 'Например: ' + n.short + ', нагрузка 18 кВт, автономия 30 минут, Астана')}</div></div></section>`;
 
     bindCat(res, total);
