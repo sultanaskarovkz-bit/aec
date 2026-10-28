@@ -75,10 +75,17 @@ window.AECUI = (function () {
   function art(key) { return (ART[key] || ART.tower)(); }
   // Фото с сайта клиента: assets/img/<slot>. Пока файл не скачан, показывается аккуратный плейсхолдер с подписью.
   const PH_SVG = (label, mode) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3edf8"/><stop offset="1" stop-color="#cfdcea"/></linearGradient><pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="rgba(10,37,64,.08)"/></pattern></defs><rect width="800" height="600" fill="url(#g)"/><rect width="800" height="600" fill="url(#p)"/>${mode === 'bg' ? '' : `<g transform="translate(400 270)"><rect x="-26" y="-34" width="52" height="68" rx="4" fill="none" stroke="#0066cc" stroke-width="3"/><path d="M4-20l-14 22h12l-6 18 16-24h-12z" fill="#0066cc"/></g><text x="400" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#0a2540">${label.replace(/[<>&]/g, '')}</text><text x="400" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#64748b">фото с aecups.kz · подставится автоматически</text>`}</svg>`);
+  // Точка фокуса для фото, которые показываются с обрезкой (object-fit: cover): лица и оборудование остаются в кадре
+  const FOCUS = { 'hero-service.jpg': '50% 22%', 'svc-dmitry.jpg': '50% 42%', 'service-montazh.jpg': '50% 50%', 'proj-airastana-1.jpg': '50% 30%', 'proj-airastana-4.jpg': '50% 45%', 'proj-airastana-5.jpg': '50% 50%', 'proj-uralsk-1.jpg': '50% 50%', 'proj-uralsk-2.jpg': '50% 50%', 'proj-uralsk-3.jpg': '50% 40%', 'proj-uralsk-4.jpg': '50% 55%', 'proj-tv-1.jpg': '50% 55%', 'proj-tv-4.jpg': '50% 60%', 'post-tv.jpg': '50% 60%', 'post-airastana.jpg': '50% 45%', 'post-electronica2025.jpg': '50% 45%', 'exh-electronica2025-1.jpg': '50% 40%', 'exh-electronica2025-3.jpg': '50% 45%', 'exh-kihe2025-6.jpg': '50% 30%', 'exh-powerexpo2024-6.jpg': '50% 45%', 'ind-telecom.jpg': '50% 45%', 'ind-gov.jpg': '50% 50%', 'blog-stab-dom.jpg': '50% 50%' };
+  // Вертикальные фото: рамки, которые подстраиваются под ориентацию, показывают их целиком
+  const PORTRAIT = new Set(['blog-chto-takoe-ibp.jpg', 'blog-kioge-1.jpg', 'blog-kioge-2.jpg', 'blog-kioge-3.jpg', 'blog-kioge-cover.jpg', 'blog-stab-dom.jpg', 'exh-electronica2025-1.jpg', 'exh-electronica2025-2.jpg', 'exh-electronica2025-3.jpg', 'exh-kihe2025-6.jpg', 'exh-powerexpo2024-6.jpg', 'hero-service.jpg', 'ind-gov.jpg', 'ind-telecom.jpg', 'post-airastana.jpg', 'post-electronica2025.jpg', 'post-ktz.jpg', 'post-tv.jpg', 'post-uralsk.jpg', 'proj-airastana-1.jpg', 'proj-airastana-4.jpg', 'proj-airastana-5.jpg', 'proj-ktz-5.jpg', 'proj-lab-2.jpg', 'proj-tv-1.jpg', 'proj-tv-2.jpg', 'proj-tv-3.jpg', 'proj-tv-4.jpg', 'proj-uralsk-1.jpg', 'proj-uralsk-2.jpg', 'proj-uralsk-3.jpg', 'proj-uralsk-4.jpg', 'service-montazh.jpg', 'svc-dmitry.jpg']);
   function img(slot, alt, cls, extra) {
-    alt = alt || slot;
-    return `<img class="${cls || ''}" src="assets/img/${slot}" alt="${alt.replace(/"/g, '&quot;')}" loading="lazy" decoding="async" ${extra || ''} onerror="this.onerror=null;this.classList.add('ph');this.src=AECUI.ph(this.alt,this.dataset.ph)">`;
+    alt = alt || slot; extra = extra || '';
+    if (FOCUS[slot]) extra = extra.indexOf('style="') >= 0 ? extra.replace('style="', 'style="object-position:' + FOCUS[slot] + ';') : extra + ' style="object-position:' + FOCUS[slot] + '"';
+    return `<img class="${cls || ''}" src="assets/img/${slot}" alt="${alt.replace(/"/g, '&quot;')}" loading="lazy" decoding="async" ${extra} onerror="this.onerror=null;this.classList.add('ph');this.src=AECUI.ph(this.alt,this.dataset.ph)">`;
   }
+  // Иллюстрация в шапке страницы: горизонтальная рамка 4:3, для вертикальных фото 3:4
+  function heroArt(slot, alt) { return `<div class="hero-art${PORTRAIT.has(slot) ? ' portrait' : ''}">${img(slot, alt, '', 'data-ph="bg"')}</div>`; }
   function bg(slot) { return `style="background-image:url('assets/img/${slot}')"`; }
 
   // ---------- Ссылки прототипа ----------
@@ -341,5 +348,5 @@ window.AECUI = (function () {
   function hashParts() { return location.hash.replace(/^#/, '').split('.').filter(Boolean); }
   function fmtDate(iso) { return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }); }
 
-  return { icon, art, img, bg, pphoto, powerTxt, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer };
+  return { icon, art, img, heroArt, bg, pphoto, powerTxt, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer };
 })();

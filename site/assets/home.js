@@ -232,17 +232,16 @@
     return `<a class="eq" href="${L.cat(c.id)}"><span class="go">${I('chev')}</span><div class="im">${ph ? img(ph, c.full || c.name) : I(c.img)}</div><h3>${c.id === 'sts' ? 'Статические переключатели STS' : c.name}</h3><div class="rng">${c.range}${c.count ? ', ' + c.count + ' моделей' : ', под проект'}</div></a>`;
   }).join('') + `<a class="eq cta" href="${L.kp}"><span class="go">${I('chev')}</span><div class="big">Не нашли нужное? Подберём оборудование под проект</div><p>Отправьте техническое задание или опишите нагрузку: инженер рассчитает мощность и автономию и подготовит КП в течение рабочего дня.</p></a>`;
 
-  const COVER = { ktz: 'proj-ktz-2.jpg', lab: 'proj-lab-2.jpg' };
-  $('#pjTrack').insertAdjacentHTML('beforeend', D.PROJECTS.map(p => `<a class="hp-pj-card" href="${L.project(p.id)}"><div class="im">${pimg(COVER[p.id] || p.photos[0], p.title)}<span class="kva">${p.kva}</span></div><div class="meta">${p.client}, ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="eq2">${p.equipment[0]}</div></a>`).join('')
+  $('#pjTrack').insertAdjacentHTML('beforeend', D.PROJECTS.map(p => `<a class="hp-pj-card" href="${L.project(p.id)}"><div class="im">${pimg(p.cover || p.photos[0], p.title)}<span class="kva">${p.kva}</span></div><div class="meta">${p.client}, ${p.city}, ${p.year}</div><h3>${p.title}</h3><div class="eq2">${p.equipment[0]}</div></a>`).join('')
     + `<div class="hp-pj-end"><b>Ваш объект может быть следующим</b><a class="btn btn-kp btn-lg" href="kp.html">Обсудить проект</a><a class="ulink" href="projects.html">Все проекты</a></div>`);
   $$('#pjTrack img').forEach(i => i.setAttribute('loading', 'eager'));
 
-  const IPH = { czod: 'proj-airastana-1.jpg', med: 'proj-uralsk-1.jpg', prom: 'proj-ktz-2.jpg', oil: 'prod-tescom-genset-1.jpg', office: 'proj-airastana-3.jpg', machines: 'ind-machines.jpg', emergency: 'proj-lab-2.jpg', telecom: 'proj-tv-1.jpg' };
+  const IPH = D.INDUSTRY_PHOTOS, HIND = D.HOME_INDUSTRIES.map(id => D.INDUSTRIES.find(x => x.id === id)).filter(Boolean);
   const list = $('#indList'), im = $('#indMedia');
-  list.innerHTML = D.INDUSTRIES.map((x, i) => `<li class="${i === 0 ? 'on' : ''}" data-i="${i}"><a href="${L.solution(x.id)}">${x.name}<small>${x.kva}</small></a></li>`).join('');
-  im.innerHTML = `<div class="frame">${D.INDUSTRIES.map((x, i) => img(IPH[x.id], x.h1, i === 0 ? 'on' : '', 'data-ph="bg"')).join('')}</div><div class="cap2" id="indCap"></div>`;
+  list.innerHTML = HIND.map((x, i) => `<li class="${i === 0 ? 'on' : ''}" data-i="${i}"><a href="${L.solution(x.id)}">${x.name}<small>${x.kva}</small></a></li>`).join('');
+  im.innerHTML = `<div class="frame">${HIND.map((x, i) => img(IPH[x.id], x.h1, i === 0 ? 'on' : '', 'data-ph="bg"')).join('')}</div><div class="cap2" id="indCap"></div>`;
   let curInd = -1;
-  function pick(i) { if (i === curInd) return; curInd = i; list.querySelectorAll('li').forEach((li, k) => li.classList.toggle('on', k === i)); im.querySelectorAll('.frame img').forEach((el, k) => el.classList.toggle('on', k === i)); const x = D.INDUSTRIES[i]; $('#indCap').innerHTML = `<div><b>${x.h1}</b>${x.text}</div><a class="ulink" href="${L.solution(x.id)}">Подробнее</a>`; }
+  function pick(i) { if (i === curInd) return; curInd = i; list.querySelectorAll('li').forEach((li, k) => li.classList.toggle('on', k === i)); im.querySelectorAll('.frame img').forEach((el, k) => el.classList.toggle('on', k === i)); const x = HIND[i]; $('#indCap').innerHTML = `<div><b>${x.h1}</b>${x.text}</div><a class="ulink" href="${L.solution(x.id)}">Подробнее</a>`; }
   pick(0);
   list.addEventListener('mouseover', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
   list.addEventListener('focusin', e => { const li = e.target.closest('li'); if (li) pick(+li.dataset.i); });
@@ -288,15 +287,11 @@
   /* ======================= Анимации ======================= */
   const root = document.documentElement;
   const ready = () => root.classList.add('ready');
-  const endIntro = () => { root.classList.remove('intro'); try { sessionStorage.setItem('aecIntro', '1'); } catch (e) { /* приватный режим */ } };
   setTimeout(ready, 3000);
-  if (!window.gsap || !window.ScrollTrigger) { ready(); endIntro(); return; }
+  if (!window.gsap || !window.ScrollTrigger) { ready(); return; }
   gsap.registerPlugin(ScrollTrigger, SplitText);
   ScrollTrigger.config({ ignoreMobileResize: true });
 
-  // Тёмная шапка: когда идёт ночная часть сценария или под шапкой тёмная секция
-  const darkOn = new Set();
-  const syncHeader = () => document.body.classList.toggle('hdr-dark', darkOn.size > 0);
   const hdr = () => ($('#hdr') || { offsetHeight: 76 }).offsetHeight;
 
   function start() {
@@ -319,8 +314,6 @@
     // Полоса прогресса
     gsap.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: .3 } });
 
-    $$('[data-dark]').forEach((sec, i) => ScrollTrigger.create({ trigger: sec, start: () => 'top ' + hdr(), end: () => 'bottom ' + hdr(), onToggle: self => { self.isActive ? darkOn.add('s' + i) : darkOn.delete('s' + i); syncHeader(); } }));
-
     /* ---------- Камера сцены: приближение вокруг защищённых объектов ---------- */
     const camIntro = { s: 1 }, camStory = { s: 1 }, camShake = { x: 0, y: 0 };
     const renderCam = () => { const c1 = $('#stage .cam'), c2 = $('#stage .cam2'); if (c1) c1.style.transform = camIntro.s === 1 ? '' : `scale(${camIntro.s.toFixed(4)})`; if (c2) c2.style.transform = (camStory.s === 1 && !camShake.x && !camShake.y) ? '' : `translate3d(${camShake.x.toFixed(1)}px, ${camShake.y.toFixed(1)}px, 0) scale(${camStory.s.toFixed(4)})`; };
@@ -340,35 +333,7 @@
       .from('#cue', { autoAlpha: 0, duration: .8 }, .9)
       .fromTo(camIntro, { s: 1.16 }, { s: 1, duration: 2.6, ease: 'expo.out', onUpdate: renderCam }, 0);
 
-    /* ---------- Загрузочный экран ---------- */
-    if (root.classList.contains('intro')) {
-      if (lenis) lenis.stop();
-      const cnt = { v: 0 }, path = $('#ldPath'), dot = $('#ldDot'), L0 = path.getTotalLength(), mv = { t: 0 };
-      const sine = $('#loaderSine'), W = { a: 26, k: 0, ph: 0, noise: 1 };
-      const drawSine = () => { let d = ''; for (let x = 0; x <= 560; x += 5) { const n = W.noise * (Math.sin(x * .37 + W.ph * 3.1) * .6 + Math.sin(x * .11 - W.ph * 2.3) * .4) * 16; d += `${d ? ' L' : 'M'}${x} ${(32 + Math.sin(x / 560 * Math.PI * 6 + W.ph) * W.a * W.k + n * W.k).toFixed(2)}`; } sine.setAttribute('d', d); };
-      const tick = () => { W.ph += .14; drawSine(); };
-      gsap.ticker.add(tick);
-      const nameSplit = new SplitText('#ldName', { type: 'chars', charsClass: 'ch' });
-      gsap.set('.loader-mark .m-line, .loader-mark .m-snow', { strokeDasharray: 1, strokeDashoffset: 1 });
-      gsap.set('.loader-mark .m-turb', { scaleY: 0, transformOrigin: '50% 100%' });
-      gsap.set('.loader-mark .m-fill', { clipPath: 'inset(100% 0 0 0)' });
-      const lt = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
-      lt.to('#ldPath', { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, 0)
-        .to(mv, { t: 1, duration: 1.1, ease: 'power2.inOut', onUpdate: () => { const p = path.getPointAtLength(mv.t * L0); dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); } }, 0)
-        .to('.loader-mark .m-line:not(#ldPath)', { strokeDashoffset: 0, duration: .8 }, .4)
-        .to('.loader-mark .m-fill', { clipPath: 'inset(0% 0 0 0)', duration: .9, ease: 'expo.inOut' }, .75)
-        .to('.loader-mark .m-snow', { strokeDashoffset: 0, duration: .5 }, 1.05)
-        .to('.loader-mark .m-turb', { scaleY: 1, duration: .7, stagger: .1, ease: 'back.out(1.7)' }, .9)
-        .to(dot, { attr: { r: 0 }, duration: .3 }, 1.15)
-        .from(nameSplit.chars, { yPercent: 120, autoAlpha: 0, duration: .7, stagger: .022, ease: 'expo.out' }, .55)
-        .to(W, { k: 1, duration: .5, ease: 'power2.out' }, .1)
-        .to(W, { noise: 0, duration: 1, ease: 'power2.inOut' }, .85)
-        .to(cnt, { v: 100, duration: 1.8, ease: 'power2.inOut', onUpdate: () => { $('#loaderCount').textContent = Math.round(cnt.v); } }, 0)
-        .to('#ldCenter, .loader-foot', { autoAlpha: 0, scale: .97, duration: .45, ease: 'power2.in' }, 1.95)
-        .to('#ldLine', { scaleX: 1, duration: .55, ease: 'expo.inOut' }, 2.15)
-        .to('#loader', { clipPath: 'inset(50% 0 50% 0)', duration: .85, ease: 'expo.inOut' }, 2.6)
-        .add(() => { gsap.ticker.remove(tick); endIntro(); if (lenis) lenis.start(); ScrollTrigger.refresh(); intro.play(0); }, 2.75);
-    } else { endIntro(); if (reduce) { intro.progress(1); ready(); } else intro.play(); }
+    if (reduce) { intro.progress(1); ready(); } else intro.play();
 
     /* ---------- Сценарий аварии ---------- */
     const mm = gsap.matchMedia();
@@ -382,7 +347,7 @@
           trigger: hero, start: () => 'top ' + hdr(), end: () => '+=' + Math.round(innerHeight * (innerWidth < 768 ? 3.4 : 3.8)), pin: true, scrub: touch ? .45 : .6, anticipatePin: 1, invalidateOnRefresh: true, fastScrollEnd: true,
           onUpdate: self => {
             const t = self.progress * 10;
-            const had = darkOn.has('hero'); if (t > .5) darkOn.add('hero'); else darkOn.delete('hero'); if (had !== darkOn.has('hero')) syncHeader();
+            if (t > .15 && intro.progress() < 1) intro.progress(1); // прокрутка во время вступления: показываем сцену сразу
             steps.forEach((li, i) => { const k = Math.round(gsap.utils.clamp(0, 1, (t - at[i]) / (at[i + 1] - at[i])) * 1000) / 1000; if (li._k !== k) { li._k = k; li.firstChild.style.transform = `scaleX(${k})`; } const on = t >= at[i] && t < at[i + 1] + (i === 4 ? 1 : 0); if (li._on !== on) { li._on = on; li.classList.toggle('on', on); } });
           }
         }
@@ -432,7 +397,7 @@
       applyScene(); renderCam();
       window.__aec = Object.assign(window.__aec || {}, { heroST: tl.scrollTrigger, lenis, S, tl });
       $('#cue').addEventListener('click', () => { const st = tl.scrollTrigger; scrollTo(st.start + (st.end - st.start) * .2); });
-      return () => { darkOn.delete('hero'); syncHeader(); };
+      return () => {};
     });
 
     /* ---------- Заголовки секций: строки выезжают из-под маски ---------- */
@@ -502,6 +467,6 @@
     addEventListener('load', () => ScrollTrigger.refresh());
   }
 
-  const go = () => (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]) : Promise.resolve()).then(start).catch(e => { console.error(e); ready(); endIntro(); });
+  const go = () => (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]) : Promise.resolve()).then(start).catch(e => { console.error(e); ready(); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();

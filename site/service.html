@@ -13,7 +13,8 @@
 .svc-nav a { flex: none; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: 14px; background: #fff; white-space: nowrap; }
 .svc-nav a.on { background: var(--navy); color: #fff; border-color: var(--navy); }
 .incl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.incl div { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; background: #fff; display: flex; gap: 12px; align-items: flex-start; }
+.incl > div { border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px; background: #fff; display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+.incl > div > div { min-width: 0; flex: 1; }
 .incl .ic { width: 32px; height: 32px; border-radius: 7px; background: var(--ok-l); color: var(--ok); display: grid; place-items: center; flex: none; }
 .incl .ic svg { width: 18px; height: 18px; }
 .incl b { display: block; font-size: 15px; color: var(--ink); font-weight: 600; margin-bottom: 3px; }
@@ -80,7 +81,7 @@
     const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Услуги', href: L.service('montazh') }, { name: s.short }];
     document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${t.h1}</h1><p class="lead">${t.lead}</p><div class="cta"><a class="btn btn-lg btn-kp" href="#order">Оставить заявку</a><a class="btn btn-lg btn-outline-light" href="${C.whatsapp}" target="_blank" rel="noopener">${I('wa')} Написать в WhatsApp</a><a class="btn btn-lg btn-outline-light" href="tel:+${C.phoneRaw}">${I('phone')} ${C.phone}</a></div>`;
     const SPH = { montazh: 'proj-uralsk-3.jpg', service: 'hero-service.jpg', remont: 'proj-airastana-2.jpg', zamena: 'proj-ktz-3.jpg', diagnostika: 'proj-ktz-1.jpg', obsledovanie: 'proj-lab-2.jpg', konsultaciya: 'proj-uralsk-2.jpg' };
-    document.getElementById('heroArt').innerHTML = `<div style="border-radius:var(--r-l);overflow:hidden;aspect-ratio:4/3;max-width:420px;margin-inline:auto;box-shadow:var(--shadow)">${U.img(SPH[s.id] || 'proj-uralsk-3.jpg', t.h1, '', 'style="width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div>`;
+    document.getElementById('heroArt').innerHTML = U.heroArt(SPH[s.id] || 'proj-uralsk-3.jpg', t.h1);
     document.getElementById('inclSub').textContent = s.text + '.';
     document.getElementById('incl').innerHTML = t.incl.map(x => `<div><span class="ic">${I('check')}</span><div><b>${x[0]}</b><p>${x[1]}</p></div></div>`).join('');
     document.getElementById('brandsLine').innerHTML = BR.map(b => `<span>${b}</span>`).join('');
@@ -88,7 +89,7 @@
     document.getElementById('geo').innerHTML = t.geo.map(x => `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
     document.getElementById('side').innerHTML = `<h3>${s.short}</h3><div class="big">${s.price}</div><p class="small muted">Ответ в рабочее время в течение часа. Выезд по Алматы в день обращения.</p><button class="btn btn-kp btn-block" data-open-modal data-title="Заявка: ${s.short}" data-type="Заявка на услугу: ${s.short}">Оставить заявку</button><a class="btn btn-wa btn-block" href="${C.whatsapp}" target="_blank" rel="noopener">${I('wa')} WhatsApp</a><a class="btn btn-ghost btn-block" href="tel:+${C.phoneRaw}">${I('phone')} ${C.phone}</a><div style="border-top:1px solid var(--line);padding-top:12px;font-size:14px"><b style="display:block;margin-bottom:6px">Другие услуги</b>${D.SERVICES.filter(x => x.id !== s.id).map(x => `<a href="${L.service(x.id)}" style="display:block;padding:4px 0">${x.short}</a>`).join('')}</div>`;
     const pj = s.id === 'zamena' || s.id === 'diagnostika' ? D.PROJECTS.filter(p => ['ktz', 'uralsk', 'lab'].includes(p.id)) : D.PROJECTS.slice(0, 3);
-    document.getElementById('pj').innerHTML = pj.map(p => `<a class="pj" href="${L.project(p.id)}"><div class="img" style="padding:0;overflow:hidden"><span class="badge badge-navy tag" style="z-index:1">${p.city}, ${p.year}</span>${U.img(p.photos[0], p.title, '', 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div><div class="body"><div class="meta">${p.client}</div><h3>${p.title}</h3><div class="kva">${p.kva}</div></div></a>`).join('');
+    document.getElementById('pj').innerHTML = pj.map(p => `<a class="pj" href="${L.project(p.id)}"><div class="img" style="padding:0;overflow:hidden"><span class="badge badge-navy tag" style="z-index:1">${p.city}, ${p.year}</span>${U.img(p.cover || p.photos[0], p.title, '', 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" data-ph="bg"')}</div><div class="body"><div class="meta">${p.client}</div><h3>${p.title}</h3><div class="kva">${p.kva}</div></div></a>`).join('');
     document.getElementById('seo').innerHTML = `<h2>${t.seo[0]}</h2>${t.seo[1]}<p>Связанные разделы: <a href="${L.cat('ibp')}">каталог ИБП</a>, <a href="${L.cat('akb')}">аккумуляторные батареи</a>, <a href="${L.cat('dgu')}">дизельные генераторы</a>, <a href="${L.calc}">калькулятор подбора</a>.</p>`;
     document.getElementById('faq').innerHTML = t.faq.map(q => `<details><summary>${q[0]}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${q[1]}</div></details>`).join('');
     document.getElementById('formTitle').textContent = 'Заявка: ' + s.short.toLowerCase();
