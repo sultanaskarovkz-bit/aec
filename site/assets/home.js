@@ -398,17 +398,11 @@
     });
     if (!reduce) ScrollTrigger.batch('.js-up', { start: 'top 90%', once: true, onEnter: els => gsap.from(els, { y: 36, autoAlpha: 0, duration: 1, ease: 'power3.out', stagger: .1, overwrite: true }) });
 
-    /* ---------- Как мы работаем: слова, линия этапов, синусоида ---------- */
+    /* ---------- Как мы работаем: слова, линия этапов ---------- */
     const mf = $('#manifest');
     if (!reduce) SplitText.create(mf, { type: 'words', wordsClass: 'w', autoSplit: true, onSplit: self => gsap.to(self.words, { opacity: 1, ease: 'none', stagger: .1, scrollTrigger: { trigger: mf, start: 'top 82%', end: 'bottom 50%', scrub: true } }) });
     const stepsLi = $$('#mfSteps li'), rail = $('#mfSteps .mf-rail i');
     const vertical = () => innerWidth <= 860;
-    // ровная синусоида (символ переменного тока), медленно плывёт, пока блок на экране
-    const mfWave = $('#mfWave'), mw = { ph: 0 };
-    const drawWave = () => { let d = ''; for (let x = 0; x <= 1600; x += 8) d += `${d ? ' L' : 'M'}${x} ${(60 + Math.sin(x / 1600 * Math.PI * 8 - mw.ph) * 28).toFixed(1)}`; mfWave.setAttribute('d', d); };
-    drawWave();
-    const waveTick = () => { mw.ph += .03; drawWave(); };
-    if (!reduce) ScrollTrigger.create({ trigger: '.manifest', start: 'top bottom', end: 'bottom top', onToggle: self => self.isActive ? gsap.ticker.add(waveTick) : gsap.ticker.remove(waveTick) });
     ScrollTrigger.create({ trigger: '#mfSteps', start: 'top 85%', end: 'bottom 55%', scrub: reduce ? false : .4,
       onUpdate: self => { const p = reduce ? 1 : self.progress; rail.style.transform = vertical() ? `scaleY(${p})` : `scaleX(${p})`; stepsLi.forEach((li, i) => li.classList.toggle('on', p >= i / stepsLi.length + .02 || p >= .999)); },
       onRefresh: self => { if (reduce) { rail.style.transform = 'none'; stepsLi.forEach(li => li.classList.add('on')); } } });
@@ -423,7 +417,7 @@
     }
 
     /* ---------- Проекты: горизонтальная прокрутка на десктопе ---------- */
-    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+    gsap.matchMedia().add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
       const track = $('#pjTrack');
       const dist = () => Math.max(0, track.scrollWidth - innerWidth);
       const move = gsap.to(track, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '#pjPin', start: () => 'top ' + hdr(), end: () => '+=' + dist(), pin: true, scrub: .8, invalidateOnRefresh: true, anticipatePin: 1 } });
