@@ -92,6 +92,13 @@ def old_urls():
     for b in 'agg bae-batterien baifa baudouin cummins deutz doosan energrid everexceed hoppecke hyundai kehua-tech mecc-alte mtu nidec-leroy-somer perkins ritar salicru scania sdec sprinter stamford-avk tescom volvo-penta yto'.split():
         urls.add(f'/brand/{b}/')
     urls |= {'/product-category/akb/litij-ionnye/', '/voltage/220v/', '/product-tag/ibp/', '/feed/', '/sitemap_index.xml', '/product-sitemap.xml'}
+    # все страницы из карт сайта WordPress и все файлы медиатеки (tools/fetch-wp-uploads.py)
+    wu = os.path.join(ROOT, 'crawl', 'wp-urls.json')
+    if os.path.exists(wu):
+        urls |= {urlparse(u).path for u in json.load(io.open(wu, encoding='utf-8'))['pages']}
+    wl = os.path.join(ROOT, 'crawl', 'wp-uploads-list.txt')
+    if os.path.exists(wl):
+        urls |= {urlparse(u).path for u in io.open(wl, encoding='utf-8').read().split()}
     res = {}
     for u in sorted(urls):
         st, fin = resolve(u)

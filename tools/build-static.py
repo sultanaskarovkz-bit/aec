@@ -398,6 +398,34 @@ def copy_site(no_docs):
             else:
                 shutil.copy2(src, dst)
 
+def copy_uploads():
+    """Файлы медиатеки старого сайта (tools/fetch-wp-uploads.py → crawl/wp-uploads) по прежним адресам /wp-content/uploads/...
+    PDF, которые побайтно совпадают с файлами в assets/docs, не дублируются: на них ставится 301 в /assets/docs/."""
+    import hashlib
+    src = os.path.join(ROOT, 'crawl', 'wp-uploads')
+    if not os.path.isdir(src):
+        print('Нет crawl/wp-uploads: старые картинки не войдут в сборку (запустите tools/fetch-wp-uploads.py)')
+        return []
+    h = lambda p: hashlib.sha1(open(p, 'rb').read()).hexdigest()
+    docs = {}
+    ddir = os.path.join(SITE, 'assets', 'docs')
+    for f in os.listdir(ddir) if os.path.isdir(ddir) else []:
+        docs[h(os.path.join(ddir, f))] = f
+    reds, n, size = [], 0, 0
+    for dp, dns, fns in os.walk(src):
+        for f in fns:
+            if f.endswith('.part'): continue
+            p = os.path.join(dp, f)
+            rel = os.path.relpath(p, src).replace('\\', '/')
+            if f.lower().endswith('.pdf'):
+                d = docs.get(h(p))
+                if d: reds.append(('wp-content/uploads/' + rel, '/assets/docs/' + d)); continue
+            dst = os.path.join(OUT, 'wp-content', 'uploads', *rel.split('/'))
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copy2(p, dst); n += 1; size += os.path.getsize(p)
+    print(f'Файлы старого сайта: {n} ({size / 1048576:.0f} МБ) в /wp-content/uploads/, PDF с переадресацией в /assets/docs/: {len(reds)}')
+    return reds
+
 def make_icons():
     from PIL import Image
     im = Image.open(os.path.join(SITE, 'assets', 'img', 'favicon.png')).convert('RGBA')
@@ -460,7 +488,8 @@ def htaccess(routes, reds):
          '# старые карты сайта Rank Math / Yoast -> новая', 'RewriteRule ^(sitemap_index|[a-z_]+-sitemap[0-9]*)\\.xml$ /sitemap.xml [R=301,L]', '',
          '# мусорные адреса WordPress: таксономии атрибутов, теги, авторы, ленты (410 — страница удалена навсегда)',
          'RewriteRule ^(voltage|install|power-factor|product-tag|tag|author|bricks_template|template|feed|comments/feed)(/.*)?$ - [G,L]',
-         'RewriteRule ^.+/feed/?$ - [G,L]', 'RewriteRule ^proizvoditel(/.*)?$ /podbor-po-brendam/ [R=301,L]', '',
+         'RewriteRule ^.+/feed/?$ - [G,L]', 'RewriteRule ^proizvoditel(/.*)?$ /podbor-po-brendam/ [R=301,L]',
+         '# рубрики блога WordPress -> блог', 'RewriteRule ^category(/.*)?$ /blog/ [R=301,L]', '',
          '# товары, у которых в адресе на старом сайте есть символы ³ и · : адрес не меняется, файл лежит в латинской папке']
     for r in routes:
         if r.kind == 'product' and r.canon != r.path:
@@ -531,6 +560,7 @@ def main():
     copy_site(a.no_docs)
     wr(os.path.join(OUT, 'assets', 'routes.js'), routes_js(D))
     make_icons()
+    upl_reds = copy_uploads()
 
     # шаблоны → оболочки страниц
     tpls = {}
@@ -569,7 +599,7 @@ def main():
         dst = os.path.join(OUT, r.file.lstrip('/'), 'index.html') if r.file.endswith('/') else os.path.join(OUT, r.file.lstrip('/'))
         wr(dst, final)
 
-    reds = redirects(D) + find_product_dupes(D)
+    reds = redirects(D) + find_product_dupes(D) + upl_reds
     wr(os.path.join(OUT, '.htaccess'), htaccess(routes, reds))
     wr(os.path.join(OUT, 'sitemap.xml'), sitemap(routes, D))
     wr(os.path.join(OUT, 'robots.txt'), ROBOTS)
@@ -593,15 +623,23 @@ def main():
     print('Отчёт: build/build-report.md')
 
     if not a.no_zip:
-        zp = os.path.join(BUILD, f'aecups-kz-{NOW.strftime("%Y%m%d")}.zip')
-        if os.path.exists(zp): os.remove(zp)
-        with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as z:
-            for dp, dns, fns in os.walk(OUT):
-                for f in fns:
-                    p = os.path.join(dp, f); arc = os.path.relpath(p, OUT).replace('\\', '/')
-                    if arc.endswith('.pdf'): z.write(p, arc, compress_type=zipfile.ZIP_STORED)
-                    else: z.write(p, arc)
-        print(f'Архив: {zp} ({os.path.getsize(zp) / 1048576:.0f} МБ)')
+        # два архива: сам сайт и медиатека старого сайта (/wp-content/uploads); оба распаковываются в корень сайта
+        stamp = NOW.strftime("%Y%m%d")
+        for zp, pick in [(os.path.join(BUILD, f'aecups-kz-{stamp}.zip'), lambda arc: not arc.startswith('wp-content/')),
+                         (os.path.join(BUILD, f'aecups-kz-wp-uploads-{stamp}.zip'), lambda arc: arc.startswith('wp-content/'))]:
+            if os.path.exists(zp): os.remove(zp)
+            n = 0
+            with zipfile.ZipFile(zp, 'w', zipfile.ZIP_DEFLATED, compresslevel=6) as z:
+                for dp, dns, fns in os.walk(OUT):
+                    for f in fns:
+                        p = os.path.join(dp, f); arc = os.path.relpath(p, OUT).replace('\\', '/')
+                        if not pick(arc): continue
+                        n += 1
+                        # картинки и PDF уже сжаты: кладём без повторного сжатия
+                        if arc.lower().endswith(('.pdf', '.jpg', '.jpeg', '.png', '.webp')): z.write(p, arc, compress_type=zipfile.ZIP_STORED)
+                        else: z.write(p, arc)
+            if n: print(f'Архив: {zp} ({n} файлов, {os.path.getsize(zp) / 1048576:.0f} МБ)')
+            else: os.remove(zp)
     print(f'Готово за {time.time() - t0:.0f} с')
 
 if __name__ == '__main__':

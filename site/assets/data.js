@@ -205,7 +205,8 @@ window.AEC = (function () {
     { slug: 'blog/dizelnyj-generator-dlya-biznes-centra/', title: 'Дизельный генератор для бизнес-центра: мощность, АВР, шум и размещение', cat: 'ДГУ', date: '2026-09-22', read: 7, cover: 'staff-6.png' },
     { slug: 'blog/ibp-dlya-medicinskogo-oborudovaniya/', title: 'ИБП для медицинского оборудования: рентген, КТ, МРТ и операционные', cat: 'Решения', date: '2026-09-10', read: 6, cover: 'proj-uralsk-3.jpg' },
     { slug: 'blog/modulnyj-ili-monoblochnyj-ibp/', title: 'Модульный или моноблочный ИБП: что выбрать для серверной и ЦОД', cat: 'Подбор', date: '2026-08-14', read: 6, cover: 'proj-lab-1.jpg' },
-    { slug: 'blog/stabilizator-dlya-stankov-chpu/', title: 'Стабилизатор напряжения для станков с ЧПУ и производственных линий', cat: 'Подбор', date: '2026-07-22', read: 6, cover: 'proj-ktz-5.jpg' }
+    { slug: 'blog/stabilizator-dlya-stankov-chpu/', title: 'Стабилизатор напряжения для станков с ЧПУ и производственных линий', cat: 'Подбор', date: '2026-07-22', read: 6, cover: 'proj-ktz-5.jpg' },
+    { slug: 'blog/kakoj-generator-luchshe-vybrat-dlya-doma-dachi-otdyha-i-dlya-predpriyatij/', title: 'Какой генератор лучше выбрать: для дома, дачи, отдыха и для предприятий', cat: 'Подбор', date: '2026-03-27', read: 7, cover: 'blog-gen-benzin-dizel.jpg' }
   ];
 
   const FAQ = [

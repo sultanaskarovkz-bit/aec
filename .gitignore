@@ -5,3 +5,4 @@ site/_dev/
 *.log
 .vercel/
 build/
+crawl/wp-uploads/

@@ -112,7 +112,7 @@ photo/photos (assets/img/products/), docs[{name,file,size}], spec{} (норма�
   (--no-docs без PDF, --no-zip, --only catalog,product для быстрой проверки). build/ в .gitignore.
 - python -X utf8 tools/qa-static.py      → битые ссылки, JSON-LD, все старые адреса aecups.kz (200/301/410), браузер 1440/390 через
   php -S + tools/hosting/dev-router.php (повторяет .htaccess), тест формы заявки.
-- Как устроено: на каждый адрес старого сайта своя страница (756: категории product-category/..., 602 товара /product/<slug WP>/,
+- Как устроено: на каждый адрес старого сайта своя страница (757: категории product-category/..., 602 товара /product/<slug WP>/,
   23 посадочные по мощности из SEO-плана, решения, услуги /uslugi/..., бренды, регионы /regiony/..., статьи /blog/...).
   Страница рендерится в Chromium, в HTML кладутся готовое содержимое #app, title, description, JSON-LD; исходный шаблон лежит
   в <template id="aec-tpl">, aec.js init() возвращает его и рисует страницу заново (тот же код, что в прототипе).
@@ -129,6 +129,10 @@ photo/photos (assets/img/products/), docs[{name,file,size}], spec{} (норма�
   в head каждой страницы, грузятся после первого действия или через 5 с. События dataLayer: generate_lead, click_phone, click_whatsapp,
   click_email, file_download, add_to_kp, catalog_filter, lead_send_error.
 - Инструкция для загрузки: tools/hosting/README-HOSTING.md (кладётся в корень архива, закрыта от просмотра).
+- Медиатека старого сайта (клиент удаляет WordPress полностью): python -X utf8 tools/fetch-wp-uploads.py → crawl/wp-uploads/
+  (не в git): все вложения из /wp-json/wp/v2/media со всеми размерами + все ссылки на /wp-content/uploads/ со страниц из карт сайта Yoast.
+  build-static.py кладёт их в архив по прежним адресам /wp-content/uploads/...; PDF, совпадающие с assets/docs, получают 301 туда.
+  Списки: crawl/wp-media.json, crawl/wp-urls.json (страницы старого сайта со статусами), crawl/wp-uploads-list.txt; qa-static.py проверяет все эти адреса.
 
 ## SEO
 План SEO (15 разделов, 15 запросов из договора, структура URL, фильтровые посадочные, регионы) лежит в Claude Docs:
