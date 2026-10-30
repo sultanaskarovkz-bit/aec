@@ -99,8 +99,8 @@
     document.getElementById('faq').innerHTML = t.faq.map(q => `<details><summary>${q[0]}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${q[1]}</div></details>`).join('');
     document.getElementById('ctaTitle').textContent = 'Подбор для объекта: ' + ind.name;
     document.getElementById('ctaType').value = 'Подбор по отрасли: ' + ind.name;
-    document.title = ind.h1 + ': подбор, поставка, монтаж | AEC Kazakhstan';
-    document.querySelector('meta[name=description]').setAttribute('content', t.lead.slice(0, 155));
+    document.title = U.fit([ind.h1 + ': подбор, поставка, монтаж | AEC Kazakhstan', ind.h1 + ': подбор, поставка, монтаж | AEC', ind.h1 + ': подбор и поставка | AEC', ind.h1 + ' | AEC']);
+    document.querySelector('meta[name=description]').setAttribute('content', U.clip(t.lead));
     document.querySelectorAll('script[type="application/ld+json"]').forEach(s => s.remove());
     U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'FAQPage', mainEntity: t.faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }] });
     U.render(); window.scrollTo({ top: 0 });

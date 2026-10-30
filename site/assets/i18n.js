@@ -59,7 +59,7 @@
 
   // Переключатель языка
   function switcher(cls) {
-    return `<div class="lang${cls ? ' ' + cls : ''}" role="group" aria-label="Язык">${Object.keys(LANGS).map(k => `<a href="?lang=${k}" data-lang="${k}" class="${k === lang ? 'on' : ''}" lang="${LANGS[k].code}" title="${LANGS[k].name}">${LANGS[k].label}</a>`).join('')}</div>`;
+    return `<div class="lang${cls ? ' ' + cls : ''}" role="group" aria-label="Язык">${Object.keys(LANGS).map(k => `<a href="?lang=${k}" rel="nofollow" data-lang="${k}" class="${k === lang ? 'on' : ''}" lang="${LANGS[k].code}" title="${LANGS[k].name}">${LANGS[k].label}</a>`).join('')}</div>`;
   }
   window.AEC_I18N_UI = { lang, switcher, tr };
   document.addEventListener('click', e => {

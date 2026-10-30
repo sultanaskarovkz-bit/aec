@@ -131,6 +131,10 @@
   const brandName = id => (D.BRANDS.find(b => b.id === id) || { name: id }).name;
   const fmtN = v => (+v).toLocaleString('ru-RU');
   const lc = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : '';
+  // первый вариант заголовка, который укладывается в 60 символов
+  const fitTitle = vs => vs.find(t => t.length <= 60) || vs[vs.length - 1];
+  // описание до 160 символов: по границе предложения, иначе по слову
+  const clip = (t, n) => { n = n || 160; t = String(t || '').replace(/\s+/g, ' ').trim(); if (t.length <= n) return t; const c = t.slice(0, n); const dot = c.lastIndexOf('. '); return dot > 90 ? c.slice(0, dot + 1) : c.slice(0, c.lastIndexOf(' ')).replace(/[,:;\s]+$/, '') + '…'; };
 
   /* ---------- Ключи фильтров ---------- */
   const phaseKey = p => { const m = (p.phases || '').match(/^[\d/]+/); return m ? m[0].replace(/\//g, '-') : ''; };
@@ -162,9 +166,11 @@
     'ibp.batarejnye-shkafy': 'Батарейные шкафы и модули для ИБП', 'ibp.aksessuary': 'Аксессуары для ИБП',
     'dgu.otkrytye': 'Дизельные генераторы открытого исполнения', 'dgu.v-kozhuhe': 'Дизельные генераторы в шумозащитном кожухе', 'dgu.v-kontejnere': 'Дизельные генераторы в контейнере', 'dgu.avr': 'АВР и панели управления для ДГУ',
     'akb.12v': 'Аккумуляторные батареи 12 В AGM и GEL', 'akb.2v': 'Аккумуляторные батареи 2 В OPzV и OPzS', 'akb.li-ion': 'Литий-ионные аккумуляторные батареи', 'akb.stellazhi': 'Стеллажи и шкафы для аккумуляторных батарей',
-    'sts.odnofaznye': 'Статические переключатели STS однофазные', 'sts.tryohfaznye': 'Статические переключатели STS трёхфазные'
+    'sts.odnofaznye': 'Статические переключатели STS однофазные', 'sts.tryohfaznye': 'Статические переключатели STS трёхфазные',
+    'stab.odnofaznye': 'Однофазные стабилизаторы напряжения 220 В', 'stab.tryohfaznye': 'Трёхфазные промышленные стабилизаторы напряжения 380 В', 'stab.relejnye': 'Релейные стабилизаторы напряжения',
+    'stab.elektromehanicheskie': 'Электромеханические стабилизаторы напряжения', 'stab.elektronnye': 'Электронные тиристорные стабилизаторы напряжения', 'akb.6v': 'Аккумуляторные батареи 6 В OPzV и OPzS'
   };
-  const SHORT = { 'akb.12v': 'АКБ 12 В', 'akb.2v': 'АКБ 2 В', 'dgu.v-kontejnere': 'ДГУ в контейнере', 'dgu.v-kozhuhe': 'ДГУ в кожухе', 'dgu.otkrytye': 'ДГУ открытые', 'sts.odnofaznye': 'STS однофазные', 'sts.tryohfaznye': 'STS трёхфазные' };
+  const SHORT = { akb: 'Аккумуляторные батареи для ИБП', 'stab.odnofaznye': 'Однофазные стабилизаторы 220 В', 'stab.tryohfaznye': 'Промышленные стабилизаторы напряжения 380 В', 'stab.relejnye': 'Релейные стабилизаторы напряжения', 'stab.elektromehanicheskie': 'Электромеханические стабилизаторы', 'stab.elektronnye': 'Электронные стабилизаторы напряжения', 'akb.6v': 'АКБ 6 В', 'akb.12v': 'АКБ 12 В', 'akb.2v': 'АКБ 2 В', 'dgu.v-kontejnere': 'ДГУ в контейнере', 'dgu.v-kozhuhe': 'ДГУ в кожухе', 'dgu.otkrytye': 'ДГУ открытые', 'sts.odnofaznye': 'STS однофазные', 'sts.tryohfaznye': 'STS трёхфазные' };
   const INTRO = {
     ibp: 'Однофазные и трёхфазные ИБП с двойным преобразованием от 0,7 кВА до 4800 кВт: складские и проектные модели: Salicru, Kehua, Tescom. Стоечные, напольные и модульные системы с резервированием N+1. Складские модели до 20 кВА отгружаем из Алматы, остальное под заказ за 4–6 недель.',
     'ibp.odnofaznye': 'ИБП 1–10 кВА с однофазным входом и выходом для серверных стоек, кабинетов связи, кассовых узлов и систем безопасности. Встроенные батареи, подключение внешних батарейных модулей, SNMP-мониторинг.',
@@ -184,6 +190,8 @@
     'akb.li-ion': 'Литий-железо-фосфатные батареи LiFePO4 со встроенной BMS для ИБП и телеком-узлов: в 3–4 раза легче свинцовых при той же ёмкости, до 3000 циклов.',
     'akb.stellazhi': 'Стеллажи, батарейные шкафы и кабинеты под линейки 12 В и 2 В: с автоматами постоянного тока, перемычками и датчиками температуры.',
     stab: 'Стабилизаторы напряжения от 1 до 3200 кВА: однофазные 220 В и трёхфазные 380 В, электромеханические с точностью ±1 % и электронные тиристорные без износа. Tescom, Salicru, EverExceed.',
+    'stab.relejnye': 'Релейные стабилизаторы Salicru RE, RE3 и RET со ступенчатой регулировкой: быстрая реакция на скачки сети, компактный корпус и доступная цена. Однофазные от 0,3 кВА и трёхфазные до 250 кВА для офисов, магазинов и инженерных систем.',
+    'akb.6v': 'Моноблоки 6 В ёмкостью 195–300 А·ч: гелевые OPzV и OPzS BAE Secura, Hoppecke grid power VR M и AGM Exide Sprinter. Для СОПТ подстанций, телеком-узлов и ИБП с большой автономией.',
     'stab.odnofaznye': 'Однофазные стабилизаторы 220 В на 1–10 кВА для офисов, торговых точек, котельных и частных объектов. Складские модели EverExceed SVC в наличии.',
     'stab.tryohfaznye': 'Трёхфазные стабилизаторы 380/400 В от 10 до 3200 кВА для станков, компрессоров, холодильного оборудования, медицинской техники и целых зданий.',
     'stab.elektromehanicheskie': 'Сервоприводные стабилизаторы с плавной регулировкой, точностью до ±1 % и высокой перегрузочной способностью: оптимальны для индуктивной нагрузки и производств.',
@@ -245,13 +253,14 @@
     sts: [['Для чего нужен STS, если есть два ИБП?', 'Оборудование с одним блоком питания не может подключиться к двум ИБП одновременно. STS питает его от первого источника и за время менее 4 мс переводит на второй при отказе, сохраняя преимущества схемы 2N для всей нагрузки.'], ['Чем отличаются STS2000 и STS4000?', 'STS2000 однофазные на 16–63 А в стоечном исполнении для отдельных рядов оборудования. STS4000 трёхфазные четырёхполюсные на 100–1250 А для распределительных щитов, с ручным байпасом и SNMP.'], ['Что будет при несинхронных источниках?', 'Если источники не синхронизированы по фазе, STS выполняет переход с паузой, чтобы исключить перекрёстное замыкание. Поэтому при проектировании ИБП синхронизируются между собой или по общему байпасу.'], ['Какой срок поставки?', 'STS поставляются под заказ за 4–6 недель. Монтаж, настройка приоритетов источников и проверка переключения под нагрузкой входят в пусконаладку.']]
   };
   const POP = {
-    ibp: [[10, 20, 30, 40, 60, 80, 100, 160, 200].map(v => ['ИБП ' + v + ' кВА', 'ibp.kva-' + v]), [['Трёхфазные ИБП', 'ibp.tryohfaznye'], ['Модульные ИБП', 'ibp.modulnye'], ['Стоечные ИБП', 'ibp.stoechnye'], ['ИБП Salicru', 'ibp.brand-salicru'], ['ИБП Kehua', 'ibp.brand-kehua-tech'], ['ИБП в наличии', 'ibp.stock-in']]].flat(),
-    dgu: [[50, 100, 150, 200, 250, 500].map(v => ['ДГУ ' + v + ' кВА', 'dgu.kva-' + v]), [['ДГУ в контейнере', 'dgu.v-kontejnere'], ['ДГУ в кожухе', 'dgu.v-kozhuhe'], ['ДГУ Perkins', 'dgu.engine-perkins'], ['ДГУ Cummins', 'dgu.engine-cummins']]].flat(),
-    akb: [['АКБ 12 В 100 А·ч', 'akb.12v.kva-100'], ['АКБ 2 В OPzV', 'akb.2v.tech-opzv'], ['АКБ 12 В 7 А·ч', 'akb.12v.kva-7'], ['АКБ 12 В 65 А·ч', 'akb.12v.kva-65'], ['АКБ OPzS', 'akb.2v.tech-opzs'], ['АКБ Hoppecke', 'akb.brand-hoppecke'], ['АКБ в наличии', 'akb.stock-in']],
+    ibp: [[10, 20, 30, 40, 60, 80, 100, 160, 200, 300].map(v => ['ИБП ' + v + ' кВА', 'ibp.kva-' + v]), [['Трёхфазные ИБП', 'ibp.tryohfaznye'], ['Модульные ИБП', 'ibp.modulnye'], ['Стоечные ИБП', 'ibp.stoechnye'], ['ИБП Salicru', 'ibp.brand-salicru'], ['ИБП Kehua', 'ibp.brand-kehua-tech'], ['ИБП в наличии', 'ibp.stock-in']]].flat(),
+    dgu: [[30, 50, 100, 150, 200, 300, 500].map(v => ['ДГУ ' + v + ' кВт', 'dgu.kva-' + String(v * 1.25).replace('.', '-')]), [['ДГУ в контейнере', 'dgu.v-kontejnere'], ['ДГУ в кожухе', 'dgu.v-kozhuhe'], ['ДГУ Perkins', 'dgu.engine-perkins'], ['ДГУ Cummins', 'dgu.engine-cummins']]].flat(),
+    akb: [[100, 200, 7, 9, 18, 65].map(v => ['АКБ 12 В ' + v + ' А·ч', 'akb.12v.kva-' + v]), [['АКБ 2 В OPzV', 'akb.2v.tech-opzv'], ['АКБ OPzS', 'akb.2v.tech-opzs'], ['АКБ Hoppecke', 'akb.brand-hoppecke'], ['АКБ в наличии', 'akb.stock-in']]].flat(),
     stab: [[10, 30, 60, 100].map(v => ['Стабилизатор ' + v + ' кВА', 'stab.kva-' + v]), [['Трёхфазные 380 В', 'stab.tryohfaznye'], ['Однофазные 220 В', 'stab.odnofaznye'], ['Электронные', 'stab.elektronnye']]].flat(),
     sts: [['STS трёхфазные', 'sts.tryohfaznye'], ['STS однофазные', 'sts.odnofaznye'], ['STS 100 А', 'sts.kva-100'], ['STS 250 А', 'sts.kva-250']]
   };
   const SOON = {
+    gpes: { text: ['Газопоршневые электростанции для постоянной и резервной генерации на природном, попутном нефтяном и биогазе: промышленные предприятия, месторождения, тепличные комплексы и объекты с собственной газовой сетью. Мощность агрегата от десятков киловатт до нескольких мегаватт.', 'Подбираем ГПЭС под график нагрузки, состав газа и режим работы, комплектуем утилизацией тепла (когенерация), шкафами синхронизации с сетью и контейнерным исполнением для открытых площадок.'], subs: ['Природный газ', 'Попутный нефтяной газ', 'Биогаз', 'Когенерация', 'Контейнерные ГПЭС', 'Параллельная работа с сетью'], ph: 'Например: ГПЭС 1 МВт на природном газе, когенерация, Шымкент' },
     zvu: { text: ['Зарядно-выпрямительные устройства и выпрямители для систем оперативного постоянного тока подстанций, электростанций, нефтегазовых объектов и телеком-узлов. Напряжение 12–220 В DC, ток до сотен ампер, параллельная работа и резервирование N+1.', 'Подбираем ЗВУ под напряжение шины, ёмкость батареи, ток нагрузки и требования к пульсациям, комплектуем шкафами СОПТ с распределением, контролем изоляции и мониторингом по Modbus или IEC 61850.'], subs: ['Однофазные ЗВУ', 'Трёхфазные ЗВУ', '12 В DC', '24 В DC', '48 В DC', '110 В DC', '220 В DC', 'Шкафы СОПТ'], ph: 'Например: ЗВУ 220 В DC, ток 100 А, батарея 400 А·ч, Атырау' },
     inv: { text: ['Инверторы DC/AC для питания переменным током потребителей от батарей или шины постоянного тока: телеком-узлы 48 В, подстанции 110 и 220 В, объекты с автономными источниками. Мощность от 6 до 3500 кВт, однофазный и трёхфазный выход.', 'Поставляем под проект со статическим байпасом, параллельной работой и мониторингом. Подбор по входному напряжению, мощности и характеру нагрузки.'], subs: ['Однофазные', 'Трёхфазные', 'Вход 24 В DC', 'Вход 48 В DC', 'Вход 110 В DC', 'Вход 220 В DC', 'Стоечные', 'Напольные'], ph: 'Например: инвертор 48 В DC / 230 В AC, 10 кВт, телеком-узел в Актобе' },
     freq: { text: ['Статические преобразователи частоты 50/60 Гц и 400 Гц для питания импортного оборудования, судовых и авиационных систем, испытательных стендов и наземного обеспечения воздушных судов.', 'Подбираем по мощности, фазности и требованиям к форме выходного напряжения, комплектуем под проект.'], subs: ['50 / 60 Гц', '400 Гц'], ph: 'Например: преобразователь 50 на 400 Гц, 30 кВА, трёхфазный' },
@@ -291,7 +300,17 @@
     return a.join('.');
   }
   let st = parse(), from = 0, to = PER, lastKey = '', near = false;
-  function commit(scroll) { history.replaceState(null, '', '#' + hashOf(st)); render(scroll); }
+  let tracked = false;
+  function commit(scroll) {
+    const h = hashOf(st);
+    if (U.clean && window.AEC_ROUTE) {
+      const u = U.cleanUrl('catalog.html#' + h), i = u.indexOf('#');
+      history.replaceState(null, '', i < 0 ? u + location.search : u.slice(0, i) + location.search + u.slice(i));
+      window.AEC_ROUTE.s = h;
+    } else history.replaceState(null, '', '#' + h);
+    if (!tracked) { tracked = true; U.track('catalog_filter', { filter_state: h }); }
+    render(scroll);
+  }
   const filterKey = s => hashOf(Object.assign({}, s, { sort: 'pop', view: 'grid' }));
 
   /* ---------- Фильтрация ---------- */
@@ -320,7 +339,11 @@
     let h1 = sub ? (H1[key] || cat.name + ' ' + lc(sub.name)) : (H1[st.cat] || cat.full);
     let title = SHORT[key] || (sub && H1[key]) || short;
     const oneBrand = st.brands.length === 1 ? brandName(st.brands[0]) : '';
-    if (st.kva != null) { h1 = short + ' ' + fmtN(st.kva) + ' ' + unit; title = h1; }
+    if (st.kva != null) {
+      if (st.cat === 'dgu') { const kw = Math.round(st.kva * 0.8); h1 = 'Дизельный генератор ' + fmtN(kw) + ' кВт (' + fmtN(st.kva) + ' кВА)'; title = 'Дизельная электростанция ' + fmtN(kw) + ' кВт'; }
+      else if (st.cat === 'akb') { h1 = short + ' ' + fmtN(st.kva) + ' ' + unit + ' для ИБП'; title = h1; }
+      else { h1 = short + ' ' + fmtN(st.kva) + ' ' + unit; title = h1; }
+    }
     else if (st.phase && PHASE_LABEL[st.phase] && !sub) { h1 = short + ' ' + PHASE_LABEL[st.phase].toLowerCase(); title = h1; }
     if (oneBrand) { h1 += ' ' + oneBrand; title += ' ' + oneBrand; }
     return { cat, sub, unit, key, short, h1, title };
@@ -337,19 +360,19 @@
   }
 
   function crumbsFor(n) {
-    const items = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: n.cat.name, href: L.cat(n.cat.id) }];
+    const items = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: U.cleanUrl('catalog.html') }, { name: n.cat.name, href: L.cat(n.cat.id) }];
     if (n.sub) items.push({ name: n.sub.name, href: L.cat(n.cat.id, n.sub.id) });
-    if (st.kva != null) items.push({ name: fmtN(st.kva) + ' ' + n.unit, href: 'catalog.html#' + hashOf(st) });
-    else if (st.brands.length === 1) items.push({ name: brandName(st.brands[0]), href: 'catalog.html#' + hashOf(st) });
+    if (st.kva != null) items.push({ name: st.cat === 'dgu' ? fmtN(Math.round(st.kva * 0.8)) + ' кВт' : fmtN(st.kva) + ' ' + n.unit, href: U.cleanUrl('catalog.html#' + hashOf(st)) });
+    else if (st.brands.length === 1) items.push({ name: brandName(st.brands[0]), href: U.cleanUrl('catalog.html#' + hashOf(st)) });
     return items;
   }
   function ldCrumbs(items) { return { '@type': 'BreadcrumbList', itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: new URL(it.href, location.href).href })) }; }
 
   function renderSoon(cat) {
     const s = SOON[cat.id];
-    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: cat.name, href: L.cat(cat.id) }];
-    document.title = cat.name + ' купить в Казахстане, поставка под проект | AEC';
-    document.querySelector('meta[name=description]').content = cat.full + ': ' + s.text[0].slice(0, 150);
+    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: U.cleanUrl('catalog.html') }, { name: cat.name, href: L.cat(cat.id) }];
+    document.title = fitTitle([cat.name + ' купить в Казахстане, поставка под проект | AEC', cat.name + ': поставка под проект | AEC', cat.name + ' | AEC']);
+    document.querySelector('meta[name=description]').content = clip(cat.full + ': ' + s.text[0]);
     document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>${esc(cat.full)}</h1><p class="lead">${esc(s.text[0])}</p><div class="cta"><button class="btn btn-lg btn-kp" data-open-modal data-title="Запрос на ${esc(cat.name)}" data-type="Запрос под проект">Запросить подбор</button><a class="btn btn-lg btn-outline-light" href="${L.service('konsultaciya')}">Предпроектная консультация</a></div>`;
     document.getElementById('body').innerHTML = `
       <section class="section-tight"><div class="wrap">
@@ -391,9 +414,9 @@
     res = res.slice().sort(SORT[st.sort]);
     const total = res.length;
     const subTotal = catProducts().filter(F.sub).length;
-    document.title = n.title + ' купить в Казахстане, цена от поставщика | AEC';
+    document.title = fitTitle(st.kva != null ? [n.title + ': цена, модели, подбор и поставка | AEC', n.title + ': цена, модели | AEC'] : [n.title + ' купить в Казахстане, цена от поставщика | AEC', n.title + ' купить в Казахстане | AEC', n.title + ' купить | AEC', n.title + ' | AEC']);
     const intro = st.kva != null ? kvaIntro(n, res) : (INTRO[n.key] || INTRO[st.cat]);
-    document.querySelector('meta[name=description]').content = (n.title + ': ' + intro).slice(0, 300);
+    document.querySelector('meta[name=description]').content = clip(intro.length < 125 ? intro + ' Подбор, поставка, монтаж и сервис по Казахстану.' : intro);
 
     /* hero */
     document.getElementById('hero').innerHTML = U.crumbs(crumbsFor(n)) + `<h1>${esc(n.h1)}</h1><p class="lead">${esc(intro)}</p>`;
@@ -433,11 +456,12 @@
     </div>`;
 
     const pop = (POP[st.cat] || []).filter(x => x[1] !== hashOf(st));
-    const faqs = FAQS[st.cat] || [];
+    const faqs = st.kva != null ? kvaFaq(n, res) : (FAQS[st.cat] || []);
+    const seoHtml = st.kva != null ? kvaSeo(n, res) : (SEO[st.cat] || '');
     document.getElementById('body').innerHTML = subs +
       `<section class="section-tight"><div class="wrap"><div class="cat-layout">${panel}${results}</div></div></section>` +
       `<section class="section-tight bg-mist"><div class="wrap"><div class="sec-head" style="margin-bottom:18px"><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Популярные подборки</h2><p>Готовые страницы по мощности, исполнению и бренду: цены, модели, подбор.</p></div></div><div class="pop">${pop.map(x => `<a href="catalog.html#${x[1]}">${esc(x[0])}</a>`).join('')}</div></div></section>` +
-      `<section class="section"><div class="wrap"><div class="split seo-split"><div class="seo">${SEO[st.cat] || ''}</div><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Вопросы и ответы</h2><p class="muted" style="margin:10px 0 18px">Коротко о выборе и эксплуатации. <a href="${L.faq}">Все вопросы</a></p><div class="acc">${faqs.map(q => `<details><summary>${esc(q[0])}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${esc(q[1])}</div></details>`).join('')}</div></div></div></div></section>` +
+      `<section class="section"><div class="wrap"><div class="split seo-split"><div class="seo">${seoHtml}</div><div><h2 style="font-size:clamp(22px,2.4vw,30px)">Вопросы и ответы</h2><p class="muted" style="margin:10px 0 18px">Коротко о выборе и эксплуатации. <a href="${L.faq}">Все вопросы</a></p><div class="acc">${faqs.map(q => `<details><summary>${esc(q[0])}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${esc(q[1])}</div></details>`).join('')}</div></div></div></div></section>` +
       `<section class="section" style="padding-top:0"><div class="wrap"><div class="cta-band"><div><h2>Помощь в подборе: ${esc(n.short)}</h2><p>Укажите нагрузку, нужную автономию и город объекта или приложите спецификацию из тендера. Инженер проверит расчёт, предложит 2–3 варианта и пришлёт КП в течение рабочего дня.</p>
         <div style="margin-top:22px;display:grid;gap:10px;font-size:15px"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent);display:flex">${I('phone')}</span><a href="tel:+${D.CONTACT.phoneRaw}" style="color:#fff;font-family:var(--font-display);font-size:20px;font-weight:600">${D.CONTACT.phone}</a></span><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--accent);display:flex">${I('mail')}</span><a href="mailto:${D.CONTACT.email}" style="color:#d7e3f0">${D.CONTACT.email}</a></span><a class="btn btn-sm btn-outline-light" style="justify-self:start" href="${L.calc}">Калькулятор подбора</a></div></div>
         ${leadForm('Помощь в подборе (' + n.title + ')', '', 'Например: ' + n.short + ', нагрузка 18 кВт, автономия 30 минут, Астана')}</div></div></section>`;
@@ -452,7 +476,70 @@
   function kvaIntro(n, res) {
     const brands = [...new Set(res.map(p => p.brand))], priced = res.filter(p => p.price).map(p => p.price), inStock = res.filter(p => p.stock === 'in').length;
     const what = n.short;
+    if (st.cat === 'dgu') return `Дизельная электростанция ${fmtN(Math.round(st.kva * 0.8))} кВт (${fmtN(st.kva)} кВА): цена, подбор и поставка. В каталоге ${res.length} ${plural(res.length, 'серия', 'серии', 'серий')} ДГУ ${brands.join(', ')} на двигателях ${[...new Set(res.map(p => p.spec['Двигатель']).filter(Boolean))].slice(0, 5).join(', ')}. Открытые, в кожухе и в контейнере, с АВР.`;
     return `${what} ${fmtN(st.kva)} ${n.unit}: цена, модели, подбор. В каталоге ${res.length} ${plural(res.length, 'модель', 'модели', 'моделей')}${brands.length ? ' ' + brands.join(', ') : ''}${priced.length ? ', складские позиции от ' + fmtN(Math.min(...priced)) + ' ₸' : ''}${inStock ? ', ' + inStock + ' ' + plural(inStock, 'модель', 'модели', 'моделей') + ' в наличии в Алматы' : ''}. Подберём по нагрузке, автономии и условиям объекта, пришлём КП в течение рабочего дня.`;
+  }
+  // ---------- Тексты посадочных страниц по мощности: собираются из данных каталога ----------
+  function topList(res, key, k) { const m = {}; res.forEach(p => { const v = key(p); if (v) m[v] = (m[v] || 0) + 1; }); return Object.keys(m).sort((a, b) => m[b] - m[a]).slice(0, k || 6); }
+  const listRu = a => a.length > 1 ? a.slice(0, -1).join(', ') + ' и ' + a[a.length - 1] : (a[0] || '');
+  const leadOf = res => topList(res, p => p.lead, 1)[0] || '';
+  function kvaSeo(n, res) {
+    const v = fmtN(st.kva), N = res.length, ser = topList(res, p => p.brand + ' ' + p.series), brands = topList(res, p => p.brand, 8), lead = leadOf(res);
+    const svc = `<a href="${L.service('montazh')}">монтаж и пусконаладку</a>, <a href="${L.service('service')}">сервисное обслуживание</a>`;
+    if (st.cat === 'ibp') {
+      const kws = res.map(p => +p.kw).filter(x => x > 0), kwMin = kws.length ? Math.min(...kws) : st.kva, kwMax = kws.length ? Math.max(...kws) : st.kva;
+      const three = res.filter(p => /^3\/3/.test(p.phases || '')).length, one = res.filter(p => /\/1$/.test(p.phases || '')).length, online = res.filter(p => /on-line|двойн/i.test(p.topology || '')).length, mod = res.filter(p => p.arch === 'Модульная').length;
+      return `<h2>Как выбрать ИБП ${v} кВА</h2>
+<p>ИБП ${v} кВА в каталоге отдают ${kwMin === kwMax ? fmtN(kwMax) + ' кВт' : 'от ' + fmtN(kwMin) + ' до ' + fmtN(kwMax) + ' кВт'} активной мощности: у моделей с коэффициентом мощности 1,0 киловольт-амперы равны киловаттам, у моделей с коэффициентом 0,9 полезная мощность на 10 % ниже. Нагрузку закладывают с запасом 20–30 %, поэтому реальные потребители для такого ИБП составляют около ${fmtN(Math.round(kwMax * 0.75))} кВт.</p>
+<h3>Модели и серии</h3>
+<p>В подборке ${N} ${plural(N, 'модель', 'модели', 'моделей')} ${brands.join(', ')}: ${listRu(ser)}.${three ? ' Трёхфазных (вход и выход 380 В): ' + three + '.' : ''}${one ? ' С однофазным выходом 220 В: ' + one + '.' : ''}${online ? ' По схеме двойного преобразования (on-line) работают ' + online + ' из ' + N + '.' : ''}${mod ? ' Модульных с горячей заменой силовых модулей: ' + mod + '.' : ''}</p>
+<h3>Автономия и батареи</h3>
+<p>Время работы от батарей определяет не мощность ИБП, а батарейный комплект: число блоков 12 В в линейке задаёт модель ИБП, а ёмкость и число параллельных линеек подбирают под нужные минуты. Расчёт с учётом разряда большими токами и старения батарей делает <a href="${L.calc}">калькулятор подбора</a>, инженер AEC проверит его бесплатно.</p>
+<h3>Поставка и сервис</h3>
+<p>Поставляем по всему Казахстану${lead ? ', срок поставки под заказ ' + lead : ''}. Берём на себя ${svc} и <a href="${L.service('zamena')}">замену батарей</a>. Для тендера приложим дистрибьюторское письмо и паспорта.</p>`;
+    }
+    if (st.cat === 'dgu') {
+      const kw = Math.round(st.kva * 0.8), engines = topList(res, p => p.spec['Двигатель'] || '', 8), fuel = (0.21 * kw * 0.75).toFixed(1).replace('.', ',');
+      return `<h2>Как выбрать дизельный генератор ${fmtN(kw)} кВт</h2>
+<p>Дизельная электростанция ${fmtN(kw)} кВт соответствует ${v} кВА при cos φ 0,8. Мощность выбирают по сумме нагрузки с учётом пусковых токов: насосы, компрессоры и лифты при старте потребляют в 3–7 раз больше номинала. Если ДГУ резервирует ИБП, генератор берут с запасом, чтобы выпрямитель ИБП не раскачивал частоту.</p>
+<h3>Серии и двигатели</h3>
+<p>Под эту мощность в каталоге ${N} ${plural(N, 'серия', 'серии', 'серий')}: ${listRu(ser)}.${engines.length ? ' Двигатели ' + listRu(engines) + '.' : ''} Исполнение открытое для машзала, в шумозащитном кожухе или во всепогодном контейнере; автоматический запуск и АВР ставим по проекту.</p>
+<h3>Расход топлива</h3>
+<p>При нагрузке 75 % генератор ${fmtN(kw)} кВт расходует около ${fuel} л дизельного топлива в час (0,21 л на кВт·ч). От объёма бака зависит время работы без дозаправки. Расчёт по вашей нагрузке и нужной автономии сделает <a href="${L.calc}#dgu">калькулятор подбора ДГУ</a>.</p>
+<h3>Поставка и сервис</h3>
+<p>Поставляем по всему Казахстану${lead ? ', срок поставки ' + lead : ''}. Берём на себя ${svc}, пусконаладку АВР и обучение персонала заказчика.</p>`;
+    }
+    if (st.cat === 'akb') {
+      const tech = topList(res, p => (p.topology || '').replace(/\s*\(.*\)/, ''), 4), life = topList(res, p => p.spec['Срок службы (проектный)'] || '', 3);
+      return `<h2>Аккумуляторы 12 В ${v} А·ч для ИБП</h2>
+<p>Батареи 12 В ${v} А·ч ставят в батарейные линейки ИБП, системы охранной и пожарной сигнализации, телеком-узлы и щиты постоянного тока. В подборке ${N} ${plural(N, 'модель', 'модели', 'моделей')} ${brands.join(', ')}: ${listRu(ser)}.${tech.length ? ' Технологии: ' + listRu(tech) + '.' : ''}${life.length ? ' Проектный срок службы: ' + listRu(life) + '.' : ''}</p>
+<h3>Как подобрать батареи для ИБП</h3>
+<p>Число блоков в линейке задаёт модель ИБП, ёмкость считают по мощности нагрузки и нужному времени автономии с учётом разряда большими токами. В одну линейку ставят батареи одной модели и одной партии: новые блоки рядом со старыми быстро выравниваются по худшему. Подбор по вашему ИБП сделает <a href="${L.calc}#akb">калькулятор батарей</a>.</p>
+<h3>Замена и утилизация</h3>
+<p>Перед заменой проверяем напряжение и внутреннее сопротивление каждого блока, меняем линейку целиком и берём на себя утилизацию старых батарей. Подробнее на странице <a href="${L.service('zamena')}">замены батарей ИБП</a>. Поставка по Казахстану${lead ? ', срок ' + lead : ''}.</p>`;
+    }
+    return SEO[st.cat] || '';
+  }
+  function kvaFaq(n, res) {
+    const v = fmtN(st.kva), N = res.length, brands = topList(res, p => p.brand, 8).join(', '), lead = leadOf(res);
+    const price = (what) => [`Сколько стоит ${what}?`, `Цена зависит от бренда, исполнения и комплектации. В каталоге ${N} ${plural(N, 'вариант', 'варианта', 'вариантов')}${brands ? ' ' + brands : ''}. Точную цену с доставкой и монтажом пришлём в коммерческом предложении в течение рабочего дня: оставьте заявку или позвоните ${D.CONTACT.phone}.`];
+    const stock = (what) => [`${what}: есть в наличии?`, `Позиции поставляются под заказ${lead ? ', срок ' + lead : ''}. Если оборудование нужно срочно, проверим остатки на складах дистрибьютора и предложим ближайшую замену по мощности.`];
+    if (st.cat === 'ibp') {
+      const kws = res.map(p => +p.kw).filter(x => x > 0), kwMax = kws.length ? Math.max(...kws) : st.kva;
+      return [price('ИБП ' + v + ' кВА'), [`Какую нагрузку можно подключить к ИБП ${v} кВА?`, `До ${fmtN(kwMax)} кВт по паспорту, на практике с запасом 20–30 %: около ${fmtN(Math.round(kwMax * 0.75))} кВт. Для двигателей и компрессоров учитывайте пусковые токи и перегрузочную способность ИБП.`],
+        [`Сколько ИБП ${v} кВА работает от батарей?`, 'Зависит от батарейного комплекта: на штатных батареях обычно 5–15 минут при полной нагрузке, с внешними батарейными шкафами автономию увеличивают до часа и больше. Точный расчёт сделает калькулятор подбора.'], stock('ИБП ' + v + ' кВА')];
+    }
+    if (st.cat === 'dgu') {
+      const kw = Math.round(st.kva * 0.8), engines = topList(res, p => p.spec['Двигатель'] || '', 8);
+      return [price('дизельная электростанция ' + fmtN(kw) + ' кВт'), [`Какой двигатель выбрать для ДГУ ${fmtN(kw)} кВт?`, `В этой мощности есть серии на двигателях ${listRu(engines) || 'нескольких производителей'}. Выбор зависит от режима работы (резервный или основной), доступности сервиса и запчастей в регионе и бюджета. Сравним варианты в КП.`],
+        [`Сколько топлива расходует ДГУ ${fmtN(kw)} кВт?`, `Около ${(0.21 * kw * 0.75).toFixed(1).replace('.', ',')} л в час при нагрузке 75 % и около ${(0.21 * kw).toFixed(1).replace('.', ',')} л в час при полной нагрузке, из расчёта 0,21 л на кВт·ч. Фактический расход зависит от двигателя и характера нагрузки.`],
+        ['Нужен ли АВР для дизельного генератора?', 'Для резервного питания объекта да: автоматический ввод резерва запускает ДГУ при пропадании сети, переключает нагрузку и возвращает её на сеть после восстановления. Комплектуем АВР и панели управления под мощность и схему объекта.']];
+    }
+    if (st.cat === 'akb') {
+      return [price('аккумулятор 12 В ' + v + ' А·ч'), [`Сколько служит аккумулятор 12 В ${v} А·ч?`, 'Проектный срок службы указан в карточке модели. В буферном режиме ИБП при 20–25 °C батареи AGM реально служат 3–5 лет, гелевые и OPzV дольше. Каждые 10 °C выше 25 °C сокращают срок службы примерно вдвое.'],
+        ['Можно ли поставить в ИБП батареи разных производителей?', 'Нет: в одной линейке должны быть батареи одной модели, ёмкости и партии. Иначе блоки заряжаются неравномерно и линейка выходит из строя раньше срока.'], stock('Аккумуляторы 12 В ' + v + ' А·ч')];
+    }
+    return FAQS[st.cat] || [];
   }
   function activeCount() { return (st.kva != null ? 1 : 0) + (st.min != null || st.max != null ? 1 : 0) + st.brands.length + ['phase', 'form', 'arch', 'bat', 'tech', 'engine'].filter(k => st[k]).length + (st.stock ? 1 : 0); }
 

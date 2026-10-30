@@ -406,7 +406,11 @@ input[type=range] { width: 100%; accent-color: var(--blue); }
 .logo-row a:hover { border-color: var(--navy); color: var(--navy); }
 @media (max-width: 1024px) { .logo-row { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 560px) { .logo-row { grid-template-columns: repeat(2, 1fr); } }
-.proto-note { font-size: 12px; color: var(--faint); text-align: center; padding: 10px var(--gutter); background: var(--mist); }
+/* уведомление о cookie (только в сборке для хостинга) */
+.cookie-note { position: fixed; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 75; max-width: 380px; display: flex; gap: 12px; align-items: center; padding: 10px 12px 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 10px 30px rgba(10, 37, 64, .14); font-size: 13px; line-height: 1.4; color: var(--text); }
+.cookie-note .btn { flex: none; }
+@media (max-width: 1024px) { .cookie-note { left: 12px; right: 12px; max-width: none; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); } }
+.send-fail .btn-wa { color: #fff; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
 /* Переключатель языка */

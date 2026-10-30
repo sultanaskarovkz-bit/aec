@@ -278,9 +278,9 @@
     if (!p) { notFound(slug); return; }
     view = 'front';
     const cat = D.cat(p.cat), b = brandOf(p), u = D.unit(p.cat);
-    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: cat.name, href: L.cat(cat.id) }, { name: p.name, href: L.product(p.slug) }];
-    document.title = p.name + ': купить, цена, характеристики | AEC';
-    document.querySelector('meta[name=description]').content = `${p.name}: ${p.kva} ${u}${p.cat === 'ibp' ? ', ' + p.topology.toLowerCase() : ''}. ${D.fmtPrice(p.price)}, ${p.stock === 'in' ? 'в наличии в Алматы' : 'поставка ' + p.lead}. Характеристики, документация, запрос КП.`;
+    const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Продукция', href: U.cleanUrl('catalog.html') }, { name: cat.name, href: L.cat(cat.id) }, { name: p.name, href: L.product(p.slug) }];
+    document.title = U.fit([p.name + ': купить, цена, характеристики | AEC', p.name + ': цена, характеристики | AEC', p.name + ': купить, цена | AEC', p.name + ' | AEC']);
+    document.querySelector('meta[name=description]').content = U.clip(`${p.name}: ${p.kva} ${u}${p.cat === 'ibp' ? ', ' + p.topology.toLowerCase() : ''}. ${D.fmtPrice(p.price)}, ${p.stock === 'in' ? 'в наличии в Алматы' : 'поставка ' + p.lead}. Характеристики, документация, запрос КП.`);
     const wa = C.whatsapp + encodeURIComponent(' Интересует ' + p.name + (p.sku ? ' (арт. ' + p.sku + ')' : '') + '.');
     const hasPhoto = !!(p.photo || (D.SERIES_PHOTOS && D.SERIES_PHOTOS[p.series]));
     const extra = (p.photos || []).slice(1).map((ph, i) => ['photo' + i, 'Фото ' + (i + 2), () => `<img class="pphoto" src="assets/img/products/${ph}" alt="${esc(p.name)}, фото ${i + 2}" loading="lazy">`]);
@@ -352,7 +352,7 @@
     bind(p, views);
     const offers = p.price ? { offers: { '@type': 'Offer', priceCurrency: 'KZT', price: p.price, availability: p.stock === 'in' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder', itemCondition: 'https://schema.org/NewCondition', url: new URL(L.product(p.slug), location.href).href, seller: { '@type': 'Organization', name: 'AEC Kazakhstan' } } } : {};
     U.jsonld({ '@context': 'https://schema.org', '@graph': [
-      Object.assign({ '@type': 'Product', name: p.name, sku: p.sku || p.model, mpn: p.model, brand: { '@type': 'Brand', name: p.brand }, category: cat.full, description: desc[0], additionalProperty: keySpecs(p).map(k => ({ '@type': 'PropertyValue', name: k[0], value: k[1] })) }, offers),
+      Object.assign({ '@type': 'Product', name: p.name, url: new URL(L.product(p.slug), location.href).href, image: (p.photos && p.photos.length ? p.photos : p.photo ? [p.photo] : []).map(f => new URL('assets/img/products/' + f, location.href).href), sku: p.sku || p.model, mpn: p.model, brand: { '@type': 'Brand', name: p.brand }, category: cat.full, description: desc[0], additionalProperty: keySpecs(p).map(k => ({ '@type': 'PropertyValue', name: k[0], value: k[1] })) }, offers),
       { '@type': 'BreadcrumbList', itemListElement: crumbs.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, item: new URL(it.href, location.href).href })) }
     ] });
     U.render();
@@ -361,7 +361,7 @@
   function plural(n, a, b, c) { const m = n % 100, d = n % 10; return m > 10 && m < 20 ? c : d === 1 ? a : d > 1 && d < 5 ? b : c; }
   function notFound(slug) {
     document.title = 'Товар не найден | AEC Kazakhstan';
-    main.innerHTML = `<section class="section"><div class="wrap">${U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: 'Товар не найден' }])}<div class="nf"><h1 style="font-size:clamp(26px,3vw,40px)">Такой модели в каталоге нет</h1><p>Запрошенная страница «${esc(slug)}» не найдена. Возможно, модель переименована или снята с производства: подберём актуальный аналог.</p><div class="cta"><a class="btn btn-primary" href="${L.search}">Поиск по каталогу</a><a class="btn btn-ghost" href="${L.cat('ibp')}">Открыть каталог</a><button class="btn btn-kp" data-open-modal data-title="Подбор аналога" data-type="Подбор аналога">Запросить аналог</button></div></div></div></section>`;
+    main.innerHTML = `<section class="section"><div class="wrap">${U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Продукция', href: U.cleanUrl('catalog.html') }, { name: 'Товар не найден' }])}<div class="nf"><h1 style="font-size:clamp(26px,3vw,40px)">Такой модели в каталоге нет</h1><p>Запрошенная страница «${esc(slug)}» не найдена. Возможно, модель переименована или снята с производства: подберём актуальный аналог.</p><div class="cta"><a class="btn btn-primary" href="${L.search}">Поиск по каталогу</a><a class="btn btn-ghost" href="${L.cat('ibp')}">Открыть каталог</a><button class="btn btn-kp" data-open-modal data-title="Подбор аналога" data-type="Подбор аналога">Запросить аналог</button></div></div></div></section>`;
     main.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => U.openModal({ title: b.dataset.title, type: b.dataset.type })));
   }
   function bind(p, views) {

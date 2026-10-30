@@ -95,8 +95,8 @@
     document.getElementById('formTitle').textContent = 'Заявка: ' + s.short.toLowerCase();
     document.getElementById('formType').value = 'Заявка на услугу: ' + s.short;
     document.getElementById('contactsBox').innerHTML = `<a href="tel:+${C.phoneRaw}" style="font-family:var(--font-display);font-size:22px;font-weight:600;color:var(--navy)">${C.phone}</a><span class="muted small">${C.hours} · ${C.address}</span>`;
-    document.title = t.h1 + ' | AEC Kazakhstan';
-    document.querySelector('meta[name=description]').setAttribute('content', t.lead.slice(0, 158));
+    document.title = U.fit([t.h1 + ' | AEC Kazakhstan', t.h1 + ' | AEC']);
+    document.querySelector('meta[name=description]').setAttribute('content', U.clip(t.lead));
     document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());
     U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.href ? new URL(c.href, location.href).href : location.href })) }, { '@type': 'Service', name: t.h1, serviceType: s.short, provider: { '@id': 'https://aecups.kz/#org' }, areaServed: { '@type': 'Country', name: 'Kazakhstan' }, offers: { '@type': 'Offer', priceCurrency: 'KZT', description: s.price } }, { '@type': 'FAQPage', mainEntity: t.faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }] });
     U.render(); if (location.hash !== '#order') window.scrollTo({ top: 0 });

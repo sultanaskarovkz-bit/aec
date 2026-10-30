@@ -61,7 +61,7 @@
     document.getElementById('faq').innerHTML = faq.map(q => `<details><summary>${q[0]}<span class="pm">${I('plus')}</span></summary><div class="acc-body">${q[1]}</div></details>`).join('');
     document.getElementById('ctaTitle').textContent = 'КП с доставкой ' + pr;
     document.getElementById('formType').value = 'Заявка из региона: ' + c.name;
-    document.title = 'ИБП, генераторы, сервис ' + pr + ': поставка и монтаж | AEC Kazakhstan';
+    document.title = U.fit(['ИБП, генераторы, сервис ' + pr + ': поставка и монтаж | AEC', 'ИБП, генераторы и сервис ' + pr + ' | AEC']);
     document.querySelector('meta[name=description]').setAttribute('content', 'Поставка ИБП, ДГУ, аккумуляторов и стабилизаторов ' + pr + ', монтаж, пусконаладка и сервис. Доставка ' + d[0] + ', выезд инженера ' + d[2] + '. AEC Kazakhstan.');
     document.querySelectorAll('script[type="application/ld+json"]').forEach(x => x.remove());
     U.jsonld({ '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: crumbs.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.name, item: x.href ? new URL(x.href, location.href).href : location.href })) }, { '@type': 'Service', name: 'Поставка и сервис систем электропитания ' + pr, provider: { '@id': 'https://aecups.kz/#org' }, areaServed: { '@type': 'City', name: c.name } }, { '@type': 'FAQPage', mainEntity: faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }] });

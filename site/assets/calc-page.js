@@ -479,7 +479,7 @@
     document.getElementById('modGrid').innerHTML = n ? R.models.slice(0, 6).map(p => U.productCard(p)).join('') : `<div class="empty" style="grid-column:1/-1"><h3>Подберём под проект</h3><p>Отправьте расчёт инженеру: предложим модели и аналоги.</p></div>`;
     // сводка на мобильных
     document.getElementById('msum').innerHTML = `<div><span>Результат расчёта</span><b class="num">${esc(headline())}</b></div><button type="button" data-goto="cres">Показать</button>`;
-    document.title = TITLES[mode][0]; document.querySelector('meta[name=description]').content = TITLES[mode][1];
+    document.title = U.fit([TITLES[mode][0], TITLES[mode][0].replace(' | AEC Kazakhstan', ' | AEC')]); document.querySelector('meta[name=description]').content = U.clip(TITLES[mode][1]);
     if (!ctaDirty) document.getElementById('cMsg').value = summary();
     U.render();
   }

@@ -106,6 +106,30 @@ photo/photos (assets/img/products/), docs[{name,file,size}], spec{} (норма�
 В catalog-details.js: table (полная таблица характеристик), desc, short, wc {id, slug, permalink, categories, tags}.
 Нет в данных: цены, остатки (везде stock 'order'), гарантия, габариты у Kehua/EverExceed/TSVR (185 позиций).
 
+## Сборка для хостинга (30.10.2026)
+Клиент заливает сайт статикой на текущий хостинг aecups.kz (Plesk: nginx + Apache, PHP), WordPress не нужен.
+- python -X utf8 tools/build-static.py   → build/aecups.kz/ и build/aecups-kz-<дата>.zip (≈225 МБ с PDF), отчёт build/build-report.md
+  (--no-docs без PDF, --no-zip, --only catalog,product для быстрой проверки). build/ в .gitignore.
+- python -X utf8 tools/qa-static.py      → битые ссылки, JSON-LD, все старые адреса aecups.kz (200/301/410), браузер 1440/390 через
+  php -S + tools/hosting/dev-router.php (повторяет .htaccess), тест формы заявки.
+- Как устроено: на каждый адрес старого сайта своя страница (756: категории product-category/..., 602 товара /product/<slug WP>/,
+  23 посадочные по мощности из SEO-плана, решения, услуги /uslugi/..., бренды, регионы /regiony/..., статьи /blog/...).
+  Страница рендерится в Chromium, в HTML кладутся готовое содержимое #app, title, description, JSON-LD; исходный шаблон лежит
+  в <template id="aec-tpl">, aec.js init() возвращает его и рисует страницу заново (тот же код, что в прототипе).
+  window.AEC_ROUTE задаёт состояние страницы (вместо хеша), assets/routes.js (генерируется) — таблица адресов,
+  aec.js cleanUrl() + MutationObserver переводят все ссылки прототипа (catalog.html#ibp...) в чистые адреса.
+  Без routes.js (прототип на Vercel) всё работает по-старому.
+- 144 товара с ³ и · в адресе WP лежат в латинских папках, старый адрес отдаётся внутренним RewriteRule (canonical = старый адрес).
+- .htaccess: 301 со старых адресов (проекты, выставки, статьи из корня, дубли товаров, корзина/аккаунт, akb → akb-dlya-ibp-ups,
+  generatory-2/dizelnye-generatory → generatory-2, ibp-dlya-linii-proizvodstv → promyshlennye-ibp, kt-mrt и операционные → bolnicz),
+  410 для таксономий атрибутов, тегов, авторов, лент; старые sitemap → /sitemap.xml.
+- Заявки: send.php (Telegram + mail() + leads/leads.csv), настройки send-config.php (tg_token/tg_chat пустые: нужен бот клиента).
+  Если сервер не отправил, форма показывает кнопку WhatsApp с готовым текстом. Скрытое поле-ловушка website + лимит 8 заявок / 10 мин.
+- Счётчики со старого сайта (GTM-PWB6S7LR, GA4 G-2JLDHHTYCG и G-KHCNKKR87M, Ads AW-17973459473, ClickCease, google-site-verification)
+  в head каждой страницы, грузятся после первого действия или через 5 с. События dataLayer: generate_lead, click_phone, click_whatsapp,
+  click_email, file_download, add_to_kp, catalog_filter, lead_send_error.
+- Инструкция для загрузки: tools/hosting/README-HOSTING.md (кладётся в корень архива, закрыта от просмотра).
+
 ## SEO
 План SEO (15 разделов, 15 запросов из договора, структура URL, фильтровые посадочные, регионы) лежит в Claude Docs:
 https://claude.ai/artifact/T8PFxTuMUWEhsmj3vm29n3

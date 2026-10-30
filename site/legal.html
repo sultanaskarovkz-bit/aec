@@ -37,6 +37,7 @@
     document.getElementById('nav').innerHTML = Object.keys(P).map(k => `<a class="btn btn-sm ${k === id ? 'btn-primary' : 'btn-ghost'}" href="legal.html#${k}">${P[k][0]}</a>`).join('');
     document.getElementById('body').innerHTML = p[1];
     document.title = p[0] + ' | AEC Kazakhstan'; window.scrollTo({ top: 0 });
+    document.querySelector('meta[name=description]').setAttribute('content', U.clip(p[0] + ' сайта aecups.kz, ' + C.legal + '. ' + document.getElementById('body').textContent));
   }
   render(); window.addEventListener('hashchange', render);
 })();

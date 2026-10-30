@@ -37,7 +37,7 @@
   const D = AEC, U = AECUI, L = U.L;
   U.init({ active: '' });
   document.getElementById('links').innerHTML = [['Каталог ИБП', L.cat('ibp')], ['Генераторы', L.cat('dgu')], ['Батареи', L.cat('akb')], ['Услуги', L.service('montazh')], ['Проекты', L.projects], ['Контакты', L.contacts]].map(x => `<a class="btn btn-ghost btn-sm" href="${x[1]}">${x[0]}</a>`).join('');
-  document.getElementById('sf').addEventListener('submit', e => { e.preventDefault(); const q = document.getElementById('sq').value.trim(); location.href = 'search.html#q-' + encodeURIComponent(q); });
+  document.getElementById('sf').addEventListener('submit', e => { e.preventDefault(); const q = document.getElementById('sq').value.trim(); location.href = U.cleanUrl('search.html') + '#q-' + encodeURIComponent(q); });
 })();
 </script>
 </body>

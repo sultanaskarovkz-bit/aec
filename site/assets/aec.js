@@ -103,6 +103,64 @@ window.AECUI = (function () {
     policy: 'legal.html#policy', terms: 'legal.html#terms', offer: 'legal.html#offer', warranty: 'legal.html#warranty'
   };
 
+  // ---------- Чистые адреса для хостинга ----------
+  // В сборке для хостинга (tools/build-static.py) подключается assets/routes.js с window.AEC_URLS,
+  // и все ссылки вида catalog.html#ibp.tryohfaznye превращаются в адреса старого сайта: /product-category/.../tryohfaznye/.
+  // В прототипе (без routes.js) всё работает по-старому.
+  const RT = window.AEC_URLS || null;
+  function cleanUrl(href) {
+    if (!RT || typeof href !== 'string') return href;
+    const m = href.match(/^([a-z0-9]+)\.html(?:#(.*))?$/); if (!m) return href;
+    const pg = m[1], h = m[2] || '', tail = h ? '#' + h : '', id = h.split('.')[0];
+    switch (pg) {
+      case 'catalog': {
+        if (!h) return RT.page.catalog;
+        const ps = h.split('.');
+        for (let n = ps.length; n > 0; n--) { const k = ps.slice(0, n).join('.'); if (RT.cat[k]) return RT.cat[k] + (n < ps.length ? tail : ''); }
+        return RT.page.catalog + tail;
+      }
+      case 'product': return h ? (RT.product[h] || '/product/' + h + '/') : RT.page.catalog;
+      case 'solution': return RT.solution[id] || RT.solution.czod;
+      case 'service': return RT.service[id] || RT.service.montazh;
+      case 'project': return RT.project[id] || RT.page.projects;
+      case 'brand': return RT.brand[id] || RT.page.brands;
+      case 'article': return RT.article[id] || RT.page.blog;
+      case 'region': return RT.region[id] || RT.page.contacts;
+      case 'legal': return RT.legal[id] || RT.legal.policy;
+      default: return (RT.page[pg] || href.split('#')[0]) + tail;
+    }
+  }
+  if (RT) Object.keys(L_).forEach(k => { const v = L_[k]; L_[k] = typeof v === 'function' ? (...a) => cleanUrl(v(...a)) : cleanUrl(v); });
+  function fixLink(a) { const h = a.getAttribute('href'), c = cleanUrl(h); if (c !== h) a.setAttribute('href', c); }
+  if (RT) {
+    document.querySelectorAll('a[href]').forEach(fixLink);
+    new MutationObserver(ms => ms.forEach(m => {
+      if (m.type === 'attributes') { if (m.target.tagName === 'A') fixLink(m.target); return; }
+      m.addedNodes.forEach(n => { if (n.nodeType !== 1) return; if (n.tagName === 'A' && n.hasAttribute('href')) fixLink(n); if (n.querySelectorAll) n.querySelectorAll('a[href]').forEach(fixLink); });
+    })).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
+  }
+
+  // ---------- Аналитика: события в dataLayer (GTM, GA4, Google Ads) ----------
+  window.dataLayer = window.dataLayer || [];
+  const track = (event, params) => { try { window.dataLayer.push(Object.assign({ event }, params || {})); } catch (e) { } };
+  // UTM-метки и gclid: первая и последняя точка входа, уходят вместе с заявкой
+  (function () {
+    try {
+      const q = new URLSearchParams(location.search), keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'yclid', 'fbclid'];
+      const got = keys.filter(k => q.get(k)).map(k => k + '=' + q.get(k)).join('&');
+      if (got) { const v = { q: got, landing: location.pathname, ts: new Date().toISOString() }; if (!localStorage.getItem('aec.utm1')) localStorage.setItem('aec.utm1', JSON.stringify(v)); localStorage.setItem('aec.utm', JSON.stringify(v)); }
+      if (!localStorage.getItem('aec.ref') && document.referrer && !document.referrer.includes(location.host)) localStorage.setItem('aec.ref', document.referrer);
+    } catch (e) { }
+  })();
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    const h = a.getAttribute('href') || '';
+    if (h.startsWith('tel:')) track('click_phone', { link_url: h, page_path: location.pathname });
+    else if (/whatsapp\.com|wa\.me/.test(h)) track('click_whatsapp', { page_path: location.pathname });
+    else if (h.startsWith('mailto:')) track('click_email', { page_path: location.pathname });
+    else if (/\.pdf($|\?)/i.test(h)) track('file_download', { file_name: h.split('/').pop(), page_path: location.pathname });
+  }, true);
+
   // ---------- Хранилище (per-viewer, best-effort) ----------
   const store = {
     get(k, d) { try { const v = localStorage.getItem('aec.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
@@ -110,7 +168,7 @@ window.AECUI = (function () {
   };
   const KP = {
     items() { return store.get('kp', []); },
-    add(id, qty) { const it = this.items(); const f = it.find(x => x.id === id); if (f) f.q += (qty || 1); else it.push({ id, q: qty || 1 }); store.set('kp', it); render(); toast('Добавлено в запрос КП', L_.kp, 'Открыть список'); },
+    add(id, qty) { const it = this.items(); const f = it.find(x => x.id === id); if (f) f.q += (qty || 1); else it.push({ id, q: qty || 1 }); store.set('kp', it); render(); toast('Добавлено в запрос КП', L_.kp, 'Открыть список'); const p = D.byId(id); track('add_to_kp', { item_id: id, item_name: p ? p.name : '' }); },
     setQty(id, q) { let it = this.items(); it = it.map(x => x.id === id ? { id, q: Math.max(1, q) } : x); store.set('kp', it); render(); },
     remove(id) { store.set('kp', this.items().filter(x => x.id !== id)); render(); },
     clear() { store.set('kp', []); render(); },
@@ -182,7 +240,6 @@ window.AECUI = (function () {
       <div><h5>Компания</h5><ul><li><a href="${L_.about}">О компании</a></li><li><a href="${L_.projects}">Проекты</a></li><li><a href="${L_.brands}">Бренды</a></li><li><a href="${L_.certs}">Сертификаты</a></li><li><a href="${L_.docs}">Документация</a></li><li><a href="${L_.blog}">Блог</a></li><li><a href="${L_.faq}">Вопросы и ответы</a></li><li><a href="${L_.contacts}">Контакты</a></li></ul></div>
       <div><h5>Контакты</h5><ul><li><a href="tel:+${C.phoneRaw}" style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--navy)">${C.phone}</a></li><li><a href="mailto:${C.email}">${C.email}</a></li><li>${C.address}</li><li>${C.hours}</li><li style="display:flex;gap:8px;margin-top:6px"><a class="btn-icon" style="background:#fff;border-color:var(--line);color:var(--navy)" href="${C.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp">${icon('wa')}</a><a class="btn-icon" style="background:#fff;border-color:var(--line);color:var(--navy)" href="${C.youtube}" target="_blank" rel="noopener" aria-label="YouTube">${icon('youtube')}</a><a class="btn-icon" style="background:#fff;border-color:var(--line);color:var(--navy)" href="${C.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${icon('instagram')}</a><a class="btn-icon" style="background:#fff;border-color:var(--line);color:var(--navy)" href="${C.twogis}" target="_blank" rel="noopener" aria-label="2GIS">${icon('pin')}</a></li></ul></div>
     </div><div class="footer-bottom"><div>© ${y} ${C.legal}, БИН ${C.bin}</div><div style="display:flex;gap:16px;flex-wrap:wrap"><a href="${L_.policy}">Политика конфиденциальности</a><a href="${L_.terms}">Пользовательское соглашение</a><a href="${L_.offer}">Публичная оферта</a><a href="${L_.warranty}">Гарантии и возврат</a></div></div></div></footer>
-    <div class="proto-note">Прототип нового сайта aecups.kz. Фотографии подставятся из медиатеки текущего сайта; данные каталога демонстрационные.</div>
     <div class="overlay" data-overlay></div>`;
   }
 
@@ -197,10 +254,10 @@ window.AECUI = (function () {
         <div class="field"><label for="mCompany">Компания</label><input class="input" id="mCompany" name="company" autocomplete="organization"></div>
         <div class="field"><label for="mEmail">E-mail</label><input class="input" id="mEmail" name="email" type="email" autocomplete="email"><span class="hint"></span></div>
         <div class="field full"><label for="mQty">Количество и комментарий</label><textarea class="textarea" id="mQty" name="comment" style="min-height:72px" placeholder="Например: 2 шт., автономия 30 минут, нужен монтаж в Атырау"></textarea></div>
-        <div class="field full"><label>Файл (ТЗ, спецификация, схема)</label><div class="file-drop">Перетащите файл или <label for="mFile" style="color:var(--blue);cursor:pointer;font-weight:500">выберите</label> · PDF, DOCX, XLSX, DWG, JPG до 20 МБ<input type="file" id="mFile" class="sr"></div></div>
+        <div class="field full"><label>Файл (ТЗ, спецификация, схема)</label><div class="file-drop">Перетащите файл или <label for="mFile" style="color:var(--blue);cursor:pointer;font-weight:500">выберите</label> · PDF, DOCX, XLSX, DWG, JPG до 20 МБ<input type="file" name="file" id="mFile" class="sr"></div></div>
         <label class="check full"><input type="checkbox" id="mConsent" required><span>Согласен на обработку персональных данных согласно <a href="${L_.policy}">политике конфиденциальности</a></span></label>
         <div class="full"><button class="btn btn-kp btn-lg btn-block" type="submit">Отправить запрос</button></div>
-        <p class="small muted full">Заявка уйдёт на e-mail отдела продаж и в WhatsApp/Telegram менеджера. Дубликат попадёт в журнал заявок в админ-панели.</p>
+        <p class="small muted full">Заявка придёт в отдел продаж, ответим в течение рабочего дня.</p>
       </form></div></div>`;
   }
   function openModal(opts) {
@@ -241,15 +298,40 @@ window.AECUI = (function () {
     const em = form.querySelector('input[type=email]'); if (em && em.value && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value)) { ok = false; const f = em.closest('.field'); if (f) { f.classList.add('err'); f.querySelector('.hint').textContent = 'Проверьте адрес e-mail'; } }
     return ok;
   }
+  function utmInfo() { try { const a = JSON.parse(localStorage.getItem('aec.utm1') || 'null'), b = JSON.parse(localStorage.getItem('aec.utm') || 'null'); return [a && ('первый вход: ' + a.q + ' → ' + a.landing), b && a && b.q !== a.q && ('последний: ' + b.q + ' → ' + b.landing)].filter(Boolean).join('; '); } catch (e) { return ''; } }
   function bindForm(form, onOk) {
+    if (!form || form.dataset.bound) return; form.dataset.bound = '1';
     form.querySelectorAll('[data-mask]').forEach(mask);
+    // ловушка для ботов: посетители это поле не видят и не заполняют
+    if (RT && !form.querySelector('[name=website]')) form.insertAdjacentHTML('beforeend', '<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">');
+    const t0 = Date.now();
     form.addEventListener('submit', e => {
       e.preventDefault();
       if (!validate(form)) return;
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.page = location.pathname.split('/').pop() + location.hash; data.utm = 'utm_source=google&utm_medium=cpc (пример)'; data.time = new Date().toLocaleString('ru-RU');
+      const fd = new FormData(form);
+      const data = {}; fd.forEach((v, k) => { if (typeof v === 'string') data[k] = v; });
+      delete data.website;
+      data.page = location.pathname + location.hash; data.time = new Date().toLocaleString('ru-RU');
+      const utm = utmInfo(); if (utm) data.utm = utm;
       store.set('lastLead', data);
-      if (onOk) onOk(data); else location.href = L_.thanks;
+      const done = () => { track('generate_lead', { form_type: data.formType || 'Заявка', page_path: location.pathname }); if (onOk) onOk(data); else location.href = L_.thanks; };
+      if (!RT) { done(); return; }
+      fd.append('page_url', location.href); fd.append('page_title', document.title); fd.append('utm', utm);
+      fd.append('referrer', (function () { try { return localStorage.getItem('aec.ref') || ''; } catch (e) { return ''; } })());
+      fd.append('elapsed', String(Math.round((Date.now() - t0) / 1000)));
+      const btn = form.querySelector('[type=submit]'), label = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Отправляем…'; }
+      const old = form.querySelector('.send-fail'); if (old) old.remove();
+      fetch('/send.php', { method: 'POST', body: fd, headers: { 'X-Requested-With': 'fetch' } })
+        .then(r => r.json()).then(j => { if (!j || !j.ok) throw new Error('send'); done(); })
+        .catch(() => {
+          if (btn) { btn.disabled = false; btn.innerHTML = label; }
+          // запасной канал: та же заявка готовым текстом в WhatsApp
+          const txt = ['Заявка с сайта aecups.kz', data.formType, data.product, data.name, data.phone, data.company, data.email, data.comment, data.items].filter(Boolean).join('\n');
+          const wa = 'https://api.whatsapp.com/send/?phone=' + C.phoneRaw + '&text=' + encodeURIComponent(txt);
+          form.insertAdjacentHTML('beforeend', `<div class="note send-fail full" role="alert" style="margin-top:4px">Не удалось отправить заявку. Отправьте её в WhatsApp одним нажатием или позвоните <a href="tel:+${C.phoneRaw}">${C.phone}</a>.<div style="margin-top:10px"><a class="btn btn-wa btn-sm" href="${wa}" target="_blank" rel="noopener">${icon('wa')} Отправить в WhatsApp</a></div></div>`);
+          track('lead_send_error', { page_path: location.pathname });
+        });
     });
   }
 
@@ -310,6 +392,10 @@ window.AECUI = (function () {
   function init(opts) {
     opts = opts || {};
     const root = document.getElementById('app') || document.body;
+    // Страница пришла с сервера уже отрисованной (для поисковиков и быстрого первого показа).
+    // Возвращаем исходный шаблон и рисуем заново теми же функциями, что и в прототипе.
+    const tpl = document.getElementById('aec-tpl');
+    if (tpl) { root.innerHTML = tpl.innerHTML; tpl.remove(); document.querySelectorAll('script[data-pre]').forEach(x => x.remove()); }
     root.insertAdjacentHTML('afterbegin', header(opts.active));
     root.insertAdjacentHTML('beforeend', footer() + modalHTML());
     bindForm(document.getElementById('mForm'));
@@ -340,13 +426,31 @@ window.AECUI = (function () {
       document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
     } else { document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')); document.querySelectorAll('[data-count]').forEach(el => el.textContent = (+el.dataset.count).toLocaleString('ru-RU') + (el.dataset.suffix || '')); }
     document.querySelectorAll('form[data-lead]').forEach(f => bindForm(f));
+    if (RT) cookieNote();
     render();
+  }
+  // Короткое уведомление о cookie (аналитика GA4 и Google Ads), показывается один раз
+  function cookieNote() {
+    if (store.get('cookieOk', false)) return;
+    const el = document.createElement('div'); el.className = 'cookie-note';
+    el.innerHTML = `<span>Сайт использует cookie для аналитики. <a href="${L_.policy}">Подробнее</a></span><button type="button" class="btn btn-sm btn-ghost">Понятно</button>`;
+    el.querySelector('button').addEventListener('click', () => { store.set('cookieOk', true); el.remove(); });
+    document.body.appendChild(el);
   }
 
   function crumbs(items) { return '<nav class="crumbs" aria-label="Хлебные крошки"><ol>' + items.map((it, i) => '<li>' + (it.href && i < items.length - 1 ? `<a href="${it.href}">${it.name}</a>` : `<span>${it.name}</span>`) + '</li>').join('') + '</ol></nav>'; }
   function jsonld(obj) { const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(obj); document.head.appendChild(s); }
-  function hashParts() { return location.hash.replace(/^#/, '').split('.').filter(Boolean); }
+  function hashParts() {
+    const sp = x => String(x || '').split('.').filter(Boolean), h = location.hash.replace(/^#/, ''), R = window.AEC_ROUTE;
+    if (!R) return sp(h);
+    // на чистом адресе состояние берётся из адреса; хеш учитывается только там, где он хранит фильтры (каталог, калькулятор, поиск)
+    if (R.hash && h && (!R.s || sp(h)[0] === sp(R.s)[0])) return sp(h);
+    return sp(R.s);
+  }
+  // title до 60 символов (первый подходящий вариант) и description до 160 символов по границе предложения или слова
+  const fit = vs => vs.find(t => t.length <= 60) || vs[vs.length - 1];
+  function clip(t, n) { n = n || 160; t = String(t || '').replace(/\s+/g, ' ').trim(); if (t.length <= n) return t; const c = t.slice(0, n); const dot = c.lastIndexOf('. '); return dot > 90 ? c.slice(0, dot + 1) : c.slice(0, c.lastIndexOf(' ')).replace(/[,:;\s]+$/, '') + '…'; }
   function fmtDate(iso) { return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }); }
 
-  return { icon, art, img, heroArt, bg, pphoto, powerTxt, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer };
+  return { icon, art, img, heroArt, bg, pphoto, powerTxt, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer, cleanUrl, track, clean: !!RT, fit, clip };
 })();

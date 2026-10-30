@@ -93,7 +93,7 @@
     const ids = U.CMP.items(); lastIds = JSON.stringify(ids);
     const items = ids.map(D.byId).filter(Boolean);
     const head = document.getElementById('head'), body = document.getElementById('body');
-    const crumbs = U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Продукция', href: 'catalog.html' }, { name: 'Сравнение' }]);
+    const crumbs = U.crumbs([{ name: 'Главная', href: L.home }, { name: 'Продукция', href: U.cleanUrl('catalog.html') }, { name: 'Сравнение' }]);
     if (!items.length) {
       head.innerHTML = crumbs + '<h1>Сравнение оборудования</h1>';
       const pop = D.PRODUCTS.filter(p => p.cat === 'ibp' && p.stock === 'in' && p.price).slice(0, 4);

@@ -65,7 +65,7 @@ window.AEC = (function () {
   const INDUSTRIES = [
     { id: 'czod', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/ibp-dlya-czod-servera/', name: 'ЦОД и серверные', h1: 'ИБП для серверной и ЦОД', icon: 'server', text: 'Двойное преобразование, модульное резервирование N+1, мониторинг по SNMP', kva: '10–600 кВА', queries: ['ибп для серверной', 'ибп для цод'] },
     { id: 'med', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/ibp-dlya-bolnicz/', name: 'Медицина', h1: 'ИБП для медицинского оборудования', icon: 'med', text: 'Рентген, КТ, МРТ, операционные и реанимация: пиковые токи и IPS-системы', kva: '10–300 кВА', queries: ['ибп для медицинского оборудования', 'ибп для мрт'] },
-    { id: 'prom', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/ibp-dlya-linii-proizvodstv/', name: 'Промышленность', h1: 'ИБП для производственных линий', icon: 'factory', text: 'Индуктивная нагрузка, провалы напряжения, пыль и температура цеха', kva: '20–1200 кВА', queries: ['промышленный ибп'] },
+    { id: 'prom', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/promyshlennye-ibp/', name: 'Промышленность', h1: 'Промышленные ИБП для производства', icon: 'factory', text: 'Индуктивная нагрузка, провалы напряжения, пыль и температура цеха', kva: '20–1200 кВА', queries: ['промышленный ибп'] },
     { id: 'oil', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/ibp-dlya-neftegaza/', name: 'Нефть и газ', h1: 'ИБП и ДГУ для нефтегазовых объектов', icon: 'oil', text: 'Удалённые объекты, контейнерные ДГУ, СОПТ 220 В, взрывозащита по ТЗ', kva: '10–3750 кВА', queries: ['ибп для нефтегаза'] },
     { id: 'office', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/ibp-dlya-biznes-centrov-trc/', name: 'Бизнес-центры и ТРЦ', h1: 'ИБП для бизнес-центров и ТРЦ', icon: 'building', text: 'Лифты, аварийное освещение, инженерные системы, кассовые узлы', kva: '20–500 кВА', queries: ['ибп для бизнес центра'] },
     { id: 'machines', slug: 'product-category/ibp-istochniki-besperebojnogo-pitaniya/ibp-dlya-stankov/', name: 'Станочное оборудование', h1: 'ИБП для станков с ЧПУ', icon: 'cnc', text: 'Защита от потери программы и брака при провалах сети', kva: '10–200 кВА', queries: ['ибп для станков'] },
@@ -96,6 +96,7 @@ window.AEC = (function () {
     { id: 'hoppecke', name: 'Hoppecke', country: 'Германия', type: 'Аккумуляторы OPzS / OPzV', status: 'Партнёр' },
     { id: 'bae-batterien', name: 'BAE Batterien', country: 'Германия', type: 'Аккумуляторы Secura', status: 'Партнёр', logo: 'brand-bae-batterien.svg' },
     { id: 'energrid', name: 'EnerGrid', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
+    { id: 'ritar', name: 'Ritar', country: 'Китай', type: 'Аккумуляторы AGM', status: 'Партнёр' },
             { id: 'sprinter', name: 'Exide', country: 'Германия', type: 'Аккумуляторы', status: 'Партнёр' },
     { id: 'bereli', name: 'Bereli', country: 'Турция', type: 'Аккумуляторы AGM', status: 'Партнёр' },
     { id: 'yuasa', name: 'Yuasa', country: 'Япония', type: 'Аккумуляторы', status: 'Партнёр' },

@@ -44,7 +44,8 @@
   document.getElementById('okIc').innerHTML = I('check');
   const lead = U.store.get('lastLead', null);
   const s = document.getElementById('sum');
-  if (lead) { s.innerHTML = `<b>Что мы получили</b><div style="margin-top:8px;display:grid;gap:4px">${[['Тип заявки', lead.formType], ['Имя', lead.name], ['Телефон', lead.phone], ['Компания', lead.company], ['Товар', lead.product], ['Комментарий', lead.comment], ['Страница', lead.page], ['Время', lead.time]].filter(x => x[1]).map(x => `<span><span class="muted">${x[0]}:</span> ${x[1]}</span>`).join('')}</div><p class="muted" style="margin-top:8px">В рабочей версии заявка сохраняется в журнале админ-панели с UTM-метками и источником перехода; цель фиксируется в GA4 и Google Ads.</p>`; } else { s.hidden = true; }
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  if (lead) { s.innerHTML = `<b>Что мы получили</b><div style="margin-top:8px;display:grid;gap:4px">${[['Тип заявки', lead.formType], ['Имя', lead.name], ['Телефон', lead.phone], ['Компания', lead.company], ['Товар', lead.product], ['Комментарий', lead.comment], ['Время', lead.time]].filter(x => x[1]).map(x => `<span><span class="muted">${x[0]}:</span> ${esc(x[1])}</span>`).join('')}</div>`; } else { s.hidden = true; }
   document.getElementById('next').innerHTML = `<a class="btn btn-ghost" href="${L.cat('ibp')}">Каталог ИБП</a><a class="btn btn-ghost" href="${L.projects}">Проекты</a><a class="btn btn-ghost" href="${L.calc}">Калькулятор подбора</a>`;
   const ph = document.getElementById('phone'); ph.textContent = C.phone; ph.href = 'tel:+' + C.phoneRaw; document.getElementById('wa').href = C.whatsapp;
 })();
