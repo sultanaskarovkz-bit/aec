@@ -321,7 +321,7 @@
       <div class="tabs" role="tablist"><button class="on" data-tab="spec">Характеристики</button><button data-tab="desc">Описание</button><button data-tab="docs">Документация</button><button data-tab="opts">Комплектация и опции</button></div>
       <div class="tab-panel on" id="tab-spec"><div class="spec-wrap"><div class="tbl-wrap"><table class="spec">${groups.map(g => `<tr class="grp"><td colspan="2">${esc(g[0])}</td></tr>` + g[1].map(r => `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join('')).join('')}</table></div></div><p class="small muted" style="margin-top:12px">Характеристики приведены по данным производителя и уточняются по datasheet конкретной модификации. Для подбора батарей и расчёта автономии воспользуйтесь <a href="${L.calc}">калькулятором</a> или запросите КП.</p></div>
       <div class="tab-panel" id="tab-desc"><div class="desc">${desc.map((t, i) => (i === 1 ? `<h3>Модель ${esc(p.model)}</h3>` : i === 2 ? '<h3>Применение</h3>' : '') + `<p>${t}</p>`).join('')}</div></div>
-      <div class="tab-panel" id="tab-docs"><div class="docs">${(p.docs || []).map(d => `<div class="doc"><span class="ic">${I('file')}</span><div><b>${esc(d.name)}</b><small>PDF · ${esc(d.size)}</small></div><a class="btn btn-sm btn-ghost dl" href="${d.file ? 'assets/docs/' + d.file : '#'}"${d.file ? ' download target="_blank" rel="noopener"' : ''} aria-label="Скачать ${esc(d.name)}">${I('download')} Скачать</a></div>`).join('')}<div class="doc"><span class="ic">${I('doc')}</span><div><b>Сертификаты и дистрибьюторские письма</b><small>Для тендерной документации</small></div><a class="btn btn-sm btn-ghost" href="${L.docs}">Открыть</a></div></div></div>
+      <div class="tab-panel" id="tab-docs"><div class="docs">${(p.docs || []).filter(d => d.file).map(d => `<div class="doc"><span class="ic">${I('file')}</span><div><b>${esc(d.name)}</b><small>PDF · ${esc(d.size)}</small></div><a class="btn btn-sm btn-ghost dl" href="assets/docs/${d.file}" target="_blank" rel="noopener" aria-label="Скачать ${esc(d.name)}">${I('download')} Скачать</a></div>`).join('')}<div class="doc"><span class="ic">${I('doc')}</span><div><b>Сертификаты и дистрибьюторские письма</b><small>Для тендерной документации</small></div><a class="btn btn-sm btn-ghost" href="${L.docs}">Открыть</a></div></div></div>
       <div class="tab-panel" id="tab-opts"><div class="opts">${opts.map(o => `<div class="opt"><span class="ic">${I(o[0])}</span><div><b>${esc(o[1])}</b><p>${o[2]}</p></div></div>`).join('')}</div></div>
     </div></section>
 
@@ -377,7 +377,6 @@
       document.querySelectorAll('.tab-panel').forEach(pn => pn.classList.toggle('on', pn.id === 'tab-' + b.dataset.tab));
     }));
     main.querySelectorAll('form[data-lead]').forEach(f => U.bindForm(f));
-    main.querySelectorAll('a.dl').forEach(a => a.addEventListener('click', e => { e.preventDefault(); U.toast('Файл будет доступен после переноса документации на сайт', L.docs, 'Документация'); }));
   }
   document.addEventListener('aec:render', () => { document.querySelectorAll('.pbtns [data-lbl]').forEach(b => { const on = b.classList.contains('on'); const s = b.querySelector('span'); if (s) s.textContent = on ? b.dataset.lblOn : b.dataset.lbl; }); });
   window.addEventListener('hashchange', render);

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Документация и datasheet | AEC Kazakhstan</title>
-<meta name="description" content="Каталоги и datasheet ИБП Salicru, Kehua, Tescom, батарей Hoppecke, BAE, Ritar, EnerGrid, ДГУ AGG и BAIFA. Сертификаты ЕАЭС и дистрибьюторские письма.">
+<title>Документация: каталоги и datasheet PDF | AEC Kazakhstan</title>
+<meta name="description" content="Каталоги и технические описания (datasheet) в PDF: ИБП Salicru, Kehua, Tescom, батареи Hoppecke, BAE, Ritar, EnerGrid, ДГУ AGG, BAIFA и Tescom, стабилизаторы и STS. Скачивание без регистрации.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/aec.css?v=281028">
 <link rel="stylesheet" href="assets/pages.css?v=281028">
@@ -32,21 +32,62 @@
   const D = AEC, U = AECUI, I = U.icon, L = U.L;
   U.init({ active: 'company' });
   const crumbs = [{ name: 'Главная', href: L.home }, { name: 'Документация' }];
-  document.getElementById('hero').innerHTML = U.crumbs(crumbs) + `<h1>Документация: каталоги, datasheet, сертификаты</h1><p class="lead">Библиотека PDF по оборудованию из каталога AEC. Фильтр по типу и бренду, поиск по модели. Документы скачиваются без регистрации.</p>`;
-  const TYPES = { ds: 'Datasheet', cat: 'Каталог', man: 'Руководство', cert: 'Сертификат', dist: 'Дистрибьюторское письмо' };
-  const docs = [];
-  const seen = new Set();
-  D.PRODUCTS.forEach(p => { const k = p.brand + p.series; if (seen.has(k)) return; seen.add(k); docs.push({ t: 'ds', brand: p.brand, name: 'Datasheet ' + p.brand + ' ' + p.series, sub: D.cat(p.cat).name + ' · ' + p.series, size: (1 + Math.round((p.series.length % 5) * 0.7 * 10) / 10).toFixed(1).replace('.', ',') + ' МБ', cat: p.cat }); });
-  [['cat', 'Salicru', 'Каталог Salicru 2026: ИБП, стабилизаторы', 'Общий каталог', '12,4 МБ'], ['cat', 'Tescom', 'Каталог Tescom: ИБП, ДГУ, стабилизаторы, STS', 'Общий каталог', '18,2 МБ'], ['cat', 'Kehua', 'Каталог Kehua Tech: ИБП и решения для ЦОД', 'Общий каталог', '9,8 МБ'], ['man', 'Salicru', 'Руководство по эксплуатации SLC ADAPT2', 'Модульные ИБП', '6,1 МБ'], ['man', 'Salicru', 'Руководство по эксплуатации SLC TWIN RT3', 'Стоечные ИБП', '3,4 МБ'], ['man', 'Tescom', 'Руководство по эксплуатации TEOS', 'Трансформаторные ИБП', '5,2 МБ'], ['cert', 'Salicru', 'Сертификат соответствия ЕАЭС: ИБП Salicru SLC', 'ТР ТС 004/2011, 020/2011', '0,8 МБ'], ['cert', 'Tescom', 'Сертификат соответствия ЕАЭС: ИБП Tescom TEOS, MTW, NEOLINE', 'ТР ТС 004/2011, 020/2011', '0,9 МБ'], ['cert', 'Kehua', 'Сертификат соответствия ЕАЭС: ИБП Kehua KR, MR', 'ТР ТС 004/2011, 020/2011', '0,7 МБ'], ['dist', 'Salicru', 'Дистрибьюторское письмо Salicru для AEC Kazakhstan', '2026 год', '0,4 МБ'], ['dist', 'Tescom', 'Дистрибьюторское письмо Tescom для AEC Kazakhstan', '2026 год', '0,4 МБ'], ['dist', 'Kehua', 'Партнёрский сертификат Kehua Tech', '2026 год', '0,3 МБ']].forEach(d => docs.push({ t: d[0], brand: d[1], name: d[2], sub: d[3], size: d[4] }));
+  const crumbsHero = `<h1>Документация: каталоги и технические описания</h1><p class="lead">Библиотека PDF производителей по оборудованию из каталога AEC: ИБП, дизельные генераторы, аккумуляторные батареи, стабилизаторы и статические переключатели. Фильтр по типу и бренду, поиск по модели. Скачивание без регистрации.</p>`;
+  document.getElementById('hero').innerHTML = U.crumbs(crumbs) + crumbsHero;
+  const TYPES = { cat: 'Каталоги', ds: 'Технические описания' };
+  const CATS = new Set(['2024-catalog.pdf', '2024-catalogue-baifapower-en.pdf', 'generator_catalogue.pdf', 'catalogo_bae.pdf', 'everexceed-general-avr-catalog-technical-sheet.pdf']);
+  const NAMES = {
+    '2024-catalog.pdf': 'Каталог дизельных генераторов AGG Power 2024', '2024-catalogue-baifapower-en.pdf': 'Каталог дизельных генераторов BAIFA Power 2024 (на английском)',
+    'generator_catalogue.pdf': 'Каталог дизельных генераторов Tescom', 'catalogo_bae.pdf': 'Каталог аккумуляторных батарей BAE Secura', 'everexceed-general-avr-catalog-technical-sheet.pdf': 'Каталог стабилизаторов напряжения EverExceed',
+    '06-01.pdf': 'Стабилизаторы напряжения Salicru RE3 и RET', 'jm84101.pdf': 'Стабилизаторы напряжения Salicru EMi3',
+    'opzs-ru.pdf': 'Аккумуляторы Hoppecke OPzS', 'opzv.pdf': 'Аккумуляторы Hoppecke OPzV', 'ogi.pdf': 'Аккумуляторы Hoppecke grid power V H', 'ogiv.pdf': 'Аккумуляторы Hoppecke grid power VR M',
+    'bae-opzs-cells.pdf': 'Аккумуляторы BAE Secura OPzS', 'bae_opzv_cells.pdf': 'Аккумуляторы BAE Secura OPzV', 'energrid-ft12.pdf': 'Аккумуляторы EnerGrid FT12',
+    'kr33300.pdf': 'ИБП Kehua KR33, 300–1200 кВА', 'kehua-kr33-h-400-800kva-series-brochure.pdf': 'ИБП Kehua KR33-H, 400–800 кВА', 'kr-rm-1-10kva.pdf': 'ИБП Kehua KR-RM, 1–10 кВА',
+    'kr-rm-10-40kva.pdf': 'ИБП Kehua KR-RM, 10–40 кВА', 'kr-rm-li-1-3kva-v20230822.pdf': 'ИБП Kehua KR-RM Li с литиевыми батареями, 1–3 кВА', 'kr11-plus-1-10kva.pdf': 'ИБП Kehua KR11 Plus, 1–10 кВА',
+    'mr-series-ups-120kva-30k-module-v20240812.pdf': 'Модульные ИБП Kehua MR, до 120 кВА (модули 30 кВА)', 'mr33-series-ups-200-500k-50k-module_high-efficiency.pdf': 'Модульные ИБП Kehua MR33, 200–500 кВА (модули 50 кВА)',
+    'myria-series-ups-10-40kva.pdf': 'ИБП Kehua Myria, 10–40 кВА', 'myria-series-ups-60-200kva.pdf': 'ИБП Kehua Myria, 60–200 кВА', 'fr-uk-gel-series-ups.pdf': 'ИБП Kehua FR-UK',
+    'ups-s3-lithium-ion-battery-all-in-one-solution-20240409.pdf': 'Литий-ионные батареи Kehua S3 для ИБП',
+    '9.-mtw150-modular-ups-10-15-20-25-kw-module.pdf': 'Модульные ИБП Tescom MTW150 (модули 10–25 кВт)', '9_1_mtw_modular_ups_25_180_kvt_25_30_kvt_modul.pdf': 'Модульные ИБП Tescom MTW, 25–180 кВт (модули 25 и 30 кВт)',
+    '10_mtw300_modular_ups_30_300_kvt_modul_30_kvt.pdf': 'Модульные ИБП Tescom MTW300, 30–300 кВт (модули 30 кВт)', '11_mtw500_modular_ups_50_500_kvt_modul_50_60_kvt.pdf': 'Модульные ИБП Tescom MTW500, 50–500 кВт (модули 50 и 60 кВт)',
+    'tescom-neoline-pro-380xl-80kva-ru.pdf': 'ИБП Tescom Neoline PRO 380XL, 80 кВА', 'tescom-tsc-series-1p-1p-6-20-kva.pdf': 'ИБП Tescom TSC, 6–20 кВА',
+    'stk_11001_serie_full_automatic_ac_static_voltage_stabilizer_1_kva.pdf': 'Стабилизатор напряжения Tescom STK 11001, 1 кВА', 'tsvr11001-series-1-kva.pdf': 'Стабилизатор напряжения Tescom TSVR11001, 1 кВА',
+    'tsvr_series_1_3200_kva_static_electronic_voltage_stabilizer.pdf': 'Стабилизаторы напряжения Tescom TSVR, 1–3200 кВА',
+    'sts-2000-series-32-120-a.pdf': 'Статические переключатели Tescom STS 2000, 32–120 А', 'sts-3000-4000-series-50-1250-a.pdf': 'Статические переключатели Tescom STS 3000 и 4000, 50–1250 А',
+    '3.-slc-adapt-3x480-40-1200-kva_with-modules-40-kva.pdf': 'Модульные ИБП Salicru SLC ADAPT 3×480, 40–1200 кВА (модули 40 кВА)'
+  };
+  function title(f, d, brand) {
+    if (NAMES[f]) return NAMES[f];
+    let n = d.name.replace(/\s+/g, ' ').trim();
+    const r = n.match(/^(\d+)Ач\s+(\S+)\s+12V\d+Ah(.*)$/i);
+    if (r) return `Аккумулятор ${brand} ${r[2]}, 12 В ${r[1]} А·ч${/high rate/i.test(r[3]) ? ' (высокая токоотдача)' : ''}`;
+    if (/^EnerGrid /.test(n)) return 'Аккумулятор ' + n;
+    if (/^SLC /.test(n)) {
+      n = n.replace(/\(with modules ([\d.]+) & ([\d.]+) kVA\)/, '(модули $1 и $2 кВА)').replace(/(\d)-(\d)/g, '$1–$2').replace(/ & /g, ' и ').replace(/\bkVA\b/g, 'кВА').replace(/\bVA\b/g, 'ВА').replace(/\s*\(([^()]*\d[^()]*(?:кВА|ВА))\)/, ', $1');
+      return (/ADAPT/.test(n) ? 'Модульные ИБП Salicru ' : 'ИБП Salicru ') + n;
+    }
+    return brand + ' ' + n;
+  }
+  const byFile = {};
+  D.PRODUCTS.forEach(p => (p.docs || []).forEach(d => {
+    if (!d.file) return;
+    const x = byFile[d.file] || (byFile[d.file] = { file: d.file, d, brand: p.brand, cat: p.cat, size: d.size, series: new Set(), n: 0, first: p });
+    x.n++; if (p.series) x.series.add(p.series);
+  }));
+  const ORDER = ['ibp', 'dgu', 'akb', 'stab', 'sts'];
+  const docs = Object.values(byFile).map(x => ({ t: CATS.has(x.file) ? 'cat' : 'ds', file: x.file, brand: x.brand, cat: x.cat, name: title(x.file, x.d, x.brand), size: x.size, n: x.n, first: x.first,
+    catName: D.cat(x.cat).name, ser: x.series.size && x.series.size <= 3 ? [...x.series].join(', ') : '' }))
+    .sort((a, b) => (a.t === b.t ? 0 : a.t === 'cat' ? -1 : 1) || (ORDER.indexOf(a.cat) - ORDER.indexOf(b.cat)) || a.brand.localeCompare(b.brand) || a.name.localeCompare(b.name, 'ru', { numeric: true }));
+  const models = n => n + ' ' + (n % 10 === 1 && n % 100 !== 11 ? 'модели' : 'моделей');
   const brands = [...new Set(docs.map(d => d.brand))];
   const st = { t: '', b: '', q: '' };
   function render() {
     document.getElementById('fType').innerHTML = `<button class="${st.t ? '' : 'on'}" data-k="t" data-v="">Все документы</button>` + Object.entries(TYPES).map(e => `<button class="${st.t === e[0] ? 'on' : ''}" data-k="t" data-v="${e[0]}">${e[1]}</button>`).join('');
     document.getElementById('fBrand').innerHTML = `<button class="${st.b ? '' : 'on'}" data-k="b" data-v="">Все бренды</button>` + brands.map(b => `<button class="${st.b === b ? 'on' : ''}" data-k="b" data-v="${b}">${b}</button>`).join('');
     const q = st.q.toLowerCase();
-    const list = docs.filter(d => (!st.t || d.t === st.t) && (!st.b || d.brand === st.b) && (!q || (d.name + ' ' + d.sub).toLowerCase().includes(q)));
-    document.getElementById('count').textContent = list.length + ' документов';
-    document.getElementById('list').innerHTML = list.map(d => `<div class="doc-row"><span class="ic">${I(d.t === 'cert' || d.t === 'dist' ? 'award' : 'file')}</span><div><b>${d.name}</b><small>${TYPES[d.t]} · ${d.brand} · ${d.sub} · PDF, ${d.size}</small></div><a class="btn btn-ghost btn-sm" href="#" onclick="AECUI.toast('В рабочей версии начнётся скачивание PDF');return false;">${I('download')} Скачать</a></div>`).join('') || '<p class="muted">Ничего не найдено. Запросите документ через форму ниже.</p>';
+    const list = docs.filter(d => (!st.t || d.t === st.t) && (!st.b || d.brand === st.b) && (!q || (d.name + ' ' + d.catName + ' ' + d.ser + ' ' + d.brand).toLowerCase().includes(q)));
+    const nd = list.length % 100, nd1 = list.length % 10;
+    document.getElementById('count').textContent = list.length + ' ' + (nd > 10 && nd < 20 ? 'документов' : nd1 === 1 ? 'документ' : nd1 > 1 && nd1 < 5 ? 'документа' : 'документов');
+    document.getElementById('list').innerHTML = list.map(d => `<div class="doc-row"><span class="ic">${I('file')}</span><div><b><a href="assets/docs/${d.file}" target="_blank" rel="noopener" style="color:inherit">${d.name}</a></b><small><span>${d.brand}</span> · <span>${d.catName}</span>${d.ser ? ` · <span>${d.ser}</span>` : ''} · ${d.n === 1 ? `<a href="${L.product(d.first.slug)}">${d.first.model}</a>` : `<span>для ${models(d.n)}</span>`} · <span>PDF, ${d.size}</span></small></div><a class="btn btn-ghost btn-sm" href="assets/docs/${d.file}" target="_blank" rel="noopener">${I('download')} Скачать</a></div>`).join('') || '<p class="muted">Ничего не найдено. Запросите документ через форму ниже.</p>';
   }
   document.addEventListener('click', e => { const b = e.target.closest('.filters-row button'); if (!b) return; st[b.dataset.k] = b.dataset.v; render(); });
   document.getElementById('q').addEventListener('input', e => { st.q = e.target.value; render(); });

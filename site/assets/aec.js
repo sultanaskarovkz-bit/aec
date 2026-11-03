@@ -194,6 +194,26 @@ window.AECUI = (function () {
     t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3200);
   }
 
+  // ---------- Просмотр скана или фото (ссылка на файл работает и без скрипта) ----------
+  function lightbox(src, cap) {
+    let b = document.getElementById('lbox');
+    if (!b) {
+      b = document.createElement('div'); b.id = 'lbox'; b.className = 'lbox'; b.setAttribute('role', 'dialog'); b.setAttribute('aria-modal', 'true');
+      b.innerHTML = '<figure><img alt=""><figcaption><span></span><a target="_blank" rel="noopener">Открыть в полном размере</a></figcaption></figure><button class="btn-icon lbox-x" type="button" aria-label="Закрыть">' + icon('close') + '</button>';
+      b.addEventListener('click', e => { if (e.target === b || e.target.closest('.lbox-x')) closeLightbox(); });
+      document.body.appendChild(b);
+    }
+    b.querySelector('img').src = src; b.querySelector('img').alt = cap || '';
+    b.querySelector('figcaption span').textContent = cap || ''; b.querySelector('figcaption a').href = src;
+    b.classList.add('open'); document.body.classList.add('lbox-on');
+    track('file_download', { file_name: src.split('/').pop(), link_text: cap || '' });
+  }
+  function closeLightbox() { const b = document.getElementById('lbox'); if (b) b.classList.remove('open'); document.body.classList.remove('lbox-on'); }
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[data-lightbox]'); if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    e.preventDefault(); lightbox(a.href, a.dataset.lightbox || [...a.querySelectorAll('b, small')].map(x => x.textContent.trim()).filter(Boolean).join(': '));
+  });
+
   // ---------- Шапка ----------
   function header(active) {
     const cats = D.CATEGORIES.map(c => `<a href="${L_.cat(c.id)}"><span class="ic">${icon(c.img)}</span><span><b>${c.name}</b><small>${c.range}${c.soon ? ', по запросу' : ''}</small></span></a>`).join('');
@@ -417,7 +437,7 @@ window.AECUI = (function () {
     });
     document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => openModal({ title: b.dataset.title, type: b.dataset.type, product: b.dataset.product, sub: b.dataset.sub })));
     document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); mm.classList.remove('open'); document.body.classList.remove('menu-open'); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeLightbox(); mm.classList.remove('open'); document.body.classList.remove('menu-open'); } });
     // reveal + counters
     if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px' });
@@ -450,7 +470,7 @@ window.AECUI = (function () {
   // title до 60 символов (первый подходящий вариант) и description до 160 символов по границе предложения или слова
   const fit = vs => vs.find(t => t.length <= 60) || vs[vs.length - 1];
   function clip(t, n) { n = n || 160; t = String(t || '').replace(/\s+/g, ' ').trim(); if (t.length <= n) return t; const c = t.slice(0, n); const dot = c.lastIndexOf('. '); return dot > 90 ? c.slice(0, dot + 1) : c.slice(0, c.lastIndexOf(' ')).replace(/[,:;\s]+$/, '') + '…'; }
-  function fmtDate(iso) { return new Date(iso).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }); }
+  function fmtDate(iso) { const loc = { en: 'en-GB', kz: 'kk-KZ' }[window.AEC_LANG] || 'ru-RU'; return new Date(iso).toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric' }); }
 
   return { icon, art, img, heroArt, bg, pphoto, powerTxt, ph: PH_SVG, L: L_, KP, CMP, FAV, store, toast, openModal, closeModal, bindForm, mask, search, variants, productCard, render, init, crumbs, jsonld, hashParts, fmtDate, header, footer, cleanUrl, track, clean: !!RT, fit, clip };
 })();

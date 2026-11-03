@@ -130,6 +130,8 @@ window.AEC = (function () {
     photo: null, photos: r.photo ? [r.photo] : [], industries: [], docs: [], spec: {},
     phases: '', topology: '', form: '', arch: '', pf: 1, eff: '', battery: '', interfaces: [], ip: '', warranty: null, dims: '', weight: '', parallel: ''
   }, r));
+  // в выгрузке у серии Kehua FR-UK к мощности дописано лишнее «кВА»: «10 кВА / 9 кВт кВА»
+  P.forEach(p => { if (/ кВт кВА$/.test(p.name)) p.name = p.name.replace(/ кВт кВА$/, ' кВт'); });
   // Полные таблицы характеристик и описания (assets/catalog-details.js подключается только на карточке товара)
   function details(id) { const d = window.AEC_CATALOG_DETAILS; return (d && d[id]) || null; }
   // Диапазон мощности: у серий ДГУ задан kva…kvaMax
@@ -148,6 +150,8 @@ window.AEC = (function () {
   ];
 
   const EXHIBITIONS = [
+    { id: 'powerexpo-2026', name: 'POWEREXPO ALMATY 2026', city: 'Алматы', year: 2026, theme: 'энергетика', photos: ['exh-powerexpo2026-1.jpg'] },
+    { id: 'kioge-2026', name: 'KIOGE 2026', city: 'Алматы', year: 2026, theme: 'нефть и газ', photos: ['exh-kioge2026-1.jpg', 'blog-kioge-1.jpg', 'blog-kioge-2.jpg', 'blog-kioge-3.jpg'] },
     { id: 'kihe-2026', name: 'KIHE 2026', city: 'Алматы', year: 2026, theme: 'здравоохранение', photos: ['exh-kihe2026-1.jpg', 'exh-kihe2026-2.jpg', 'exh-kihe2026-3.jpg'] },
     { id: 'power-expo-2025', name: 'POWER EXPO 2025', city: 'Алматы', year: 2025, theme: 'энергетика', photos: ['exh-powerexpo2025-1.jpg', 'exh-powerexpo2025-2.jpg', 'exh-powerexpo2025-3.jpg', 'exh-powerexpo2025-4.jpg'] },
     { id: 'electronica-2025', name: 'ELECTRONICA EXPO ASTANA 2025', city: 'Астана', year: 2025, theme: 'электроника', photos: ['exh-electronica2025-1.jpg', 'exh-electronica2025-2.jpg', 'exh-electronica2025-3.jpg'] },

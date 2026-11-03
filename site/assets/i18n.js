@@ -15,7 +15,9 @@
 
   // Словарь нужного языка подключается здесь же (document.write), движок стартует после его загрузки
   if (lang !== 'ru' && !(window.AEC_I18N && window.AEC_I18N[lang])) {
-    document.write('<script src="assets/i18n-' + lang + '.js"><\/script><script>window.AEC_I18N_START && window.AEC_I18N_START()<\/script>');
+    // словарь берёт ту же метку версии, что и i18n.js, чтобы после обновления сайта браузер не показывал старые переводы из кэша
+    const ver = ((document.currentScript && document.currentScript.src || '').match(/\?v=\w+/) || [''])[0];
+    document.write('<script src="assets/i18n-' + lang + '.js' + ver + '"><\/script><script>window.AEC_I18N_START && window.AEC_I18N_START()<\/script>');
   }
   window.AEC_I18N_START = function () {
   const dict = (window.AEC_I18N && window.AEC_I18N[lang]) || null;
@@ -25,18 +27,60 @@
     for (const k in dict) {
       const nums = k.match(NUM); if (!nums) continue;
       let t = dict[k], ok = true;
-      for (const n of nums) { if (t.indexOf(n) < 0) { ok = false; break; } t = t.replace(n, '\u0000'); }
+      // в английском переводе дробная часть пишется через точку: «37,5 кВА» -> «37.5 kVA», шаблон это учитывает
+      for (const n of nums) { if (t.indexOf(n) >= 0) t = t.replace(n, '\u0000'); else if (n.indexOf(',') > 0 && t.indexOf(n.replace(',', '.')) >= 0) t = t.replace(n.replace(',', '.'), '\u0001'); else { ok = false; break; } }
       if (ok) tpl[k.replace(NUM, '#')] = t;
     }
   }
-  function tr(s) {
+  // Названия товаров из каталога (602 позиции, в построчном словаре их нет): тип товара переводится, модель и параметры сохраняются.
+  // Перевод применяется, только если после замены в названии не осталось незнакомых русских слов; иначе название остаётся как есть.
+  const UNITS_EN = [[/ в комплекте с АКБ/g, ' with batteries'], [/, со встроенными АКБ/g, ', built-in batteries'], [/, для внешних АКБ/g, ', for external batteries'], [/, вертикальное исполнение/g, ', tower'],
+    [/ серии ([^\s,]+)/g, ' $1 series'], [/ с двигателем ([^\s,]+)/g, ' with $1 engine'], [/ \(вертикальное исполнение\)/g, ' (tower)'], [/от ([\d.,]+) до ([\d.,]+)/g, '$1–$2'],
+    [/кВА/g, 'kVA'], [/кВт/g, 'kW'], [/ВА/g, 'VA'], [/А·ч/g, 'Ah'], [/(\d) В(?![А-Яа-яЁё])/g, '$1 V'], [/(\d) А(?![А-Яа-яЁё])/g, '$1 A'], [/(\d)ф(?![А-Яа-яЁё])/g, '$1-ph']];
+  const UNITS_KZ = [[/А·ч/g, 'А·сағ'],[/ в комплекте с АКБ/g, ' АКБ жинағымен'], [/, со встроенными АКБ/g, ', кірістірілген АКБ'], [/, для внешних АКБ/g, ', сыртқы АКБ үшін'], [/, вертикальное исполнение/g, ', тік нұсқа'],
+    [/ серии ([^\s,]+)/g, ' $1 сериялы'], [/ с двигателем ([^\s,]+)/g, ' $1 қозғалтқышымен'], [/ \(вертикальное исполнение\)/g, ' (тік нұсқа)'], [/от ([\d.,]+) до ([\d.,]+)/g, '$1–$2']];
+  const PN = {
+    en: { first: true, rest: UNITS_EN, ok: /(?!)/g, heads: [['Трехфазный стабилизатор напряжения', 'Three-phase voltage stabiliser'], ['Однофазный стабилизатор напряжения', 'Single-phase voltage stabiliser'],
+      ['Стабилизатор напряжения', 'Voltage stabiliser'], ['Статический переключатель нагрузки', 'Static transfer switch'], ['Аккумуляторная батарея', 'Battery'], ['Дизельный генератор', 'Diesel generator'], ['ИБП', 'UPS']] },
+    kz: { first: false, rest: UNITS_KZ, ok: /кВА|кВт|ВА|А·сағ|АКБ|жинағымен|кірістірілген|сыртқы|үшін|тік нұсқа|сериялы|қозғалтқышымен|(\d) [ВА](?![А-Яа-яЁё·])/g, heads: [['Трехфазный стабилизатор напряжения', 'үш фазалы кернеу тұрақтандырғышы'],
+      ['Однофазный стабилизатор напряжения', 'бір фазалы кернеу тұрақтандырғышы'], ['Стабилизатор напряжения', 'кернеу тұрақтандырғышы'], ['Статический переключатель нагрузки', 'жүктеменің статикалық ауыстырып-қосқышы'],
+      ['Аккумуляторная батарея', 'аккумуляторлық батареясы'], ['Дизельный генератор', 'дизельді генераторы'], ['ИБП', 'ҮҚК']] }
+  }[lang];
+  function trName(key) {
+    if (!PN) return null;
+    const h = PN.heads.find(x => key.indexOf(x[0] + ' ') === 0); if (!h) return null;
+    let rest = key.slice(h[0].length + 1);
+    for (const r of PN.rest) rest = rest.replace(r[0], r[1]);
+    if (/[А-Яа-яЁё]/.test(rest.replace(PN.ok, ''))) return null;
+    if (PN.first) return h[1] + ' ' + rest;
+    const i = rest.indexOf(', '); return i < 0 ? rest + ' ' + h[1] : rest.slice(0, i) + ' ' + h[1] + rest.slice(i);
+  }
+  // Строки, собранные из шаблона и переменной части (модель, название документа, номер фото): шаблон переводится, переменная часть
+  // переводится тем же tr() или остаётся как есть, если в ней нет русских слов.
+  const PFX = {
+    en: [[/^Скачать (.+)$/, 'Download $1'], [/^Запросить КП на (.+)$/, 'Request a quotation for $1'], [/^Другие модели серии (.+)$/, 'Other $1 series models'],
+      [/^КП на оборудование (.+)$/, 'Quotation for $1 equipment'], [/^Запрос КП \(бренд (.+)\)$/, 'Quotation request ($1)'], [/^(.+), фото (\d+)$/, '$1, photo $2'], [/^(.+) \| (AEC(?: Kazakhstan)?)$/, '$1 | $2']],
+    kz: [[/^Скачать (.+)$/, '$1 жүктеу'], [/^Запросить КП на (.+)$/, '$1 үшін КҰ сұрау'], [/^Другие модели серии (.+)$/, '$1 сериясының басқа модельдері'],
+      [/^КП на оборудование (.+)$/, '$1 жабдығына КҰ'], [/^Запрос КП \(бренд (.+)\)$/, 'КҰ сұрау ($1)'], [/^(.+), фото (\d+)$/, '$1, $2-фото'], [/^(.+) \| (AEC(?: Kazakhstan)?)$/, '$1 | $2']]
+  }[lang];
+  function trPfx(key, depth) {
+    if (!PFX || depth > 2) return null;
+    for (const r of PFX) {
+      const m = key.match(r[0]); if (!m) continue;
+      const parts = m.slice(1).map(g => /[А-Яа-яЁё]/.test(g) ? tr(g, depth + 1) : g);
+      if (parts.some(x => x == null)) return null;
+      return r[1].replace(/\$(\d)/g, (_, i) => parts[i - 1]);
+    }
+    return null;
+  }
+  function tr(s, depth) {
     if (!dict) return null;
     const key = s.replace(/\s+/g, ' ').trim();
     if (!key || !/[А-Яа-яЁё]/.test(key)) return null;
     if (dict[key]) return dict[key];
     const nums = key.match(NUM);
-    if (nums) { const t = tpl[key.replace(NUM, '#')]; if (t) { let i = 0; return t.replace(/\u0000/g, () => nums[i++]); } }
-    return null;
+    if (nums) { const t = tpl[key.replace(NUM, '#')]; if (t) { let i = 0; return t.replace(/[\u0000\u0001]/g, c => { const n = nums[i++]; return c === '\u0001' ? n.replace(',', '.') : n; }); } }
+    return trName(key) || trPfx(key, depth || 0);
   }
   const ATTRS = ['placeholder', 'title', 'aria-label', 'alt', 'data-title', 'data-sub', 'data-type', 'content'];
   function translateNode(node) {
