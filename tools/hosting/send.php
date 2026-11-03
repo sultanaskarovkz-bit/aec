@@ -1,7 +1,8 @@
 <?php
 /**
  * Заявки с сайта aecups.kz: Telegram + e-mail + журнал заявок (leads/leads.csv).
- * Настройки: send-config.php (рядом с этим файлом). Ответ: JSON {"ok": true|false}.
+ * Настройки: send-config.php (рядом с этим файлом, создаётся один раз из send-config.example.php и в архивы не входит,
+ * поэтому повторная загрузка сайта архивом его не перезаписывает). Ответ: JSON {"ok": true|false}.
  * Если не сработал ни один канал, сайт предложит посетителю отправить ту же заявку в WhatsApp.
  */
 header('Content-Type: application/json; charset=utf-8');
@@ -16,9 +17,11 @@ $cfg = [
     'max_file_mb' => 20,
     'log'         => __DIR__ . '/leads/leads.csv',
 ];
-if (is_file(__DIR__ . '/send-config.php')) {
-    $over = include __DIR__ . '/send-config.php';
+foreach (['send-config.php', 'send-config.example.php'] as $cf) {
+    if (!is_file(__DIR__ . '/' . $cf)) continue;
+    $over = include __DIR__ . '/' . $cf;
     if (is_array($over)) $cfg = array_merge($cfg, $over);
+    break;
 }
 
 function out($ok, $code = 200, $err = '') { http_response_code($code); echo json_encode($err ? ['ok' => $ok, 'error' => $err] : ['ok' => $ok], JSON_UNESCAPED_UNICODE); exit; }

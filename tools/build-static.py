@@ -460,7 +460,23 @@ def finalize(r, shell, snap):
     s = s[:a] + app + '</div>\n<template id="aec-tpl">' + orig + '</template>' + s[b + len('</div>'):]
     return s
 
+LASTMOD = os.path.join(ROOT, 'tools', 'hosting', 'lastmod.json')
+def page_dates(routes):
+    import hashlib
+    old = json.load(io.open(LASTMOD, encoding='utf-8')) if os.path.exists(LASTMOD) else {}
+    new = {}
+    for r in routes:
+        f = os.path.join(OUT, r.file.lstrip('/'), 'index.html') if r.file.endswith('/') else os.path.join(OUT, r.file.lstrip('/'))
+        if not os.path.exists(f): continue
+        s = re.sub(r'\?v=\d+', '', rd(f))
+        h = hashlib.sha1(s.encode('utf-8')).hexdigest()[:16]
+        prev = old.get(r.canon)
+        new[r.canon] = {'h': h, 'd': prev['d'] if prev and prev.get('h') == h else TODAY}
+    io.open(LASTMOD, 'w', encoding='utf-8').write(json.dumps(new, ensure_ascii=False, indent=0, sort_keys=True))
+    return {k: v['d'] for k, v in new.items()}
+
 def sitemap(routes, D):
+    dates = page_dates(routes)
     imgs = {}
     for r in routes:
         if r.kind == 'product' and r.img: imgs[r.path] = DOMAIN + '/' + r.img
@@ -468,7 +484,7 @@ def sitemap(routes, D):
     for r in routes:
         if not r.index or not r.sm: continue
         u = DOMAIN + r.canon
-        out.append(f'<url><loc>{esc(u)}</loc><lastmod>{TODAY}</lastmod><priority>{r.prio}</priority>' + (f'<image:image><image:loc>{esc(quote(imgs[r.path], safe=":/%"))}</image:loc></image:image>' if r.path in imgs else '') + '</url>')
+        out.append(f'<url><loc>{esc(u)}</loc><lastmod>{dates.get(r.canon, TODAY)}</lastmod><priority>{r.prio}</priority>' + (f'<image:image><image:loc>{esc(quote(imgs[r.path], safe=":/%"))}</image:loc></image:image>' if r.path in imgs else '') + '</url>')
     out.append('</urlset>')
     return '\n'.join(out) + '\n'
 
@@ -477,7 +493,7 @@ def htaccess(routes, reds):
          '# Apache / LiteSpeed. В Plesk работает при включённом Apache (режим «nginx + Apache»).',
          'Options -Indexes -MultiViews', 'DirectoryIndex index.html', 'AddDefaultCharset utf-8', 'ErrorDocument 404 /404.html', '',
          '<IfModule mod_mime.c>', '  AddType image/webp .webp', '  AddType image/svg+xml .svg', '  AddType font/woff2 .woff2', '  AddType application/javascript .js', '  AddType application/xml .xml', '</IfModule>', '',
-         '# закрыть служебные файлы', '<FilesMatch "^(send-config\\.php|README.*|.*\\.md|.*\\.csv|.*\\.log)$">', '  Require all denied', '</FilesMatch>', '',
+         '# закрыть служебные файлы', '<FilesMatch "^(send-config.*\\.php|README.*|.*\\.md|.*\\.csv|.*\\.log|.*\\.json)$">', '  Require all denied', '</FilesMatch>', '',
          '<IfModule mod_rewrite.c>', 'RewriteEngine On', 'RewriteBase /', '',
          '# без www (как на текущем сайте)', 'RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]', 'RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L,NE]', '',
          '# http -> https. На Plesk этот редирект обычно включён в настройках хостинга («SEO-безопасный 301 с HTTP на HTTPS»).',
@@ -603,7 +619,7 @@ def main():
     wr(os.path.join(OUT, '.htaccess'), htaccess(routes, reds))
     wr(os.path.join(OUT, 'sitemap.xml'), sitemap(routes, D))
     wr(os.path.join(OUT, 'robots.txt'), ROBOTS)
-    for f in ('send.php', 'send-config.php', 'README-HOSTING.md'):
+    for f in ('send.php', 'send-config.example.php', 'README-HOSTING.md'):
         src = os.path.join(ROOT, 'tools', 'hosting', f)
         if os.path.exists(src): shutil.copy2(src, os.path.join(OUT, f))
     os.makedirs(os.path.join(OUT, 'leads'), exist_ok=True)
